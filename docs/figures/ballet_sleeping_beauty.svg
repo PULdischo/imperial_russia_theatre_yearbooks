@@ -160,7 +160,7 @@
 <text x="574.0" y="707" font-size="15" fill="#1f2328">Перро, музыка П. И.</text>
 <text x="574.0" y="728" font-size="15" fill="#1f2328">Чайковскаго.»</text>
 <text x="574.0" y="755" font-size="14" font-style="italic" fill="#5b6470">already running when the</text>
-<text x="574.0" y="774" font-size="14" font-style="italic" fill="#5b6470">Yearbook begins: 21 dates listed</text>
+<text x="574.0" y="774" font-size="14" font-style="italic" fill="#5b6470"><tspan font-style="normal">Yearbook</tspan> begins: 21 dates listed</text>
 <line x1="696.0" y1="530" x2="696.0" y2="560" stroke="#2f6db5" stroke-width="2"/>
 <circle cx="696.0" cy="530" r="4" fill="#2f6db5"/>
 <rect x="884.7" y="594" width="310.7" height="220" rx="10" fill="#fbeee8" stroke="#b5562f" stroke-width="1.5"/>

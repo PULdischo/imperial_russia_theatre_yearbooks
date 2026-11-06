@@ -85,7 +85,7 @@ def slide(title, subtitle, d, work_meta, quotes, footer, fname, n_title_lines=4,
     t_lines = [(f'«{esc(t)}» <tspan fill="{FAINT}">×{n}</tspan>', 16, INK, 400) for t, n in d['titles'][:n_title_lines]]
     if len(d['titles']) > n_title_lines:
         t_lines.append((f'+ {len(d["titles"]) - n_title_lines} more forms', 15, MUTED, 400))
-    o += card(80, 326, 440, 66 + 24 * len(t_lines), f'PRINTED TITLES → THIS WORK ({len(d["titles"])} FORMS)', t_lines)
+    o += card(80, 326, 440, 66 + 24 * len(t_lines), f'PRINTED TITLES → THIS WORK ({len(d["titles"])} FORM{"S" if len(d["titles"]) != 1 else ""})', t_lines)
 
     y_exc = 326 + 66 + 24 * len(t_lines) + 16
     n_exc_perf = sum(n for _, n, _w in d['exc'])
@@ -148,7 +148,8 @@ def slide(title, subtitle, d, work_meta, quotes, footer, fname, n_title_lines=4,
         if qd.get('note'):
             yy += 6
             for ln in qd['note']:
-                o.append(f'<text x="{x + 14:.1f}" y="{yy}" font-size="14" font-style="italic" fill="{MUTED}">{esc(ln)}</text>')
+                ln_svg = esc(ln).replace('Yearbook', '<tspan font-style="normal">Yearbook</tspan>')   # title set upright inside italics
+                o.append(f'<text x="{x + 14:.1f}" y="{yy}" font-size="14" font-style="italic" fill="{MUTED}">{ln_svg}</text>')
                 yy += 19
         # leader tick to the season column
         for s in qd['seasons']:
@@ -192,6 +193,21 @@ QUOTES = {
              lines=['«… Музыка соч. Минкуса', B('и другихъ авторовъ') + '.»'],
              note=['music now credited', 'to more than one hand']),
     ],
+    'Волшебное зеркало': [
+        # «Г***»: the print sets an italic Г and three asterisks in a point-down triangle (scan check 2026-11-06)
+        dict(city='SP', seasons=['1902-03'], head='St Petersburg · 1902/03 · p. 44',
+             lines=['«Фантастическій балетъ', 'въ 4 д. и ' + B('7 карт.') + ' …', 'либретто составлено', 'М. И. Петипа и Г***', 'музыка А. Н. Корещенко.»'],
+             note=['entry marked * in the list;', 'one date, 9 Feb 1903']),
+        dict(city='SP', seasons=['1903-04'], head='St Petersburg · 1903/04 · p. 45',
+             lines=['«Большой фантастическій', 'балетъ въ 4 д. и ' + B('8 карт.') + ',', '… либретто М. И. Петипа', 'и Г***, …»'],
+             note=['one more scene than', 'the year before']),
+        dict(city='SP', seasons=['1904-05'], head='St Petersburg · 1904/05 · p. 138',
+             lines=[B('«(1-е, 3-е д. и 2-я карт.'), B('4-го д.).') + ' Большой', 'фантастическій балетъ …»'],
+             note=['selected acts only, one date;', 'still filed under the work']),
+        dict(city='Moscow', seasons=['1904-05'], head='Moscow · 1904/05 · p. 145',
+             lines=['«Балетъ въ 4 д.,', B('соч. М. Петипа') + ', музыка', 'А. Корещенко.»'],
+             note=['Petipa alone credited;', 'first date 13 Feb 1905']),
+    ],
 }
 
 
@@ -199,6 +215,7 @@ def main():
     con = duckdb.connect(str(DB), read_only=True)
     sb = data(con, 'Спящая красавица')
     dq = data(con, 'Донъ-Кихотъ')
+    wm = data(con, 'Волшебное зеркало')
     con.close()
     slide('One work, two cities: «Спящая красавица»',
           'A straightforward case: one ballet, a St Petersburg staging and a later Moscow production, all linked to one work',
@@ -215,6 +232,13 @@ def main():
           'ballet_don_quixote.svg', n_title_lines=4,
           exc_show=['1-е д. бал. Донъ-Кихотъ Ламанчскій', '1-я карт. 1-го д. бал. «Донъ-Кихотъ».'],
           annotations=[('1893-94', '1899-00', 392, 'not performed 1893/94–1899/00')])
+    slide('One work, two cities in turn: «Волшебное зеркало»',
+          'A St Petersburg premiere that survives there only in excerpts, while Moscow keeps the whole ballet',
+          wm, dict(name='Волшебное зеркало', line='ballet · music by Koreshchenko'),
+          QUOTES['Волшебное зеркало'],
+          'Each list entry keeps its own printed scene count and credits; the work ties the two cities\' records together.',
+          'ballet_magic_mirror.svg', n_title_lines=1,
+          exc_show=['4-е д. бал. Волшебное зеркало', '1-е д., 3-е д. и 2-я карт. 4-го д. бал. Волшебное зеркало'])
 
 
 if __name__ == '__main__':

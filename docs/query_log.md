@@ -27789,3 +27789,35 @@ with the restored title and 0 FK violations. A general rule (any alias whose wor
 works — 2 misprints («Agence dramatiqus» → «Agence dramatique», «Бокаччіо» → «Боккаччіо») and 11 titles printed with their genre or subtitle
 («Наканунѣ, возможный случай», «Ломоносовъ, истор.-быт. сцены» …) — so it is limited to an explicit list (WORK_TITLE_FROM_ALIAS) with
 «Сцепа» only.
+
+## 2026-11-06 — Ballets performed in Moscow but never in St Petersburg (slide candidate)
+
+```sql
+-- ballet works (art_form='ballet', not excerpts) with 0 SP performances, ranked by Moscow performances; with SP excerpt
+-- performances, list entries by city, review credits and cast statements; then per-candidate seasons, titles, list entries,
+-- and any SP Repertoire title sharing the first word
+SELECT ... FROM research.work w JOIN research.performance p ... JOIN research.event e ... WHERE sp = 0 ORDER BY mo DESC;
+```
+
+Result: Золотая рыбка 31 (1903-04..1910-11, 6 seasons; list 1903-04 marked premiere, first date 16 Nov 1903; «либретто (сюжетъ
+заимствованъ) А. А. Горскаго, музыка Минкуса» -- not scan-checked; 48 review credits, 28 cast statements); Звѣзды 29 (1897-98..1900-01,
+premiere 1897-98, «соч. К. Ѳ. Вальца, музыка А. Ю. Симона»; 44/13); Кипрская статуя 27; Приключенія Флика и Флока 23; Хрустальный
+башмачекъ 21; Сатанилла 20; Саламбо 15 (1909-11, Горскій, no review rows). Excluded: Фіаметта and Брама (SP excerpts/list entries).
+Side notes, not chased: one Золотая рыбка performance has a NULL verbatim_title; Хрустальный башмачекъ (1890-97) and Волшебный
+башмачекъ («Сандрильона», 1899-1903) share Вальцъ / Мюльдорферъ credits -- possibly one Cinderella ballet under two titles (RG's call).
+
+## 2026-11-06 — «Волшебное зеркало» slide: data + scan check of 4 list entries and 9 excerpt cells
+
+```sql
+SELECT work_id, canonical_title FROM research.work WHERE canonical_title ILIKE 'Волшебное зеркало%' AND excerpt_of_work_id IS NULL;  -- 4bba6fba
+SELECT e.season, e.city, count(*), min(e.date) FROM research.performance p JOIN research.event e USING (event_id) WHERE p.work_id = '4bba6fba-…' GROUP BY ALL;
+SELECT ... excerpt works of 4bba6fba with their performances; research.production rows; review_credit / review_assertion counts
+```
+
+Result: 26 performances (SP 1902-03 1, 1903-04 1; Moscow 24 from 13 Feb 1905 to 1910-11, none 1908-09); 1 title form; 7 excerpt
+forms / 9 performances (SP 2 in 1904, Moscow 7); 7 list entries (SP 1902-03 premiere, 1903-04, 1904-05 selected acts; Moscow 1904-05,
+1907-08, 1909-10, 1910-11); 61 review credits, 46 cast statements. Scan check (Claude helpers, full-res PDF images): 4 list entries match
+raw letter for letter; «Г⁂» in raw is printed as italic Г + three asterisks in a point-down triangle (slide writes «Г***»); SP 1902-03
+marked only «*4.», one date 9 Feb 1903; SP 1903-04 «8 карт.» confirmed, dates 28 Dec 1903 and 14 Apr 1904 (acts); Moscow 1904-05 dates
+13, 26, 27 Feb and 19 Apr 1905. 9 excerpt cells read blind: all match raw (mid-title «бал.» sometimes in verbatim_genre); 29 Apr 1907
+prints «Велшебное» (genuine_print_typos.md).

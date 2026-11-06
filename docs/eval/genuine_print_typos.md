@@ -1073,3 +1073,9 @@ person; raw keeps the print.
   `scan_audit/1892-93_repertoire_SP_p18_1893-02-07_scepa.png`.
 - **1904-05 Moscow Repertoire, p.101:** «23 Пятница.» printed where 5 Nov 1904 belongs (already handled: research.event.date 1904-11-05,
   `corrected_manual`, known_issues.md #151; raw keeps «23»). Re-seen 2026-11-04 during the ballet-slide title check; no change needed.
+
+## «Велшебное» for «Волшебное» in the Repertoire (added 2026-11-06; blind read by a Claude helper on the scan)
+
+- **1906-07 Moscow Repertoire, p.129, 29 Apr 1907 morning, Большой:** «4-е д. бал. Велшебное зеркало.» -- е for о (its crossbar and open
+  side match the е of «-ное», not the round о beside it). Raw already keeps the print; the excerpt is linked to «Волшебное зеркало».
+  Crop `scan_audit/1906-07_repertoire_MSK_p129_1907-04-29_velshebnoe.png`.

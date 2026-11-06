@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <rect width="1600" height="900" fill="#2C3932"/>
+
+  <!-- Title -->
+  <text x="80" y="88" font-size="48" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">From the <tspan font-style="italic">Yearbook</tspan> to the database</text>
+  <text x="80" y="128" font-size="22" fill="#BDB2A5">Ежегодникъ Императорскихъ театровъ, 1890/91 onward</text>
+
+  <!-- Column headings -->
+  <text x="80" y="176" font-size="18" font-weight="700" letter-spacing="2" fill="#9C9488">IN THE <tspan font-style="italic">YEARBOOK</tspan></text>
+  <text x="1100" y="176" font-size="18" font-weight="700" letter-spacing="2" fill="#9C9488">IN THE DATABASE</text>
+
+  <!-- Connecting lines (coloured by the record they feed) -->
+  <g fill="none" stroke-width="4" stroke-linecap="round" opacity="0.75">
+    <!-- Repertoire tables -> Theatres, Events, Works -->
+    <path d="M680 235 C 890 235, 890 255, 1100 255" stroke="#C49A98"/>
+    <path d="M680 235 C 890 235, 890 425, 1100 425" stroke="#C5D2CB"/>
+    <path d="M680 235 C 890 235, 890 595, 1100 595" stroke="#8296AA"/>
+    <!-- People spiski -> People -->
+    <path d="M680 345 C 890 345, 890 765, 1100 765" stroke="#D2BD9A"/>
+    <!-- Production spiski -> Events, Works, People -->
+    <path d="M680 455 C 890 455, 890 425, 1100 425" stroke="#C5D2CB"/>
+    <path d="M680 455 C 890 455, 890 595, 1100 595" stroke="#8296AA"/>
+    <path d="M680 455 C 890 455, 890 765, 1100 765" stroke="#D2BD9A"/>
+    <!-- Season statistics -> Events (check only) -->
+    <path d="M680 565 C 890 565, 890 425, 1100 425" stroke="#C5D2CB" stroke-dasharray="10 9"/>
+    <!-- Season reviews -> Events, Works, People -->
+    <path d="M680 675 C 890 675, 890 425, 1100 425" stroke="#C5D2CB"/>
+    <path d="M680 675 C 890 675, 890 595, 1100 595" stroke="#8296AA"/>
+    <path d="M680 675 C 890 675, 890 765, 1100 765" stroke="#D2BD9A"/>
+    <!-- Jubilees & obituaries -> People -->
+    <path d="M680 785 C 890 785, 890 765, 1100 765" stroke="#D2BD9A"/>
+  </g>
+
+  <!-- Yearbook sections -->
+  <g>
+    <rect x="80" y="190" width="600" height="90" rx="12" fill="#36463D" stroke="#6F7D73" stroke-width="2"/>
+    <text x="104" y="228" font-size="26" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">Repertoire tables</text>
+    <text x="104" y="260" font-size="17" fill="#BDB2A5">day by day: date, theatre, works, receipts</text>
+
+    <rect x="80" y="300" width="600" height="90" rx="12" fill="#36463D" stroke="#6F7D73" stroke-width="2"/>
+    <text x="104" y="338" font-size="26" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">People <tspan font-style="italic">spiski</tspan></text>
+    <text x="104" y="370" font-size="17" fill="#BDB2A5">administrators, artists, production staff, school staff, graduates</text>
+
+    <rect x="80" y="410" width="600" height="90" rx="12" fill="#36463D" stroke="#6F7D73" stroke-width="2"/>
+    <text x="104" y="448" font-size="26" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">Production <tspan font-style="italic">spiski</tspan></text>
+    <text x="104" y="480" font-size="17" fill="#BDB2A5">each production staged: creators and dates</text>
+
+    <rect x="80" y="520" width="600" height="90" rx="12" fill="#36463D" stroke="#6F7D73" stroke-width="2"/>
+    <text x="104" y="558" font-size="26" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">Season statistics</text>
+    <text x="104" y="590" font-size="17" fill="#BDB2A5">printed totals, checked against the calendar</text>
+
+    <rect x="80" y="630" width="600" height="90" rx="12" fill="#36463D" stroke="#6F7D73" stroke-width="2"/>
+    <text x="104" y="668" font-size="26" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">Season reviews</text>
+    <text x="104" y="700" font-size="17" fill="#BDB2A5">casts, dances, solos, creators and craftspeople</text>
+
+    <rect x="80" y="740" width="600" height="90" rx="12" fill="#36463D" stroke="#6F7D73" stroke-width="2"/>
+    <text x="104" y="778" font-size="26" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DFD2C4">Jubilees &amp; obituaries</text>
+    <text x="104" y="810" font-size="17" fill="#BDB2A5">anniversaries of service, deaths</text>
+  </g>
+
+  <!-- Links between database records (read downward: Theatres host Events, which include Works, which credit People) -->
+  <defs>
+    <marker id="down" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9C9488"/>
+    </marker>
+  </defs>
+  <g stroke="#9C9488" stroke-width="3" marker-end="url(#down)">
+    <line x1="1180" y1="315" x2="1180" y2="356"/>
+    <line x1="1180" y1="485" x2="1180" y2="526"/>
+    <line x1="1180" y1="655" x2="1180" y2="696"/>
+  </g>
+  <g font-size="17" font-style="italic" fill="#BDB2A5">
+    <text x="1196" y="346">host</text>
+    <text x="1196" y="516">include</text>
+    <text x="1196" y="686">credit</text>
+  </g>
+
+  <!-- Database records -->
+  <g>
+    <rect x="1100" y="195" width="420" height="120" rx="14" fill="#4A3A3B" stroke="#C49A98" stroke-width="3"/>
+    <text x="1128" y="248" font-size="34" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#D4B0AE">Theatres</text>
+    <text x="1128" y="284" font-size="18" fill="#BDB2A5">St Petersburg and Moscow stages</text>
+
+    <rect x="1100" y="365" width="420" height="120" rx="14" fill="#3B4A42" stroke="#C5D2CB" stroke-width="3"/>
+    <text x="1128" y="418" font-size="34" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#D3DED8">Events</text>
+    <text x="1128" y="454" font-size="18" fill="#BDB2A5">one theatre, date and session</text>
+
+    <rect x="1100" y="535" width="420" height="120" rx="14" fill="#2F3F4C" stroke="#8296AA" stroke-width="3"/>
+    <text x="1128" y="588" font-size="34" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#AFC0D1">Works</text>
+    <text x="1128" y="624" font-size="18" fill="#BDB2A5">ballets, operas, plays, operettas, concerts</text>
+
+    <rect x="1100" y="705" width="420" height="120" rx="14" fill="#4A4537" stroke="#D2BD9A" stroke-width="3"/>
+    <text x="1128" y="758" font-size="34" font-weight="400" font-family="Playfair, 'Playfair Display', Georgia, 'Times New Roman', serif" fill="#DCCAA8">People</text>
+    <text x="1128" y="794" font-size="18" fill="#BDB2A5">artists, staff, graduates, creators, craftspeople</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="80" y="872" font-size="17" fill="#BDB2A5">Every record keeps the original spelling and cites its printed page. Dashed line: the season statistics check events rather than create them.</text>
+<g font-size="13" fill="#9C9488" text-anchor="end"><text x="1520" y="30">Graphic made with Claude Code (AI): drafting, layout and database checks.</text><text x="1520" y="47">Content, categories and final wording decided by the author.</text></g>
+</svg>

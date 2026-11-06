@@ -2,11 +2,11 @@
   <rect width="1600" height="900" fill="#ffffff"/>
 
   <!-- Title -->
-  <text x="80" y="88" font-size="44" font-weight="700" fill="#1f2328">From the Yearbook to the database</text>
+  <text x="80" y="88" font-size="44" font-weight="700" fill="#1f2328">From the <tspan font-style="italic">Yearbook</tspan> to the database</text>
   <text x="80" y="128" font-size="22" fill="#5b6470">Ежегодникъ Императорскихъ театровъ, 1890/91 onward</text>
 
   <!-- Column headings -->
-  <text x="80" y="176" font-size="18" font-weight="700" letter-spacing="2" fill="#8a929c">IN THE YEARBOOK</text>
+  <text x="80" y="176" font-size="18" font-weight="700" letter-spacing="2" fill="#8a929c">IN THE <tspan font-style="italic">YEARBOOK</tspan></text>
   <text x="1100" y="176" font-size="18" font-weight="700" letter-spacing="2" fill="#8a929c">IN THE DATABASE</text>
 
   <!-- Connecting lines (coloured by the record they feed) -->
