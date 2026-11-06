@@ -42,3 +42,21 @@ Alongside "editorial", add four booleans to every line. "editorial" is true exac
 - "ed_editors": the editors and the editorial office: Молчановъ, Петровъ, Дризенъ, the Редакція acting, decisions about contents, copies allotted to the editor or редакція.
 A page may carry several or none. Distribution of copies with none of the above is none of these.
 Clarification on "ed_editors": К. А. Петровъ (head of the Central Library) and П./А. Шенкъ signing or receiving ROUTINE sales, shipment and subscription letters is distribution, not the editorial office acting: leave ed_editors false. Set it true only when a page shows the editor or редакція doing editorial work (commissioning, accepting or paying for content, deciding contents, being allotted editorial copies) or names who the editor is.
+
+## Дела that are not about the Ежегодник (added 2026-11-06)
+From batch 1's later arrivals on, many дела are ballet, music, staging, wardrobe or
+payroll files (groups in docs/rgia_request_log.csv). For these, keep every key and
+rule above, with these changes:
+- The framing paragraph about the Ежегодник chapter does not apply. Describe each
+  page on its own terms (contract, list, requisition, payroll, letter...).
+- Ballet in substance is what counts most: ballet works, ballet music and composers,
+  conductors of ballet, ballet masters, dancers by name, the ballet troupe, ballet
+  productions, and the people who made them: designers, costume makers, machinists,
+  prop makers and administrators over the ballet (RG counts craftspeople equal to
+  creators). Name every ballet work and named person you can read.
+- relevance: "high" = substantive ballet content (or Ежегодник editorial content,
+  tagged as above); "medium" = theatre business with no ballet named that may still
+  bear on it (orchestra or music staff generally, opera/drama staging or props,
+  general wardrobe or workshop business, payrolls without ballet names); "low" =
+  covers, blanks, slips, unreadable fragments, duplicate views.
+- The ed_* tags will usually be false; set them only on the same rules as above.
