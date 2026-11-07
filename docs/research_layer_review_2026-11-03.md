@@ -913,7 +913,7 @@ heading only; no ballet; inclusion test). Nothing else changed.
 Every raw / analysis / entities table and column compared with research (query log). Row gaps all deliberate (the excluded 1910-11 p056
 page, 5 group music credits, 6 supplied performances). **Added (RG "Yes, add it"):** `person_appearance.printed_family_name`,
 `printed_first_name`, `printed_patronymic` — the name as each season's list prints it (differs from the canonical name on 4,057
-appearances: ordinal 2,873, spelling 647, first name 537). Still not carried: `list_number` (printed on 16,380 entries; not yet ruled),
+appearances: ordinal 2,873, spelling 647, first name 537). Still not carried: `list_number` (printed on 16,380 entries; RG 2026-11-06: not needed, see Outstanding item 3),
 event month/year heading text, the lists' «Исполненъ»/«Всего» lines verbatim and section heading, review layout fields,
 `season_stat_line.city_verbatim`; pipeline-internal by design: merge history, Wikidata decisions, matcher evidence, retired ids.
 
@@ -948,7 +948,9 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
    Maiennacht», «Und Pippa tanzt! ein Glasettenmärchen», «Бабушка, отрывокъ изъ жизни», «Какъ они бросили курить, басня-шаржъ», «Лиса
    Патрикѣевна, оперетта», «Ломоносовъ, истор.-быт. сцены», «Наканунѣ, возможный случай». One ruling each; a ruling adds the title to
    `WORK_TITLE_FROM_ALIAS` in build_research_model.py.
-3. **`list_number`** (the printed number on the staff list, 16,380 entries) — not yet in `research.person_appearance` (RG "Not now").
+3. ~~**`list_number`**~~ — **RULED 2026-11-06: not needed** (RG: "I am ruling that I do not need this, as long as we have the correct
+   volume and page number to cite"). Checked the same day: all 23,980 `research.person_appearance` rows carry `season`, `source_file`,
+   `scan_page` and `printed_folio` (none null). The number stays in raw only.
 4. **Corpus sweep for missed «Заслуженн… артист…» honours** — only seven holders were checked 2026-11-04.
 5. **«Щимана»** music credit (1900-01, «Волшебный башмачекъ») — waits on the Шиманъ identity in the person audit.
 6. **Gold set out of step** — roster 76.4% because the gold predates later convention rulings (headings with Directorate/Contora prefix,

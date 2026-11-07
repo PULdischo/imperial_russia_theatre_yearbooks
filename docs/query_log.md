@@ -27834,3 +27834,13 @@ SELECT work_id, verbatim_title, count(*) FROM research.performance GROUP BY ALL;
 
 Result: 98 ballets, 2,398 full performances; ballets.json 194 KB. Cross-check: Донъ-Кихотъ 80 performances, 108 credits, 132 cast
 statements, 17 list entries (= the slide). List text is raw transcription, not scan-checked (the page says so).
+
+## 2026-11-06 — Can every staff-list appearance be cited by volume and page? (list_number ruling)
+
+```sql
+SELECT count(*), count(season), count(source_file), count(scan_page), count(printed_folio) FROM research.person_appearance;
+SELECT season, count(*) - count(printed_folio) FROM research.person_appearance GROUP BY 1 HAVING count(*) - count(printed_folio) > 0;
+```
+
+Result: 23,980 rows; season, source_file, scan_page and printed_folio all filled (0 null, every season). RG ruled `list_number` not needed
+for the research layer, given volume + page citation.
