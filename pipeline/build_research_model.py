@@ -277,10 +277,39 @@ ART_FORM_BY_PERFORMANCE_CSV = Path(__file__).parent / "research_corrections" / "
 #: labels here, see apply_work_artform_overrides (known_issues.md #158).
 WORK_ARTFORM_OVERRIDES_CSV = Path(__file__).parent / "entity_curation" / "work_artform_overrides.csv"
 WORK_TITLE_ALIASES_CSV = Path(__file__).parent / "entity_curation" / "work_title_aliases.csv"
-#: Aliased printed titles whose work takes the alias's match-as title as its canonical title, because the misprint is the
-#: work's only printing (otherwise the most common printing names the work). One by one, RG's ruling for each.
+#: Aliased printed titles whose work takes the alias's match-as title as its canonical title (otherwise the most common
+#: printing names the work). One by one, RG's ruling for each. Keyed on the work's current (entities) canonical title =
+#: the alias's printed_title; value = (genre to set when the work has none, or None; genre_source; title_note text).
+#: Every performance keeps its verbatim printed title. Scan checks: docs/research_layer_review_2026-11-03.md, Outstanding 2.
+_SUBTITLE_NOTE = ("title given as «{t}»: the print sets the subtitle or genre «{g}» with the title (genre field empty); "
+                  "it is the work's genre (RG 2026-11-06, \"Bare title, subtitle as genre\")")
 WORK_TITLE_FROM_ALIAS = {
-    "Сцепа изъ бал. Корсаръ",  # RG 2026-11-04, "Yes, restore it": the one printing, 7 Feb 1893, misprints «Сцена»
+    # RG 2026-11-04, "Yes, restore it": the one printing, 7 Feb 1893, misprints «Сцена»
+    "Сцепа изъ бал. Корсаръ": (None, None, "title given as «{t}»: its only printing is the misprint «{p}»"),
+    # RG 2026-11-06: the one printing, Александринскій 4 Dec 1899, misprints «dramatique» (s for e; genuine_print_typos.md)
+    "Agence dramatiqus": (None, None, "title given as «{t}»: its only printing is the misprint «{p}» "
+                                      "(RG 2026-11-06, \"Agence dramatique\")"),
+    # RG 2026-11-06: printed once each way, a 1-1 tie; not ruled a misprint
+    "Бокаччіо": (None, None, "title given as «{t}», as printed 23 Apr 1907; 25 Feb 1901 prints «{p}» "
+                             "(spelling not ruled an error; RG 2026-11-06, \"Боккаччіо\")"),
+    # RG 2026-11-06, "Bare title, subtitle as genre": the subtitle/genre printed with the title becomes the work's genre
+    "... so ich dir! Schausp.": ("Schausp.", "printed", _SUBTITLE_NOTE),
+    "Chéri! vaud.": ("vaud.", "printed", _SUBTITLE_NOTE),
+    "Der Star, ein Wiener Stück": ("ein Wiener Stück", "printed", _SUBTITLE_NOTE),
+    "Die Hochzeitsfackel, Spiel einer Maiennacht": ("Spiel einer Maiennacht", "printed", _SUBTITLE_NOTE),
+    "Бабушка, отрывокъ изъ жизни": ("отрывокъ изъ жизни", "printed", _SUBTITLE_NOTE),
+    "Какъ они бросили курить, басня-шаржъ": ("басня-шаржъ", "printed", _SUBTITLE_NOTE),
+    "Лиса Патрикѣевна, оперетта": ("оперетта", "printed", _SUBTITLE_NOTE),
+    "Ломоносовъ, истор.-быт. сцены": ("истор.-быт. сцены", "printed", _SUBTITLE_NOTE),
+    "Наканунѣ, возможный случай": ("возможный случай", "printed", _SUBTITLE_NOTE),
+    # 1905-06 prints «Basazzade» (x4), 1909-10 «Bajazzade» (x3): RG 2026-11-06 ruled «Basazzade» a print slip
+    "Colombine, Basazzade.": ("Bajazzade", "printed", _SUBTITLE_NOTE + "; 1904-05 prints the slip «Basazzade» "
+                              "(RG 2026-11-06), 1909-10 «Bajazzade»"),
+    # print «ein Glassetten-märchen» (x2) for Hauptmann's «ein Glashüttenmärchen»: RG 2026-11-06 ruled it a print slip
+    "Und Pippa tanzt! ein Glassettenmärchen": ("ein Glashüttenmärchen", "research_rule",
+                                               "title given as «{t}»: the print sets the subtitle with the title (genre field "
+                                               "empty), as the slip «ein Glassetten-märchen» for Hauptmann's «{g}»; the "
+                                               "corrected subtitle is the work's genre (RG 2026-11-06)"),
 }
 CONCERT_EVENT_RE = r"концерт|музыкально-литературн|литературно-музыкальн|вокально-инструментально"
 #: An event headed «Симфоническій концертъ» is a concert as a whole: every titled item on it
@@ -2712,6 +2741,7 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
     # A work that absorbed a printed variant through work_title_aliases.csv says so in title_note (RG 2026-11-04,
     # provenance pass: the reader must be able to trace "any attendant decisions").
     n_alias_notes = n_alias_titles = 0
+    titled_from_alias: set[str] = set()
     for r in csv.DictReader(open(WORK_TITLE_ALIASES_CSV, encoding="utf-8")):
         hits = con.execute("""SELECT work_id, count(*) FROM perf_rows WHERE verbatim_title = ? AND work_id IS NOT NULL
                               GROUP BY 1""", [r["printed_title"]]).fetchall()
@@ -2727,16 +2757,21 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         # The alias's match-as title is the work's name; the printed form stays on the performance's verbatim_title.
         target = (r.get("match_as_title") or "").strip()
         if target and target != r["printed_title"] and r["printed_title"] in WORK_TITLE_FROM_ALIAS:
+            genre, gsrc, note = WORK_TITLE_FROM_ALIAS[r["printed_title"]]
             for (wid,) in con.execute("SELECT work_id FROM research.work WHERE canonical_title = ?",
                                       [r["printed_title"]]).fetchall():
                 con.execute("""UPDATE research.work SET canonical_title = ?,
+                                   canonical_genre = coalesce(canonical_genre, ?),
+                                   genre_source = CASE WHEN canonical_genre IS NULL AND ? IS NOT NULL THEN ? ELSE genre_source END,
                                    title_note = coalesce(title_note || '; ', '') || ?
                                WHERE work_id = ?""",
-                            [target, f"title given as «{target}»: its only printing is the misprint «{r['printed_title']}»",
-                             wid])
+                            [target, genre, genre, gsrc, note.format(t=target, p=r["printed_title"], g=genre), wid])
                 n_alias_titles += 1
+                titled_from_alias.add(r["printed_title"])
+    for p in set(WORK_TITLE_FROM_ALIAS) - titled_from_alias:
+        raise SystemExit(f"WORK_TITLE_FROM_ALIAS: «{p}» is not an aliased printed title naming a research.work")
     print(f"  works noted as absorbing a printed variant (work_title_aliases.csv): {n_alias_notes}; "
-          f"titled by the alias because their only printing is the misprint: {n_alias_titles}")
+          f"titled by the alias's match-as title (WORK_TITLE_FROM_ALIAS, RG's rulings): {n_alias_titles}")
     con.execute(f"""
         CREATE TABLE research.performance (
             performance_id VARCHAR PRIMARY KEY,

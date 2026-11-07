@@ -27958,3 +27958,25 @@ Result: the build stopped at WORK_TITLE_FROM_ALIAS («Und Pippa tanzt!…» not 
 "Saved follow-ups" session's raw fix is not in production yet), so the copy is partial and was discarded.
 Before the stop: work 13 rows differ -- «Балетное отдѣленіе» programme item / NULL (this change) plus the 12
 retitlings of the parallel session; event 1 row differs. Production NOT written for «Балетное отдѣленіе».
+
+## 2026-11-06 — Outstanding item 2: misprinted / subtitle-attached work titles, scan checks and RG's rulings applied
+
+```sql
+SELECT w.canonical_title, w.canonical_genre, w.art_form, p.verbatim_title, p.verbatim_genre, e.date, t.canonical_name, e.page_id, sp.scan_page, sp.printed_page
+FROM research.work w JOIN research.performance p USING (work_id) JOIN research.event e USING (event_id)
+LEFT JOIN research.theater t USING (theater_id) LEFT JOIN research.source_page sp ON sp.page_id = e.page_id
+WHERE w.canonical_title ILIKE <each of the 13 titles> ORDER BY e.date;
+SELECT canonical_title, canonical_genre FROM entities.work WHERE canonical_title ILIKE <bare title>||'%';   -- collision check: none
+-- after: full chain on a copy (raw fix, parse_and_validate with both flags, build_duckdb, build_entities, validate_performance_dates,
+-- build_research_model, match_review_mentions .. build_review_credits, check_person_link_alignment); every table EXCEPT ALL both ways
+SELECT canonical_title, canonical_genre, genre_source, art_form, title_note FROM research.work WHERE work_id IN (<14 changed>);
+```
+
+Result: before, the works took their most common printing: «Agence dramatiqus» (1 perf), «Бокаччіо» (1 + «Боккаччіо» 1), «... so ich
+dir! Schausp.» 3, «Chéri! vaud.» 6 (2 stored «Chéri!» + vaud.), «Colombine, Basazzade.» 7 (4 Basazzade 1905, 3 Bajazzade 1910), «Der
+Star, ...» 2, «Die Hochzeitsfackel, ...» 3, «Und Pippa tanzt! ein Glasettenmärchen» 2, «Бабушка, ...» 1, «Какъ они бросили курить, ...» 1,
+«Лиса Патрикѣевна, оперетта» 1, «Ломоносовъ, ...» 4 (1 stored bare), «Наканунѣ, возможный случай» 27 (7 stored bare). All scan-confirmed as
+stored except Pippa (print «Glassetten», raw «Glasetten»). After: 14 works retitled (13 + «Сцепа», unchanged), titles/genres as ruled;
+diff = research.work 14 (13 + parallel session's «Балетное отдѣленіе»), performance 4, event 1, entities.work 1, raw.event_entry_performance
+2; review_mention 155 / review_assertion 4 / review_dance_performer 14 differ only in candidate-list order (0 after sorting); 0 person_link
+shifts. Production = tested copy.

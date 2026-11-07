@@ -942,12 +942,20 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
 1. **Ambiguous review names (the one large item).** 3,909 person mentions in `research.review_mention` have several candidates (Петипа
    377, Егорова 117, Павлова 109, Ширяевъ 92, Ѳедорова 86, Николаева 80, Ивановъ 68, Смирновъ 67); 94 more have one candidate not accepted.
    Approach: rule by rule (season, city, ordinal, honorific, that season's staff-list role credits), each rule brought to RG with evidence.
-2. **Titles printed with a misprint or with their genre/subtitle attached** (found 2026-11-04 while restoring «Сцепа»): works whose only
-   printing names them. Misprints: «Agence dramatiqus» (→ «Agence dramatique»), «Бокаччіо» (→ «Боккаччіо»). Genre/subtitle attached (11):
-   «... so ich dir! Schausp.», «Chéri! vaud.», «Colombine, Basazzade.», «Der Star, ein Wiener Stück», «Die Hochzeitsfackel, Spiel einer
-   Maiennacht», «Und Pippa tanzt! ein Glasettenmärchen», «Бабушка, отрывокъ изъ жизни», «Какъ они бросили курить, басня-шаржъ», «Лиса
-   Патрикѣевна, оперетта», «Ломоносовъ, истор.-быт. сцены», «Наканунѣ, возможный случай». One ruling each; a ruling adds the title to
-   `WORK_TITLE_FROM_ALIAS` in build_research_model.py.
+2. ~~**Titles printed with a misprint or with their genre/subtitle attached**~~ — **RULED and APPLIED 2026-11-06.** Every printing
+   scan-checked by Claude first (full-res images in the ForUpload PDFs). Rulings (RG, one at a time): «Agence dramatiqus» → work
+   «Agence dramatique» (its only printing, a logged misprint; "«Agence dramatique»"); «Бокаччіо» (1901) / «Боккаччіо» (1907), a 1-1 tie
+   → work «Боккаччіо», the single к not ruled an error; the 11 subtitle titles → "Bare title, subtitle as genre" (work «Наканунѣ» genre
+   «возможный случай», «Chéri!» «vaud.», «Der Star» «ein Wiener Stück» ...); «Colombine»: «Basazzade» (1905, ×4) ruled a print slip for
+   «Bajazzade» (1910, ×3), genre «Bajazzade» (RG asked what it is: German clown-play/harlequinade, from «Bajazzo»); «Und Pippa tanzt!»:
+   the print's «Glassetten-märchen» ruled a slip for Hauptmann's «Glashüttenmärchen», genre «ein Glashüttenmärchen». Our own slip found
+   on the way: raw had «Glasettenmärchen» (one s) where the print has two; raw corrected
+   (`docs/eval/raw_fix_pippa_glassetten_2026-11-06.py`, alias row re-keyed). Applied through `WORK_TITLE_FROM_ALIAS` (now title + genre +
+   note per printed title); every performance keeps its verbatim title; each work's title_note gives the ruling. The two slips are in
+   genuine_print_typos.md. Full rebuild + review chain on a copy, then production (backup `outputs/full_run/db_backup_work_titles_2026-11-06/`):
+   research.work 14 rows (these 13 + the «Балетное отдѣленіе» divertissement ruling from a parallel session, carried by the same build),
+   research.performance 4 (Pippa ×2, two divertissement items), research.event 1, entities.work 1, raw 2; review tables identical apart
+   from the order of spelling variants inside candidate lists; person_link 0 shifts.
 3. ~~**`list_number`**~~ — **RULED 2026-11-06: not needed** (RG: "I am ruling that I do not need this, as long as we have the correct
    volume and page number to cite"). Checked the same day: all 23,980 `research.person_appearance` rows carry `season`, `source_file`,
    `scan_page` and `printed_folio` (none null). The number stays in raw only.

@@ -1079,3 +1079,13 @@ person; raw keeps the print.
 - **1906-07 Moscow Repertoire, p.129, 29 Apr 1907 morning, Большой:** «4-е д. бал. Велшебное зеркало.» -- е for о (its crossbar and open
   side match the е of «-ное», not the round о beside it). Raw already keeps the print; the excerpt is linked to «Волшебное зеркало».
   Crop `scan_audit/1906-07_repertoire_MSK_p129_1907-04-29_velshebnoe.png`.
+
+## «Basazzade» and «Glassetten-märchen» in German titles (added 2026-11-06; scan read by Claude; raw keeps the print; RG ruled both slips)
+
+- **1904-05 SP Repertoire, p.124 (repertoire_1904-05_p034), Александринскій 10-13 Mar 1905 (German guests):** «Colombine, Basazzade.»
+  four times -- s for j; the genre is the German «Bajazzade» (a clown-play, from «Bajazzo»), as the 1909-10 Михайловскій printings
+  (17-19 Mar 1910, p.44) set it. RG 2026-11-06: a print slip; research.work «Colombine» takes genre «Bajazzade».
+- **1905-06 SP Repertoire, p.118 (repertoire_1905-06_p034), Александринскій 2-3 Mar 1906 (German guests):** «Und Pippa tanzt! ein
+  Glassetten-märchen.» twice, for Hauptmann's «Ein Glashüttenmärchen». The extraction had also dropped one s («Glasettenmärchen»); raw
+  now keeps the print's double s (docs/eval/raw_fix_pippa_glassetten_2026-11-06.py). RG 2026-11-06: a print slip; research.work «Und
+  Pippa tanzt!» takes genre «ein Glashüttenmärchen».
