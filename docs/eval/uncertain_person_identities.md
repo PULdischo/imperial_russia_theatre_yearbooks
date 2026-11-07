@@ -505,3 +505,10 @@ printed start reads «съ 1 іюня 1890 г.» in 1900-01 (p. 73) and «съ 1
 two «Корнетъ» players (Адамовъ, Михаилъ; Решке, Богумилъ), and listed instruments don't bound soloists (1901-02 cornet solo by
 Табаковъ, listed as Вальдгорнъ in 1905-06). RG: "Keep unlinked". Evidence: docs/eval/scan_audit/R5_groupC_Brant_Brandt_evidence.png
 (read by Claude). Would resolve it: a programme or press notice naming the soloist's first name.
+
+## «бенефисъ М. Петипа», 15 Dec 1855 (Petersburg review 1900-01, p.187) — Marius or Марія Сергѣевна? Unlinked (RG 2026-11-07)
+
+- «[Маркитантка] въ Петербургѣ … былъ данъ, на сценѣ Большого театра, въ первый разъ, 15 декабря 1855 года, въ бенефисъ М. Петипа.
+  Поставленъ онъ былъ балетмейстеромъ Перро.» In 1855 two Petipas carried «М.»: Marius (then a dancer) and his wife Марія Сергѣевна
+  Суровщикова-Петипа; other reviews print «М. С. Петипа» for her benefits (1859, 1860, 1865). No honorific here. Historical (pre-Yearbook);
+  left unlinked, low priority (RG: Yearbook-period people first). Mention 12826, review_1900-01_SP_ballet_p031.

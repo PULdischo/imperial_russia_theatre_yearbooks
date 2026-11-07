@@ -973,11 +973,28 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
      1865-11-04. Review chain on a copy then production (backup `outputs/full_run/db_backup_historical_blocks_2026-11-07/`): exactly
      those 30 mentions and 7 rows changed; 0 person_link shifts. Lesson: the `occurrence` in review_mention_links.csv counts in the
      matcher's own row order (outputs/reviews/mentions/review_mention.csv), not text order.
+   - **Role in only one staff-list entry → that person** (RG 2026-11-07: "if only one Petipa has that role listed, we know it was
+     her"; general rule for the review-name work): «Маріи—г-жа Петипа» (Привалъ кавалеріи) and «Пахита—г-жа Петипа» (1900-01) →
+     Марія. **Люсинда** (1905-06 p.128, «графини Люсинды—г-жа Петипа 1», scan-confirmed): the staff lists credit Надежда (2-я) with
+     Люсинда in 1904-05 and 1905-06 and Марія never → Надежда, the «1» a probable print slip (RG "Надежда (print slip)";
+     genuine_print_typos.md, unconfirmed). The only role conflict among all ruled Petipa links.
    Noticed, not chased: roles parsed as persons («Графа» → Граффъ, 1904-05 p.118; «Парисъ» → Парисъ, 1893-94 p.231); «1-жа» for
    «г-жа» in captions; «Имераторскихъ» (1905-06 p.14) a likely print typo.
-   Open for this pilot: plain «г-жа Петипа» in seasons with 2-3 daughters listed (role check settles 2); old casts («М. С.» =
-   Суровщикова-Петипа, 1847 «отцомъ и сыномъ»); past-year creator credits; «Королева—г. М. Петипа», «г. И. Петипа», the 1901-02
-   pupil «Петипа». Working files: docs/eval/review_names_petipa_2026-11-06/ (classify.py, rules2.py, rolecheck.py, proposed.csv, rolecheck.csv, scan_results.csv).
+   - **Last rulings (RG 2026-11-07):** «Малороссіянъ: г-жа Петипа» (Конекъ-Горбунокъ 1905-06) → Марія (same dance, same production named
+     «М. Петипа, заслуженная артистка» in three other reviews); «Королева—г. М. Петипа» (1902-03) → Марія by the role rule (RG: men
+     played character women's roles, so the «г.» is not called a slip); «г. И. Петипа» (1905-06 p.134) → Marius, «И.» logged as a
+     slip; pupil «Петипа» 1901-02 → Вѣра (only Petipa still at the school), pupil «Петипа 1-я» 1897-98 unlinked; past events: 1884
+     staging → Marius, 1875 «дебюта г-жи М. Петипа» → Марія, «Петипа-отца» beside «М. И. Петипа» as Гердтъ's teachers → Jean-Antoine
+     (Q3163722); 1855 «бенефисъ М. Петипа» unlinked (uncertain_person_identities.md), «двумя Петипа, отцомъ и сыномъ» unlinked (two
+     people in one name); the divertissement «panaderos» (1900-01) and 6 other plain «г-жа Петипа» left unlinked (no deciding evidence).
+     RG's priority: people of the Yearbook period; historical passages flagged and listed, not adjudicated.
+   - **APPLIED 2026-11-07:** 332 links in review_mention_links.csv (Marius 231, Марія 84, Вѣра 9, Надежда 7, Jean-Antoine 1), occurrence
+     counted in the matcher's order. Review chain on a copy then production (backup `outputs/full_run/db_backup_petipa_links_2026-11-07/`):
+     exactly the 332 mentions as ruled, 14 cast statements (13 gained a performer; «Танцы и постановка — М. Петипа» 1904-05 moved from
+     Марія to Marius), 3 credits gained Marius, 15 dance performers; 0 person_link shifts. Tied person mentions corpus-wide 3,908 → 3,588;
+     «Петипа» left unlinked 46 (historical + the cases above).
+   Next: the other surnames (Егорова 117, Павлова 109, Ширяевъ 92, Ѳедорова 86 …), same method: season/city/ordinal/honorific/role
+   evidence, staff-list role check, historical passages listed quickly.
 2. ~~**Titles printed with a misprint or with their genre/subtitle attached**~~ — **RULED and APPLIED 2026-11-06.** Every printing
    scan-checked by Claude first (full-res images in the ForUpload PDFs). Rulings (RG, one at a time): «Agence dramatiqus» → work
    «Agence dramatique» (its only printing, a logged misprint; "«Agence dramatique»"); «Бокаччіо» (1901) / «Боккаччіо» (1907), a 1-1 tie

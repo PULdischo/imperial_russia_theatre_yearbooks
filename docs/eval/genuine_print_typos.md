@@ -1089,3 +1089,24 @@ person; raw keeps the print.
   Glassetten-märchen.» twice, for Hauptmann's «Ein Glashüttenmärchen». The extraction had also dropped one s («Glasettenmärchen»); raw
   now keeps the print's double s (docs/eval/raw_fix_pippa_glassetten_2026-11-06.py). RG 2026-11-06: a print slip; research.work «Und
   Pippa tanzt!» takes genre «ein Glashüttenmärchen».
+
+## «Петипа 1» for «Петипа 2» in a Season Review cast, probable (added 2026-11-07; scan read by Claude; NOT confirmed)
+
+- **1905-06 SP Season Review, p.128 (review_1905-06_SP_ballet_p002), «Испытаніе Дамиса», «20-го сентября»:** «графини Люсинды—г-жа
+  Петипа 1». The staff lists credit «Петипа 2-я, Надежда» with «графиня Люсинда» once in 1904-05 and once in 1905-06, and Марія
+  (1-я) never; her only «Испытаніе Дамиса» role is Изабелла (1899-00). RG 2026-11-07: link to Надежда as a probable print slip.
+  The review's date is also off: the Repertoire gives the ballet on 28 Sept 1905 and 3 Apr 1906, not 20 Sept.
+
+## «Королева—г. М. Петипа»: a man's honorific on a woman's role, NOT confirmed as a slip (added 2026-11-07; scan read by Claude)
+
+- **1902-03 SP Season Review, p.155 (review_1902-03_SP_ballet_p013), «Волшебное зеркало»:** «Король—г. П. Гердтъ; Королева—г. М.
+  Петипа;» -- the print has «г.». RG 2026-11-07: men not uncommonly played character women's roles, so «г.» is not to be called an
+  error. Linked to Петипа 1-я, Марія on other evidence: the 1902-03 staff list credits only her with «Волшебное зеркало — королева»
+  (×1), and no male Petipa danced in 1902-03. Possibly the «г.» carries over from «Король—г.» just before; left open.
+
+## «г. И. Петипа» for the ballet master (added 2026-11-07; scan read by Claude)
+
+- **1905-06 SP Season Review, p.134 (review_1905-06_SP_ballet_p008), «Тщетная предосторожность», 15 Jan 1906:** «Поставленъ
+  балетмейстеромъ г. И. Петипа, солистомъ Его Величества, и Л. Ивановымъ». The 1904-05 review of the same ballet prints «г. М. Петипа»
+  in the same sentence; no Petipa with «И.» is on any staff list. «И» for «М» (or his patronymic initial set alone). Linked to Marius
+  (RG 2026-11-07).

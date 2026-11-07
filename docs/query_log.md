@@ -28012,3 +28012,15 @@ Result: 378 tied; staff lists hold only Marius and Марія with «М.»; Ма
 there). Rules ruled: Marius 200 (creator wording) + 28 (first name / «М. И.»); Марія 65 + 1 (first name); ordinals 27. Role check: 16
 agree, 0 disagree. Historical: 9 list rows (2 'part'), 30 unlinks (15 were linked), 7 rows dated 1865-11-04; diff = review_mention 30,
 review_assertion 7, nothing else; 0 person_link shifts. Production = tested copy. Petipa links themselves not yet written.
+
+## 2026-11-07 — «Петипа» review links applied (332)
+
+```sql
+SELECT mention_id, block_id, char_start, surface FROM entities.review_mention WHERE mention_id IN (<332 ruled>);
+-- occurrence from outputs/reviews/mentions/review_mention.csv row order; review chain on a copy; diff every table both ways (candidate lists sorted)
+SELECT count(*) FILTER (WHERE person_id IS NULL AND candidates_n>1) FROM research.review_mention WHERE mention_type='person';
+```
+
+Result: 332 links as ruled (Marius 231, Марія 84, Вѣра 9, Надежда 7, Jean-Antoine 1), 0 unintended; review_assertion 14 (13 gained, 1
+corrected Марія→Marius), review_credit 3, review_dance_performer 15; 0 person_link shifts. Tied person mentions 3,908 → 3,588; Петипа 46
+left unlinked. Production = tested copy.

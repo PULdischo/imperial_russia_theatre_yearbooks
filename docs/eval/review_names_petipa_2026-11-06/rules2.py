@@ -2,7 +2,11 @@ import csv, re, sys, duckdb
 from collections import Counter
 c=duckdb.connect('outputs/full_run/imperial_theaters.duckdb',read_only=True)
 rows=list(csv.DictReader(open(sys.argv[1],encoding='utf-8')))
-hb={r['block_id'] for r in csv.DictReader(open('docs/eval/review_historical_passages.csv'))}
+_hp=list(csv.DictReader(open('docs/eval/review_historical_passages.csv')))
+hb={r['block_id'] for r in _hp if r.get('scope','whole')!='part'}
+# 'part' blocks: only mentions inside the quoted stretch are historical (hist_mentions.csv, 2026-11-07)
+hist_part={r['mention_id'] for r in csv.DictReader(open('docs/eval/review_names_petipa_2026-11-06/hist_mentions.csv')) if r['in_historical_stretch']=='True'
+           and r['block_id'] in {q['block_id'] for q in _hp if q.get('scope')=='part'}}
 blk=dict(c.sql(f"select mention_id, block_id from research.review_mention where mention_id in ({','.join(x['mention_id'] for x in rows)})").fetchall())
 MAR,MARIA,NAD,LUB,VER='Marius','Марія М.','Надежда М.','Любовь М.','Вѣра М.'
 def third(season): return LUB if season<='1900-01' else (VER if season>='1902-03' else None)
@@ -23,9 +27,24 @@ for x in rows:
     fem_ctx = (re.search(HON+r"[^;—]{0,120}$", bs) or re.search(r"(заслуженн\w+ артистк\w*|балерин\w*)[^;—]{0,60}$", bs)
                or re.match(r"^\s*\((?!1-е)", a))
     male = re.search(r"(\bг\.|\bгг\.|г-нъ)\s*$", bs) or re.search(r"\bгг\.[^;—]{0,30}$", bs)
-    if x['mention_id']=='9276': lab,who="X pupil «воспитанницы Петипа 1-я» 1897-98 (Любовь?)",None
+    if x['mention_id']=='16772': lab,who="R4 «М. Петипа» in a ladies' list (list starts on the previous page)",MARIA
+    elif x['mention_id']=='21766': lab,who="R5 creator wording («Танцы и постановка — М. Петипа»)",MAR
+    elif x['mention_id']=='21782': lab,who="H old cast: 1859 «Парижскій рынокъ» (block dated by override)",None
+    elif x['mention_id']=='23908': lab,who="R10 «Петипа-отца» beside «М. И. Петипа» = Jean-Antoine",'JEAN'  # RG 2026-11-07
+    elif x['mention_id']=='12826': lab,who="X 1855 benefit of «М. Петипа»: Marius or М. С. (RG: unlinked; uncertain list)",None
+    elif x['mention_id']=='886': lab,who="X «двумя Петипа, отцомъ и сыномъ»: two people in one name (RG: unlinked)",None
+    elif x['mention_id']=='14607': lab,who="R11 pupil 1901-02, only Вѣра still at the school",VER  # RG 2026-11-07
+    elif x['mention_id']=='12213': lab,who="R5 creator wording (1884 staging)",MAR  # RG 2026-11-07
+    elif x['mention_id']=='19312': lab,who="R12 «для дебюта г-жи М. Петипа» 1875 = Марія",MARIA  # RG 2026-11-07
+    elif x['mention_id']=='23809': lab,who="R5 creator wording («г. И. Петипа», print slip)",MAR  # RG 2026-11-07
+    elif x['mention_id']=='16962': lab,who="R8 role listed for only one Petipa that season (Королева; print has «г.», not called a slip)",MARIA
+    elif x['mention_id']=='12952': lab,who="X divertissement panaderos 1900-01: RG left unlinked (season totals too indirect)",None
+    elif x['mention_id']=='23122': lab,who="R9 same dance, same production named «М. Петипа, заслуженная артистка» elsewhere",MARIA  # RG 2026-11-07
+    elif x['mention_id'] in ('12303','12913'): lab,who="R8 role listed for only one Petipa that season",MARIA  # RG 2026-11-07
+    elif x['mention_id']=='23207': lab,who="R2x «Петипа 1» ruled a print slip for 2 (Люсинда, staff lists)",NAD  # RG 2026-11-07
+    elif x['mention_id']=='9276': lab,who="X pupil «воспитанницы Петипа 1-я» 1897-98 (Любовь?)",None
     elif x['mention_id']=='15568': lab,who="R5 creator wording",MAR  # «pas de trois, М. Петипа … того же балетмейстера» (1901-02 p.205)
-    elif blk[int(x['mention_id'])] in hb: lab,who="H0 historical block (ruled: stays unlinked)",None
+    elif blk[int(x['mention_id'])] in hb or x['mention_id'] in hist_part: lab,who="H0 historical block (ruled: stays unlinked)",None
     elif ini.startswith('М.С') or re.search(r'Сергѣевн\w*\s*$', b): lab,who="H1 «М. С.» = Суровщикова-Петипа, old cast (new)",None
     elif re.search(r"отц\w*\s+и\s+сын|были:\s*$|-\s*отца|отца,", b+a): lab,who="H2 historical wording (new)",None
     elif re.search(r"(18[0-8]\d)\s*(г|год)", b[-120:]): lab,who="Y past-year wording: RG to rule",None
