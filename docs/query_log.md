@@ -27980,3 +27980,17 @@ stored except Pippa (print «Glassetten», raw «Glasetten»). After: 14 works r
 diff = research.work 14 (13 + parallel session's «Балетное отдѣленіе»), performance 4, event 1, entities.work 1, raw.event_entry_performance
 2; review_mention 155 / review_assertion 4 / review_dance_performer 14 differ only in candidate-list order (0 after sorting); 0 person_link
 shifts. Production = tested copy.
+
+## 2026-11-06 — Check after the parallel session's production rebuild (5963671): are both unnamed ballet items filed?
+
+```sql
+SELECT w.canonical_title, w.entry_kind, w.art_form, p.performance_id, p.genre_family, p.discipline
+FROM research.work w JOIN research.performance p USING(work_id)
+WHERE w.canonical_title IN ('Балетъ','Балетное отдѣленіе');
+SELECT entry_kind, art_form, count(*) FROM research.work WHERE art_form='ballet' OR entry_kind='programme item' GROUP BY ALL;
+SELECT count(*) FROM research.work; SELECT sum(receipts_total_kopecks) FROM research.event;
+```
+
+Result: both are programme item / NULL art_form / genre_family divertissement / discipline ballet
+(repertoire_1907-08_p020__s021__w4, repertoire_1903-04_p024__s013__w3). Ballet works 249, programme items
+49, research.work 2,937, receipts 3,223,088,581 k. «Балетное отдѣленіе» is now BUILT in production.
