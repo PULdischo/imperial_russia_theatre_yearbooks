@@ -27994,3 +27994,21 @@ SELECT count(*) FROM research.work; SELECT sum(receipts_total_kopecks) FROM rese
 Result: both are programme item / NULL art_form / genre_family divertissement / discipline ballet
 (repertoire_1907-08_p020__s021__w4, repertoire_1903-04_p024__s013__w3). Ballet works 249, programme items
 49, research.work 2,937, receipts 3,223,088,581 k. «Балетное отдѣленіе» is now BUILT in production.
+
+## 2026-11-07 — «Петипа» review mentions: ruled rules, and historical blocks unlinked + listed
+
+```sql
+-- tied Петипа mentions with context (raw.review_block text/caption_text, nearest «Пе» within 40 chars of char_start)
+SELECT m.mention_id, m.season, m.city, m.block_id, m.char_start, e.evidence FROM research.review_mention m
+JOIN entities.review_mention e USING (mention_id) WHERE m.mention_type='person' AND m.surface ILIKE 'Петипа%' AND m.person_id IS NULL;
+SELECT family_name, first_name, patronymic, page_id FROM raw.person_entry WHERE family_name ILIKE '%етип%';       -- who carries «М.»
+SELECT pe.family_name, pe.first_name, cr.label, cr.role_name FROM raw.person_entry pe JOIN raw.person_entry_credit cr USING (entry_id)
+WHERE pe.family_name LIKE 'Петипа%' AND cr.credit_type='named_work';                                              -- role cross-check
+SELECT season, date, annotation FROM research.event WHERE annotation ILIKE '%Петипа%';                           -- benefits
+-- after: review chain on a copy; every table EXCEPT ALL both ways, candidate lists sorted
+```
+
+Result: 378 tied; staff lists hold only Marius and Марія with «М.»; Марія unlisted 1906-07 and 1909-10 (none of her 65 mentions fall
+there). Rules ruled: Marius 200 (creator wording) + 28 (first name / «М. И.»); Марія 65 + 1 (first name); ordinals 27. Role check: 16
+agree, 0 disagree. Historical: 9 list rows (2 'part'), 30 unlinks (15 were linked), 7 rows dated 1865-11-04; diff = review_mention 30,
+review_assertion 7, nothing else; 0 person_link shifts. Production = tested copy. Petipa links themselves not yet written.

@@ -942,6 +942,42 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
 1. **Ambiguous review names (the one large item).** 3,909 person mentions in `research.review_mention` have several candidates (Петипа
    377, Егорова 117, Павлова 109, Ширяевъ 92, Ѳедорова 86, Николаева 80, Ивановъ 68, Смирновъ 67); 94 more have one candidate not accepted.
    Approach: rule by rule (season, city, ordinal, honorific, that season's staff-list role credits), each rule brought to RG with evidence.
+   **IN PROGRESS 2026-11-06, pilot «Петипа»** (378 tied mentions; the matcher offers all six Petipas for every mention, with no
+   season or city filter). RG's guidance: Marius can be named anywhere as a creator (choreographer, not only ballet master in SP);
+   dancers sometimes guested in the other city, so season and city are evidence, never a filter; a role named in the review can be
+   checked against that season's staff-list entry (`raw.person_entry_credit` named_work role_name) — not foolproof, helps in ties.
+   Rulings so far (nothing applied yet; applied together once the Petipa rules are all ruled):
+   - **R5 creator wording → Маріусъ Ивановичъ** (RG "Yes, link to Marius"): «балетъ / бал. / въ постановкѣ / соч. / танцы и
+     постановка … М. Петипа», «… М. Петипа, музыка …», «Программа его составлена М. Петипа»; both cities. 199 mentions (158 SP /
+     40 Moscow at ruling, +1 «Испытаніе Дамиса» М. Петипа и А. Глазунова moved in after). Scan sample 10/10.
+   - **R4 «г-жа М. Петипа» (honorific directly before the initial, 50) and «М. Петипа» inside a «г-жи …» list of ladies (9) →
+     Марія Маріусовна (1-я)** (RG: "these are definitely Maria"; old-cast risk "highly unlikely"). Only Marius and Марія carry «М.»
+     on any staff list; none of the 59 falls in 1906-07 or 1909-10, when she is unlisted. Scan sample 7/7; 8 roles match her
+     staff-list entry and no sister's.
+   - **6 more → Марія** (RG 2026-11-07 "Yes, link to Марія"): «М. Петипа, заслуженная артистка» (5, incl. 3 «Малороссійскій танецъ»
+     in «Конекъ-Горбунокъ», where the same sentence names «Постановка и танцы Маріуса Петипа») and «балерины М. Кшесинской (Аспичія)
+     и М. Петипа (Néva)». The 7th, «исполнили pas de trois, М. Петипа, и … pas de deux, того же балетмейстера» (1901-02 p.205), is
+     the choreographer → R5. Totals: Marius 200 (R5), Марія 65.
+   - **First names / full initials** (RG "Yes, link as named"): 27 «Маріуса / Маріусомъ Петипа» + «М. И. Петипа» → Marius;
+     «бенефисъ г-жи Маріи Петипа, за 25-лѣтнюю службу» (4 Feb 1901) → Марія.
+   - **Ordinals + season** (RG "Yes, link by ordinal"): «Петипа 1» → Марія (13), «2» → Надежда (6), «3» → Вѣра (8; all 1903-04 /
+     1905-06, Любовь has none). 6 role matches, none against. Held out: the pupil «воспитанницы Петипа 1-я» (1897-98 caption,
+     probably Любовь, the elder pupil sister).
+   - **Old casts / quoted chronicles → unlinked and listed** (RG "Yes, unlink and list"; RG: every historical block must be findable
+     later). `review_historical_passages.csv` gains a `scope` column: 'whole' (the build re-dates the block) or 'part' (a block that is
+     only partly a quoted cast, recorded so it can be found; its rows are dated in review_assertion_overrides.csv, its names unlinked
+     in review_mention_links.csv). +9 rows: the 1886 «Жертвы Амуру» cast (1893-94 p.231), the 1859 «Парижскій рынокъ» cast (1894-95
+     p.204), the c. 1856 Прихунова review quoted in 1900-01 (5 blocks, undated), and 'part' rows for 1904-05 p.116 (1865 cast before
+     «При настоящемъ возобновленіи») and p.118 (1860 «Голубая Георгина» chronicle). 30 explicit unlinks (15 had been linked to
+     present-day dancers: the 1886 cast, Л. Ивановъ, Гердтъ); creator credits inside the quotes keep Marius. 7 cast rows dated
+     1865-11-04. Review chain on a copy then production (backup `outputs/full_run/db_backup_historical_blocks_2026-11-07/`): exactly
+     those 30 mentions and 7 rows changed; 0 person_link shifts. Lesson: the `occurrence` in review_mention_links.csv counts in the
+     matcher's own row order (outputs/reviews/mentions/review_mention.csv), not text order.
+   Noticed, not chased: roles parsed as persons («Графа» → Граффъ, 1904-05 p.118; «Парисъ» → Парисъ, 1893-94 p.231); «1-жа» for
+   «г-жа» in captions; «Имераторскихъ» (1905-06 p.14) a likely print typo.
+   Open for this pilot: plain «г-жа Петипа» in seasons with 2-3 daughters listed (role check settles 2); old casts («М. С.» =
+   Суровщикова-Петипа, 1847 «отцомъ и сыномъ»); past-year creator credits; «Королева—г. М. Петипа», «г. И. Петипа», the 1901-02
+   pupil «Петипа». Working files: docs/eval/review_names_petipa_2026-11-06/ (classify.py, rules2.py, rolecheck.py, proposed.csv, rolecheck.csv, scan_results.csv).
 2. ~~**Titles printed with a misprint or with their genre/subtitle attached**~~ — **RULED and APPLIED 2026-11-06.** Every printing
    scan-checked by Claude first (full-res images in the ForUpload PDFs). Rulings (RG, one at a time): «Agence dramatiqus» → work
    «Agence dramatique» (its only printing, a logged misprint; "«Agence dramatique»"); «Бокаччіо» (1901) / «Боккаччіо» (1907), a 1-1 tie

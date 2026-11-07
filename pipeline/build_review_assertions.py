@@ -652,7 +652,9 @@ def main() -> None:
     # dates): their performers are not resolved through the spiski credits, which are the review season's (RG
     # 2026-11-03: the 1865 «Путешествующая танцовщица» cast had linked «г-жа М. С. Петипа» to Петипа 1-я that way).
     _hp = Path("docs/eval/review_historical_passages.csv")
-    historical_blocks = ({r["block_id"] for r in csv.DictReader(open(_hp, encoding="utf-8"))}
+    # scope 'part' rows only record a block that is partly a quoted old cast (RG 2026-11-07, so every historical block can be
+    # found again); its old rows are dated in review_assertion_overrides.csv and its names unlinked in review_mention_links.csv.
+    historical_blocks = ({r["block_id"] for r in csv.DictReader(open(_hp, encoding="utf-8")) if r.get("scope", "whole") != "part"}
                          if _hp.exists() else set())
 
     # people the corpus knows as composers or musicians (see the composer pass)
@@ -1060,7 +1062,8 @@ def main() -> None:
     # their rows take the quoted date, and their dancers are left unlinked (person mentions there are unlinked in
     # docs/eval/review_mention_links.csv). One row per block, in docs/eval/review_historical_passages.csv.
     hist_path = Path("docs/eval/review_historical_passages.csv")
-    historical = ({r["block_id"]: r["event_date"] for r in csv.DictReader(open(hist_path, encoding="utf-8"))}
+    historical = ({r["block_id"]: r["event_date"] for r in csv.DictReader(open(hist_path, encoding="utf-8"))
+                   if r.get("scope", "whole") != "part"}
                   if hist_path.exists() else {})
     seen_hist = set()
     for r in out:
