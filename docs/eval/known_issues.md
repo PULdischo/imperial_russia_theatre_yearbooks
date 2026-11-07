@@ -24745,3 +24745,32 @@ B6 (4071d3f) took one reader proposed_fix verbatim including its comment: ballet
 ## «Апоѳеозъ, Кантата.» 19 Feb 1911: one item or two -- OPEN (RG undecided, 2026-11-03)
 
 Found while giving research.work an art form (branch claude/work-art-form-7f2943). The scan (1910-11 p. 38, read by Claude) prints «Апоѳеозъ, Кантата.» on one line in the Александринскій cell of the Emancipation-jubilee evening; raw stores title «Апоѳеозъ», genre «Кантата.». The same evening the Большой prints «Живая картина.; Кантата.; Жизнь за царя» with the cantata as its own item. RG could not say which reading is right, so the row stays as printed. Side effect found and fixed the same day: the season-genre fallback had copied «Кантата.» onto the Малый «Апоѳеозъ.» of the same evening (now tableau / apotheosis); tableau/apotheosis titles no longer take a season genre.
+
+---
+
+## «Балетъ», Маріинскій 22 Dec 1907: a programme item, not a work, 2026-11-06 (RG) -- BUILT
+
+RG: «Балетъ» "is not the name of a ballet, it indicates that dancers performed something unknown,
+probably some kind of divertissement"; "this can go in the same category as the unidentified ballet
+divertissements." Scan checked by Claude (printed p. 96, full-resolution image in
+`pdf/RepertoireTables/ForUpload_1907-08_Repertoire.pdf`, PDF page 21): «Балетъ.» stands alone on its own
+line, item 4 of 5 on the charity bill, no genre, no second line, no receipts; raw matches the print. The
+1907-08 SP ballet list has no 22 Dec date and no 1907-08 SP ballet review mentions the evening, so the
+item stays unidentified. HathiTrust not searched (RG: "not now").
+
+Research layer only (`build_research_model.py`, `UNNAMED_BALLET_ITEM_RE`): `research.work` «Балетъ»
+`entry_kind` work -> programme item, `art_form` ballet -> NULL; its performance keeps discipline ballet
+and genre бал., `genre_family` ballet -> divertissement. Raw untouched; work_id unchanged. Counts: ballet
+works 251 -> 250, programme items 47 -> 48; no other table or total changed (docs/query_log.md,
+2026-11-06). Backup: `outputs/full_run_pre_balet_backup_2026-11-06.duckdb`. Not yet in
+`research_dataset.sqlite` (needs `build_datasette.py`; publishing is Andy's).
+
+**Same day, «Балетное отдѣленіе», Маріинскій 24 Jan 1904** (RG: "check that one, too"). Scan checked by Claude
+(printed p. 26, `ForUpload_1903-04_Repertoire.pdf` PDF page 25): «Балетное отдѣленіе.» alone on its line, item
+3 of 4 on the литературный фондъ benefit, no title, genre or receipts; raw matches the print. The concert half of
+the same bill, «Концертное отдѣленіе», was already a programme item. Filed the same way:
+`UNNAMED_BALLET_ITEM_RE` now `^(балетъ|балетное отдѣленіе)\.?$`; work aca4e77b… becomes a programme item,
+genre_family divertissement, discipline stays ballet. Code in place but NOT yet built into production: a
+parallel session's in-progress edits to the same script stopped the trial build, and its own full rebuild
+(planned the same evening) will carry this change. Expected effect: ballet works 250 -> 249, programme items
+48 -> 49, genre_family ballet -1 / divertissement +1.

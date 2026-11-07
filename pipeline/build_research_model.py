@@ -140,10 +140,12 @@ RESEARCH_GENRE_RULES = [
      "ballet divertissement: printed without a genre; ballet assigned in the research layer (RG, issue #114)"),
     (r"^Балетное отдѣленіе\.?$", "бал.",
      "the ballet section of a mixed gala (Маріинскій, 24 Jan 1904): printed without a genre; ballet assigned "
-     "in the research layer (RG, 2026-10-13)"),
+     "in the research layer (RG, 2026-10-13); its dances are not named, so it is a programme item with the "
+     "unidentified ballet divertissements (RG, 2026-11-06)"),
     (r"^Балетъ\.?$", "бал.",
      "an unnamed ballet item on a charity bill (Маріинскій, 22 Dec 1907): labelled ballet although the work is "
-     "not known (RG, 2026-10-13)"),
+     "not known (RG, 2026-10-13); «Балетъ» is not a title but says dancers gave something unnamed, probably a "
+     "divertissement, so it is a programme item with the unidentified ballet divertissements (RG, 2026-11-06)"),
 ]
 
 
@@ -234,6 +236,10 @@ RECITATION_TITLE_RE = r"^сцена г\. |^чтеніе|отдѣленіе ли�
 #: («Monologues», «Scènes et monologues»: the French troupe's recited monologues, RG 2026-11-03)
 TABLEAU_TITLE_RE = r"^апоѳеоз|^жив(ая|ыя) картин"
 DIVERTISSEMENT_TITLE_RE = r"дивертис|дивертим"
+#: A bare «Балетъ.» or «Балетное отдѣленіе.» on a bill is not a title: dancers gave something
+#: unnamed, probably a divertissement. Filed with the unidentified ballet divertissements (RG,
+#: 2026-11-06; one each: Маріинскій 22 Dec 1907 and 24 Jan 1904, both scan-checked). Raw keeps the print.
+UNNAMED_BALLET_ITEM_RE = r"^(балетъ|балетное отдѣленіе)\.?$"
 DIVERTISSEMENT_GENRE_RE = r"^диверт|^див\."
 OPERETTA_GENRE_RE_ANY = r"^(оперет|опер\.|operet|opéret|opéra-bouffe|шут\.-оперет|опера-вод|com\.-opér)"
 OPERA_GENRE_RE_ANY = r"^(оп\.|op\.|oper\.|опера)"
@@ -1625,6 +1631,8 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
          "tableau / apotheosis", "printed title"),
         (f"regexp_matches(lt, {lit(DIVERTISSEMENT_TITLE_RE)}) OR regexp_matches(lab, {lit(DIVERTISSEMENT_GENRE_RE)})",
          "divertissement", "printed title or label"),
+        (f"regexp_matches(lt, {lit(UNNAMED_BALLET_ITEM_RE)})", "divertissement",
+         "printed «Балетъ» / «Балетное отдѣленіе» alone: an unnamed dance item, probably a divertissement (RG, 2026-11-06)"),
         ("pa.art_form = 'concert'", "concert", "concert item (title, label «Кантата», or art_form_by_title.csv)"),
         ("pa.art_form = 'ballet'", "ballet", "ballet"),
         (f"regexp_matches(lab, {lit(OPERETTA_GENRE_RE_ANY)}) OR regexp_matches(lt, ', оперетта$')",
@@ -1929,6 +1937,10 @@ def assign_work_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             form, basis = None, ("programme item: a divertissement, a group of short selections from various works, not a work "
                                  "(RG, 2026-11-03); dancing, when known, is marked per performance (discipline ballet, "
                                  "or includes_dance via works_with_dancers.csv)")
+        elif re.match(UNNAMED_BALLET_ITEM_RE, (title or "").lower()):
+            form, basis = None, (f"programme item: «{title}» printed alone is not a title; dancers gave something unnamed, "
+                                 "probably a divertissement, filed with the unidentified ballet divertissements "
+                                 "(RG, 2026-11-06)")
         elif re.match(TABLEAU_TITLE_RE, (title or "").lower()):
             form, basis = None, ("programme item: an apotheosis or tableau vivant, not a work (RG, 2026-11-03); "
                                  "the occasion is on research.event.annotation, the kind on performance.genre_family")

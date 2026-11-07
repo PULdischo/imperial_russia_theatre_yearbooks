@@ -27844,3 +27844,117 @@ SELECT season, count(*) - count(printed_folio) FROM research.person_appearance G
 
 Result: 23,980 rows; season, source_file, scan_page and printed_folio all filled (0 null, every season). RG ruled `list_number` not needed
 for the research layer, given volume + page citation.
+
+## 2026-11-06 — Which work is stored with the bare title «Балетъ», and where does it come from?
+
+```sql
+SELECT work_id, canonical_title, canonical_genre, appearance_count, art_form, entry_kind, title_note, source_note
+FROM research.work WHERE regexp_matches(lower(trim(canonical_title)), '^[«"]?балет[ъ]?[»".]?$');
+SELECT p.*, e.* FROM research.performance p JOIN research.event e USING(event_id)
+WHERE p.work_id='9330ec33-f754-5c71-9dc9-d4627ad9bd46';
+SELECT p.performance_order, p.verbatim_title, p.verbatim_genre, w.canonical_title, p.discipline, t.*
+FROM research.performance p JOIN research.work w USING(work_id) JOIN research.event e USING(event_id)
+JOIN research.theater t ON t.theater_id=e.theater_id
+WHERE p.event_id='repertoire_1907-08_p020__s021' ORDER BY p.performance_order;
+SELECT * FROM raw.event_entry_performance WHERE event_id='repertoire_1907-08_p020__s021';
+```
+
+Result: 1 work, «Балетъ» (work_id 9330ec33…, genre бал., ballet, appearance_count 1). Its only
+performance: repertoire_1907-08_p020__s021__w4, Маріинскій, 22 Dec 1907 («22 Суббота.», date verified),
+time_of_day unspecified, printed p. 96, no receipts, is_charity true; annotation «Спектакль
+благотворительнаго Общества въ пользу новорожденныхъ дѣтей и бѣдныхъ матерей при Императорскомъ
+родовспомогательномъ заведеніи.» Bill (5 items): Елка (ком.) | Желѣзка (ком.) | 2-е д. Травіата (оп.) |
+Балетъ (no printed genre) | Концертъ. Raw genre for item 4 is null; бал. comes from RESEARCH_GENRE_RULES.
+
+## 2026-11-06 — Do the ballet productions list or the reviews name the 22 Dec 1907 «Балетъ»?
+
+```sql
+SELECT pd.*, pr.* FROM research.production_date pd JOIN research.production pr USING(production_id)
+WHERE pd.date BETWEEN '1907-12-20' AND '1907-12-24' OR pd.event_id='repertoire_1907-08_p020__s021';
+SELECT season, city, count(DISTINCT production_id), count(*), min(date), max(date)
+FROM research.production_date JOIN research.production USING(production_id)
+WHERE season IN ('1907-08','1908-09') GROUP BY ALL;
+SELECT season, city, genre, count(*) FROM research.review_page WHERE season='1907-08' GROUP BY ALL;
+SELECT pd.date, pr.list_title FROM research.production_date pd JOIN research.production pr USING(production_id)
+WHERE pd.date BETWEEN '1907-12-01' AND '1908-01-15' ORDER BY 1;
+SELECT e.date, e.time_of_day, string_agg(p.verbatim_title, ' | ' ORDER BY p.performance_order)
+FROM research.event e JOIN research.performance p USING(event_id)
+WHERE e.city='SP' AND e.date BETWEEN '1907-12-15' AND '1907-12-30' AND e.disciplines ILIKE '%ballet%' GROUP BY ALL;
+-- review text search (SP 1907-08): text ILIKE '%22%декабр%' / '%благотвор%' / '%дѣтей%' / '%Елка%' / '%Травіат%'
+SELECT ps.page_id, ps.block_index, ps.text FROM research.review_passage ps JOIN research.review_page rp USING(page_id)
+WHERE rp.season='1907-08' AND rp.city='SP' AND (ps.text ILIKE '%22%декабр%' OR ps.text ILIKE '%благотвор%'
+  OR ps.text ILIKE '%дѣтей%' OR ps.text ILIKE '%Елка%' OR ps.text ILIKE '%Ёлк%' OR ps.text ILIKE '%Травіат%');
+```
+
+Result: 0 rows. The 1907-08 SP ballet list (23 productions, 64 dates) has no 22 Dec date; nearest are
+16 Dec and 26 Dec. The 16 SP ballet review pages for 1907-08 have no passage matching those terms.
+Nothing in the database identifies which ballet this was.
+
+## 2026-11-06 — How are unnamed dance items («Дивертиссементъ», «Балетный дивертиссементъ») stored, to file «Балетъ» the same way?
+
+```sql
+SELECT entry_kind, art_form, count(*) FROM research.work GROUP BY ALL ORDER BY ALL;
+SELECT canonical_title, canonical_genre, entry_kind, art_form, appearance_count, genre_source, title_note
+FROM research.work WHERE canonical_title ILIKE '%дивертис%' OR canonical_title ILIKE '%танц%' OR canonical_title ILIKE '%пляс%'
+ORDER BY appearance_count DESC LIMIT 25;
+SELECT w.canonical_title, w.art_form_basis, p.discipline, p.discipline_basis, p.genre_family, p.genre_family_basis, p.includes_dance
+FROM research.work w JOIN research.performance p USING(work_id)
+WHERE w.canonical_title IN ('Балетъ','Балетный дивертиссементъ') LIMIT 3;
+```
+
+Result: divertissements are entry_kind 'programme item' (art_form NULL); «Балетный дивертиссементъ» (10
+appearances) has genre бал. by research rule, discipline ballet, genre_family divertissement. «Балетъ» was
+entry_kind 'work', art_form ballet, genre_family ballet.
+
+## 2026-11-06 — Before/after the «Балетъ» -> programme item rebuild (RG ruling 2026-11-06)
+
+```sql
+SELECT count(*) FROM research.<work|performance|event|person|person_appearance|production|production_date|review_mention>;
+SELECT entry_kind, art_form, count(*) FROM research.work GROUP BY ALL ORDER BY ALL;
+SELECT genre_family, count(*) FROM research.performance GROUP BY ALL ORDER BY 2 DESC;
+SELECT discipline, count(*) FROM research.performance GROUP BY ALL ORDER BY 2 DESC;
+SELECT sum(receipts_total_kopecks) FROM research.event;
+SELECT w.*, p.discipline, p.genre_family, p.genre_family_basis, e.disciplines, e.genre_families
+FROM research.work w JOIN research.performance p USING(work_id) JOIN research.event e USING(event_id)
+WHERE w.canonical_title='Балетъ';
+```
+
+Result: only two lines differ. Works: programme item 47 -> 48, ballet works 251 -> 250. Performance
+genre_family: ballet 2,632 -> 2,631, divertissement 108 -> 109. Unchanged: row counts of all eight tables
+(work 2,937, performance 30,836, event 32,813, person 2,619, person_appearance 23,980, production 628,
+production_date 2,374, review_mention 27,443), discipline counts (ballet 2,699), receipts sum 3,223,088,581 k.
+«Балетъ» (work_id 9330ec33… unchanged): entry_kind programme item, genre бал., discipline ballet,
+genre_family divertissement; event genre_families now «opera; play; divertissement; concert».
+
+## 2026-11-06 — «Балетное отдѣленіе»: where printed, and what is on the bill?
+
+```sql
+SELECT w.work_id, w.canonical_title, w.canonical_genre, w.entry_kind, w.art_form, w.art_form_basis, w.appearance_count,
+       p.performance_id, p.performance_order, p.verbatim_title, p.verbatim_genre, p.discipline, p.genre_family,
+       e.date, e.season, e.time_of_day, e.printed_page_number, e.annotation, e.receipts_verbatim, e.page_id, t.canonical_name
+FROM research.work w JOIN research.performance p USING(work_id) JOIN research.event e USING(event_id)
+JOIN research.theater t ON t.theater_id=e.theater_id
+WHERE w.canonical_title ILIKE '%балетн%отд%' OR p.verbatim_title ILIKE '%балетн%отд%';
+SELECT performance_order, verbatim_title, verbatim_genre, discipline, genre_family FROM research.performance
+WHERE event_id='repertoire_1903-04_p024__s013' ORDER BY 1;
+SELECT pd.date, pr.list_title FROM research.production_date pd JOIN research.production pr USING(production_id)
+WHERE pd.date BETWEEN '1904-01-22' AND '1904-01-26';
+```
+
+Result: 1 work (aca4e77b…, genre бал. by research rule, entry_kind work, art_form ballet), 1 performance:
+repertoire_1903-04_p024__s013__w3, Маріинскій 24 Jan 1904, printed p. 26, «Спектакль въ пользу литературнаго
+фонда.», no receipts. Bill: Послѣднее свиданіе (оп.) | 3 сцены изъ Мертвыхъ душъ | Балетное отдѣленіе |
+Концертное отдѣленіе (concert). Ballet list: nothing on 24 Jan (25 Jan only).
+
+## 2026-11-06 — Trial rebuild on a scratch copy (not production): diff vs production
+
+```sql
+-- per research base table: SELECT * FROM trial.research.<t> EXCEPT ALL SELECT * FROM prod.research.<t> (and reverse)
+SELECT canonical_title, entry_kind, art_form FROM trial.research.work
+EXCEPT SELECT canonical_title, entry_kind, art_form FROM prod.research.work;
+```
+
+Result: the build stopped at WORK_TITLE_FROM_ALIAS («Und Pippa tanzt!…» not yet a research.work; the parallel
+"Saved follow-ups" session's raw fix is not in production yet), so the copy is partial and was discarded.
+Before the stop: work 13 rows differ -- «Балетное отдѣленіе» programme item / NULL (this change) plus the 12
+retitlings of the parallel session; event 1 row differs. Production NOT written for «Балетное отдѣленіе».
