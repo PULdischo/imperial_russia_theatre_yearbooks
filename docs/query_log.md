@@ -27821,3 +27821,16 @@ raw letter for letter; «Г⁂» in raw is printed as italic Г + three asterisk
 marked only «*4.», one date 9 Feb 1903; SP 1903-04 «8 карт.» confirmed, dates 28 Dec 1903 and 14 Apr 1904 (acts); Moscow 1904-05 dates
 13, 26, 27 Feb and 19 Apr 1905. 9 excerpt cells read blind: all match raw (mid-title «бал.» sometimes in verbatim_genre); 29 Apr 1907
 prints «Велшебное» (genuine_print_typos.md).
+
+## 2026-11-06 — Ballet Explorer artifact: export of every ballet work (docs/figures/explorer/export_ballet_data.py)
+
+```sql
+SELECT work_id, canonical_title FROM research.work WHERE art_form='ballet' AND excerpt_of_work_id IS NULL
+   AND (EXISTS performance OR EXISTS production);                                    -- 98 works
+SELECT p.work_id, e.season, e.city, count(*) FROM research.performance p JOIN research.event e USING (event_id) GROUP BY ALL;
+SELECT work_id, verbatim_title, count(*) FROM research.performance GROUP BY ALL;      -- printed title forms
+-- excerpt works (excerpt_of_work_id) by city; research.production rows; review_credit / review_assertion counts by work_id
+```
+
+Result: 98 ballets, 2,398 full performances; ballets.json 194 KB. Cross-check: Донъ-Кихотъ 80 performances, 108 credits, 132 cast
+statements, 17 list entries (= the slide). List text is raw transcription, not scan-checked (the page says so).
