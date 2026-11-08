@@ -1030,6 +1030,9 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
      likeliest one.
    Next: the surname-by-season groups (plain surname among namesakes); historical leftovers flagged; the ~150 pupil mentions linked to an
    older namesake (see below).
+   Known limit of G1/G2 (and of any link made from a staff list): a pupil or guest artist with the same surname is not on that
+   season's list, so the list cannot rule them out. RG 2026-11-07, idea for later: tag guest appearances (e.g. from the reviews and
+   Repertoire notes) so these links can be filtered or rechecked. Not started.
    **School pupils in the reviews (RG 2026-11-07: "we should definitely collect a list of school pupil mentions"):**
    `docs/eval/review_pupil_mentions.csv` (script `docs/eval/review_names_general_rules_2026-11-07/pupil_mentions.py`): 1,027 person
    mentions standing in a pupils' list (воспитанницы, в-цы, восп., уч-цы …), 17 seasons, SP 737 / Moscow 290; columns include the marker
