@@ -28041,3 +28041,14 @@ Result: G1 531, G2 1,297, G3 32; 183 + others set aside by safeguards; 3 scan sa
 transcribed; 3 old casts found -> old-cast safeguard widened (24 caught). Role cross-check: 84 confirmations, 0 contradictions. Applied
 1,859 links; 0 unintended changes; ties 3,588 -> 1,729; linked 20,033. School-pupil list: 1,027 mentions (docs/eval/review_pupil_mentions.csv);
 ~150 already-linked pupil mentions point to an older namesake (follow-up).
+
+## 2026-11-07 — Pupil mentions linked to an older namesake: 55 relinked, 41 unlinked
+
+```sql
+-- docs/eval/review_pupil_mentions.csv (pupil-list mentions); research.person first_attested_season; research.person_appearance entity_type='Graduates'
+-- docs/eval/review_pupil_links_2026-11-07/classify.py: gender (marker, surname ending), first listed 3+ seasons before, inside-the-list test,
+-- one graduate of that surname+gender within 6 seasons -> relink, else unlink; review chain on a copy; diff both ways
+```
+
+Result: 703 linked pupil mentions; 529 fit; 96 corrected (55 relink, 41 unlink); scan sample 10/10; diff = review_mention 96, review_assertion 6,
+review_dance_performer 20; 0 person_link shifts. Production = tested copy.

@@ -1015,6 +1015,14 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
      kept). Review chain on a copy then production (backup `outputs/full_run/db_backup_general_rules_2026-11-07/`): exactly those 1,859
      mentions; cast statements +61 performers, credits +3, dance performers 250 rows, dance composers +2 («музыка А. Гербера»), solos +4;
      nothing switched or lost; 0 person_link shifts. **Tied person mentions 3,588 → 1,729**; linked 20,033.
+   - **Pupil mislinks — APPLIED 2026-11-07** (RG "Both: relink 55, unlink 41"): of 703 linked pupil mentions, 529 fit a pupil; ~70 flagged
+     were false hits (teachers «ученица класса П. Гердта», choreographers «соч. М. М. Ѳокина», adults after the list ends), so a pupil now
+     must stand inside the list (no г-жа/г./new item between marker and name). 96 corrections where the linked person was on the company
+     lists 3+ seasons earlier or the printed gender rules them out: 55 relinked to the one graduate of that surname and gender within six
+     seasons («воспитанница Шишко» → Евгенія, «в-цы … Власова» → Ольга), 41 unlinked. Links to people who joined later kept (a pupil who
+     joined later fits). Scan sample 10/10 (two relinks — «Ефимовъ», «восп. Чекрыгинъ» 1900 — rest on graduation timing alone). Review
+     chain on a copy then production (backup `outputs/full_run/db_backup_pupil_links_2026-11-07/`): exactly the 96 mentions, 6 cast
+     statements, 20 dance-performer rows; 0 person_link shifts. Files: `docs/eval/review_pupil_links_2026-11-07/`.
    Next: the surname-by-season groups (plain surname among namesakes); historical leftovers flagged; the ~150 pupil mentions linked to an
    older namesake (see below).
    **School pupils in the reviews (RG 2026-11-07: "we should definitely collect a list of school pupil mentions"):**
