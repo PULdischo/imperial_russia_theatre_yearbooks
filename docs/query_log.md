@@ -28024,3 +28024,20 @@ SELECT count(*) FILTER (WHERE person_id IS NULL AND candidates_n>1) FROM researc
 Result: 332 links as ruled (Marius 231, Марія 84, Вѣра 9, Надежда 7, Jean-Antoine 1), 0 unintended; review_assertion 14 (13 gained, 1
 corrected Марія→Marius), review_credit 3, review_dance_performer 15; 0 person_link shifts. Tied person mentions 3,908 → 3,588; Петипа 46
 left unlinked. Production = tested copy.
+
+## 2026-11-07 — Review names: general rules G1-G3 ruled and applied
+
+```sql
+-- candidates on that season's list: research.person_appearance (person_id, season, city, printed_family_name, entity_type)
+-- G1: exactly one listed; G2: several listed, printed number / gender / initial / pupils' list leaves one; G3: review role in one candidate's
+-- raw.person_entry_credit named_work role (joined on research.person_appearance.appearance_id = entry_id)
+-- safeguards: gender of honorific, surname ending, number ending; pupils' list; oldcast_check.py; pre-1890 year nearby
+-- scripts: docs/eval/review_names_general_rules_2026-11-07/{g1,g2,g3}_candidates.py, oldcast_check.py, build_links.py, pupil_mentions.py
+SELECT count(*) FILTER (WHERE person_id IS NULL AND candidates_n>1), count(*) FILTER (WHERE person_id IS NOT NULL)
+FROM research.review_mention WHERE mention_type='person';
+```
+
+Result: G1 531, G2 1,297, G3 32; 183 + others set aside by safeguards; 3 scan samples (36 mentions): surnames and deciding details as
+transcribed; 3 old casts found -> old-cast safeguard widened (24 caught). Role cross-check: 84 confirmations, 0 contradictions. Applied
+1,859 links; 0 unintended changes; ties 3,588 -> 1,729; linked 20,033. School-pupil list: 1,027 mentions (docs/eval/review_pupil_mentions.csv);
+~150 already-linked pupil mentions point to an older namesake (follow-up).

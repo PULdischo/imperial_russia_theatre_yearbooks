@@ -993,6 +993,37 @@ Everything above is applied, committed and pushed (main at 2f60354). Still open,
      exactly the 332 mentions as ruled, 14 cast statements (13 gained a performer; «Танцы и постановка — М. Петипа» 1904-05 moved from
      Марія to Marius), 3 credits gained Marius, 15 dance performers; 0 person_link shifts. Tied person mentions corpus-wide 3,908 → 3,588;
      «Петипа» left unlinked 46 (historical + the cases above).
+   **General rules (RG 2026-11-07: "will we have to do these all case-by-case?" → no; rules ruled once, applied to every surname).**
+   Files: `docs/eval/review_names_general_rules_2026-11-07/`. Safeguards common to the rules: the candidate must agree with the gender of the
+   honorific, the printed surname ending and the ordinal ending («-я/-й»); a printed ordinal (incl. bare digits after the name, «Эрлеръ 2»,
+   which the matcher ignored) must match the person's number in that season's list; mentions in a pupils' list need a pupil/graduate
+   candidate; quoted old casts (oldcast_check.py: «При первомъ … представленіи», «первыми исполнителями», «въ первый разъ поставленъ» …,
+   looking back up to 3 blocks, stopped by a dated current performance) and pre-1890 years nearby are excluded.
+   - **G1 — only one possible person on that season's list in that city → that person** (RG "Yes, apply G1"): 535 mentions (SP 313,
+     Moscow 222; ballet artists 489, musicians 23, graduates 10 …); 183 set aside by the safeguards. Scan sample 11/12 (the 12th, a reprinted
+     1890 premiere cast, led to the old-cast safeguard). Side finding: three person records for «Спрышинская» (Целина / Целія / Цецилія
+     Владиславовна) — merge candidate.
+   - **G2 — several on the list; the printed number, gender (honorific / surname ending / number ending), initial or pupils' list leaves
+     one → that person** (RG "Yes, after one more check"): 1,297 mentions (SP 732, Moscow 565; number 1,046, gender 232, pupils 15,
+     initial 4). Scan sample: the deciding detail printed as transcribed 12/12; 2 were quoted old casts («первыми сюжетами тогдашней
+     труппы», «Составъ первыхъ исполнителей»), so oldcast_check.py was widened (24 caught; G1 now 531). A third sample (12, from the cleaned
+     sets) is checked before applying.
+   - **G3 — the role in only one candidate's staff-list entry → that person** (RG "Yes, apply G3", generalising the Petipa ruling):
+     32 mentions; never used against a printed number or gender («Вестрисъ—г. Легать 5-й» set aside). Cross-check: confirms 84 G1/G2
+     choices, contradicts none. Third scan sample (12 from the cleaned sets): all current-season, all support the link.
+   - **APPLIED 2026-11-07:** 1,859 links (G1 531, G2 1,297, G3 32 less one: an existing old-cast unlink for «Лебедева», Moscow 1901-02,
+     kept). Review chain on a copy then production (backup `outputs/full_run/db_backup_general_rules_2026-11-07/`): exactly those 1,859
+     mentions; cast statements +61 performers, credits +3, dance performers 250 rows, dance composers +2 («музыка А. Гербера»), solos +4;
+     nothing switched or lost; 0 person_link shifts. **Tied person mentions 3,588 → 1,729**; linked 20,033.
+   Next: the surname-by-season groups (plain surname among namesakes); historical leftovers flagged; the ~150 pupil mentions linked to an
+   older namesake (see below).
+   **School pupils in the reviews (RG 2026-11-07: "we should definitely collect a list of school pupil mentions"):**
+   `docs/eval/review_pupil_mentions.csv` (script `docs/eval/review_names_general_rules_2026-11-07/pupil_mentions.py`): 1,027 person
+   mentions standing in a pupils' list (воспитанницы, в-цы, восп., уч-цы …), 17 seasons, SP 737 / Moscow 290; columns include the marker
+   as printed, the current link, and graduates of the same surname that season or later (843 have one). A finding aid: a few rows are
+   false hits («еще будучи воспитанницей» mid-sentence). **Follow-up found on the way, not yet chased:** ~150 of the 681 already-linked
+   pupil mentions point to an older namesake first listed 3+ seasons earlier, often a man («воспитанница Шишко» → Николай Шишко,
+   «Домашева» → Николай Домашевъ, «Рѣпина» → Василій Рѣпинъ) — existing matcher links, to be reviewed after the general rules.
    Next: the other surnames (Егорова 117, Павлова 109, Ширяевъ 92, Ѳедорова 86 …), same method: season/city/ordinal/honorific/role
    evidence, staff-list role check, historical passages listed quickly.
 2. ~~**Titles printed with a misprint or with their genre/subtitle attached**~~ — **RULED and APPLIED 2026-11-06.** Every printing
