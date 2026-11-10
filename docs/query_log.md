@@ -28206,3 +28206,18 @@ Result: block b006 credits 2369 Куличевской, 2370 Чайковска�
 («Ѳетида и Пелей» excerpt_of 05f1a0a1…; «Приключенія Пелея» source_note «mention only …»); production = tested copy (0 tables
 differ). List entries filed under an excerpt: «Оживленный садъ» (Корсаръ) 3, «Ѳетида и Пелей» (Приключенія Пелея) 1. Export:
 98 ballets, 2,395 full + 240 excerpt performances; 52 composers, 101 composer-ballet pairs, 12 performed ballets with no credit.
+
+## 2026-11-10 — Ballet Explorer: Season review pop-up (docs/figures/explorer/export_review_passages.py)
+
+```sql
+-- passages linked to a ballet (or one of its excerpt works): work mentions, cast statements, credits, dance numbers
+SELECT block_id, entity_id, surface FROM entities.review_mention WHERE mention_type = 'work' AND entity_id IS NOT NULL;
+SELECT block_id, work_id FROM research.review_assertion / research.review_credit / research.review_dance WHERE work_id IS NOT NULL;
+-- all passages in reading order, by review section (page_id without _pNNN), for the neighbour passages
+SELECT b.block_id, b.page_id, b.block_index, b.block_type, b.text, b.caption_text, p.season, p.city, p.genre, p.printed_folio
+  FROM research.review_passage b JOIN research.review_page p USING (page_id) ORDER BY b.page_id, b.block_index;
+```
+
+Result: 105 ballets with linked review passages; 2,712 distinct passages (linked + the one before/after each); English from
+outputs/reviews/translations.csv (4,662 machine translations of 6 Oct 2026, for reading). Донъ-Кихотъ Moscow 1900-01: 17 linked passages,
+22 shown. Mention char offsets do not match review_passage.text (20 of 48 sampled), so highlights search the printed title forms instead.

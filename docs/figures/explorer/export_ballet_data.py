@@ -39,7 +39,7 @@ genre_of = dict(q("SELECT work_id::VARCHAR, canonical_genre FROM research.work")
 
 out = {}
 for wid, t in works:
-    out[wid] = dict(title=t, perf={}, xperf={}, xrows=[], titles=[], exc=[], lists=[], credits=cred.get(wid, 0), cast=cast.get(wid, 0))
+    out[wid] = dict(id=wid, title=t, perf={}, xperf={}, xrows=[], titles=[], exc=[], lists=[], credits=cred.get(wid, 0), cast=cast.get(wid, 0))
 for wid, s, c, n in perf:
     if wid in out:
         out[wid]['perf'].setdefault(s, {})[c] = n

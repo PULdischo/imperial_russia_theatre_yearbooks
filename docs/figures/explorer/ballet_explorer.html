@@ -103,6 +103,29 @@ tr.flash td { animation: flash 2.4s ease-out; }
 @keyframes flash { 0%, 35% { background-color: color-mix(in srgb, var(--hl) 35%, var(--panel)); } 100% { } }
 @media (prefers-reduced-motion: reduce) { tr.flash td { animation: none; background-color: color-mix(in srgb, var(--hl) 25%, var(--panel)); } }
 .hint { font-size: 13px; color: var(--faint); padding: 0 4px; }
+.rvbtn { font: inherit; font-size: 13px; font-weight: 600; color: var(--text); background: transparent; border: 1px solid var(--muted);
+  border-radius: 999px; padding: 3px 11px; cursor: pointer; justify-self: start; }
+.rvbtn:hover, .rvbtn:focus-visible { background: var(--text); color: var(--bg); outline: none; }
+.ltable td.none .rvbtn { margin-left: 8px; }
+dialog#rv { width: min(900px, 94vw); max-height: 88vh; padding: 0; border: 1px solid var(--rule); border-radius: 14px;
+  background: var(--bg); color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+dialog#rv::backdrop { background: rgba(10, 14, 12, .62); }
+.rv-head { position: sticky; top: 0; background: var(--panel); border-bottom: 1px solid var(--rule); padding: 14px 18px; display: grid;
+  grid-template-columns: 1fr auto; gap: 4px 12px; align-items: start; z-index: 1; }
+.rv-head h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 28px; line-height: 1.15; }
+.rv-head .x { font: inherit; font-size: 22px; line-height: 1; color: var(--muted); background: transparent; border: 1px solid var(--rule);
+  border-radius: 8px; width: 36px; height: 36px; cursor: pointer; grid-row: 1 / span 2; grid-column: 2; }
+.rv-head .x:hover, .rv-head .x:focus-visible { color: var(--bg); background: var(--text); outline: none; }
+.rv-body { padding: 14px 18px 20px; display: grid; gap: 12px; }
+.psg { border: 1px solid var(--rule); border-radius: 10px; padding: 11px 14px; display: grid; gap: 7px; background: var(--panel); }
+.psg.ctx { background: transparent; border-style: dashed; color: var(--muted); }
+.psg .pmeta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--faint); align-items: center; }
+.psg .ptxt { line-height: 1.55; overflow-wrap: anywhere; }
+.psg .en { border-top: 1px dashed var(--rule); padding-top: 8px; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.psg .en .tag { display: block; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin-bottom: 3px; }
+.enbtn { font: inherit; font-size: 12.5px; color: var(--muted); background: transparent; border: 1px solid var(--rule); border-radius: 999px;
+  padding: 2px 10px; cursor: pointer; }
+.enbtn[aria-expanded="true"], .enbtn:hover, .enbtn:focus-visible { color: var(--bg); background: var(--muted); outline: none; }
 .cell { display: grid; gap: 6px; }
 .cell + .cell { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--rule); }
 .cell .meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; color: var(--faint); font-variant-numeric: tabular-nums; }
@@ -200,8 +223,17 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
         <tbody id="l-rows"></tbody>
       </table>
     </div>
-    <p class="note"><span class="chg">changes</span> are flagged automatically (gold outline) by comparing each entry with the previous one in the same city: number of acts or scenes, a prologue or apotheosis, creator names newly printed or no longer printed, a staging or dance credit, «соч.» becoming «либретто», and music «и другихъ». Story sources («сюжетъ …») and rewording are ignored. The flags point you to the text; they are not a ruling. <span class="star">*</span> the database records the entry as new (in the entries checked so far, the <i>Yearbook</i> marks this with an asterisk before the entry's number). List text is the database's transcription; it has not been checked against the scans, except the entries quoted on the presentation slides for «Спящая красавица», «Донъ-Кихотъ» and «Волшебное зеркало».</p>
+    <p class="note"><b>Season review</b> opens what that city's review says about the ballet that season. <span class="chg">changes</span> are flagged automatically (gold outline) by comparing each entry with the previous one in the same city: number of acts or scenes, a prologue or apotheosis, creator names newly printed or no longer printed, a staging or dance credit, «соч.» becoming «либретто», and music «и другихъ». Story sources («сюжетъ …») and rewording are ignored. The flags point you to the text; they are not a ruling. <span class="star">*</span> the database records the entry as new (in the entries checked so far, the <i>Yearbook</i> marks this with an asterisk before the entry's number). List text is the database's transcription; it has not been checked against the scans, except the entries quoted on the presentation slides for «Спящая красавица», «Донъ-Кихотъ» and «Волшебное зеркало».</p>
   </section>
+
+  <dialog id="rv" aria-labelledby="rv-title">
+    <div class="rv-head">
+      <div class="eyebrow" id="rv-eyebrow"></div>
+      <button class="x" id="rv-close" aria-label="Close">×</button>
+      <h2 id="rv-title"></h2>
+    </div>
+    <div class="rv-body" id="rv-body"></div>
+  </dialog>
 
   <footer>
     <p class="note">Two different ballets can share a title («Времена года», «Карнавалъ»); each is labelled with its printed genre and first season. Performances are full performances of the ballet in the Repertoire tables; excerpts (single acts, scenes or numbers) are counted separately and shown with the Excerpts switch. Data: production research database, exported 10 Nov 2026.</p>
@@ -382,12 +414,64 @@ function renderLists(w) {
     if (noList.has(se)) return `<tr id="row-${se}"><td class="season">${lab(se)}</td><td class="nolist" colspan="2">no productions lists in the database for this season</td></tr>`;
     const td = city => {
       const es = cells[city][se];
-      if (!es) return `<td class="${city} none">—</td>`;
-      return `<td class="${city}${es.some(e => e.changed) ? ' changed' : ''}">${es.map(cell).join('')}</td>`;
+      const rv = reviewCount(w, se, city);
+      const btn = rv ? `<button class="rvbtn" data-season="${se}" data-city="${city}">Season review · ${rv} passage${rv === 1 ? '' : 's'}</button>` : '';
+      if (!es) return `<td class="${city} none">—${btn}</td>`;
+      return `<td class="${city}${es.some(e => e.changed) ? ' changed' : ''}">${es.map(cell).join('')}${btn ? `<div class="cell">${btn}</div>` : ''}</td>`;
     };
     return `<tr id="row-${se}"><td class="season">${lab(se)}</td>${td('SP')}${td('Moscow')}</tr>`;
   }).join('');
 }
+
+// ---- Season review pop-up (passages loaded on first use)
+let REV = null, revLoading = null;
+function loadReviews() {
+  revLoading ||= fetch('reviews.json').then(r => r.json()).then(d => { REV = d; renderLists(DATA.works[+$('work').value]); }).catch(() => {});
+  return revLoading;
+}
+function reviewCount(w, se, city) {
+  if (!REV || !w.id) return 0;
+  const b = REV.ballets[w.id];
+  return b && b.seasons[se + '|' + city] ? b.seasons[se + '|' + city].filter(x => x[1]).length : 0;
+}
+const reEsc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function highlight(text, forms) {
+  let h = esc(text);
+  const fs = [...new Set(forms.filter(Boolean))].sort((a, b) => b.length - a.length).map(f => reEsc(esc(f)));
+  if (fs.length) h = h.replace(new RegExp(`(${fs.join('|')})`, 'giu'), '<mark>$1</mark>');
+  return h;
+}
+function openReview(w, se, city) {
+  const b = REV.ballets[w.id], list = (b && b.seasons[se + '|' + city]) || [];
+  const forms = [...(b ? b.hl : []), w.title, ...w.titles.map(t => t[0])];
+  $('rv-eyebrow').textContent = `Season review · ${CITY[city]} · ${lab(se)}`;
+  $('rv-title').textContent = `«${w.title}»`;
+  const nd = list.filter(x => x[1]).length;
+  $('rv-body').innerHTML =
+    `<p class="note">${nd} passage${nd === 1 ? '' : 's'} the database links to this ballet (its title, excerpts, cast lists, dance numbers or credits), ` +
+    `in reading order, with the passage just before and after each in dashed outline. Mentions of the title are highlighted. ` +
+    `Text as transcribed; not checked against the scans.</p>` +
+    list.map(([id, direct], i) => {
+      const p = REV.passages[id];
+      return `<div class="psg${direct ? '' : ' ctx'}"><div class="pmeta"><span>${p.folio ? 'p. ' + esc(p.folio) : ''}</span>` +
+        `<span>${esc(p.genre === 'All' ? 'general review' : (p.genre || '').toLowerCase() + ' review')}</span>${direct ? '' : '<span>context</span>'}` +
+        (p.en ? `<button class="enbtn" aria-expanded="false" data-i="${i}">English</button>` : '') + `</div>` +
+        `<div class="ptxt">${highlight(p.ru, forms)}</div>` +
+        (p.en ? `<div class="en" id="en-${i}" hidden><span class="tag">Machine translation, made for reading (6 Oct 2026); may predate later text corrections</span>${esc(p.en)}</div>` : '') +
+        `</div>`;
+    }).join('');
+  const dlg = $('rv');
+  if (!dlg.open) dlg.showModal();
+  dlg.scrollTop = 0;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.rvbtn');
+  if (b) { openReview(DATA.works[+$('work').value], b.dataset.season, b.dataset.city); return; }
+  const en = e.target.closest('.enbtn');
+  if (en) { const box = document.getElementById('en-' + en.dataset.i); box.hidden = !box.hidden; en.setAttribute('aria-expanded', String(!box.hidden)); }
+});
+$('rv-close').addEventListener('click', () => $('rv').close());
+$('rv').addEventListener('click', e => { if (e.target === $('rv')) $('rv').close(); });   // a click on the backdrop closes it
 
 function drawChart(w) {
   const W = 960, X0 = 132, CW = (W - X0 - 8) / 21, ROW = 112, SPB = 150, MOB = 286, LY = 318;
@@ -471,6 +555,7 @@ fetch('ballets.json').then(r => r.json()).then(d => {
   }
   const dq = DATA.works.findIndex(w => w.title === 'Донъ-Кихотъ');
   fillSelect(fromHash ? +fromHash[1] : (dq >= 0 ? dq : 0));
+  loadReviews();
 }).catch(() => {
   $('h1').textContent = 'Imperial Ballet Repertoire';
   $('count').textContent = 'The ballet data did not load. Reload the page to try again.';
