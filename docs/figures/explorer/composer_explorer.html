@@ -1,0 +1,315 @@
+<meta charset="utf-8">
+<title>Imperial Ballet Composers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Companion to the Ballet Explorer: same CDH deck palette (single deliberate dark look, no light variant). */
+:root {
+  color-scheme: dark;
+  --bg: #2C3932; --panel: #36463D; --panel-2: #3F4F45; --rule: #6F7D73;
+  --text: #DFD2C4; --muted: #BDB2A5; --faint: #9C9488;
+  --sp: #8296AA; --sp-fill: #2F3F4C; --sp-text: #AFC0D1;
+  --mo: #D2BD9A; --mo-fill: #4A4537; --mo-text: #DCCAA8;
+  --hl: #E3B66B;
+  --display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.45; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 40px;
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 22px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+header { display: grid; gap: 6px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(30px, 4.6vw, 52px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 17px; margin: 0; max-width: 72ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: end; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+select {
+  font: inherit; font-size: 16px; color: var(--text); background: var(--panel); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 9px 12px; max-width: 100%; min-width: min(420px, 100%);
+}
+select:focus-visible, .chip:focus-visible, tr.pick:focus-visible { outline: 2px solid var(--mo); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 14px; color: var(--muted); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 7px 13px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--bg); background: var(--text); border-color: var(--text); font-weight: 600; }
+.count { color: var(--faint); font-size: 14px; }
+.side { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); align-items: start; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; min-width: 0; }
+.card.who { background: var(--sp-fill); border-color: var(--sp); }
+.card h2 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.15; margin: 0; color: var(--sp-text); overflow-wrap: anywhere; }
+.card .lbl { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 210px; overflow-y: auto; }
+.card li { overflow-wrap: anywhere; }
+.n { color: var(--faint); font-variant-numeric: tabular-nums; }
+.stat { display: flex; flex-wrap: wrap; gap: 4px 14px; font-variant-numeric: tabular-nums; }
+.stat b { font-weight: 700; }
+.chart { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 14px 8px; min-width: 0; }
+.chart svg { display: block; width: 100%; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); padding: 4px 4px 6px; }
+.sw { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+section { display: grid; gap: 10px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 12px; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid color-mix(in srgb, var(--rule) 50%, transparent); }
+th { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); background: var(--panel); }
+tbody tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* ballet x season grid */
+.grid { min-width: 1080px; table-layout: fixed; }
+.grid col.t { width: 230px; }
+.grid col.tot { width: 64px; }
+.grid th.s, .grid td.s { text-align: center; padding: 6px 2px; }
+.grid th.s { font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.grid th.s.nolist, .grid td.s.nolist { background: color-mix(in srgb, var(--panel-2) 70%, var(--bg)); }
+.grid td.title { position: sticky; left: 0; background: var(--panel); z-index: 1; overflow-wrap: anywhere; }
+.grid th.title { position: sticky; left: 0; z-index: 2; }
+.grid td.title .o { display: block; font-size: 12.5px; color: var(--faint); }
+.v { display: block; font-variant-numeric: tabular-nums; font-size: 13.5px; line-height: 1.35; border-radius: 3px; }
+.v.SP { color: var(--sp-text); }
+.v.Moscow { color: var(--mo-text); }
+.v.fb { font-style: italic; text-decoration: underline dotted; text-underline-offset: 2px; }
+.v.x { opacity: .75; }
+.dot { color: color-mix(in srgb, var(--faint) 55%, transparent); }
+/* overview heatmap */
+.heat { min-width: 1000px; table-layout: fixed; }
+.heat col.t { width: 200px; }
+.heat col.tot { width: 64px; }
+.heat th.s, .heat td.s { text-align: center; padding: 5px 1px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.heat th.s { font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.heat td.title { position: sticky; left: 0; background: var(--panel); z-index: 1; overflow-wrap: anywhere; }
+.heat th.title { position: sticky; left: 0; z-index: 2; }
+tr.pick { cursor: pointer; }
+tr.pick:hover td.title { color: var(--hl); }
+tr.pick.sel td.title { color: var(--hl); font-weight: 700; }
+.city { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.city.SP { color: var(--sp-text); background: var(--sp-fill); border: 1px solid var(--sp); }
+.city.Moscow { color: var(--mo-text); background: var(--mo-fill); border: 1px solid var(--mo); }
+.note { color: var(--faint); font-size: 13px; max-width: 95ch; margin: 0; }
+.empty { color: var(--faint); font-style: italic; }
+footer { display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 14px; }
+.hint { font-size: 13px; color: var(--faint); padding: 0 4px; }
+a { color: var(--sp-text); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Ежегодникъ Императорскихъ театровъ · ballet composers, 1890/91–1910/11</div>
+    <h1 id="h1">Imperial Ballet by Composer</h1>
+    <p class="sub">Choose a composer to see which of their ballets were performed in each season, in St Petersburg and in Moscow, and how the productions lists print the music credit. All composers are compared season by season at the foot of the page.</p>
+  </header>
+
+  <div class="controls">
+    <div class="field">
+      <label for="comp">Composer</label>
+      <select id="comp"></select>
+    </div>
+    <div class="field">
+      <label id="mode-l">Performances</label>
+      <div class="chips" role="group" aria-labelledby="mode-l" id="modes">
+        <button class="chip" data-m="full" aria-pressed="true">Full ballet</button>
+        <button class="chip" data-m="excerpts" aria-pressed="false">Excerpts</button>
+        <button class="chip" data-m="both" aria-pressed="false">Both</button>
+      </div>
+    </div>
+    <div class="count" id="count"></div>
+  </div>
+
+  <div class="chart">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--sp)"></i>St Petersburg performances</span>
+      <span><i class="sw" style="background:var(--mo)"></i>Moscow performances</span>
+      <span><i class="sw" style="background:var(--panel-2)"></i>no productions lists in the database</span>
+    </div>
+    <svg id="chart" viewBox="0 0 960 320" role="img" aria-label="Performances of this composer's ballets per season by city"></svg>
+  </div>
+
+  <div class="side">
+    <div class="card who">
+      <div class="lbl">Composer</div>
+      <h2 id="c-name">—</h2>
+      <div class="stat" id="c-stat"></div>
+      <div id="c-wd" class="n"></div>
+    </div>
+    <div class="card">
+      <div class="lbl" id="f-lbl">Name as printed in the lists</div>
+      <ul id="f-list"></ul>
+    </div>
+    <div class="card">
+      <div class="lbl">Shared credits</div>
+      <ul id="s-list"></ul>
+    </div>
+  </div>
+
+  <section>
+    <div class="eyebrow" id="g-head">Ballets by season</div>
+    <div class="tablewrap"><table class="grid" id="grid"></table></div>
+    <p class="note">Each cell gives that season's performances: <span class="v SP" style="display:inline">St Petersburg</span> above, <span class="v Moscow" style="display:inline">Moscow</span> below. <span class="v fb" style="display:inline">Dotted, italic</span> numbers are attributed from the ballet's other list entries, because there is no list entry for that ballet in that season and city (always the case in 1905/06 and 1906/07, which have no lists in the database).</p>
+  </section>
+
+  <section>
+    <div class="eyebrow" id="c-head">Music credits as printed</div>
+    <div class="tablewrap">
+      <table style="min-width:640px">
+        <thead><tr><th>Ballet</th><th>Season</th><th>City</th><th>Printed</th><th>Page</th></tr></thead>
+        <tbody id="c-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">All composers, season by season</div>
+    <div class="tablewrap"><table class="heat" id="heat"></table></div>
+    <div class="hint">Both cities together; hover a cell for the split. Click a composer to open them above.</div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Performed ballets with no music credit in any list</div>
+    <p class="note" id="unc"></p>
+  </section>
+
+  <footer>
+    <p class="note">Composers come from the «музыка» credits of the productions lists, linked to people in the research database. A performance counts under the composers printed in that ballet's list entry for the same season and city; where there is none, under every composer the lists credit for the ballet. A ballet with several composers (for example «Корсаръ»: Adam, Pugni, Delibes) counts in full under each, so composer totals overlap and do not add up to the Repertoire total. Excerpts (single acts, scenes or numbers) count under the composers of the ballet they come from. Two different ballets can share a title: «Времена года» is Petipa and Glazunov's ballet and, once (8 April 1909), Fokine's «хореографическая фантазія» to Tchaikovsky; each is labelled with its printed genre and first season. Data: production research database, exported 10 Nov 2026.</p>
+    <p class="note">Made with Claude Code (AI): drafting, layout and database queries. Data model, choice of what to show and editorial decisions by the author.</p>
+  </footer>
+</div>
+
+<script>
+const SEASONS = Array.from({length: 21}, (_, i) => `${1890 + i}-${String(1891 + i).slice(2)}`);
+const lab = s => s.replace('-', '/');
+const CITY = {SP: 'St Petersburg', Moscow: 'Moscow'};
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+let DATA = null, mode = 'full', cur = 0;
+
+const cnt = (b, se, city) => (mode === 'excerpts' ? 0 : ((b.f[se] || {})[city] || 0)) + (mode === 'full' ? 0 : ((b.x[se] || {})[city] || 0));
+const tot = c => mode === 'full' ? c.ftotal : mode === 'excerpts' ? c.xtotal : c.ftotal + c.xtotal;
+const btot = b => SEASONS.reduce((a, se) => a + cnt(b, se, 'SP') + cnt(b, se, 'Moscow'), 0);
+const ctot = (c, se, city) => c.ballets.reduce((a, b) => a + cnt(b, se, city), 0);
+const bt = b => `«${esc(b.title)}»` + (b.tag ? ` <span class="n">(${esc(b.tag)})</span>` : '');
+const noList = () => new Set(SEASONS.filter(s => !DATA.list_seasons.includes(s)));
+
+function fillSelect() {
+  const sel = $('comp');
+  sel.innerHTML = DATA.composers.map((c, i) =>
+    `<option value="${i}">${esc(c.name)} — ${c.ballets.length} ballet${c.ballets.length === 1 ? '' : 's'}, ${tot(c)} perf.</option>`).join('');
+  sel.value = String(cur);
+  $('count').textContent = `${DATA.composers.length} composers`;
+}
+
+function render(i) {
+  cur = i;
+  const c = DATA.composers[i]; if (!c) return;
+  try { history.replaceState(null, '', '#c' + i + (mode === 'full' ? '' : '-' + mode)); } catch (e) {}
+  $('comp').value = String(i);
+  $('c-name').textContent = c.name;
+  const seasons = SEASONS.filter(se => ctot(c, se, 'SP') + ctot(c, se, 'Moscow') > 0);
+  const what = {full: 'full performances', excerpts: 'excerpt performances', both: 'performances, full and excerpts'}[mode];
+  const by = k => SEASONS.reduce((a, se) => a + ctot(c, se, k), 0);
+  $('c-stat').innerHTML = `<span><b>${c.ballets.length}</b> ballet${c.ballets.length === 1 ? '' : 's'}</span>` +
+    `<span><b>${c.ftotal}</b> full · <b>${c.xtotal}</b> excerpt performances</span>` +
+    `<span>Showing ${what}: ${seasons.length ? lab(seasons[0]) + '–' + lab(seasons.at(-1)) : 'none'}</span>` +
+    `<span>St Petersburg <b>${by('SP')}</b> · Moscow <b>${by('Moscow')}</b></span>`;
+  $('c-wd').innerHTML = c.qid ? `Wikidata: <a href="https://www.wikidata.org/wiki/${esc(c.qid)}" target="_blank" rel="noopener">${esc(c.wd || c.qid)}</a>` : 'Not linked to Wikidata';
+  $('f-lbl').textContent = `Name as printed in the lists (${c.forms.length} form${c.forms.length === 1 ? '' : 's'})`;
+  $('f-list').innerHTML = c.forms.map(([f, n]) => `<li>${esc(f)} <span class="n">×${n}</span></li>`).join('');
+  const shared = c.ballets.filter(b => b.others.length);
+  $('s-list').innerHTML = shared.length
+    ? shared.map(b => `<li>${bt(b)} <span class="n">with ${b.others.map(esc).join(', ')}</span></li>`).join('')
+    : '<li class="empty">sole composer credited for every ballet</li>';
+  drawChart(c); drawGrid(c); drawCredits(c);
+  for (const r of document.querySelectorAll('#heat tr.pick')) r.classList.toggle('sel', +r.dataset.i === i);
+}
+
+function drawChart(c) {
+  const W = 960, X0 = 132, CW = (W - X0 - 8) / 21, ROW = 120, SPB = 150, MOB = 290;
+  const max = Math.max(1, ...SEASONS.flatMap(se => ['SP', 'Moscow'].map(k => ctot(c, se, k))));
+  const nl = noList();
+  let s = '';
+  SEASONS.forEach((se, k) => {
+    const x = X0 + k * CW;
+    if (nl.has(se)) s += `<rect x="${x}" y="22" width="${CW}" height="${MOB + 8 - 22}" fill="var(--panel-2)"/>`;
+    s += `<line x1="${x}" y1="22" x2="${x}" y2="${MOB + 8}" stroke="var(--rule)" stroke-opacity=".45"/>`;
+    if (k % 5 === 0) s += `<text x="${x + CW / 2}" y="14" font-size="14" fill="var(--faint)" text-anchor="middle">${lab(se)}</text>`;
+  });
+  s += `<line x1="${X0 + 21 * CW}" y1="22" x2="${X0 + 21 * CW}" y2="${MOB + 8}" stroke="var(--rule)" stroke-opacity=".45"/>`;
+  for (const [city, base, col, txt] of [['SP', SPB, 'var(--sp)', 'var(--sp-text)'], ['Moscow', MOB, 'var(--mo)', 'var(--mo-text)']]) {
+    s += `<text x="0" y="${base - 6}" font-size="16" font-weight="700" fill="${txt}">${CITY[city]}</text>`;
+    s += `<line x1="${X0}" y1="${base}" x2="${X0 + 21 * CW}" y2="${base}" stroke="var(--faint)"/>`;
+    SEASONS.forEach((se, k) => {
+      const n = ctot(c, se, city); if (!n) return;
+      const h = (ROW - 22) * n / max, x = X0 + k * CW;
+      const parts = c.ballets.map(b => [b.title + (b.tag ? ' (' + b.tag + ')' : ''), cnt(b, se, city)]).filter(p => p[1]).map(([t, v]) => `${t} ${v}`).join('; ');
+      s += `<rect x="${x + 5}" y="${base - h}" width="${CW - 10}" height="${h}" fill="${col}" opacity=".9"><title>${CITY[city]}, ${lab(se)}: ${n} — ${esc(parts)}</title></rect>`;
+      s += `<text x="${x + CW / 2}" y="${base - h - 4}" font-size="13" fill="var(--muted)" text-anchor="middle">${n}</text>`;
+    });
+  }
+  $('chart').innerHTML = s;
+}
+
+function drawGrid(c) {
+  const nl = noList();
+  const rows = c.ballets.map(b => [b, btot(b)]).sort((a, b) => b[1] - a[1] || a[0].title.localeCompare(b[0].title, 'ru'));
+  $('g-head').textContent = `${c.name}: ballets by season`;
+  const cellv = (b, se, city) => {
+    const n = cnt(b, se, city);
+    if (!n) return `<span class="v dot">·</span>`;
+    const fb = (b.basis[se] || {})[city] === 'fallback';
+    const onlyX = mode !== 'full' && !((b.f[se] || {})[city]);
+    return `<span class="v ${city}${fb ? ' fb' : ''}${onlyX && mode === 'both' ? ' x' : ''}" title="${CITY[city]}, ${lab(se)}: ${n}${fb ? ' (attributed from other list entries)' : ''}">${n}</span>`;
+  };
+  $('grid').innerHTML = `<colgroup><col class="t">${SEASONS.map(() => '<col>').join('')}<col class="tot"></colgroup>` +
+    `<thead><tr><th class="title">Ballet</th>${SEASONS.map(se => `<th class="s${nl.has(se) ? ' nolist' : ''}">${lab(se).replace('/', '/<wbr>')}</th>`).join('')}<th class="s">Total</th></tr></thead><tbody>` +
+    rows.map(([b, n]) => `<tr><td class="title">${bt(b)}${b.others.length ? `<span class="o">also ${b.others.map(esc).join(', ')}</span>` : ''}</td>` +
+      SEASONS.map(se => `<td class="s${nl.has(se) ? ' nolist' : ''}">${cellv(b, se, 'SP')}${cellv(b, se, 'Moscow')}</td>`).join('') +
+      `<td class="s num"><b>${n}</b></td></tr>`).join('') + '</tbody>';
+}
+
+function drawCredits(c) {
+  const rows = c.ballets.flatMap(b => b.credits.map(e => ({...e, title: b.title, b}))).sort((a, b) => a.season.localeCompare(b.season) || a.title.localeCompare(b.title, 'ru'));
+  $('c-head').textContent = `Music credits as printed (${rows.length} list entr${rows.length === 1 ? 'y' : 'ies'})`;
+  $('c-body').innerHTML = rows.length ? rows.map(r =>
+    `<tr><td>${bt(r.b)}</td><td class="num">${lab(r.season)}</td><td><span class="city ${r.city}">${CITY[r.city] || r.city}</span></td>` +
+    `<td>${esc(r.role)} ${esc(r.name)}</td><td class="num">${r.page ? 'p. ' + esc(r.page) : '—'}</td></tr>`).join('')
+    : '<tr><td colspan="5" class="empty">No list entries.</td></tr>';
+}
+
+function drawHeat() {
+  const order = DATA.composers.map((c, i) => [c, i, tot(c)]).filter(r => r[2] > 0).sort((a, b) => b[2] - a[2] || a[0].name.localeCompare(b[0].name, 'ru'));
+  const max = Math.max(1, ...order.flatMap(([c]) => SEASONS.map(se => ctot(c, se, 'SP') + ctot(c, se, 'Moscow'))));
+  const shade = n => n ? `background: color-mix(in srgb, var(--hl) ${Math.round(8 + 62 * Math.sqrt(n / max))}%, var(--panel));${n / max > .45 ? 'color: var(--bg); font-weight: 700;' : ''}` : '';
+  $('heat').innerHTML = `<colgroup><col class="t">${SEASONS.map(() => '<col>').join('')}<col class="tot"></colgroup>` +
+    `<thead><tr><th class="title">Composer</th>${SEASONS.map(se => `<th class="s">${lab(se).replace('/', '/<wbr>')}</th>`).join('')}<th class="s">Total</th></tr></thead><tbody>` +
+    order.map(([c, i, t]) => `<tr class="pick" data-i="${i}" tabindex="0"><td class="title">${esc(c.name)}</td>` +
+      SEASONS.map(se => { const sp = ctot(c, se, 'SP'), mo = ctot(c, se, 'Moscow'), n = sp + mo;
+        return `<td class="s" style="${shade(n)}" title="${esc(c.name)}, ${lab(se)}: St Petersburg ${sp}, Moscow ${mo}">${n || ''}</td>`; }).join('') +
+      `<td class="s num"><b>${t}</b></td></tr>`).join('') + '</tbody>';
+  for (const r of document.querySelectorAll('#heat tr.pick')) r.classList.toggle('sel', +r.dataset.i === cur);
+}
+function pickRow(r) { render(+r.dataset.i); $('comp').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center'}); }
+$('heat').addEventListener('click', e => { const r = e.target.closest('tr.pick'); if (r) pickRow(r); });
+$('heat').addEventListener('keydown', e => { const r = e.target.closest('tr.pick'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickRow(r); } });
+$('comp').addEventListener('change', e => render(+e.target.value));
+$('modes').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  mode = b.dataset.m;
+  for (const ch of $('modes').children) ch.setAttribute('aria-pressed', String(ch === b));
+  fillSelect(); drawHeat(); render(cur);
+});
+
+fetch('composers.json').then(r => r.json()).then(d => {
+  DATA = d;
+  DATA.composers.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+  $('unc').textContent = DATA.uncredited.map(([t, f, x, wh]) => `«${t}» (${f} full${x ? ', ' + x + ' excerpt' : ''}; ${wh.map(w => lab(w.split(' ')[0]) + ' ' + (CITY[w.split(' ')[1]] || w.split(' ')[1])).join(', ')})`).join(', ') + '.';
+  const h = /^#c(\d+)(?:-(excerpts|both))?$/.exec(location.hash);
+  if (h && h[2]) { mode = h[2]; for (const ch of $('modes').children) ch.setAttribute('aria-pressed', String(ch.dataset.m === mode)); }
+  const minkus = DATA.composers.findIndex(c => c.name.startsWith('Минкусъ'));
+  cur = h ? +h[1] : (minkus >= 0 ? minkus : 0);
+  fillSelect(); drawHeat(); render(cur);
+}).catch(() => { $('count').textContent = 'The composer data did not load. Reload the page to try again.'; });
+</script>

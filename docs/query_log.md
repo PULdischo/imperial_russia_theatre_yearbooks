@@ -28082,3 +28082,79 @@ SELECT w.excerpt_of_work_id, e.season, e.city, e.date, e.time_of_day, t.canonica
 Result: 97 ballets (3 known only from excerpts: Виноградная лоза, Папоротникъ…, Пери), 2,396 full performances, 239 excerpt
 performances. (98 / 2,398 on 11-06: the database was rebuilt since.) Донъ-Кихотъ 80 full / 7 excerpts; Волшебное зеркало 26 / 9, the 9
 matching the 2026-11-06 scan-checked cells.
+
+## 2026-11-10 — Ballet Composers artifact: where composer credits live and how well they cover the ballets
+
+```sql
+SELECT role_category, count(*), count(person_id) FROM research.production_credit GROUP BY 1 ORDER BY 2 DESC;
+SELECT w.art_form, count(*), count(DISTINCT pc.person_id), count(DISTINCT w.work_id)
+FROM research.production_credit pc JOIN research.production p USING (production_id) JOIN research.work w ON w.work_id = p.work_id
+WHERE pc.role_category = 'music' GROUP BY 1;
+-- performed full ballets with / without any music credit
+WITH b AS (SELECT w.work_id FROM research.work w WHERE w.art_form = 'ballet' AND w.excerpt_of_work_id IS NULL
+           AND EXISTS (SELECT 1 FROM research.performance p WHERE p.work_id = w.work_id))
+SELECT count(*), count(*) FILTER (WHERE EXISTS (SELECT 1 FROM research.production p JOIN research.production_credit pc USING (production_id)
+                                               WHERE p.work_id = b.work_id AND pc.role_category = 'music')) FROM b;
+-- ballets crediting more than one composer
+SELECT w.canonical_title, list(DISTINCT pc.name_printed) FROM research.production_credit pc JOIN research.production p USING (production_id)
+JOIN research.work w ON w.work_id = p.work_id WHERE pc.role_category = 'music' AND w.art_form = 'ballet'
+GROUP BY 1 HAVING count(DISTINCT pc.person_id) > 1;
+SELECT p.season, p.city, pc.role_text, pc.name_printed, p.description_text FROM research.production_credit pc
+JOIN research.production p USING (production_id) JOIN research.work w ON w.work_id = p.work_id
+WHERE w.canonical_title = 'Времена года' AND pc.role_category = 'music';
+SELECT count(*) FROM research.performance p JOIN research.work w USING (work_id) WHERE w.art_form = 'ballet' AND w.excerpt_of_work_id IS NULL;
+SELECT w.work_id, list(DISTINCT e.season || ' ' || e.city), count(*) FROM research.work w JOIN research.performance p USING (work_id)
+JOIN research.event e USING (event_id) WHERE w.canonical_title = 'Карнавалъ' AND w.art_form = 'ballet' GROUP BY ALL;
+```
+
+Result: 688 «music» credits, all linked to a person (687 confirmed, 1 proposed), all on ballet works: 52 people, 86 works. 94 performed
+ballets, 83 with a music credit. 14 ballets credit more than one composer (Корсаръ, Пахита, Эсмеральда, Дочь фараона …). «Времена года»:
+Glazunov in 1899-00/1907-08/1908-09/1909-10/1910-11 SP, plus a 1908-09 SP entry «Хореографическая фантазія М. М. Фокина на музыку
+П. И. Чайковскаго» linked to the same work (looks like a different piece; not chased). 2,396 full ballet performances in the database.
+Two ballet works titled «Карнавалъ»: 1899-00 Moscow (1 perf., no credit) and 1910-11 SP (3 perf., Р. Шумана).
+
+Export (docs/figures/explorer/export_composer_data.py -> composers.json): 52 composers, 102 composer–ballet pairs; attributed 2,371 full
++ 238 excerpt performances, plus 25 full + 1 excerpt in 12 ballets with no music credit = 2,396 + 239, matching the database. Season-city
+cells attributed from the ballet's own list entry 685, from its other entries (no entry that season/city) 103. Top by full performances:
+Пуни 522, Чайковскій 393, Минкусъ 300, Дриго 185, Адамъ 156, Делибъ 148 (multi-composer ballets count under each).
+
+## 2026-11-10 — «Времена года» 1908-09 SP: is Fokine's Tchaikovsky piece a separate work from Petipa/Glazunov's ballet?
+
+```sql
+SELECT production_id, season, city, list_title, list_number, is_premiere, n_dates, printed_page_number, work_basis, description_text
+FROM research.production WHERE work_id IN (SELECT work_id FROM research.work WHERE canonical_title = 'Времена года') ORDER BY season;
+SELECT * FROM research.production_date WHERE production_id IN ('balletproductions_1908-09_SP_p000__e003', 'balletproductions_1908-09_SP_p000__e004');
+SELECT e.date, p.verbatim_genre, e.printed_page_number FROM research.performance p JOIN research.event e USING (event_id)
+WHERE p.work_id = 'ccdf6127-c5ef-5ae8-8cbe-59db92f3c6cf' ORDER BY e.date;
+SELECT e.date, p.verbatim_title, p.verbatim_genre FROM research.performance p JOIN research.event e USING (event_id) WHERE p.verbatim_genre ILIKE '%фантаз%';
+SELECT season, city, date_undate, role_category, printed_phrase FROM research.review_credit WHERE work_id = 'ccdf6127-c5ef-5ae8-8cbe-59db92f3c6cf';
+SELECT rp.season, p.page_id, p.block_index, p.text FROM research.review_passage p JOIN research.review_page rp USING (page_id)
+WHERE (p.text ILIKE '%Времена год%' OR p.text ILIKE '%Фокин%фантаз%') AND rp.season >= '1908-09';
+```
+
+Result: one research.work (ccdf6127…) holds both. The 1908-09 SP list (p. 63) prints two entries: no. 3 «Аллегорическій балетъ въ 1 актѣ,
+соч. М. И. Петипа. Музыка А. К. Глазунова», dates 5 and 19 Apr 1909; no. *4 (new) «Хореографическая фантазія М. М. Фокина на музыку
+П. И. Чайковскаго», 8 Apr 1909, «Всего—1 разъ». Both production_work rows point to the same work (matched by title). Repertoire genres: 8 Apr
+1909 «хореограф. фантазія» (the only such genre in the corpus); every other of the 13 performances «бал.», «аллег. бал.» or blank. Review
+1908-09 SP p005 (folio 121), block 6: the school examination performance, given on Palm Sunday and repeated 8 April for the non-subscription
+public, «Ѳетида и Пелей» + «Времена года» + divertissement, the second a «хореографическая фантазія» to Tchaikovsky staged by Fokine. Review
+p004 names 5 April as Glazunov's «Испытаніе Дамиса» and «Времена года». No review credits or cast statements are linked to the Fokine piece.
+Checked by Claude on the scans: list p. 63 (entries 3 and *4) and Repertoire p. 48 (8 Apr «Времена года, хореограф. фантазія.»; 5 Apr «бал.»).
+
+## 2026-11-10 — «Времена года» split applied: what changed in the research layer
+
+```sql
+-- every research table, rebuild (new code) vs baseline (committed code, same input), both directions
+SELECT * FROM research.<t> EXCEPT ALL SELECT * FROM b.research.<t>;   -- and the reverse
+-- production vs baseline before the rebuild: 0 tables differ
+SELECT work_id, canonical_genre, appearance_count FROM research.work WHERE canonical_title = 'Времена года';
+SELECT production_id, work_id FROM research.production WHERE season = '1908-09' AND list_title = 'Времена года';
+SELECT w.canonical_title, w.work_id, w.canonical_genre, min(first season), appearance_count FROM research.work w
+WHERE art_form = 'ballet' AND excerpt_of_work_id IS NULL AND canonical_title IN (titles held by >1 such work);
+```
+
+Result: only research.work (+1: d0e1ef23… «Времена года», хореограф. фантазія, 1 performance; ccdf6127… 13 -> 12),
+research.performance (repertoire_1908-09_p047__s004__w2 relinked), research.production and production_work (e003 ->
+ccdf6127 with 2 dates, e004 -> d0e1ef23 with 1) differ. Ballet titles held by two works: «Времена года» (бал. 1899-00;
+хореограф. фантазія 1908-09) and «Карнавалъ» (дивертисментъ 1899-00 Moscow; пантомима-бал. 1910-11 SP). Re-export:
+98 ballets, 2,396 full + 239 excerpt performances (unchanged totals); Glazunov's «Времена года» 12, Tchaikovsky 1 (Fokine).

@@ -204,7 +204,7 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
   </section>
 
   <footer>
-    <p class="note">Performances are full performances of the ballet in the Repertoire tables; excerpts (single acts, scenes or numbers) are counted separately and shown with the Excerpts switch. Data: production research database, exported 10 Nov 2026.</p>
+    <p class="note">Two different ballets can share a title («Времена года», «Карнавалъ»); each is labelled with its printed genre and first season. Performances are full performances of the ballet in the Repertoire tables; excerpts (single acts, scenes or numbers) are counted separately and shown with the Excerpts switch. Data: production research database, exported 10 Nov 2026.</p>
     <p class="note">Made with Claude Code (AI): drafting, layout and database queries. Data model, choice of what to show and editorial decisions by the author.</p>
   </footer>
 </div>
@@ -245,7 +245,7 @@ function fillSelect(keep) {
   const sel = $('work');
   const shown = DATA.works.map((w, i) => [w, i]).filter(([w]) => passes(w));
   sel.innerHTML = shown.map(([w, i]) =>
-    `<option value="${i}">${esc(w.title)} — ${w.total} full${w.xtotal ? ' · ' + w.xtotal + ' exc.' : ''}</option>`).join('');
+    `<option value="${i}">${esc(w.title)}${w.tag ? ' (' + esc(w.tag) + ')' : ''} — ${w.total} full${w.xtotal ? ' · ' + w.xtotal + ' exc.' : ''}</option>`).join('');
   $('count').textContent = `${shown.length} of ${DATA.works.length} ballets`;
   const keepIdx = shown.find(([, i]) => i === keep);
   sel.value = keepIdx ? String(keep) : (shown[0] ? String(shown[0][1]) : '');
@@ -256,7 +256,7 @@ function render(i) {
   const w = DATA.works[i];
   if (!w) return;
   try { history.replaceState(null, '', '#w' + i + (mode === 'full' ? '' : '-' + mode)); } catch (e) {}
-  $('w-title').textContent = `«${w.title}»`;
+  $('w-title').innerHTML = `«${esc(w.title)}»` + (w.tag ? ` <span class="n" style="font-size:18px">(${esc(w.tag)})</span>` : '');
   const seasons = SEASONS.filter(se => ['SP', 'Moscow'].some(k => { const n = counts(w, se, k); return n.f + n.x > 0; }));
   const what = {full: 'full performances', excerpts: 'excerpt performances', both: 'performances, full and excerpts'}[mode];
   const span = seasons.length ? `${lab(seasons[0])}–${lab(seasons[seasons.length - 1])}` : `no ${what}`;

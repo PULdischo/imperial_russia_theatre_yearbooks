@@ -34,6 +34,8 @@ lists = q("""SELECT work_id::VARCHAR, season, city, list_title, is_premiere, n_d
 cred = dict(q("SELECT work_id::VARCHAR, count(*) FROM research.review_credit WHERE work_id IS NOT NULL GROUP BY 1"))
 cast = dict(q("SELECT work_id::VARCHAR, count(*) FROM research.review_assertion WHERE work_id IS NOT NULL GROUP BY 1"))
 season_lists = sorted({s for s, in q("SELECT DISTINCT season FROM research.production")})
+# two different ballets can share a title («Времена года», «Карнавалъ»): label each with its printed genre and first season
+genre_of = dict(q("SELECT work_id::VARCHAR, canonical_genre FROM research.work"))
 
 out = {}
 for wid, t in works:
@@ -59,6 +61,12 @@ for w in out.values():
     w['titles'].sort(key=lambda x: -x[1]); w['exc'].sort(key=lambda x: -x[2]); w['lists'].sort(key=lambda x: (x['season'], x['city']))
     w['total'] = sum(sum(v.values()) for v in w['perf'].values())
     w['xtotal'] = len(w['xrows']); w['xrows'].sort(key=lambda r: (r['date'] or '', r['city']))
+from collections import Counter
+dup = Counter(w['title'] for w in out.values())
+for wid, w in out.items():
+    if dup[w['title']] > 1:
+        first = min(list(w['perf']) + list(w['xperf']) + [l['season'] for l in w['lists']], default=None)
+        w['tag'] = ', '.join(x for x in (genre_of.get(wid), first and first.replace('-', '/')) if x)
 data = dict(works=sorted(out.values(), key=lambda w: w['title']), list_seasons=season_lists)
 p = Path(__file__).with_name('ballets.json'); p.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
 print(len(data['works']), 'ballets;', sum(w['total'] for w in out.values()), 'performances;', sum(w['xtotal'] for w in out.values()), 'excerpt performances;', p.stat().st_size // 1024, 'KB')

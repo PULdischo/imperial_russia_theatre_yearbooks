@@ -730,15 +730,27 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
     excerpt_parent = dict(con.execute(
         "SELECT work_id::VARCHAR, excerpt_of_work_id::VARCHAR FROM entities.work").fetchall())
     titles = dict(con.execute("SELECT work_id::VARCHAR, canonical_title FROM entities.work").fetchall())
+    # Keyed by the list ENTRY (its own dates), not by season + city + title: two entries can share a title and be
+    # different works (same_title_works.csv, «Времена года» SP 1908-09). A performance moved there counts for its
+    # own work.
+    entry_of = dict(con.execute(
+        "SELECT production_performance_id, production_entry_id FROM raw.production_entry_performance").fetchall())
+    same_title = {p: str(w) for p, w, _e in con.execute("SELECT * FROM same_title_split").fetchall()}
+    for p, w in con.execute("""SELECT DISTINCT CAST(s.split_work_id AS VARCHAR), w.canonical_title
+                               FROM same_title_split s JOIN research.work w ON w.work_id = s.split_work_id""").fetchall():
+        titles[p] = w
     matched = collections.defaultdict(collections.Counter)
-    for season, city, _d, title, _note, _eid, wid, parent in ballet_list_matches(con):
+    for lpid, season, city, _d, title, _note, _eid, wid, parent, rpid in _list_date_matches(con):
+        if rpid in same_title:
+            matched[entry_of[lpid]][same_title[rpid]] += 1
+            continue
         w = str(parent or wid)
         # An act excerpt counts toward its whole ballet's list entry, but an
         # excerpt the list prints under its OWN title stays itself: «Оживленный
         # садъ» is Корсаръ's Le Jardin animé given on its own, a separate
         # version with its own list entries (RG, 2026-10-26).
         up = excerpt_parent.get(w)
-        matched[(season, city, title)][w if up and norm(titles.get(w) or "") == norm(title) else (up or w)] += 1
+        matched[entry_of[lpid]][w if up and norm(titles.get(w) or "") == norm(title) else (up or w)] += 1
     entries = con.execute("""SELECT production_entry_id, season, city, title FROM raw.production_entry""").fetchall()
     # An entry whose dates name no work the Repertoire prints may still match a performance supplied from another part
     # of the yearbook (supplied_performances.csv) on the same city and date, under the list's title or its parent's
@@ -760,19 +772,19 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
             entry_dates[pid].append(typo[0] if typo else iso)
     via_supplied = set()
     for pid, season, city, title in entries:
-        if matched.get((season, city, title)):
+        if matched.get(pid):
             continue
-        via_supplied.add((season, city, title))
+        via_supplied.add(pid)
         lkeys = {norm(title)} | aliases.get(norm(title), set())
         for d in entry_dates.get(pid, []):
             for wid, tk, pk, parent in supplied_day.get((city, d), []):
                 if tk in lkeys:
-                    matched[(season, city, title)][wid] += 1
+                    matched[pid][wid] += 1
                 elif pk and pk in lkeys:
-                    matched[(season, city, title)][parent] += 1
+                    matched[pid][parent] += 1
     prod_work, best = [], {}
     for pid, season, city, title in entries:
-        cnt = matched.get((season, city, title))
+        cnt = matched.get(pid)
         if not cnt:
             continue
         for w, n in cnt.items():
@@ -784,8 +796,8 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
     for pid, season, city, title in entries:
         if pid not in best:
             continue
-        cnt, w = matched[(season, city, title)], best[pid]
-        if (season, city, title) in via_supplied:
+        cnt, w = matched[pid], best[pid]
+        if pid in via_supplied:
             basis_of[pid] = ("the entry's dates match a performance supplied from another part of the yearbook "
                              "(see that performance's performance_source_note)")
         elif norm(titles.get(w) or "") == norm(title):
@@ -795,6 +807,10 @@ def build_productions(con: duckdb.DuckDBPyConnection) -> None:
             basis_of[pid] = (f"the work most of the entry's dates match in the Repertoire ({cnt[w]} of "
                              f"{n_dates_of.get(pid)}; an excerpt counts toward its whole work); the list title differs")
 
+    for pid, w in con.execute("""SELECT DISTINCT production_entry_id, CAST(split_work_id AS VARCHAR)
+                                 FROM same_title_split WHERE production_entry_id IS NOT NULL""").fetchall():
+        if best.get(pid) != w:
+            raise SystemExit(f"same_title_works.csv: list entry {pid} matched {best.get(pid)}, not its own work {w}")
     con.execute("""
         CREATE TABLE research.production (
             production_id VARCHAR PRIMARY KEY,
@@ -1244,6 +1260,66 @@ def load_supplied_performances(con: duckdb.DuckDBPyConnection) -> int:
     if out:
         con.executemany("INSERT INTO supplied_perf VALUES (?, ?, ?, ?, ?)", out)
     return len(out)
+
+
+#: Two different works printed with the same title and the same art form (RG, 2026-11-10: Fokine's 1909
+#: «Времена года» to Tchaikovsky is not Petipa and Glazunov's ballet). Work identity in build_entities.py is title +
+#: art form, so both land on one entities.work row. Each CSV row names one printed performance (season, city, date,
+#: theater, time of day, verbatim title); the listed performances move to their own research.work row (same title,
+#: the printed genre, title_note saying which work it is), keyed by work_key. production_entry_id names the ballet-list
+#: entry that must end up on that work: build_productions matches each entry by its own dates, and the build stops if
+#: that entry lands anywhere else. Raw and entities are untouched. The build fails unless a row matches exactly one
+#: performance.
+SAME_TITLE_WORKS_CSV = Path(__file__).parent / "research_corrections" / "same_title_works.csv"
+
+
+def load_same_title_works(con: duckdb.DuckDBPyConnection) -> int:
+    """Adds rows to perf_split (so every later join follows them) and one research.work row per work_key; fills temp
+    table same_title_split (performance_id, split_work_id, production_entry_id). Runs right after the per-performance
+    genre splits, before research.performance exists."""
+    con.execute("""CREATE OR REPLACE TEMP TABLE same_title_split
+                   (performance_id VARCHAR, split_work_id UUID, production_entry_id VARCHAR)""")
+    if not SAME_TITLE_WORKS_CSV.exists():
+        return 0
+    rows = list(csv.DictReader(open(SAME_TITLE_WORKS_CSV, encoding="utf-8")))
+    new_works = {}
+    for row in rows:
+        hits = con.execute("""
+            SELECT eep.performance_id, coalesce(m.to_id, wl.work_id), eep.genre
+            FROM research.event e
+            JOIN research.theater t USING (theater_id)
+            JOIN analysis.event_entry a ON a.event_id = e.event_id
+            JOIN raw.event_entry_performance eep ON eep.event_id = e.event_id
+            JOIN entities.work_link wl ON wl.raw_performance_id = eep.performance_id
+            LEFT JOIN work_merge m ON m.from_id = wl.work_id
+            WHERE e.season = ? AND e.city = ? AND CAST(e.date AS VARCHAR) = ? AND t.canonical_name = ?
+              AND a.time_of_day = ? AND eep.performance_title = ?
+              AND eep.performance_id NOT IN (SELECT performance_id FROM perf_split)""",
+            [row["season"], row["city"], row["date"], row["theater"], row["time_of_day"],
+             row["verbatim_title"]]).fetchall()
+        if len(hits) != 1:
+            raise SystemExit(f"same_title_works.csv: {row['date']} {row['theater']} {row['verbatim_title']!r} "
+                             f"matches {len(hits)} performances")
+        perf_id, base, genre = hits[0]
+        split = uuid.uuid5(PERFORMANCE_GENRE_NAMESPACE, f"{base}|same-title:{row['work_key']}")
+        con.execute("INSERT INTO perf_split VALUES (?, ?, ?, NULL, NULL, ?)", [perf_id, base, split, row["basis"]])
+        con.execute("INSERT INTO same_title_split VALUES (?, ?, ?)", [perf_id, split, row["production_entry_id"] or None])
+        new_works.setdefault(split, (base, genre, row["title_note"], row["basis"]))
+    for split, (base, genre, note, basis) in new_works.items():
+        con.execute("""
+            INSERT INTO research.work
+            SELECT ?, w.canonical_title, ?, (SELECT count(*) FROM same_title_split s WHERE s.split_work_id = ?),
+                   NULL, NULL, CASE WHEN ? IS NOT NULL THEN 'printed' END, NULL, ?, 'repertoire',
+                   'same title as another work, a different work: pipeline/research_corrections/same_title_works.csv. '
+                   || ?, NULL, NULL, NULL
+            FROM research.work w WHERE w.work_id = ?""", [split, genre, split, genre, note, basis, base])
+        con.execute("""INSERT INTO work_ballet SELECT ?, 'printed in the ballet productions list as its own entry '
+                       || '(same_title_works.csv)' WHERE ? IN (SELECT work_id FROM work_ballet)""", [split, base])
+        con.execute("""UPDATE research.work SET appearance_count = appearance_count -
+                           (SELECT count(*) FROM same_title_split s JOIN perf_split p USING (performance_id)
+                            WHERE p.base_work_id = ?)
+                       WHERE work_id = ?""", [base, base])
+    return len(rows)
 
 
 #: Performances whose WORK the research layer takes from another part of the
@@ -2656,6 +2732,8 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         print(f"  per-performance genres: {len(split_rows)} performances moved to "
               f"{len({r[2] for r in split_rows})} research-rule work row(s)")
 
+    n_same = load_same_title_works(con)
+    print(f"  same-title works kept apart: {n_same} performance(s) moved")
     n_reworked = load_performance_work_overrides(con)
     print(f"  performances shown under a work taken from another part of the yearbook: {n_reworked}")
     n_supplied = load_supplied_performances(con)

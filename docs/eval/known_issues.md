@@ -24774,3 +24774,36 @@ genre_family divertissement, discipline stays ballet. Code in place but NOT yet 
 parallel session's in-progress edits to the same script stopped the trial build, and its own full rebuild
 (planned the same evening) will carry this change. Expected effect: ballet works 250 -> 249, programme items
 48 -> 49, genre_family ballet -1 / divertissement +1.
+
+## «Времена года», SP 1908-09: two different ballets with the same title, 2026-11-10 (RG) -- BUILT
+
+Found while building the Ballet Composers artifact: the one research.work «Времена года» carried a
+Tchaikovsky music credit beside Glazunov's. RG: "they are two different works, both ballets, with the same
+title!" Evidence (checked by Claude on the scans): the 1908-09 SP ballet list (p. 63) prints two entries,
+no. 3 «Аллегорическій балетъ въ 1 актѣ, соч. М. И. Петипа. Музыка А. К. Глазунова» (5, 19 Apr 1909) and
+no. *4 «Хореографическая фантазія М. М. Фокина на музыку П. И. Чайковскаго» (8 Apr 1909, «Всего—1 разъ»);
+the Repertoire (p. 48) prints 8 Apr «Времена года, хореограф. фантазія.», the only such genre in the corpus;
+the 1908-09 SP ballet review (folio 121) names the 8 April performance as the repeat of the school examination
+performance, Fokine's «хореографическая фантазія» to Tchaikovsky. Every other «Времена года» performance (12)
+prints «бал.», «аллег. бал.» or no genre.
+
+Cause: work identity (build_entities.py) is title + art form, so both pieces were one entities.work; and
+build_productions matched list entries to works by season + city + title, so both list entries shared one
+match ("3 of the entry's 2 dates"). This was the only pair of list entries in the corpus sharing a title in
+one season and city.
+
+Fix, research layer only: new `pipeline/research_corrections/same_title_works.csv` (one row: the 8 Apr
+performance, its list entry, a title_note and the evidence) read by `load_same_title_works` in
+build_research_model.py, which moves the performance to its own research.work (d0e1ef23…, «Времена года»,
+genre «хореограф. фантазія», art form ballet); build_productions now matches each list entry by its own dates
+and stops if the named entry lands on another work. Raw and entities untouched. Diff against a baseline build
+of the committed code: only research.work (+1 row, Petipa's count 13 -> 12), research.performance (1 row
+relinked), research.production and production_work (the two 1908-09 entries) changed. Backup:
+`outputs/full_run_pre_promote_backup_2026-11-10_same_title/`. Ballet Explorer and Ballet Composers artifacts
+re-exported and republished; both label titles shared by two ballets with genre and first season (also the
+two «Карнавалъ»). Not yet in `research_dataset.sqlite` (needs `build_datasette.py`; publishing is Andy's).
+
+Not chased (tangents for RG): the review says the examination performance was first given on Palm Sunday, a
+date the Repertoire table does not print (presumably the school theatre; not checked); and it calls «Ѳетида и
+Пелей» "one act of the old ballet «Приключенія Пелея»", a connection for the "connect productions without
+equating" design.

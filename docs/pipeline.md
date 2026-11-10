@@ -296,3 +296,9 @@ WHERE trim(p.verbatim_title) = '<printed title>' ORDER BY e.season, e.date;
 
 Then rebuild on a copy and diff `research.work` and `research.performance` against production: only the intended
 performances should move. Record the scan reading in the alias row's `basis`.
+
+- `pipeline/research_corrections/same_title_works.csv` (read by `build_research_model.py`): "this one performance is a
+  *different* work that happens to share its title and art form". The opposite of an alias: the performance moves to a
+  research.work of its own (same title, printed genre, a `title_note` saying which work it is), and the named ballet-list
+  entry must follow it, or the build stops. First case: Fokine's «Времена года» to Tchaikovsky, SP 8 Apr 1909, against
+  Petipa and Glazunov's ballet (RG, 2026-11-10; known_issues.md).
