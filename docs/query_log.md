@@ -28222,6 +28222,76 @@ Result: 105 ballets with linked review passages; 2,712 distinct passages (linked
 outputs/reviews/translations.csv (4,662 machine translations of 6 Oct 2026, for reading). Донъ-Кихотъ Moscow 1900-01: 17 linked passages,
 22 shown. Mention char offsets do not match review_passage.text (20 of 48 sampled), so highlights search the printed title forms instead.
 
+## 2026-11-10 — Are any composers of ballets women?
+
+```sql
+-- 1. Look for a gender column anywhere (none found)
+select table_schema, table_name, column_name from information_schema.columns
+where column_name ilike '%gender%' or column_name ilike '%sex%' or column_name ilike '%female%';
+
+-- 2. Every composer credited on a ballet (art_form = 'ballet'), from productions lists + season reviews
+with music as (
+  select pc.person_id, pc.name_printed, w.work_id, w.canonical_title, 'productions list' src
+  from research.production_credit pc
+  join research.production p using(production_id)
+  join research.work w on w.work_id = p.work_id
+  where pc.role_category = 'music' and w.art_form = 'ballet'
+  union all
+  select rc.person_id, rc.name_surface, w.work_id, w.canonical_title, 'season review'
+  from research.review_credit rc
+  join research.work w on w.work_id = rc.work_id
+  where rc.role_category = 'music' and w.art_form = 'ballet'
+)
+select coalesce(pe.display_name, '[unlinked] '||m.name_printed) composer, pe.wikidata_description,
+       count(distinct m.work_id) n_ballets, string_agg(distinct m.name_printed, ' | ') printed,
+       string_agg(distinct m.src, ', ') sources
+from music m left join research.person pe using(person_id) group by all order by 1;
+
+-- 3. Context for the one feminine-looking link and the undeclined surnames
+select rc.season, rc.city, rc.printed_folio, rc.work_surface, rc.printed_phrase, rc.link_method, rc.person_candidates_n
+from research.review_credit rc join research.work w using(work_id)
+where rc.role_category='music' and w.art_form='ballet'
+  and rc.name_surface in ('Симонова','Морлей','Верони-Весть','Шенбургъ','Цуни','Маренго','Константина Даль’','Арджино');
+```
+
+Result: no gender column exists. 101 composer rows (57 linked persons, 44 printed-only surnames). By name, every one is a man.
+The single woman linked, «Симонова, Антонина Александровна» (a roster performer, 1897-98–1902-03), comes from «муз. Симонова»
+(1901-02 Moscow, Конекъ-горбунокъ, folio 313) via an automatic mention-link with 4 candidates. This is almost certainly a
+mislink of a masculine genitive (Симоновъ, or Симона = А. Ю. Симонъ), not a woman composer. Undeclined forms («муз. Морлей»
+1905-06 MSK Конекъ-горбунокъ f.232; «муз. соч. Шенбургъ» 1903-04 MSK Золотая рыбка f.195; «Верони-Весть» 1901-02 SP f.174)
+are grammatically open but not checked on the scans.
+
+## 2026-11-10 — Scan check of three undeclined ballet-composer names (Морлей, Шенбургъ, Верони-Весть)
+
+```sql
+select rc.page_id, rc.block_id, rc.char_start, rc.name_surface, coalesce(b.text, b.caption_text), b.block_type
+from research.review_credit rc join raw.review_block b using(block_id)
+where rc.name_surface in ('Морлей','Шенбургъ','Верони-Весть','Цуни');
+```
+
+Result: 4 rows; passages read against outputs/reviews/images (checked by Claude). «b) Musette, муз. Морлей» (1905-06 MSK p023, f.232)
+and «муз. соч. Шенбургъ, орк. А. Ѳ. Арендсъ» (1903-04 MSK p016, f.195) match the scan; the same clause leaves «Арендсъ»
+undeclined too. «Matelote americain (муз. Верони-Вестъ)» (1901-02 SP p008, f.174) is a misread: the scan has
+hard sign «Вестъ», the transcription soft sign «Весть». Not yet corrected in the data.
+
+## 2026-11-10 — «Верони-Весть» -> «Верони-Вестъ» applied; check of the rebuild
+
+```sql
+-- per-table diff, backup vs rebuilt copy (EXCEPT ALL both ways, every table in the file)
+select count(*) from (select * from a.<schema>.<table> except all select * from b.<schema>.<table>);
+-- after the fix
+select name_surface, person_id, link_method from research.review_credit
+where name_surface in ('Верони-Вестъ','Симонова') and role_category = 'music';
+```
+
+Result: one row in docs/eval/review_text_corrections.csv; chain = apply_review_text_corrections -> build_reviews_duckdb ->
+build_review_assertions -> build_review_credits, run from the committed + staged files (the 9 Nov unstaged mention-link edits left out).
+Changed: 1 row each in raw.review_block, research.review_passage, review_credit, review_dance, review_dance_composer; nothing else.
+Production identical to the tested copy (0 tables differ). Backup outputs/backups/veroni_vest_2026-11-10/. The matcher was NOT rerun:
+a test rerun unlinks all 18 «Времена года» review mentions (two ballets of that title since 60d3072) and moves 3 dances to the wrong
+ballet (19 assertions, 17 credits lose their work). So the Симонова mention-link row is not yet in research.review_mention. Not
+re-exported: docs/figures/explorer/reviews.json still prints «Весть»; sqlite not rebuilt (Andy).
+
 ## 2026-11-10 — «Времена года» review mentions: explicit links after the same-title split (side session)
 -- production entities.review_mention (before rebuild): all 18 work mentions with normalised 'времен% года' -> ccdf6127 (Petipa/Glazunov)
 -- scratch rerun (index tree + 18 new rows in docs/eval/review_work_mention_links.csv), all 70 tables diffed against production

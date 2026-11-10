@@ -317,3 +317,17 @@ RG (2026-10-30). **A hypothesis based only on our observations of the data**, no
 - **Where it is used:** only as a flag (`research.person_tenure.change_in_refresh_year`); it never decides a date.
 - **To test:** the RGIA editorial дела for the Ежегодникъ (Ф. 497 Оп. 18, Д. 159-203: who compiled which list, when, from what);
   the dancers' own service files for the 1908-09 backdated dates.
+
+### 8. Composers of single dance numbers (Season Reviews only)
+
+RG (2026-11-10): "very interesting", follow up later, **not** in the Explore Composers artifact (which stays on the productions
+lists' «музыка» credits).
+
+- **What:** the Season Reviews credit composers for individual numbers inside divertissements, benefit performances and inserted
+  dances («Musette, муз. Морлей», «варіаціи … муз. соч. Шенбургъ, орк. А. Ѳ. Арендсъ», «Matelote americain (муз. Верони-Вестъ)»,
+  «Русскій (муз. Симонова)»). 44 of the 101 composers credited on ballet works appear only in reviews (query of 2026-11-10 in
+  `docs/query_log.md`); many are concert-repertoire names (Брамсъ, Шопенъ, Григъ, Листъ, Дворжакъ) or are otherwise unidentified.
+- **Where:** `research.review_credit` (role_category = 'music') and `research.review_dance_composer`; most are printed-only, with no
+  person link.
+- **Questions:** which music was borrowed for dance numbers, and from whom; how this differs between SP and Moscow and changes over
+  time; who the obscure names are (Морлей, Шенбургъ, Верони-Вестъ, Симонова are all unidentified).
