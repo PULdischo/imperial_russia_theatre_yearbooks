@@ -2,8 +2,7 @@
 
 A passage is "direct" when the database links it to the ballet or one of its excerpts: a work mention (entities.review_mention), a cast
 statement (research.review_assertion), a creator or craft credit (research.review_credit) or a dance number (research.review_dance).
-The passage just before and just after each direct one, in the same review section, is added as "context" so a discussion that goes on
-without naming the ballet is not cut off. Text is research.review_passage (the corrected transcription), reflowed for reading.
+Text is research.review_passage (the corrected transcription), reflowed for reading.
 English is the machine translation in outputs/reviews/translations.csv (made 2026-10-06 for reading; may predate later text corrections).
 
 usage: uv run python docs/figures/explorer/export_review_passages.py  ->  docs/figures/explorer/reviews.json"""
@@ -72,10 +71,7 @@ for wid, blocks in direct.items():
         if b not in pos:
             continue
         sect, i = pos[b]
-        keep[b] = True
-        for j in (i - 1, i + 1):
-            if 0 <= j < len(order[sect]):
-                keep.setdefault(order[sect][j], False)
+        keep[b] = True          # linked passages only (RG 2026-11-10: the neighbouring "context" passages were dropped)
     by = defaultdict(list)
     for b, is_direct in keep.items():
         d = info[b]

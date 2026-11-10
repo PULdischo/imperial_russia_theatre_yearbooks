@@ -94,6 +94,8 @@ footer { display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top
 .ltable td.Moscow { background: color-mix(in srgb, var(--mo-fill) 55%, var(--bg)); border-left: 1px solid color-mix(in srgb, var(--rule) 50%, transparent); }
 .ltable td.none { color: var(--faint); }
 .ltable td.nolist { background: var(--panel-2); color: var(--faint); font-style: italic; text-align: center; }
+.ltable td.nolist .cell { justify-items: center; margin-top: 8px; }
+.ltable td.nolist .rvbtn { font-style: normal; justify-self: center; }
 .ltable td.changed { box-shadow: inset 0 0 0 2px var(--hl); }
 .ltable tbody tr:last-child td { border-bottom: 0; }
 .hit { fill: transparent; cursor: pointer; }
@@ -411,7 +413,15 @@ function renderLists(w) {
     (ch.length ? `<div class="changes">${ch.map(([k, t]) => `<span class="chg${k === 'minus' ? ' minus' : k === 'info' ? ' info' : ''}">${esc(t)}</span>`).join('')}</div>` : '') +
     `</div>`;
   $('l-rows').innerHTML = SEASONS.map(se => {
-    if (noList.has(se)) return `<tr id="row-${se}"><td class="season">${lab(se)}</td><td class="nolist" colspan="2">no productions lists in the database for this season</td></tr>`;
+    if (noList.has(se)) {
+      // no productions lists this season, but the Season reviews may still discuss the ballet
+      const nl = city => {
+        const rv = reviewCount(w, se, city);
+        const btn = rv ? `<div class="cell"><button class="rvbtn" data-season="${se}" data-city="${city}">Season review · ${rv} passage${rv === 1 ? '' : 's'}</button></div>` : '';
+        return `<td class="nolist">no productions list in the database${btn}</td>`;
+      };
+      return `<tr id="row-${se}"><td class="season">${lab(se)}</td>${nl('SP')}${nl('Moscow')}</tr>`;
+    }
     const td = city => {
       const es = cells[city][se];
       const rv = reviewCount(w, se, city);
@@ -442,19 +452,19 @@ function highlight(text, forms) {
   return h;
 }
 function openReview(w, se, city) {
-  const b = REV.ballets[w.id], list = (b && b.seasons[se + '|' + city]) || [];
+  const b = REV.ballets[w.id], list = ((b && b.seasons[se + '|' + city]) || []).filter(x => x[1]);   // linked passages only
   const forms = [...(b ? b.hl : []), w.title, ...w.titles.map(t => t[0])];
   $('rv-eyebrow').textContent = `Season review · ${CITY[city]} · ${lab(se)}`;
   $('rv-title').textContent = `«${w.title}»`;
   const nd = list.filter(x => x[1]).length;
   $('rv-body').innerHTML =
     `<p class="note">${nd} passage${nd === 1 ? '' : 's'} the database links to this ballet (its title, excerpts, cast lists, dance numbers or credits), ` +
-    `in reading order, with the passage just before and after each in dashed outline. Mentions of the title are highlighted. ` +
+    `in reading order. Mentions of the title are highlighted. ` +
     `Text as transcribed; not checked against the scans.</p>` +
     list.map(([id, direct], i) => {
       const p = REV.passages[id];
       return `<div class="psg${direct ? '' : ' ctx'}"><div class="pmeta"><span>${p.folio ? 'p. ' + esc(p.folio) : ''}</span>` +
-        `<span>${esc(p.genre === 'All' ? 'general review' : (p.genre || '').toLowerCase() + ' review')}</span>${direct ? '' : '<span>context</span>'}` +
+        `<span>${esc(p.genre === 'All' ? 'general review' : (p.genre || '').toLowerCase() + ' review')}</span>` +
         (p.en ? `<button class="enbtn" aria-expanded="false" data-i="${i}">English</button>` : '') + `</div>` +
         `<div class="ptxt">${highlight(p.ru, forms)}</div>` +
         (p.en ? `<div class="en" id="en-${i}" hidden><span class="tag">Machine translation, made for reading (6 Oct 2026); may predate later text corrections</span>${esc(p.en)}</div>` : '') +
