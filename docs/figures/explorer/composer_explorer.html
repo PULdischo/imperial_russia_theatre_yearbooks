@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>Imperial Ballet Composers</title>
+<title>Explore Composers</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,6 +82,11 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .heat col.tot { width: 64px; }
 .heat th.s, .heat td.s { text-align: center; padding: 5px 1px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .heat th.s { font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.heat th.sort { cursor: pointer; }
+.heat th.sort:hover { color: var(--text); }
+.heat th.sort:focus-visible { outline: 2px solid var(--mo); outline-offset: -2px; }
+.heat th.sorted { color: var(--text); box-shadow: inset 0 -3px 0 var(--hl); }
+.heat td.sorted { box-shadow: inset 2px 0 0 var(--hl), inset -2px 0 0 var(--hl); }
 .heat td.title { position: sticky; left: 0; background: var(--panel); z-index: 1; overflow-wrap: anywhere; }
 .heat th.title { position: sticky; left: 0; z-index: 2; }
 tr.pick { cursor: pointer; }
@@ -165,7 +170,7 @@ a { color: var(--sp-text); }
   <section>
     <div class="eyebrow">All composers, season by season</div>
     <div class="tablewrap"><table class="heat" id="heat"></table></div>
-    <div class="hint">Both cities together; hover a cell for the split. Click a composer to open them above.</div>
+    <div class="hint">Both cities together; hover a cell for the split. Click a season to rank composers by that season's performances (click it again, or Total, to go back). Click a composer to open them above.</div>
   </section>
 
   <section>
@@ -185,7 +190,7 @@ const lab = s => s.replace('-', '/');
 const CITY = {SP: 'St Petersburg', Moscow: 'Moscow'};
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
-let DATA = null, mode = 'full', cur = 0;
+let DATA = null, mode = 'full', cur = 0, heatSort = null;   // heatSort: a season, or null for overall totals
 
 const cnt = (b, se, city) => (mode === 'excerpts' ? 0 : ((b.f[se] || {})[city] || 0)) + (mode === 'full' ? 0 : ((b.x[se] || {})[city] || 0));
 const tot = c => mode === 'full' ? c.ftotal : mode === 'excerpts' ? c.xtotal : c.ftotal + c.xtotal;
@@ -280,20 +285,34 @@ function drawCredits(c) {
 }
 
 function drawHeat() {
-  const order = DATA.composers.map((c, i) => [c, i, tot(c)]).filter(r => r[2] > 0).sort((a, b) => b[2] - a[2] || a[0].name.localeCompare(b[0].name, 'ru'));
+  const sn = c => heatSort ? ctot(c, heatSort, 'SP') + ctot(c, heatSort, 'Moscow') : 0;
+  const order = DATA.composers.map((c, i) => [c, i, tot(c)]).filter(r => r[2] > 0)
+    .sort((a, b) => sn(b[0]) - sn(a[0]) || b[2] - a[2] || a[0].name.localeCompare(b[0].name, 'ru'));
+  const hs = (k, inner, label) => `<th class="s sort${k === heatSort ? ' sorted' : ''}" data-sort="${k ?? ''}" tabindex="0" role="button"` +
+    ` aria-pressed="${k === heatSort}" title="${label}">${inner}</th>`;
   const max = Math.max(1, ...order.flatMap(([c]) => SEASONS.map(se => ctot(c, se, 'SP') + ctot(c, se, 'Moscow'))));
   const shade = n => n ? `background: color-mix(in srgb, var(--hl) ${Math.round(8 + 62 * Math.sqrt(n / max))}%, var(--panel));${n / max > .45 ? 'color: var(--bg); font-weight: 700;' : ''}` : '';
   $('heat').innerHTML = `<colgroup><col class="t">${SEASONS.map(() => '<col>').join('')}<col class="tot"></colgroup>` +
-    `<thead><tr><th class="title">Composer</th>${SEASONS.map(se => `<th class="s">${lab(se).replace('/', '/<wbr>')}</th>`).join('')}<th class="s">Total</th></tr></thead><tbody>` +
+    `<thead><tr><th class="title">Composer${heatSort ? ` <span class="n">ranked by ${lab(heatSort)}</span>` : ''}</th>${SEASONS.map(se => hs(se, lab(se).replace('/', '/<wbr>'), `Rank composers by ${lab(se)}`)).join('')}${hs(null, 'Total', 'Rank composers by total')}</tr></thead><tbody>` +
     order.map(([c, i, t]) => `<tr class="pick" data-i="${i}" tabindex="0"><td class="title">${esc(c.name)}</td>` +
       SEASONS.map(se => { const sp = ctot(c, se, 'SP'), mo = ctot(c, se, 'Moscow'), n = sp + mo;
-        return `<td class="s" style="${shade(n)}" title="${esc(c.name)}, ${lab(se)}: St Petersburg ${sp}, Moscow ${mo}">${n || ''}</td>`; }).join('') +
+        return `<td class="s${se === heatSort ? ' sorted' : ''}" style="${shade(n)}" title="${esc(c.name)}, ${lab(se)}: St Petersburg ${sp}, Moscow ${mo}">${n || ''}</td>`; }).join('') +
       `<td class="s num"><b>${t}</b></td></tr>`).join('') + '</tbody>';
   for (const r of document.querySelectorAll('#heat tr.pick')) r.classList.toggle('sel', +r.dataset.i === cur);
 }
 function pickRow(r) { render(+r.dataset.i); $('comp').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center'}); }
-$('heat').addEventListener('click', e => { const r = e.target.closest('tr.pick'); if (r) pickRow(r); });
-$('heat').addEventListener('keydown', e => { const r = e.target.closest('tr.pick'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickRow(r); } });
+function sortHeat(th) {
+  const k = th.dataset.sort || null;
+  heatSort = k === heatSort ? null : k;
+  drawHeat();
+  const again = document.querySelector(`#heat th[data-sort="${heatSort ?? ''}"]`); if (again) again.focus({preventScroll: true});
+}
+$('heat').addEventListener('click', e => { const th = e.target.closest('th.sort'); if (th) return sortHeat(th); const r = e.target.closest('tr.pick'); if (r) pickRow(r); });
+$('heat').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const th = e.target.closest('th.sort'), r = e.target.closest('tr.pick');
+  if (th || r) { e.preventDefault(); th ? sortHeat(th) : pickRow(r); }
+});
 $('comp').addEventListener('change', e => render(+e.target.value));
 $('modes').addEventListener('click', e => {
   const b = e.target.closest('.chip'); if (!b) return;
