@@ -27835,6 +27835,22 @@ SELECT work_id, verbatim_title, count(*) FROM research.performance GROUP BY ALL;
 Result: 98 ballets, 2,398 full performances; ballets.json 194 KB. Cross-check: Донъ-Кихотъ 80 performances, 108 credits, 132 cast
 statements, 17 list entries (= the slide). List text is raw transcription, not scan-checked (the page says so).
 
+## 2026-11-06 — Ballets with the longest first-to-last span in the Repertoire
+
+```sql
+WITH f AS (SELECT p.work_id, min(e.date::DATE) d0, max(e.date::DATE) d1, count(*) n, count(DISTINCT e.season) ns, min(e.season) s0,
+                  max(e.season) s1, string_agg(DISTINCT e.city, '+') cities
+             FROM research.performance p JOIN research.event e USING (event_id) JOIN research.work w ON w.work_id = p.work_id
+            WHERE w.art_form = 'ballet' AND w.excerpt_of_work_id IS NULL AND e.date IS NOT NULL GROUP BY 1)
+SELECT w.canonical_title, d0, d1, (d1 - d0) / 365.25, s0, s1, ns, n, cities FROM f JOIN research.work w USING (work_id) ORDER BY d1 - d0 DESC;
+-- plus first/last excerpt dates per parent work
+```
+
+Result: Repertoire dates run 16 Aug 1890 – 19 May 1911 (21 seasons). Full span 1890-91..1910-11 (first and last season of the record):
+Конекъ-горбунокъ (21/21 seasons, 234 perf), Спящая красавица (21/21, 205), Коппелія (21/21, 107), Эсмеральда (19/21, 74),
+Донъ-Кихотъ (14/21, 80), Капризы бабочки (12/21, 29, SP only), Талисманъ (5/21, 16, SP only). Then Тщетная предосторожность and Дочь
+фараона (from 1891-92), Царь Кандавлъ, Корсаръ, Щелкунчикъ, Пахита, Лебединое озеро, Жизель. Spans are censored by the record's edges.
+
 ## 2026-11-06 — Can every staff-list appearance be cited by volume and page? (list_number ruling)
 
 ```sql
@@ -28052,3 +28068,17 @@ transcribed; 3 old casts found -> old-cast safeguard widened (24 caught). Role c
 
 Result: 703 linked pupil mentions; 529 fit; 96 corrected (55 relink, 41 unlink); scan sample 10/10; diff = review_mention 96, review_assertion 6,
 review_dance_performer 20; 0 person_link shifts. Production = tested copy.
+
+## 2026-11-10 — Ballet Explorer: excerpt performances added (export_ballet_data.py re-run)
+
+```sql
+-- as 2026-11-06, plus: parents reached only through excerpts; and every excerpt performance
+SELECT w.excerpt_of_work_id, e.season, e.city, e.date, e.time_of_day, t.canonical_name, e.printed_page_number,
+       coalesce(p.verbatim_title, w.canonical_title), p.verbatim_genre
+  FROM research.work w JOIN research.performance p ON p.work_id = w.work_id JOIN research.event e USING (event_id)
+  LEFT JOIN research.theater t USING (theater_id) WHERE w.excerpt_of_work_id IS NOT NULL;
+```
+
+Result: 97 ballets (3 known only from excerpts: Виноградная лоза, Папоротникъ…, Пери), 2,396 full performances, 239 excerpt
+performances. (98 / 2,398 on 11-06: the database was rebuilt since.) Донъ-Кихотъ 80 full / 7 excerpts; Волшебное зеркало 26 / 9, the 9
+matching the 2026-11-06 scan-checked cells.
