@@ -1262,6 +1262,33 @@ def load_supplied_performances(con: duckdb.DuckDBPyConnection) -> int:
     return len(out)
 
 
+#: Excerpts whose parent work the Repertoire never prints but the Season Reviews name (entities.review_work), so the
+#: curated excerpt links in build_entities.py (entities.work only) cannot reach it (RG, 2026-11-10: «Ѳетида и Пелей»,
+#: "one act of the old ballet «Приключенія Пелея»"). Sets research.work.excerpt_of_work_id / excerpt_note; the excerpt
+#: keeps its own title, performances and list entries (as «Оживленный садъ» does under «Корсаръ»). The build fails
+#: unless each side matches exactly one work.
+REVIEW_PARENT_EXCERPTS_CSV = Path(__file__).parent / "research_corrections" / "review_parent_excerpts.csv"
+
+
+def apply_review_parent_excerpts(con: duckdb.DuckDBPyConnection) -> int:
+    if not REVIEW_PARENT_EXCERPTS_CSV.exists() or not con.execute(
+            "SELECT count(*) FROM research.work WHERE work_source = 'review'").fetchone()[0]:
+        return 0    # no review works yet (a build before the Season Reviews are loaded)
+    n = 0
+    for row in csv.DictReader(open(REVIEW_PARENT_EXCERPTS_CSV, encoding="utf-8")):
+        ex = con.execute("""SELECT work_id FROM research.work WHERE canonical_title = ? AND canonical_genre IS NOT DISTINCT FROM ?
+                            AND work_source = 'repertoire'""", [row["excerpt_title"], row["excerpt_genre"] or None]).fetchall()
+        par = con.execute("SELECT work_id FROM research.work WHERE canonical_title = ? AND work_source = 'review'",
+                          [row["parent_title"]]).fetchall()
+        if len(ex) != 1 or len(par) != 1:
+            raise SystemExit(f"review_parent_excerpts.csv: {row['excerpt_title']!r} matches {len(ex)} works, "
+                             f"{row['parent_title']!r} matches {len(par)} review works")
+        con.execute("UPDATE research.work SET excerpt_of_work_id = ?, excerpt_note = ? WHERE work_id = ?",
+                    [par[0][0], row["excerpt_note"], ex[0][0]])
+        n += 1
+    return n
+
+
 #: Two different works printed with the same title and the same art form (RG, 2026-11-10: Fokine's 1909
 #: «Времена года» to Tchaikovsky is not Petipa and Glazunov's ballet). Work identity in build_entities.py is title +
 #: art form, so both land on one entities.work row. Each CSV row names one printed performance (season, city, date,
@@ -2370,6 +2397,9 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
                    NULL, NULL, NULL
             FROM entities.review_work rw
         """)
+    n_rpx = apply_review_parent_excerpts(con)
+    if n_rpx:
+        print(f"  excerpts of a work named only in the Season Reviews: {n_rpx}")
     con.execute("""
         CREATE OR REPLACE TEMP TABLE work_ballet AS
         SELECT pg.work_id, any_value(pg.note) AS note

@@ -24807,3 +24807,25 @@ Not chased (tangents for RG): the review says the examination performance was fi
 date the Repertoire table does not print (presumably the school theatre; not checked); and it calls «Ѳетида и
 Пелей» "one act of the old ballet «Приключенія Пелея»", a connection for the "connect productions without
 equating" design.
+
+## «Ѳетида и Пелей» is an excerpt of «Приключенія Пелея», 2026-11-10 (RG) -- BUILT
+
+RG: "Yes, as excerpt", like «Оживленный садъ» under «Корсаръ» (keeps its own title and list entry). Evidence, scan read by
+Claude 2026-11-10: 1908-09 SP ballet review f. 121, «Первый балетъ—собственно одинъ актъ изъ стараго балета «Приключенія
+Пелея»—былъ возобновленъ г-жей Куличевской»; f. 122, given to the public once; list p. 65 no. 26 (not marked new), «Миѳологическій
+балетъ въ 1 д., соч. М. Петипа, музыка Л. Делиба и Л. Минкуса», 8 Apr 1909; 1903-04 SP f. 115, Кшесинская danced «Приключенія
+Пелея» at a court gala (Петергофъ). «Приключенія Пелея» is a review-only work (entities.review_work), never printed in the
+Repertoire or the lists, so the curated excerpt links (build_entities.py, entities.work only) cannot reach it.
+
+Fix: new `pipeline/research_corrections/review_parent_excerpts.csv` + `apply_review_parent_excerpts` in
+build_research_model.py set research.work.excerpt_of_work_id / excerpt_note («one act of «Приключенія Пелея»»); art form now
+from the parent (ballet either way). Three folio-121 review credits the reader had put on «Приключенія Пелея» reassigned in
+`docs/eval/review_credit_overrides.csv` (persons unchanged): Куличевская staging-revival -> «Ѳетида и Пелей»; Чайковскій music
+and Фокинъ staging -> Fokine's «Времена года» (d0e1ef23…). «Приключенія Пелея» source_note now reads "mention only". Rebuild
+order: build_review_credits.py, then build_research_model.py. Diff vs production: research.work 2 rows, research.review_credit 3
+rows, nothing else. Backup: `outputs/full_run_pre_promote_backup_2026-11-10_peleus/`. Not yet in `research_dataset.sqlite`.
+
+Exports: list entries filed under an excerpt (the 3 «Оживленный садъ», «Ѳетида и Пелей») are now shown under the parent ballet,
+labelled with the printed title, in both explorers. Before this the Ballet Explorer left them out entirely, and the composer
+export (2026-11-10 morning) showed them as untitled "?" ballets under Delibes and Minkus. Their performances take the excerpt's
+own list credits. Ballet Explorer totals: 2,395 full + 240 excerpt performances (one moved from full to excerpt).

@@ -275,7 +275,7 @@ function drawCredits(c) {
   $('c-head').textContent = `Music credits as printed (${rows.length} list entr${rows.length === 1 ? 'y' : 'ies'})`;
   $('c-body').innerHTML = rows.length ? rows.map(r =>
     `<tr><td>${bt(r.b)}</td><td class="num">${lab(r.season)}</td><td><span class="city ${r.city}">${CITY[r.city] || r.city}</span></td>` +
-    `<td>${esc(r.role)} ${esc(r.name)}</td><td class="num">${r.page ? 'p. ' + esc(r.page) : '—'}</td></tr>`).join('')
+    `<td>${r.listed ? '<i>as «' + esc(r.listed) + '»:</i> ' : ''}${esc(r.role)} ${esc(r.name)}</td><td class="num">${r.page ? 'p. ' + esc(r.page) : '—'}</td></tr>`).join('')
     : '<tr><td colspan="5" class="empty">No list entries.</td></tr>';
 }
 

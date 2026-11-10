@@ -3,7 +3,9 @@
 Composers come from the productions lists only (research.production_credit, role_category = 'music'). A performance in season S and
 city C is attributed to the composers printed in that ballet's own list entry for S and C; where there is no such entry (no list
 that season, or the ballet is not in it) it falls back to every composer any list credits for the ballet. A ballet with several
-composers counts in full under each. Excerpts (works with excerpt_of_work_id) count under the parent ballet's composers.
+composers counts in full under each. Excerpts (works with excerpt_of_work_id) count under the parent ballet, attributed to the
+excerpt's own list credits where the lists print it under its own title («Оживленный садъ», «Ѳетида и Пелей»), otherwise to the
+parent's. Such a list entry is shown under the parent ballet with the title the list prints.
 
 usage: uv run python docs/figures/explorer/export_composer_data.py  ->  docs/figures/explorer/composers.json"""
 import json, sys
@@ -27,37 +29,45 @@ dup = Counter(works.values())
 tag = {w: ', '.join(x for x in (genre_of.get(w), (first_of.get(w) or '').replace('-', '/')) if x)
        for w, t in works.items() if dup[t] > 1}
 # full performances and excerpt performances, per parent ballet, season, city
-perf = q("""SELECT coalesce(w.excerpt_of_work_id, w.work_id)::VARCHAR, w.excerpt_of_work_id IS NOT NULL, e.season, e.city, count(*)
+perf = q("""SELECT coalesce(w.excerpt_of_work_id, w.work_id)::VARCHAR, w.work_id::VARCHAR, w.excerpt_of_work_id IS NOT NULL,
+                   e.season, e.city, count(*)
             FROM research.performance p JOIN research.work w USING (work_id) JOIN research.event e USING (event_id)
             WHERE w.art_form = 'ballet' GROUP BY ALL""")
 credits = q("""SELECT p.work_id::VARCHAR, p.season, p.city, pc.person_id::VARCHAR, pc.role_text, pc.name_printed,
                       p.printed_page_number, p.list_title
                FROM research.production_credit pc JOIN research.production p USING (production_id)
                WHERE pc.role_category = 'music' AND p.work_id IS NOT NULL""")
+parent_of = dict(q("SELECT work_id::VARCHAR, excerpt_of_work_id::VARCHAR FROM research.work WHERE excerpt_of_work_id IS NOT NULL"))
 people = {pid: dict(name=dn, wd=wl, qid=qid) for pid, dn, wl, qid in
           q("SELECT person_id::VARCHAR, display_name, wikidata_label, wikidata_qid FROM research.person")}
 list_seasons = sorted(s for s, in q("SELECT DISTINCT season FROM research.production"))
 
 by_entry = defaultdict(set)     # (work, season, city) -> composers printed in that entry
 by_work = defaultdict(set)      # work -> every composer any list credits
-entries = defaultdict(list)     # (composer, work) -> printed credits
+entries = defaultdict(list)     # (composer, parent ballet) -> printed credits
+others_of = defaultdict(set)    # parent ballet -> composers credited on it or on an excerpt of it
 forms = defaultdict(lambda: defaultdict(int))
 for wid, s, c, pid, role, name, page, lt in credits:
-    by_entry[(wid, s, c)].add(pid); by_work[wid].add(pid)
-    entries[(pid, wid)].append(dict(season=s, city=c, role=role, name=name, page=page))
+    by_entry[(wid, s, c)].add(pid); by_work[wid].add(pid)    # keyed by the work the entry is filed under (maybe an excerpt)
+    top = parent_of.get(wid, wid)
+    others_of[top].add(pid)
+    entries[(pid, top)].append(dict(season=s, city=c, role=role, name=name, page=page,
+                                    listed=lt if top != wid else None))
     forms[pid][name] += 1
 
 comp = {}   # composer -> {ballet -> {'f': {season: {city: n}}, 'x': ...}}
 uncredited = defaultdict(lambda: dict(f=0, x=0, where=set()))
-for wid, is_x, s, c, n in perf:
+for wid, own, is_x, s, c, n in perf:
     if wid not in works:
         continue
-    who = by_entry.get((wid, s, c)) or by_work.get(wid)
+    # an excerpt the lists print under its own title takes that entry's credits; any other performance, its ballet's
+    hit = [k for k in ((own, s, c), (wid, s, c)) if k in by_entry]
+    who = (by_entry[hit[0]] if hit else None) or (is_x and by_work.get(own)) or by_work.get(wid)
     if not who:
         uncredited[wid]['x' if is_x else 'f'] += n
         uncredited[wid]['where'].add(s + ' ' + c)
         continue
-    basis = 'entry' if (wid, s, c) in by_entry else 'fallback'
+    basis = 'entry' if hit else 'fallback'
     for pid in who:
         b = comp.setdefault(pid, {}).setdefault(wid, dict(f={}, x={}, basis={}))
         d = b['x' if is_x else 'f'].setdefault(s, {}); d[c] = d.get(c, 0) + n
@@ -70,7 +80,7 @@ out = []
 for pid, ballets in comp.items():
     bl = []
     for wid, b in ballets.items():
-        others = sorted(people[o]['name'] for o in by_work[wid] if o != pid)
+        others = sorted(people[o]['name'] for o in others_of[wid] if o != pid)
         bl.append(dict(title=works.get(wid, '?'), tag=tag.get(wid), f=b['f'], x=b['x'], basis=b['basis'], others=others,
                        credits=sorted(entries.get((pid, wid), []), key=lambda e: (e['season'], e['city'])),
                        ftotal=sum(sum(v.values()) for v in b['f'].values()), xtotal=sum(sum(v.values()) for v in b['x'].values())))

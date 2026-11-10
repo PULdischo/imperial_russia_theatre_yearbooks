@@ -302,3 +302,7 @@ performances should move. Record the scan reading in the alias row's `basis`.
   research.work of its own (same title, printed genre, a `title_note` saying which work it is), and the named ballet-list
   entry must follow it, or the build stops. First case: Fokine's «Времена года» to Tchaikovsky, SP 8 Apr 1909, against
   Petipa and Glazunov's ballet (RG, 2026-11-10; known_issues.md).
+- `pipeline/research_corrections/review_parent_excerpts.csv` (read by `build_research_model.py`): "this work is an excerpt
+  of a work the Repertoire never prints but the Season Reviews name" (`entities.review_work`), which the curated excerpt links
+  in `build_entities.py` cannot reach. Sets `excerpt_of_work_id` / `excerpt_note`; the excerpt keeps its title and list entry.
+  First case: «Ѳетида и Пелей», one act of «Приключенія Пелея» (RG, 2026-11-10).

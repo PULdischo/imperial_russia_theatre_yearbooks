@@ -28158,3 +28158,51 @@ research.performance (repertoire_1908-09_p047__s004__w2 relinked), research.prod
 ccdf6127 with 2 dates, e004 -> d0e1ef23 with 1) differ. Ballet titles held by two works: «Времена года» (бал. 1899-00;
 хореограф. фантазія 1908-09) and «Карнавалъ» (дивертисментъ 1899-00 Moscow; пантомима-бал. 1910-11 SP). Re-export:
 98 ballets, 2,396 full + 239 excerpt performances (unchanged totals); Glazunov's «Времена года» 12, Tchaikovsky 1 (Fokine).
+
+## 2026-11-10 — «Ѳетида и Пелей» and «Приключенія Пелея»: what the yearbooks record, and how they are linked
+
+```sql
+SELECT work_id, canonical_title, canonical_genre, appearance_count, excerpt_of_work_id, art_form, title_note, work_source
+FROM research.work WHERE canonical_title ILIKE '%Пеле%';
+SELECT w.canonical_title, e.season, e.city, e.date, t.canonical_name, p.verbatim_title, p.verbatim_genre, e.printed_page_number
+FROM research.performance p JOIN research.work w USING (work_id) JOIN research.event e USING (event_id)
+LEFT JOIN research.theater t USING (theater_id) WHERE w.canonical_title ILIKE '%Пеле%';
+SELECT performance_title, genre, count(*) FROM raw.event_entry_performance
+WHERE performance_title ILIKE '%Пеле%' OR performance_title ILIKE '%Ѳетид%' OR performance_title ILIKE '%Ѳемид%' GROUP BY ALL;
+SELECT season, city, list_title, list_number, is_premiere, n_dates, printed_page_number, description_text FROM research.production
+WHERE list_title ILIKE '%Пеле%';
+SELECT * FROM entities.review_work WHERE canonical_title ILIKE '%Пеле%';
+SELECT rp.season, rp.city, rp.printed_folio, p.page_id, p.block_index, p.text FROM research.review_passage p
+JOIN research.review_page rp USING (page_id) WHERE p.text ILIKE '%Пеле%' OR p.text ILIKE '%Ѳетид%';
+SELECT season, printed_folio, work_surface, role_category, printed_phrase, name_surface, person_id, link_method
+FROM research.review_credit WHERE work_id::VARCHAR IN ('05f1a0a1-c7f9-5ee9-b037-24cd10d6bc09', 'a502fe5e-58a9-5e64-a61b-2c93aa64bb34');
+SELECT * FROM research.review_mention WHERE work_id::VARCHAR IN (same two);
+SELECT w.canonical_title, pw.canonical_title FROM research.work w LEFT JOIN research.work pw ON pw.work_id = w.excerpt_of_work_id
+WHERE w.canonical_title ILIKE 'Оживлен%';
+```
+
+Result: «Ѳетида и Пелей» (a502fe5e…, бал.) has 1 performance: Маріинскій 8 Apr 1909 (printed «Ѳемида и Пелей», ruled a print
+slip 2026-10-26), and 1 list entry: 1908-09 SP no. 26, p. 65, not marked new, «Миѳологическій балетъ въ 1 д., соч. М. Петипа,
+музыка Л. Делиба и Л. Минкуса», 1 date. «Приключенія Пелея» (05f1a0a1…) is a review-only work, 0 performances, no list entry:
+1903-04 SP f. 115 (Кшесинская danced it at a court gala, Петергофъ) and 1908-09 SP f. 121 («Ѳетида и Пелей» is «собственно одинъ
+актъ изъ стараго балета «Приключенія Пелея»», revived by г-жа Куличевская); f. 122 says «Ѳетида и Пелей» and «Времена года»
+(г. Фокина) were given to the public once. No excerpt or other link between the two works. Three f. 121 review credits sit on
+«Приключенія Пелея» although the passage gives them to other works: staging-revival Куличевская (-> «Ѳетида и Пелей»), music
+Чайковскій and staging Фокинъ (-> Fokine's «Времена года», d0e1ef23…); person links correct. «Оживленный садъ» precedent: excerpt_of «Корсаръ»
+(note «Le Jardin animé»), 4 performances, and its own list entries (1901-02, 1907-08, 1908-09 SP) stay on «Оживленный садъ». Checked by Claude on the scans: list p. 65, review 1908-09 ff. 121-122, 1903-04 f. 115.
+
+## 2026-11-10 — «Ѳетида и Пелей» excerpt link + three folio-121 credits: what changed
+
+```sql
+SELECT credit_id, block_id, name_surface, char_start, role_category, work_id, work_surface, work_source, person_id
+FROM research.review_credit WHERE block_id = 'review_1908-09_SP_ballet_p005__b006';
+-- every research table, rebuilt copy vs production, both directions (EXCEPT ALL); then production vs tested copy
+SELECT w.canonical_title, pw.canonical_title, count(*) FROM research.production p JOIN research.work w ON w.work_id = p.work_id
+JOIN research.work pw ON pw.work_id = w.excerpt_of_work_id GROUP BY ALL;
+```
+
+Result: block b006 credits 2369 Куличевской, 2370 Чайковскаго, 2371 Фокинымъ, all on 05f1a0a1… («Приключенія Пелея»), work_source
+'clause'. After the rebuild: review_credit +3/-3 (the three now on a502fe5e… / d0e1ef23…, work_source 'curated'), work +2/-2
+(«Ѳетида и Пелей» excerpt_of 05f1a0a1…; «Приключенія Пелея» source_note «mention only …»); production = tested copy (0 tables
+differ). List entries filed under an excerpt: «Оживленный садъ» (Корсаръ) 3, «Ѳетида и Пелей» (Приключенія Пелея) 1. Export:
+98 ballets, 2,395 full + 240 excerpt performances; 52 composers, 101 composer-ballet pairs, 12 performed ballets with no credit.

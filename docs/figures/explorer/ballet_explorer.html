@@ -362,6 +362,10 @@ function renderLists(w) {
   for (const city of ['SP', 'Moscow']) {
     let prev = null;
     for (const l of w.lists.filter(l => l.city === city)) {
+      if (l.excerpt) {   // an entry for an excerpt under its own title: shown, but not compared with the whole ballet's entries
+        (cells[city][l.season] ||= []).push({l, ch: [['info', 'list entry for an excerpt']], marks: [], changed: false});
+        continue;
+      }
       const f = feats(l.text), {ch, marks} = compare(prev, f);
       if (!f.selected) prev = f;
       (cells[city][l.season] ||= []).push({l, ch, marks, changed: ch.some(c => c[0] !== 'info')});

@@ -54,9 +54,14 @@ for wid, s, c, d, tod, th, pp, t, g in xrows:
         out[wid]['xperf'].setdefault(s, {})
         out[wid]['xperf'][s][c] = out[wid]['xperf'][s].get(c, 0) + 1
         out[wid]['xrows'].append(dict(season=s, city=c, date=d, session=tod, theater=th, page=pp, text=t, genre=g))
+# a list entry filed under an excerpt the list prints under its own title («Оживленный садъ», «Ѳетида и Пелей») is shown
+# under the whole ballet, marked as an excerpt entry
+parent_of = dict(q("SELECT work_id::VARCHAR, excerpt_of_work_id::VARCHAR FROM research.work WHERE excerpt_of_work_id IS NOT NULL"))
 for wid, s, c, lt, prem, nd, pp, desc in lists:
-    if wid in out:
-        out[wid]['lists'].append(dict(season=s, city=c, title=lt, premiere=bool(prem), dates=nd, page=pp, text=desc))
+    top = parent_of.get(wid, wid)
+    if top in out:
+        out[top]['lists'].append(dict(season=s, city=c, title=lt, premiere=bool(prem), dates=nd, page=pp, text=desc,
+                                      excerpt=top != wid))
 for w in out.values():
     w['titles'].sort(key=lambda x: -x[1]); w['exc'].sort(key=lambda x: -x[2]); w['lists'].sort(key=lambda x: (x['season'], x['city']))
     w['total'] = sum(sum(v.values()) for v in w['perf'].values())
