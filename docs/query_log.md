@@ -28221,3 +28221,13 @@ SELECT b.block_id, b.page_id, b.block_index, b.block_type, b.text, b.caption_tex
 Result: 105 ballets with linked review passages; 2,712 distinct passages (linked + the one before/after each); English from
 outputs/reviews/translations.csv (4,662 machine translations of 6 Oct 2026, for reading). Донъ-Кихотъ Moscow 1900-01: 17 linked passages,
 22 shown. Mention char offsets do not match review_passage.text (20 of 48 sampled), so highlights search the printed title forms instead.
+
+## 2026-11-10 — «Времена года» review mentions: explicit links after the same-title split (side session)
+-- production entities.review_mention (before rebuild): all 18 work mentions with normalised 'времен% года' -> ccdf6127 (Petipa/Glazunov)
+-- scratch rerun (index tree + 18 new rows in docs/eval/review_work_mention_links.csv), all 70 tables diffed against production
+--   (EXCEPT ALL both ways, candidate-id columns ignored):
+--   entities/research.review_mention 19 rows: 16 «Времена года» same work (method now 'curated'), 27083 (f. 121) and 27116 (f. 122)
+--   -> d0e1ef23 (Fokine); 13789 «Симонова» unlinked (staged row). review_assertion 4, review_dance_performer 14, review_solo 2:
+--   candidate-id order only (Левенсонъ, Вольфъ-Израэль). review_credit, review_dance: identical.
+-- production after rebuild: review_mention ccdf6127 16 / d0e1ef23 2; review_assertion ccdf6127 17 (unchanged);
+--   review_credit ccdf6127 17, d0e1ef23 2 (unchanged); production = tested copy apart from candidate-id order.

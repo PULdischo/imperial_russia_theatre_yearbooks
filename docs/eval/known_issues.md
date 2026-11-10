@@ -24829,3 +24829,15 @@ Exports: list entries filed under an excerpt (the 3 «Оживленный са�
 labelled with the printed title, in both explorers. Before this the Ballet Explorer left them out entirely, and the composer
 export (2026-11-10 morning) showed them as untitled "?" ballets under Delibes and Minkus. Their performances take the excerpt's
 own list credits. Ballet Explorer totals: 2,395 full + 240 excerpt performances (one moved from full to excerpt).
+
+## «Времена года» review mentions linked explicitly, 2026-11-10 -- APPLIED
+
+Since the same-title split (60d3072) a matcher rerun left all 18 review mentions of «Времена года» unlinked (two ballets of that
+title). 18 rows in `docs/eval/review_work_mention_links.csv`: 16 -> Petipa/Glazunov's ballet (ccdf6127…; 1899-00, 1906-07,
+1907-08, 1910-11, 1912-13 and 1908-09 f. 120, the 5 Apr «два балета А. К. Глазунова» bill and its 19 Apr repeat), 2 -> Fokine's
+(d0e1ef23…): f. 121, the examination performance («хореографическая фантазія» на музыку Чайковскаго, поставленная г. Фокинымъ),
+and f. 122, ««Временъ года» (г. Фокина), которые были даны для публики 1 разъ» (RG 2026-11-10: "Yes, Fokine's"). 1908-09 scans
+read by Claude. Tested on a scratch copy built from the git index (not the unstaged 9 Nov matcher/Ѳедорова edits), every table
+diffed: only those two mentions change work; the staged «Симонова» unlink (13789) goes in with this rerun; other differences are
+candidate-id order only. Production rebuilt (matcher -> build_reviews_duckdb -> assertions -> credits; text corrections step not
+needed). Backup `outputs/backups/vremena_goda_links_2026-11-10/`. sqlite not rebuilt (Andy).
