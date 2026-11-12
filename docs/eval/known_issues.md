@@ -25056,3 +25056,7 @@ SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Mosc
 - Rebuild (backup `imperial_theaters.pre_div_excerpts_2026-11-12.duckdb`): 9 performances changed, +1 work; 0 shift blocks;
   sqlite rebuilt. 1911-12 performances with no discipline 20 -> 8 (two galas items, two divertissements left blank by the
   rule, a cantata, two concert sections, an apotheosis -- the same kinds earlier seasons leave blank).
+- «Маскарадъ-монстръ.» / «Каскадъ-веселья.» (Маріинскій 28 Jan 1912, p. 34; charity for the Императорское Русское Театральное
+  Общество, no receipts): RG 2026-11-12: "we might get more evidence from a season review. My instinct is that it's a special
+  event at the theater." Left as stored (no art form, no item kind); not related to Verdi's «Балъ-маскарадъ» (always «оп.»)
+  or the 1905 «Маскарадъ, диверт.». Revisit with the 1911-12 Season Reviews.
