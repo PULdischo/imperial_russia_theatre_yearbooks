@@ -448,7 +448,10 @@ EVENT_FLAG_RES = {
     "is_charity": (r"[вб]ъ? пользу|благотворит|au profit|zum besten|wohlth[aä]tig|zu gunsten|"
                    r"для образованія фонда|на (усиленіе|основаніе|образованіе) (фонда|капиталовъ|средствъ)|"
                    r"съ отчисленіемъ части сбора|на памятникъ|pour élever un monument|"
-                   r"попечительства о бѣдныхъ|общества попеченія|общества по устройству"),
+                   r"попечительства о бѣдныхъ|общества попеченія|общества по устройству|"
+                   # «Спектакль Литературнаго фонда.» (Маріинскій 10 Mar 1912) without «въ пользу»; every other
+                   # Literary Fund evening is printed «въ пользу». RG 2026-11-12: "mark it as charity like the others"
+                   r"литературнаго фонда"),
     "is_free": r"безплатн|бесплатн",
     "is_student_performance": r"для учащ",
     "is_reduced_price": r"уменьшенн|prix r[ée]duits",

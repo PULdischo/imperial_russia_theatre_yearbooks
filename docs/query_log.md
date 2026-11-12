@@ -28359,3 +28359,11 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 -- After the aliases + Гроза raw fix, test copy vs production: research.work 3,043 -> 3,030; 14 performances changed work (all intended);
 --   research.performance other columns: 2 rows (Гроза title; Ровизоръ discipline_basis «ком.»); event / person / person_appearance /
 --   production / production_work / review_assertion / person_tenure EXCEPT both ways: 0; person_link 0 shift blocks.
+
+## 2026-11-12 — 1911-12 checklist C4: performed events with no work
+-- research.event 1911-12 event_status='performed' and n_works=0: 5 (1 Oct Маріинскій IRTO children's shelter; 20 Jan Михайловскій
+--   Dalcroze demonstration; 4 Mar Маріинскій + Большой invalids' concerts; 10 Mar Маріинскій Literary Fund) -- each cell read on the
+--   scan: heading only, no work, no receipts. research.production_date on those dates: none in the SP ballet list.
+-- research.event annotations naming a fund / Literary Fund / Dalcroze, all seasons: every Literary Fund evening is_charity TRUE
+--   except 10 Mar 1912 («Спектакль Литературнаго фонда.», no «въ пользу»). After the rule change, test copy vs production:
+--   research.event 1 row (that event), every other research table 0.
