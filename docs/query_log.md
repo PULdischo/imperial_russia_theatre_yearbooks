@@ -28367,3 +28367,36 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 -- research.event annotations naming a fund / Literary Fund / Dalcroze, all seasons: every Literary Fund evening is_charity TRUE
 --   except 10 Mar 1912 («Спектакль Литературнаго фонда.», no «въ пользу»). After the rule change, test copy vs production:
 --   research.event 1 row (that event), every other research table 0.
+
+## 2026-11-12 — Jubilee/obituary person links re-run, loader tested on a fresh copy of production
+
+`docs/jubilees_obituaries/build/link_persons.py` (reads production read-only). Then
+`build/load_jubilees_obituaries.py --db <copy of outputs/full_run/imperial_theaters.duckdb>`, run twice, then
+`pipeline/build_research_model.py` on the copy. Checks on the copy:
+
+```sql
+select count(*) from research.jubilee_obituary j
+where person_id is not null and person_id not in (select person_id from research.person);   -- 0
+select j.name_verbatim, j.season, d.season from research.jubilee_obituary j join research.person_death d using(person_id)
+where j.kind in ('jubilee','farewell') and j.season > d.season;                                -- none
+```
+
+Result: 702 catalogue rows, 655 person entries, 317 linked entries -> 275 people (was 316 -> 274 on 2026-10-22,
+317 -> 275 at HEAD). Loader integrity checks all 0; second load byte-identical; the three tables unchanged after the
+research rebuild. Since HEAD: 35 record season ranges now end 1911-12; Боборыкинъ decision re-keyed (his two records
+were merged in 434f169, same person_id); two new 1911-12 records drew wrong matches and got no_record decisions:
+«г. Панчина 1-го» (1903-04) ≠ Панчина, Нина; «А. И. Южина» (1908) ≠ Южина, Наталья. Loaded into production the same day (RG "Yes, load it", loader
+`--production`); production table hashes = the tested copy.
+
+## 2026-11-12 — Jubilee/obituary links: Корсакъ/Бекке basis text updated, production reloaded
+
+Basis text only (scan check of 31866d7 written in; links unchanged). Loader tested on a fresh copy, then run on
+production with `--production`; integrity checks all 0, 317 linked entries -> 275 people, production = copy.
+
+```sql
+select record_name, basis from entities.jubilee_obituary_person_link
+where record_name like 'Корсакъ%' or record_name like 'Бекке%';
+```
+
+Result: both rows carry the new scan-check basis. Корсакъ's check covered the 1890-91 to 1894-95 rosters only
+(she is also listed in 1895-96, not re-read). research.jubilee_obituary unchanged by this reload.

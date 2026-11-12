@@ -34,11 +34,11 @@ cd39183612,no_record,,"Н. К. Богданова, historical article; the one �
 d21639fc53,link,"Смирнова, Евгенія Кирилловна","the print conflict already in the README: obituary «Евгенія Дмитріевна», review and rosters Е. К. / Евгенія Кирилловна; SP, last listed 1894-95"
 d3ead23787,link,,† 5 Nov 1902; the death is reprinted in the 1904-05 list (FOR_MAIN_THREAD.md)
 e15bdefb17,link,"Рябовъ, Степанъ","«Рябова», chief conductor of the Moscow ballet: Степанъ Яковлевичъ, Musicians"
-e1ee26861a,link,"Боборыкинъ, Петръ Дмитріевичъ|1909-10",two records with the same name: 1890-91–1909-10 and 1910-11 only; linked to the longer one
+e1ee26861a,link,"Боборыкинъ, Петръ Дмитріевичъ",two records with the same name (1890-91–1909-10 and 1910-11 only) linked to the longer one on 2026-10-22; the two were merged in the 1911-12 person merges (434f169) into that same record
 e38f3b716b,link,"Петипа 1-я, Марія","«Маріи Петипа», character dancer, jubilee 1901; a second record «Петипа, Марія Маріусовна» covers 1910-11 only"
 e7caef0e0e,no_record,,"«Евг. Соколовой» (farewell 1886, recalled 1893-94); no Евгенія Соколова on the rosters"
 ec04fee795,no_record,,"Спиридонъ Александровичъ d. 1890-91; the three Литавкины on the rosters are all Спиридоновичи, listed after his death"
-ee16e7fb24,link,"Корсакъ, Вѣра","obituary «Вѣра Алексѣевна», record «Вѣра Александровна»: the only Вѣра Корсакъ, SP ballet, last listed 1895-96 (d. Feb 1896); patronymic not checked on the roster scan"
+ee16e7fb24,link,"Корсакъ, Вѣра","obituary «Вѣра Алексѣевна», record «Вѣра Александровна»: the only Вѣра Корсакъ, SP ballet, last listed 1895-96 (d. Feb 1896); scan-checked 2026-10-22 (31866d7, by Claude): the SP ballet rosters 1890-91 to 1894-95 print «Вѣра Александровна», the 1895-96 obituary «Вѣра Алексѣевна» (née Рейхель), a print conflict; the 1895-96 roster was not in that check"
 f730fda8dc,no_record,,"opera singer d. May 1895; the Moscow Musicians record Иванъ Ивановичъ Ивановъ runs to 1898-99, so not him"
 f84f3bedcf,link,"Бенда, Маттіанъ","Маттіасъ (obituary) / Маттіанъ (record): one letter; Moscow ballet orchestra, last listed 1894-95, d. Mar 1895"
 fdf63c8c3b,link,"Дровинъ, Антонъ","«Антонъ-Карлъ», d. Oct 1892: Антонъ Фердинандовичъ listed 1891-92–1892-93; a record «Дровинъ, Карлъ Фердинандовичъ» (1890-91 only) may be the same man"
@@ -96,7 +96,7 @@ cbfa95a1f7,no_record,,"А. М. Максимовъ, actor; neither Максимо
 d0e381a718,no_record,,drama actor; the one Казаковъ record is a musician
 d20a514172,no_record,,writer and actor; the one Горбуновъ record is a musician
 d6f24a25f4,link,"Пфейферъ, Ѳедоръ",Осиповичъ (obituary) / Іосифовичъ (record): same patronymic in two forms; SP orchestra
-d7a9c0cb23,link,"Бекке, Евгеній","«Евгеній Генриховичъ» (obituary) / «Евгеній Андреевичъ» (record): only Бекке, SP orchestra, last listed 1895-96; patronymic not checked on the roster scan"
+d7a9c0cb23,link,"Бекке, Евгеній","«Евгеній Генриховичъ» (obituary) / «Евгеній Андреевичъ» (record): only Бекке, SP orchestra, last listed 1895-96; scan-checked 2026-10-22 (31866d7, by Claude): all 6 SP orchestra rosters 1890-91 to 1895-96 print «Евгеній Андреевичъ», and the 1895-96 obituary gives both, «Евгеній Генриховичъ (Андреевичъ)»: a print conflict the obituary itself explains"
 df12c5500b,link,"Петерсенъ, Карлъ","«Карлъ-Іоганъ», oboe: Карлъ Карловичъ, SP orchestra, last listed 1893-94"
 f335dc7fbe,no_record,,Alexandrinsky actress's 50-year benefit; the ballet dancer Александрова 1-я is not her
 f496a09938,no_record,,former chorister; no Владиміръ Максимовичъ Матвѣевъ
@@ -106,3 +106,5 @@ fa60944342,no_record,,"monument-fund performance; the candidate (Горбуно�
 fc3852d7ed,no_record,,chorister; the one Логановскій record is Николай Николаевичъ
 fc9d480fc6,no_record,,former chorister; the one Энгель record is a musician
 740ee3926a,link,"Гебгардъ, Эдуардъ Карловичъ","decided 2026-11-02 (RG, person merge batch): «Гебгардтъ (Joseph-Eduard Gebhardt), Эдуардъ Карловичъ» = the SP bassoonist printed Іосифъ 1890-94 / Эдуардъ 1894-96, «съ 1 сентября 1885 г.», roster «† 30 апрѣля 1896 г.» = obituary date; obituary spells the surname with т"
+ba02c06726,no_record,,"decided 2026-11-12: «г. Панчина 1-го», a man with 25 years' service at the Alexandrinsky in 1903-04; the only same-surname record, Панчина, Нина, appears in 1911-12 only (new roster record), so it is not him"
+3a09cd8cb0,no_record,,"decided 2026-11-12: «А. И. Южина», Maly actor with 25 years' service in 1908; the only same-surname record, Южина, Наталья (Moscow graduate, 1911-12 only), disagrees on the initial and the dates"

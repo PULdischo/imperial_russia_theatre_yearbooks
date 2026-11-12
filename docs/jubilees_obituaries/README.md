@@ -240,8 +240,9 @@ says there is none. It is keyed by `entry_id`, the same id the Obsidian notes ca
   «Богдановъ, А. Н.» (Moscow, 1890-91). The initials conflict on the scans, so the case is also entry 42 in
   `docs/eval/uncertain_person_identities.md`.
 
-Coverage: 219 of the 266 core and mentions entries are linked (182 of 212 core). In all, 316 entries
-point to 274 people. As a check, no linked person has deaths in seasons more than two apart, or a jubilee or
+Coverage: 219 of the 266 core and mentions entries are linked (182 of 212 core). In all, 317 entries
+point to 275 people (re-run 2026-11-12 after the 1911-12 person merges; two wrong matches to new 1911-12
+records, «г. Панчина 1-го» and «А. И. Южина», were decided as no record). As a check, no linked person has deaths in seasons more than two apart, or a jubilee or
 farewell after a death. Name variants were linked where the person is plainly the same one: Осипъ/Іосифъ,
 Левъ/Леопольдъ Ауэръ, German names against the rosters' Russian forms (Брауэръ, Рамзе, Шварцъ). A
 patronymic conflict is noted in `basis`: Смирнова (already above), Корсакъ, Бекке. Things this found that
@@ -251,7 +252,7 @@ The links are decisions and can be revised: change a row in `build/person_link_d
 `person_id`s follow production, and the script follows merges (`superseded_by_person_id`). If people are merged
 or split later, re-run it.
 
-## Loading into the database (2026-10-22, tested on a copy only)
+## Loading into the database (in production since 2026-11-12)
 
 `build/load_jubilees_obituaries.py --db <file>` writes three tables:
 
@@ -261,19 +262,24 @@ or split later, re-run it.
 | `entities.jubilee_obituary_person_link` | 655 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
 | `research.jubilee_obituary` | 702 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
 
-It has **not** been run on production. The script refuses any path under `outputs/full_run`, and the pipeline
-does not call it. It was tested on a copy of production on 2026-10-22, with these results:
-- All integrity checks pass, and 316 links point to 274 people.
+**Loaded into production on 2026-11-12 with RG's approval** (backup of the database just before:
+`outputs/full_run/imperial_theaters.before_jubilees_2026-11-12.duckdb`). The script refuses `outputs/full_run`
+unless given `--production`, and the pipeline does not call it. Before the load it was tested on a fresh copy of
+production:
+- All integrity checks pass, and 317 links point to 275 people.
 - A second run gives the same result.
-- `pipeline/build_research_model.py` rebuilds the research layer on the copy without error, and no link is left
-  pointing at a missing person afterwards.
+- `pipeline/build_research_model.py` rebuilds the research layer on the copy without error and leaves the three
+  tables unchanged; no link points at a missing person, and no jubilee or farewell falls after a recorded death.
+- Production after the load is identical to the tested copy.
 
 `person_id` is a plain column with no declared foreign key. `build_research_model.py` drops and recreates
 `research.person`, and a declared key would block that. The loader checks every id itself instead.
 
-What happens next is up to RG:
-- **Before running it on production**, re-run `build/link_persons.py`, after the main thread's person merges.
-- **Wiring it into the build** means calling it after `build_research_model.py`. Adding it to
+Keeping it current:
+- **After person merges or splits**, re-run `build/link_persons.py`, test the loader on a copy, then load with
+  `--production`. The pipeline's own scripts replace only their own tables, so these survive a rebuild, but
+  their `person_id`s can go stale when `research.person` changes.
+- **Wiring it into the build** (not done) means calling it after `build_research_model.py`. Adding it to
   `build_datasette.py`'s `TABLES` would also put it in the published sqlite, which Andy republishes.
 
 ## Not yet done

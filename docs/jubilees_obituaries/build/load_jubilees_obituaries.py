@@ -46,9 +46,12 @@ def entry_id(d):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--db', required=True, type=Path)
+    ap.add_argument('--production', action='store_true',
+                    help='allow writing to outputs/full_run (RG approved the first production load 2026-11-12); '
+                         'test on a copy first and re-run build/link_persons.py before every production load')
     args = ap.parse_args()
-    if 'full_run' in str(args.db.resolve()):
-        raise SystemExit('refusing to write to outputs/full_run: test on a copy (RG has not approved production)')
+    if 'full_run' in str(args.db.resolve()) and not args.production:
+        raise SystemExit('refusing to write to outputs/full_run without --production: test on a copy first')
 
     cat = list(csv.DictReader(open(CATALOGUE, encoding='utf-8')))
     cols = list(cat[0].keys())
