@@ -28430,3 +28430,23 @@ research.jubilee_obituary 715).
 --   138 exact; disagreements read on the list scans by Claude and checked against the blind column reads
 --   (outputs/repertoire_1911-12/column_reads/*.csv): see docs/eval/opera_drama_list_repertoire_disagreements.md.
 -- research.season_stat_check 1911-12 SP: printed 618 events, Repertoire 637 (ledger 1911-12-10: SP Russian drama Repertoire +11).
+
+## 2026-11-12 — Jubilee/obituary snapshot refresh: matcher fixes, older-season rows, production load
+
+Matchers fixed (title key for work anniversaries, initials check, Russian dates, date range to 1913) and the roster
+export extended to deaths held as parsed end dates:
+
+```sql
+select ... from raw.person_entry where tenure_note_text like '%†%'
+union all
+select ... from raw.person_entry e join research.person_death d on d.source_ref = e.entry_id and d.source = 'roster'
+where coalesce(e.tenure_note_text, '') not like '%†%';
+-- coverage check: research.person_death roster rows whose source_ref is not in the «†» snapshot
+```
+
+Result: 19 roster deaths were missing from the «†»-only snapshot (17 already had an obituary or notice). Fresh
+snapshots + `build_catalogue.py` in a scratch copy give 7 new rows (6 core «†» marks, all read on the scans and
+agreeing; 1 farewell) and 2 corrected annotation rows; other differences are rebuild artifacts, not applied.
+Николаева 3-я's 1902-03 mark is RG's 2026-11-03 print-error ruling, noted. Links 671 / 329 -> 286 people.
+Loader tested on a fresh copy (checks 0, rerun identical, unchanged by build_research_model.py, person_death 313),
+then loaded with `--production`; production = copy (722 / 671 / 722).

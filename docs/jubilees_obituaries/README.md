@@ -8,9 +8,9 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry (715 rows, 664 of them person entries; 13 rows for 1911-12 added 2026-11-12, see "1911-12" below). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
+| `jubilees_obituaries_all_entries.csv` | Every entry (722 rows, 671 of them person entries; 13 rows for 1911-12 and 7 for older seasons added 2026-11-12, see "1911-12" and "Snapshot refresh" below). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
-| `jubilees_obituaries_person_links.csv` | Each of the 664 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
+| `jubilees_obituaries_person_links.csv` | Each of the 671 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `repertoire_date_check.csv`, `repertoire_annotations_matched.csv` | The Repertoire's annotations against the catalogue, both directions. |
@@ -258,15 +258,15 @@ or split later, re-run it.
 
 | Table | Rows | What |
 |---|---|---|
-| `raw.jubilee_obituary_entry` | 715 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
-| `entities.jubilee_obituary_person_link` | 664 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
-| `research.jubilee_obituary` | 715 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
+| `raw.jubilee_obituary_entry` | 722 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
+| `entities.jubilee_obituary_person_link` | 671 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
+| `research.jubilee_obituary` | 722 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
 
 **Loaded into production on 2026-11-12 with RG's approval** (backup of the database just before:
 `outputs/full_run/imperial_theaters.before_jubilees_2026-11-12.duckdb`). The script refuses `outputs/full_run`
 unless given `--production`, and the pipeline does not call it. Before the load it was tested on a fresh copy of
 production:
-- All integrity checks pass, and 317 links point to 275 people (323 -> 281 after the 1911-12 rows, loaded the same day the same way; backup `outputs/full_run/imperial_theaters.before_jubilees_1911-12_2026-11-12.duckdb`).
+- All integrity checks pass, and 317 links point to 275 people (323 -> 281 after the 1911-12 rows, 329 -> 286 after the snapshot refresh, each loaded the same day the same way; backups `outputs/full_run/imperial_theaters.before_jubilees_olderseasons_2026-11-12.duckdb` and `outputs/full_run/imperial_theaters.before_jubilees_1911-12_2026-11-12.duckdb`).
 - A second run gives the same result.
 - `pipeline/build_research_model.py` rebuilds the research layer on the copy without error and leaves the three
   tables unchanged; no link points at a missing person, and no jubilee or farewell falls after a recorded death.
@@ -303,22 +303,55 @@ snapshots also changes older seasons, see below). 13 rows:
   **Никулина is a print conflict**: the section (p. 127) prints «15 декабря», the Repertoire (p. 23) has the
   jubilee performance on Monday 12 Dec 1911; the same bill is repeated on 15 Dec with no annotation. Both scans
   read 2026-11-12 by Claude.
-- Two matcher slips found on the way, fixed by hand here, not in the script: both «Жизнь за Царя» annotations
-  were matched to the «Ревизоръ» 75-year entry, and the 30 Aug line's «Н. Х. Рыбакова» (the father) to К. Н.
-  Рыбаковъ's jubilee. `match_repertoire_annotations.py` also checks dates only up to 1911.
+- Two matcher slips found on the way: both «Жизнь за Царя» annotations were matched to the «Ревизоръ» 75-year
+  entry, and the 30 Aug line's «Н. Х. Рыбакова» (the father) to К. Н. Рыбаковъ's jubilee; the date check also
+  stopped at 1911. All three fixed in the script the same day (see "Snapshot refresh").
 - Person links: 9 new person entries, 6 linked (the five roster marks' own entries + Смирнова). Totals now
   323 linked entries -> 281 people.
 
-**Fresh snapshots also turn up rows for older seasons** that the October snapshots lacked, from database
-corrections since then (e.g. «†» marks restored in the person field audit: Бершадскій 1900-01, Маслова 1901-02,
-Николаева 3-я 1902-03; annotations such as «Въ пользу фонда … памятника А. С. Пушкину», 1901-02). These were
-**not** added; adding them is a separate pass.
+## Snapshot refresh and matcher fixes (2026-11-12)
+
+`build/roster_death_marks.csv` and `build/repertoire_annotations.csv` were re-exported from production, and the
+match files regenerated, after these fixes:
+
+- `match_repertoire_annotations.py`: a work's anniversary is keyed on the title in «…» (it had keyed on the last
+  word, so «Ревизоръ»'s «…первой постановки» matched any «первой постановки»); initials printed before a surname
+  must agree with the catalogue's (Н. Х. vs К. Н. Рыбаковъ); Russian dates in the catalogue («15 декабря [1911]»)
+  are parsed; dates are checked up to 1913, not 1911, and births or debuts before 1890 are skipped. The date check
+  now flags Никулина (above) on its own.
+- `match_roster_deaths.py`: also exports deaths the database holds as a parsed end date with no «†» left in the
+  tenure note (taken from `research.person_death`). The «†»-only search missed 19 roster deaths; 17 already had
+  an obituary or notice in the catalogue.
+
+**7 rows added** (`build_catalogue.py` was run in a scratch copy and only rows the catalogue lacked were taken; a
+full rebuild still changes existing rows, see below):
+- Six «†» marks, all core (ballet troupe), each read on the roster scan (not blind, by Claude): Бершадскій
+  (1900-01, p. 78), Маслова (1901-02, p. 74), Нарышкина and Николаева 3-я (1902-03 Moscow, p. 108), Кшесинскій 1-й
+  († 3 іюля 1905 г., 1904-05, p. 23; the catalogue had only his jubilees) and Николаевъ, Борисъ (1907-08 Moscow,
+  p. 53). Бершадскій, Маслова, Николаева 3-я: «†» lines restored in the person field audit; the other three: deaths
+  held as end dates. **Николаева 3-я's mark is a print error by RG's ruling of 2026-11-03** (she dances to 1911-12):
+  kept as printed, noted, linked to her record, and absent from `research.person_death` as before.
+- One farewell: «Bénéfice d'adieu de M-r Hittemans» (1891-92), tier none.
+
+**2 rows corrected**: the 1901-02 Pushkin-monument fund performance and the 1902-03 Пажескій корпусъ jubilee had the
+bill run into the annotation; the database now stores the bill as performances, and `name_verbatim`/`evidence_verbatim`
+follow it (the Pushkin row's decision re-keyed to its new `entry_id`).
+
+Links: 671 person entries, 329 linked -> 286 people (Нарышкина linked by decision: «Никоноровна» on this roster,
+«Никаноровна» on the record).
+
+**Not applied — a full rebuild of the catalogue is not reproducible.** Re-running `build_catalogue.py` on current
+snapshots also rewrites existing rows: rows with no name collide (the 1890-91 «Смѣсь» articles), paired jubilee/farewell
+rows swap `kind`, hand-recorded scan checks (`date_check`) are lost, and «On the bill» notes, roster headings and
+roles follow later database corrections. So the catalogue is now kept by appending; the scripts' outputs are compared
+in a scratch copy and only new rows are taken.
 
 ## Not yet done
 
 - **1911-12 sections**: the 1912 VII jubilee and obituary pages are not scanned; when they are, catalogue them,
   link the people and make the reading notes.
-- **Older-season rows from fresh snapshots** (see the 1911-12 section above): not added.
+- **`build_catalogue.py` is not reproducible** (see "Snapshot refresh"): fixing that would mean folding the hand-made
+  changes (scan checks, rulings, the 1890-91 articles) into the script.
 
 - The supplements have not been checked for obituaries (deferred; see `unscanned_worth_getting.md`).
 - Coverage is limited to what was scanned: e.g. 1894-95 jubilee pp. 333-367 and

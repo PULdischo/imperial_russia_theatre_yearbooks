@@ -42,17 +42,37 @@ def cat_dates(s):
     # "17 and 22 Feb 1894"
     for d1, d2, m, y in re.findall(r'(\d{1,2}) and (\d{1,2}) ([A-Za-z]{3})[a-z]* (\d{4})', s):
         out.append(datetime.date(int(y), ENG[m.lower()], int(d1)))
+    # Russian dates as the later sections print them: «15 декабря [1911]», «8 января 1912 г.» (added 2026-11-12)
+    for d, m, y in re.findall(r'(\d{1,2}) ([а-яѣі]+) \[?(\d{4})\]?', s):
+        mo = next((v for k, v in RU.items() if re.match(k, m)), None)
+        if mo: out.append(datetime.date(int(y), mo, int(d)))
     return sorted(set(out))
+RU = {'январ': 1, 'феврал': 2, 'март': 3, 'апрѣл': 4, 'ма[яйѣ]': 5, 'іюн': 6, 'іюл': 7, 'август': 8, 'сентябр': 9, 'октябр': 10, 'ноябр': 11, 'декабр': 12}
 def stem(d):
-    n = d['name_verbatim']; m = re.search(r'normalised name: ([^;]+)', d['notes'])
-    if m: n = m.group(1)
+    n = d['name_verbatim']; m = re.search(r'normalised name: ([^;\[]+)', d['notes'])
+    if m: n = m.group(1).strip()
     n = re.sub(r'\([^)]*\)', ' ', n)
+    t = re.search(r'«([^»]+)»', d['name_verbatim'])
     if ',' in n: s = n.split(',')[0]
+    elif t:   # a work's anniversary: key on the title, not on the last word of the phrase (2026-11-12: «Ревизоръ»'s
+        # «…первой постановки» matched every «первой постановки» annotation)
+        s = next((x for x in re.findall(r'[А-Яа-яѣіѳѵІѲѢ-]+', t.group(1)) if len(x) > 3), t.group(1))
     else:
         w = [x for x in re.findall(r'[А-Яа-яѣіѳѵІѲѢ-]+', re.sub(r'\b[А-ЯІѲ][а-яѣіѳ]{0,3}\.', ' ', n)) if len(x) > 3]
         s = w[-1] if w else n
     s = re.sub(r'\s*\d-[йя].*$', '', s.strip()).split()[0] if s.strip() else ''
     return re.sub(r'(.)\1', r'\1', re.sub(r'(ъ|ь|а|ая|ой|ій|аго|ымъ|у|и)$', '', s.lower()))
+def initials_ok(d, a):
+    """False when the annotation prints initials before this surname and none agree with the catalogue's
+    (2026-11-12: «Н. Х. Рыбакова», the father, had matched К. Н. Рыбаковъ). No initials printed: True."""
+    n = d['name_verbatim']
+    if ',' not in n: return True
+    sur, given = n.split(',', 1)
+    mine = [x[0] for x in re.findall(r'[А-ЯІѲѢ][а-яѣіѳ]*\.?', given)[:1]]
+    if not mine or len(sur.strip()) < 4: return True
+    found = re.findall(r'((?:[А-ЯІѲѢ]\.\s*){1,2})\s*' + re.escape(sur.strip()[:4]), a['ann'])
+    if not found: return True
+    return any(f.strip()[0] == mine[0] for f in found)
 byday = collections.defaultdict(list)
 for a in A:
     if a['date_undate']: byday[(a['city'], a['date_undate'][:10])].append(a)
@@ -64,14 +84,14 @@ chk = []
 occ = [d for d in C if d['kind'] in ('jubilee', 'farewell', 'memorial_feature', 'work_milestone', 'biographical_feature') and d['source_type'] in ('review', 'section')]
 matched_events = collections.defaultdict(list)
 for d in occ:
-    ds = cat_dates(d['dates']); st = stem(d)
+    ds = [x for x in cat_dates(d['dates']) if 1890 <= x.year <= 1913]; st = stem(d)   # births and debuts before 1890 are not checkable
     if not ds or (d['source_type'] == 'section' and d['kind'] != 'jubilee'): continue
     best = None
     for dt in ds:
-        if not (1890 <= dt.year <= 1911): continue
+        if not (1890 <= dt.year <= 1913): continue   # was 1911 until 2026-11-12; the Repertoire now runs to 1912-13
         same = [a for a in A if a['date_undate'][:10] == dt.isoformat() and city_ok(a, d)]
-        named = [a for a in same if st and len(st) > 3 and st in a['annl']]
-        near = [a for a in A if st and len(st) > 3 and st in a['annl'] and city_ok(a, d) and a['date_undate']
+        named = [a for a in same if st and len(st) > 3 and st in a['annl'] and initials_ok(d, a)]
+        near = [a for a in A if st and len(st) > 3 and st in a['annl'] and initials_ok(d, a) and city_ok(a, d) and a['date_undate']
                 and abs((datetime.date.fromisoformat(a['date_undate'][:10]) - dt).days) <= 400 and a not in named]
         if named: best = ('annotation names the person on that date', named[0], dt); break
         if same and not best: best = ('event annotated that date, person not named', same[0], dt)
@@ -98,7 +118,7 @@ for a in A:
     if not k: continue
     hits = matched_events.get(a['event_id'], [])
     if not hits:   # same person anywhere in the catalogue, same season +-1, any jubilee/farewell/memorial kind
-        hits = [d for d in occ if len(stem(d)) > 3 and stem(d) in a['annl'] and abs(int(d['season'][:4]) - int(a['season'][:4])) <= 1
+        hits = [d for d in occ if len(stem(d)) > 3 and stem(d) in a['annl'] and initials_ok(d, a) and abs(int(d['season'][:4]) - int(a['season'][:4])) <= 1
                 and d['kind'] in ('jubilee', 'farewell', 'memorial_feature', 'biographical_feature')]
     out.append([a['season'], a['city'], a['theater'], a['date_undate'][:10], k, a['ann'], a['works'], a['page_id'], a['printed_page_number'], a['event_id'],
                 'in catalogue' if hits else 'NOT in catalogue', '; '.join(dict.fromkeys(f"{d['source_type']} {d['season']} {d['kind']}: {d['name_verbatim']}" for d in hits))])

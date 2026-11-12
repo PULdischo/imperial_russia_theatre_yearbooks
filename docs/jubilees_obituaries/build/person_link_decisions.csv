@@ -86,7 +86,7 @@ e7b357d69f,link,"Богдановъ, А. Н.","RG 2026-10-22 (linked, initials c
 a36d99af01,link,"Крюгеръ, Оскаръ","«Оскаръ-Адольфъ», horn, Moscow: Оскаръ, Moscow Musicians, last listed 1894-95"
 a4ef31c06b,no_record,,opera chorister; the one Казаковъ record is a musician (Сергѣй Аѳанасьевичъ)
 a8484eb14b,no_record,,chorister; no Петръ Григорьевичъ Степановъ
-b316d3f80e,no_record,,"Pushkin monument fund performance; the production-list record «Пушкинъ» has no initials, so not linked"
+34251e11bc,no_record,,"Pushkin monument fund performance (re-keyed 2026-11-12 from b316d3f80e: the annotation text was corrected in the database); the production-list record «Пушкинъ» has no initials, so not linked"
 b3fc90c290,link,"Мирчке, Эрнестъ","«Эрнстъ-Вильгельмъ», percussion: Эрнестъ, Moscow Musicians, last listed 1892-93"
 b46046517b,no_record,,drama actor; no Александръ Андреевичъ Орловъ
 c403e1cbfe,no_record,,"А. Л. Морозовъ, régisseur; none of the Морозовы fits"
@@ -109,3 +109,5 @@ fc9d480fc6,no_record,,former chorister; the one Энгель record is a musicia
 ba02c06726,no_record,,"decided 2026-11-12: «г. Панчина 1-го», a man with 25 years' service at the Alexandrinsky in 1903-04; the only same-surname record, Панчина, Нина, appears in 1911-12 only (new roster record), so it is not him"
 3a09cd8cb0,no_record,,"decided 2026-11-12: «А. И. Южина», Maly actor with 25 years' service in 1908; the only same-surname record, Южина, Наталья (Moscow graduate, 1911-12 only), disagrees on the initial and the dates"
 3e8c1a1c4a,no_record,,"decided 2026-11-12: «М. А. Михайловой», farewell after 20 years' service, Mariinsky, 27 Jan 1912 («Фра-Діаволо», opera); the only М. А. record, Михайлова, Марія Анемподистовна, is Moscow ballet and last listed 1896-97, so it is not her"
+c061635c30,link,"Нарышкина, Александра Никаноровна","decided 2026-11-12: the death mark's own roster entry (balletartists_1902-03_MSK_p003__e003); the 1902-03 roster prints «Никоноровна», the record's display name «Никаноровна»: a spelling variant, same entry"
+c412e43696,link,"Николаева 3-я, Зинаида Николаевна","decided 2026-11-12: the death mark's own roster entry (balletartists_1902-03_MSK_p003__e010), linked so the printed mark is attached to her; RG ruled the mark a print error (person field audit DECISIONS.md, 2026-11-03: she dances to 1911-12), so research.person_death leaves it out"

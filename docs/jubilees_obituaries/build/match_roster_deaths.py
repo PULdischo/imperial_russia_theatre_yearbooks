@@ -11,7 +11,16 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 SNAP = HERE + '/roster_death_marks.csv'
 SQL = """select regexp_extract(page_id,'\\d{4}-\\d{2}') season, entity_type, family_name, first_name, patronymic,
        rank_or_title, instrument, subject_taught, institution, heading_path, tenure_note_text, page_id, entry_id
-from raw.person_entry where tenure_note_text like '%†%' order by 1, 2, 3"""
+from raw.person_entry where tenure_note_text like '%†%'
+union all
+-- 2026-11-12: deaths the database holds as a parsed end date, with no «†» left in tenure_note_text (e.g. Нарышкина
+-- 1902-03, Николаевъ 1907-08); the printed date comes from research.person_death, rebuilt to read «† …» as above
+select regexp_extract(e.page_id,'\\d{4}-\\d{2}'), e.entity_type, e.family_name, e.first_name, e.patronymic,
+       e.rank_or_title, e.instrument, e.subject_taught, e.institution, e.heading_path,
+       trim(coalesce(e.tenure_note_text, '') || ' † ' || trim(replace(d.printed_text, '†', ''))), e.page_id, e.entry_id
+from raw.person_entry e join research.person_death d on d.source_ref = e.entry_id and d.source = 'roster'
+where coalesce(e.tenure_note_text, '') not like '%†%'
+order by 1, 2, 3"""
 if '--export' in sys.argv:
     import duckdb
     c = duckdb.connect(os.path.join(ROOT, '..', '..', 'outputs/full_run/imperial_theaters.duckdb'), read_only=True)
