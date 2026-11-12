@@ -36,9 +36,9 @@ Status columns: done / partial / not done / n.a. Keep the table current when a s
 
 | # | Step | Precedent | 1911-12 |
 |---|---|---|---|
-| C1 | Performances with no discipline: classify (title rules, art_form_by_title, overrides) | "Titles with no art form", #158 | partly: Гамлетъ (3) done; **open**: 6 plain Дивертиссементъ, act excerpts, gala items, concert sections |
-| C2 | Plain «Дивертиссементъ» -> ballet genre | 2026-10-12 ruling | **open** (part of C1) |
-| C3 | Act/scene excerpts linked to their parent work | 2026-10-13 excerpt links | **open** (Призракъ, chronicle scenes, Гроза, ...) |
+| C1 | Performances with no discipline: classify (title rules, art_form_by_title, overrides) | "Titles with no art form", #158 | done 2026-11-12: 20 -> 8; left blank as in earlier seasons (galas items, concert sections, cantata, apotheosis, 2 divertissements by rule) |
+| C2 | Plain «Дивертиссементъ» -> ballet genre | 2026-10-12 ruling | done 2026-11-12: 4 ballet, 2 left blank by the rule |
+| C3 | Act/scene excerpts linked to their parent work | 2026-10-13 excerpt links | done 2026-11-12: 5 curated links + curated parent «Призракъ»; the rest automatic |
 | C4 | Performed events with no work: decided (annotation-only) | #141 | 5, same kinds as 1910-11; **not yet reviewed** |
 | C5 | Visiting troupe runs labelled | VISITING_RUNS | done (MXT, RG) |
 | C6 | Dancers in operas/dramas (`includes_dance`) for new works | 2026-10-12 | **not checked** for new 1911-12 works |

@@ -25043,3 +25043,16 @@ SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Mosc
   matinée-level opera receipts on 28 Dec and 19 Feb, so the Repertoire may omit a second performance those days. Row 13 set to
   **open**; RG: "perhaps the season reviews can clarify. Let's look at this when they come in." -> check the 1911-12 SP (and
   Moscow) ballet Season Reviews when scanned.
+
+**1911-12 divertissements and excerpt links (RG: "let's do these", 2026-11-12; checklist C2/C3).**
+- Plain «Дивертиссементъ.» by RG's 2026-10-12 rule (ballet only when every other work on the bill is a ballet): бал. for
+  23 Oct, 23 Nov, 4 Dec 1911 (Большой, with «Жизель») and 25 Apr 1912 (Маріинскій, three ballet excerpts) --
+  `research_performance_genre.csv`; left without a genre: 10 Dec 1911 Большой (charity, concert section) and 26 Jan 1912
+  Александринскій (Мичурина jubilee, drama bill).
+- Excerpts linked (`work_excerpt_links.csv`): «1 д. ком. «Нахлѣбникъ».» -> Нахлѣбникъ; «2 е д. драмы Гроза;» -> Гроза; the two
+  «Дмитрій Самозванецъ и Василій Шуйскій» scene excerpts -> the chronicle; «2 и 3 д. оперы «Призракъ».» x2 -> new curated parent
+  «Призракъ» [оп.] (`curated_parent_works.csv`; never performed whole, composer not identified). Every other 1911-12 excerpt
+  was already linked automatically.
+- Rebuild (backup `imperial_theaters.pre_div_excerpts_2026-11-12.duckdb`): 9 performances changed, +1 work; 0 shift blocks;
+  sqlite rebuilt. 1911-12 performances with no discipline 20 -> 8 (two galas items, two divertissements left blank by the
+  rule, a cantata, two concert sections, an apotheosis -- the same kinds earlier seasons leave blank).
