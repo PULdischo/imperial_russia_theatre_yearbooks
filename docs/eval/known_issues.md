@@ -25101,3 +25101,15 @@ SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Mosc
 - Rebuild (test copy `outputs/c7_1911-12/test`, then promoted; backup `outputs/backups/c7_1911-12_2026-11-12/`): works 3,043 ->
   3,030 (13 folded); 14 performances moved to the intended work; no other change to events, persons, appearances, productions,
   review assertions or tenures; 0 shift blocks; sqlite rebuilt (republishing is Andy's).
+
+**1911-12 checklist C4 (2026-11-12): the 5 performed events with no work.** Маріинскій 1 Oct 1911 «Спектакль въ пользу
+пріюта для дѣтей сценическихъ дѣятелей Императорскаго Русскаго Театральнаго Общества.»; Михайловскій 20 Jan 1912
+«Демонстрація воспитательной системы ритмической гимнастики Жакъ-Далькроза.»; Маріинскій and Большой 4 Mar 1912 «Концертъ въ
+пользу инвалидовъ.»; Маріинскій 10 Mar 1912 «Спектакль Литературнаго фонда.». Each cell read on the scan by Claude: the heading
+only, no work, no receipts. Cross-checked with the 1911-12 production lists (ballet lists in the DB; opera and drama lists
+transcribed as a finding aid, `outputs/c7_1911-12/production_lists_1911-12.csv`, 158 entries, helper-read): every list date
+on those days belongs to a bill another theater prints; none falls on these five events. Same kinds as #141 -> they stay
+annotation-only events (RG's 2026-10-09 decision). The 10 Mar heading lacked «въ пользу», so it was not flagged as charity;
+RG 2026-11-12: "mark it as charity like the others" -> `EVENT_FLAG_RES` is_charity also matches «литературнаго фонда»
+(2eb95e7; only that event changed). The Dalcroze demonstration (rhythmic gymnastics) is a possible lead for movement / dance
+outside the ballet company; not marked.
