@@ -28333,3 +28333,13 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 -- raw.person_entry Пащеевъ Борисъ: patronymic printed Ѳедоровичъ 7x, Ѳедотовичъ 8x incl. 1911-12; Ивановъ Иванъ Николаевичъ
 --   printed «1-й» 1904-05, 1909-12. Куличевская Клавдія Михайловна: the only Куличевская (SP ballet 1890-91..1900-01, school
 --   1900-01..1911-12). Finding aids, checked by Claude.
+
+## 2026-11-12 — 1911-12 person-merge batch prepared; Group A applied
+-- research.person first_attested_season='1911-12' (141) vs established persons with the same folded family + first name
+--   (+ patronymic or blank) and a shared list type: 29 new persons (outputs/merge_batch_1911-12/groups.txt); entities.person_candidate
+--   new pending rows 47, of which 20 already resolve to one live person through superseded_by (stale), 27 real (evidence.txt).
+-- Group A merge (22 people, 29 records): before/after, every base table EXCEPT ALL both ways: only entities.person (51),
+--   person_link (35), person_candidate (-25), merge_log (+29), research.person (2,760 -> 2,731), person_appearance /
+--   tally / tenure / service_period rows of those 22 people; research.person_appearance rows whose person changed = 35, all 22 names.
+-- Group B merge (11 people): before/after EXCEPT ALL: only those 11 persons' rows changed (person 2,731 -> 2,720; 11 appearances moved).
+-- Group B variants (7): rechecked company scans; Ивановъ withdrawn (p. 94 Ивановскій / Ивановъ 5-й both Николай Павловичъ); redone from backup; only 7 persons changed.

@@ -180,3 +180,114 @@ Other identity candidates from the same audit are listed in docs/eval/person_fie
 | 18 | Иванова 1-я, Александра Александровна (1902-03) = Иванова 1-я, Александра Адріановна | 354186a0 (Moscow ballet 1902-03 only) + 2b63eb2c (1900-01, 1903-04..1908-09) | same «1-я», same start «съ 1 сентября 1891 г.», the 1902-03 entry fills the one-season gap in 2b63eb2c's run; 1908-09 prints «Андріановна», leaving 15 Aug 1909. Patronymic «Александровна» in 1902-03 only (print or reading, not scan-checked) | merge into 2b63eb2c; scan-check 1902-03 MSK p.107 first |
 | 19 | Джури, Адель = Джури, Аделина Антоновна | 10dbce09 (Moscow ballet 1893-94..1899-00) + 430919f3 (1900-01..1902-03) | Adelina Djuri, one Moscow ballerina: consecutive runs, same surname; the first name is printed short in 1893-1900 | merge; check the start dates printed in both runs first |
 | 20 | Спрышинская, Целина Владиславовна = Спрышинская, Целія Владиславовна = Спрышинская, Цецилія Владиславовна | 0ad5b310 (1899-00..1910-11) + 3e676298 (1903-04..1907-08) + 76bd06a7 (1908-09) | Same surname and patronymic, Petersburg ballet; first-name spellings Целина / Целія / Цецилія overlap in years (found 2026-11-07 by the review-name scan check: one review mention proposed for «Целія», another for «Целина»). Not yet checked on the staff-list scans. | Probably one woman; check the lists, then merge |
+
+## 1911-12 batch (prepared 2026-11-12, after the 1911-12 promotion, #163) -- NOT applied
+
+Built from production after promotion. Evidence lines: `outputs/merge_batch_1911-12/groups.txt` (every new 1911-12 person
+and any established person with the same family + first name + patronymic in the same list) and `evidence.txt` (the
+build's own candidate queue, every entry of both sides). Checked by Claude from the database; the 1911-12 spellings were
+zoomed by the list readers (fullread reports), the older ones come from earlier audits.
+
+**Why so many.** A new season's entry joins an existing person automatically only when both are in the same list type
+AND print the same start date. Lists that print no start date (TheaterSchoolStaff mostly, some ProductionTeam and
+Musicians) never join, nor do entries whose start date is printed differently from year to year. The same gap already
+left one-season splits from 1910-11 in production.
+
+### Group A -- same family, first name and patronymic (or patronymic blank on one side), same list, consecutive seasons (29 new people)
+Recommendation: merge, as one rule-based step. Where 1910-11 also left a one-season split, that record joins too.
+Plain cases (start dates agree or are not printed): Байковъ А. А.*, Боборыкинъ П. Д. (+1910-11 split), Бруннеръ Л. Ѳ. (+1910-11
+split), Брындинъ К. К. (1910-11 + 1911-12), Воздвиженскій В. П.*, Герасимова В. И.*, Казанскій Л. И. (+1910-11 split), Карпова Л. В.*,
+Касаткинъ Ю. В.*, Клемецкая Е. В. (+ two older records), Крюгеръ Э. Э., Легатъ А. С.*, Литке К. К.*, Мендесъ Джульетта, Наумовъ П. Н.
+(+1910-11 split), Печатниковъ Н. А., Пигулевскій В. Ѳ. (+1910-11 split), Плаксинъ А. Л. (print «Леонтьёвичъ»), Погожевъ В. П. (+1910-11
+split), Сенкусъ, Соколовъ Н. Г. (1910-11 + 1911-12), Тецъ В. К.
+(* = the start date printed in 1911-12 differs from earlier years by a day/month/year -- a print variant, the reason the
+automatic merge skipped them; listed in groups.txt.)
+Needing a look first: Чагинъ В. Н. (1911-12 prints «съ 30 ноября 1896», earlier «съ 1 октября 1901»); Шарыпинъ К. П. («съ 17 мая 1876»
+vs «съ 1 сентября 1887»); Кассанъ А. Ф. (SP orchestra 1904-08, Moscow orchestra 1911-12 «съ 1 апрѣля 1910»: a move or a namesake);
+Гавриловъ Александръ (1911-12 SP ballet, no patronymic; the old record is Moscow ballet, Митрофановичъ -- probably NOT the same);
+Кузнецовъ 2-й Н. И. (Moscow ballet, «съ 1 августа 1910»; old record = the 1910 graduate Кузнецовъ Николай, plausible);
+Смирновъ В. И. (1911-12 «съ 1 ноября 1911», old Смирновъ 2-й 1904-09: a return?); Шредеръ Карлъ Августовичъ (RG's 2026-10-05
+Шредеръ/Шнейдеръ split -- keep with Шредеръ, the percussionist?).
+
+### Group B -- the class of 1911 joining the company (graduate entry 1910-11 -> company entry 1911-12)
+Recommendation: merge, as #133 / the 2026-10-12 graduate merges did. From the queue: Александрова Лидія (Павловна), Бажанова Марія,
+Владиміровъ Петръ (graduate «Владиміровъ», company «Владимировъ»), Клементьева Марія, Невельская Софья / Невельская 2-я Софія
+Карловна, Павловъ Евгеній, Покровская Анна, Свобода Вячеславъ, Цаплева Елизавета, Цаплинъ Павелъ, «Вольшакова» Лидія (graduate list)
+/ Большакова 2-я Лидія Іосифовна (company; same «съ 1 іюня 1911»). Not in the queue but the same kind: Чичелева Елена (graduate) /
+Чичилева 2-я Елена Васильевна; Гилевичъ Евгенія / Гитлевичъ Евгенія Львовна; Подлевская Янина / Годлевская Янина Михайловна;
+Фокина Екатерина / Фокина 2-я Екатерина Владиміровна; Литовкинъ Сергѣй / Литавкинъ Сергѣй Сергѣевичъ. The surname variants here
+(В/Б, Г/П, и/а, Гилевичъ/Гитлевичъ) need a zoom on the graduate list before merging.
+
+### Group C -- one person, spelling variant across years (from the queue)
+Бужановскій Стефанъ (1903-08) / Степанъ (1911-12), same «съ 1 ноября 1903», trumpet; Парманинъ / Порманинъ Тихонъ, «съ 1 сентября
+1905»; Зозель Павелъ (1890-1911) / Цозель Павелъ (1911-12; readerD read «Цозель» with ь); Продановъ Михаилъ Мелетевичъ /
+Мелентьевичъ; Арендсъ Генрихъ (1890-1906; NB his 1906-08 entries are printed «Андрей Ѳедоровичъ» and sit in this record) / Арендсъ
+Генрихъ Евгеній (1911-12, «съ 25 сентября 1883»); Чичелева / Чичилева 1-я Елизавета Васильевна, «съ 1 сентября 1899»; Никольскій
+Іоаннъ / Иванъ Васильевичъ (priest, «съ 10 декабря 1896»). Recommendation: merge after a zoom of the 1911-12 form.
+
+### Group D -- genuinely uncertain, for RG
+- Волчокъ Василій Васильевичъ (1911-12 SP «Капельмейстеры балета», «съ 15 января 1911») vs Волковъ Василій Васильевичъ (SP ballet
+  artist 1890-95): different surname, 16 years apart -- recommend keep apart.
+- Свѣтинская Марія Александровна (1890-99) vs Снѣжинская Марія Александровна (1911-12 ProductionTeam): RG rejected the merge of the
+  older pair on 2026-10-05; the new 1911-12 record is a fresh pair -- RG to say whether the rejection stands.
+- Мосолова 1-я Вѣра Ильинишна (1911-12, «съ 1 сентября 1893») vs Мосолова Вѣра Владиміровна (1892-1911): patronymic differs.
+- Воронцовъ Владиміръ Петровичъ (1911-12 SP ballet, no start date) vs Воронцовъ Владиміръ Васильевичъ (1890-1912) and «Боронцовъ
+  Владиміръ» (1910-11 graduate).
+- Булгаковъ Александръ Дмитріевичъ (1911-12 Moscow, «съ 1 іюня 1889 г. по 1 іюня 1909 г. и съ 24 октября 1910 г.») vs Булгаковъ
+  Алексѣй Дмитріевичъ (1890-1909).
+- Егорова: in production the 1910-11 SP entry printed «Любовь» is linked to Егорова Марія Николаевна (0eea687d); the 1911-12
+  «Егорова, Любовь Александровна» is a new record. Check against RG's 2026-11-02 Егорова resplit.
+
+### Group E -- the rest (112 new 1911-12 people with no exact namesake)
+Mostly genuine newcomers (start dates 1909-1912; the 1912 graduates). Not yet checked one by one for continuations under a
+changed spelling; Moscow orchestra entries «съ 1909-1910» deserve a look against the 1910-11 Moscow orchestra list.
+
+The 20 queue rows whose two sides were merged automatically later in the same build need nothing (stale candidates).
+
+**Group A APPLIED 2026-11-12 (RG: "Yes, merge Group A").** `docs/eval/person_merge_group_a_1911-12_2026-11-12.py --write`
+(backup `outputs/full_run/imperial_theaters.pre_merge_group_a_1911-12_2026-11-12.duckdb`), then build_entities,
+build_research_model, alignment check (0 shift blocks), sqlite rebuilt. The 22 plain cases listed above: 29 records (the
+1911-12 entries and the 1910-11 one-season records) joined the established record, which keeps its id. Live persons
+2,662 -> 2,633; 35 staff appearances moved; nothing else changed (all tables compared both ways against the backup). No review
+mention or curated file pointed at a merged-away id (the jubilee proposal row for Боборыкинъ already names the survivor).
+The seven "needing a look first" names in Group A were NOT merged.
+
+**Group B (names printed the same) APPLIED 2026-11-12 (RG: "Yes, merge them").** `docs/eval/person_merge_group_b_1911-12_2026-11-12.py
+--write` (backup `outputs/full_run/imperial_theaters.pre_merge_group_b_1911-12_2026-11-12.duckdb`): Александрова Лидія, Бажанова
+Марія, Владиміровъ Петръ, Клементьева Марія, Невельская Софья, Павловъ Евгеній, Покровская Анна, Свобода Вячеславъ, Фокина
+Екатерина, Цаплева Елизавета, Цаплинъ Павелъ -- graduate record (1910-11) survives, 1911-12 company entry joins. Live persons
+2,633 -> 2,622; 11 appearances moved, nothing else changed; 0 shift blocks; sqlite rebuilt. Display names stay the graduate form
+without patronymic (one printing each; the majority vote breaks the tie toward the earlier entry) until 1912-13 adds a printing --
+or a tie-break preferring the fuller name (RG to decide; would also touch other tied persons). NOT merged yet: the five with
+surname variants (Вольшакова/Большакова 2-я, Подлевская/Годлевская, Гилевичъ/Гитлевичъ, Литовкинъ/Литавкинъ, Чичелева/Чичилева 2-я).
+
+**Group B, spelling variants -- scan-checked by Claude 2026-11-12 (both lists zoomed), awaiting RG.** The 1910-11 graduate
+lists (pp. 153 SP, 154 Moscow) and the 1911-12 company lists print the class of 1911 as follows; every SP graduate entered the
+SP company «съ 1 іюня 1911 г.» (except Безкоровайная, ill), the Moscow ones «съ 1 августа 1911 г.»:
+| graduate (1910-11, as printed) | company 1911-12 (as printed) | person ids (grad -> company) |
+|---|---|---|
+| Вольшакова, Лидія (В for Б, letter-spaced) | Большакова 2-я, Лидія Іосифовна (sister Большакова 1-я Галя Іосифовна in the same list) | 8f4bbc7c -> d9304a99 |
+| Боронцовъ, Владиміръ (Б for В) | Воронцовъ, Владиміръ Петровичъ (no start date printed) | c4d7ab13 -> 782afaae |
+| Гавриловъ, Александръ | Гавриловъ, Александръ (SP ballet, no patronymic, no start) -- NOT the Moscow Митрофановичъ | 7bf20009 -> 92808b96 |
+| Ивановъ, Николай | Ивановъ 5-й, Николай Павловичъ (no start) | 31dfba8e -> b2db337a |
+| Литовкинъ, Сергѣй | Литавкинъ, Сергѣй Сергѣевичъ («съ 1 іюня 1911») | 40bf44fb -> b042e317 |
+| Гилевичъ, Евгенія | Гитлевичъ, Евгенія Львовна (p. 124 no. 18) | see groups.txt -> 1f5195c0 |
+| Подлевская, Янина | Годлевская, Янина Михайловна (p. 124 no. 19) | see groups.txt -> e13cb221 |
+| Чичелева, Елена | Чичилева 2-я, Елена Васильевна (p. 127 no. 80) | c3b834fc -> d5539533 |
+Separate question: Петровъ, Леонидъ (Moscow graduate 1911) and Мяздриковъ, Леонидъ Дмитріевичъ «(по сценѣ Петровъ)» (Moscow
+company p. 129 no. 36, «съ 1 августа 1911») -- the graduate list seems to print his stage name.
+Not a match: Кирхгеймъ, Луція (SP graduate) vs Кирхгеймъ, Маргарита Фердинандовна (SP company since 1909) -- keep apart.
+This also settles two Group A/D items: the new SP «Гавриловъ, Александръ» is this graduate (not Митрофановичъ), and the new
+«Воронцовъ, Владиміръ Петровичъ» is the graduate «Боронцовъ» (not Владиміръ Васильевичъ).
+
+**Group B spelling variants APPLIED 2026-11-12 (RG: "Yes, merge them"), 7 of 8.** RG then asked whether both scans were read
+correctly: the graduate lists had been zoomed by Claude, but the SP company forms had only been read by the list reader and the
+Moscow ones at reduced size. Rechecked on the company scans at higher resolution (pp. 88, 93, 94, 95, 124, 127): Большакова 2-я
+Лидія Іосифовна «(съ 1 іюня 1911 г.)» (our raw drops the «(» -- to fix), Воронцовъ Владиміръ Петровичъ (no date), Гавриловъ
+Александръ (no date; «Оставилъ службу 23 сентября 1911 г.»), Литавкинъ Сергѣй Сергѣевичъ «(съ 1 іюня 1911 г.)», Гитлевичъ Евгенія
+Львовна, Годлевская Янина Михайловна, Чичилева 2-я Елена Васильевна -- all as transcribed. **Ивановъ withdrawn:** p. 94 prints
+BOTH «23. Ивановскій, Николай Павловичъ (съ 1 іюня 1911 г.)» (3 ballets) and «28. Ивановъ 5-й, Николай Павловичъ.» (undated,
+126 performances); the class printed 5 boys, the company gained 6 new SP men, so which of the two is the graduate «Ивановъ, Николай»
+is open -> RG. The merge was redone from the pre-batch backup without it (script comment explains). Live persons 2,622 -> 2,615;
+only those 7 people changed; 0 shift blocks; sqlite rebuilt. Display names show the graduate list's form, misprints included
+(«Вольшакова», «Боронцовъ»), because one printing each ties and the earlier wins -- see the tie-break question.
