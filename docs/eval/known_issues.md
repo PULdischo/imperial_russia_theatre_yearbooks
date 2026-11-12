@@ -25038,3 +25038,8 @@ SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Mosc
 - #1 «1407 р. 88 к.» (Малый 1 Oct 1911, p. 9; first digit a slanted 7-like sort): RG 2026-11-12 "good i agree" -- 1407 stands.
   Evidence: Moscow drama season total 266,615.70 is exceeded by 907.20 with 1407, by 6,907.20 with 7407; «Горе отъ ума» took
   687-1,678 р. on its other Малый nights; the Малый's season maximum was 7,849.52 (Никулина jubilee). All seven readings settled.
+- Ledger rows 1911-12-06 and -13 looked at with RG 2026-11-12 (sheets `docs/eval/scan_audit/1911-12_ledger_ballet_{A_stats,B_lists}.png`):
+  p. 56 prints SP ballet 42 / 181,272.03 as transcribed; on the list's holiday dates the Маріинскій is dark on 1 Jan and shows
+  matinée-level opera receipts on 28 Dec and 19 Feb, so the Repertoire may omit a second performance those days. Row 13 set to
+  **open**; RG: "perhaps the season reviews can clarify. Let's look at this when they come in." -> check the 1911-12 SP (and
+  Moscow) ballet Season Reviews when scanned.
