@@ -196,3 +196,6 @@ name_printed,role_category,creator_key,form_status,evidence
 Оге,libretto,auguste,confirmed,"Два вора (MSK 1907-08) ""Сюжетъ г. Оге""; the title line gives ""(Робертъ и Бертрамъ)"", where Г. Оге is the printed author in 1892-94; initials omitted in 1907-08"
 Шмидта,music,schmidt,confirmed,"Два вора (MSK 1907-08) ""соч. Шмидта и другихъ""; role corrected to music (ROLE_FIXES), RG 2026-10-10"
 А. А. Давыдова,music,davydov_aa,confirmed,Принцъ-садовникъ (SP 1907-08)
+Армсгеймера,,armsgeimer,confirmed,"Привалъ кавалеріи (SP 1911-12) ""музыка Армсгеймера"", no initials; the only Армсгеймеръ"
+Бруеша,,brugsch,confirmed,"Дочь Фараона (MSK 1911-12): print typo for Брукша (zoomed 2026-11-12, #163)"
+К. М. Куличевской,,kulichevskaya,confirmed,"Весеннія грезы (SP 1911-12) ""постановка К. М. Куличевской"""

@@ -28315,3 +28315,21 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 Макарова-Юнева Елена Александровна (SP 1900-01–1902-03), Черепанова Анна Андреевна (Moscow 1904-05–1910-11).
 Михайлова Марія Анемподистовна = Moscow ballet 1890-91–1896-97, but the 1912 jubilee «М. А. Михайловой» is not confirmed as her.
 Колаковскій Алексѣй Антоновичъ = Moscow orchestra (initials don't match «А. К. Колаковскаго»). Finding aid only, checked by Claude.
+
+## 2026-11-12 — 1911-12 season promoted into full_run (#163): trial-build comparisons and source cross-checks
+-- outputs/integration_1911-12/compare.py: every base table, EXCEPT ALL both ways.
+--   control (production inputs, new code) vs production: identical except 1911-12 season_stat_* rows (10 lines, 1 page, 2 checks).
+--   integration vs control: additions only (+1,673 events, +1,304 performances, +969 staff entries, +36 productions, +129 dates,
+--   +95 credits); changed existing rows = last_attested_season (819 persons), 20 display names and 5 work titles by majority,
+--   122 work appearance counts, person_tenure ranges; 0 person/work ids lost.
+--   promoted full_run vs integration: identical except the 141 new persons first attested 1911-12 (fresh ids by design);
+--   0 differences ignoring person_id; 0 old production person ids missing; person_link 24,949, 0 shift blocks.
+-- pipeline/compare_season_stats.py (integration): 1911-12 Moscow ballet 53 vs 54 sessions, receipts 156,853.75 = 156,853.75;
+--   SP ballet 42 = 42, receipts 181,272.03 vs 186,007.53; SP «Московскаго Художественнаго театра» 41 = 41 after VISITING_RUNS
+--   (raw.event_entry Михайловскій 1912-03-26..04-26 performed events = 41, receipts null); SP drama 257 vs 274 (not chased).
+-- pipeline/compare_productions_repertoire.py: 1911-12 Moscow 58/58 list dates exact; SP 59/71, the 12 = list «Пробужденіе Флоры»
+--   «декабря 2, 5» (Repertoire 2 and 5 Oct, the list's own Жизель «октября 2, 5») and list dates 26-29 Dec, 1 Jan, 19 Feb with no
+--   Маріинскій ballet in the Repertoire (raw.event_entry SP ballet query; p. 26 scan: operas only, no УТРО row).
+-- raw.person_entry Пащеевъ Борисъ: patronymic printed Ѳедоровичъ 7x, Ѳедотовичъ 8x incl. 1911-12; Ивановъ Иванъ Николаевичъ
+--   printed «1-й» 1904-05, 1909-12. Куличевская Клавдія Михайловна: the only Куличевская (SP ballet 1890-91..1900-01, school
+--   1900-01..1911-12). Finding aids, checked by Claude.

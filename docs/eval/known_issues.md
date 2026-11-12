@@ -24949,3 +24949,57 @@ continuous, every date count = Всего, 0 unparsed. No premieres. Print slips
 **Next:** integration build in a scratch dir (full_run + 1911-12 Repertoire `parsed_final` + lists `parsed_final` +
 ballet lists; add the 16 staged receipt corrections), season-stats compare, ballet lists vs Repertoire, control vs
 production diff, then RG decides on promotion.
+
+**2026-11-12, morning items + trial build (RG: "pick back up").**
+- *Small list items:* p. 144 (administration p002) is fully in frame; every reading readerD had left unverified there matches
+  the scan (checked by Claude); only fix = «Помощники завѣдывающаго постановками:» colon. Асафьевъ's tenure note restored
+  «(съ ...» (printed, p. 88). Обуховъ (TSS p003) rank and class rejoined in rank_or_title as in 1910-11; the print gives
+  «колл. сов.» there and «ст. сов.» on p. 144 (both printed). «Дежурные врачи» row, Асафьевъ's «Піанистъ» heading and
+  musicians MSK p000 «Оркестры.» match 1910-11 / the print, no change. Мяздриковъ «(по сценѣ Петровъ)» stays verbatim in
+  tenure_note_text (no stage-name field). Log: `outputs/roster_1911-12/fullread/reports/claude_followup_changes.csv`.
+- *Trial build* (`outputs/integration_1911-12/`, script `chain.sh`; control = production inputs on today's code,
+  `outputs/control_1911-12/`). Fixes needed on the way, all in code/curation, none changing production:
+  1. `build_entities`: curated excerpt links matched exact titles; 1911-12 prints «1-е д. ком. Нахлѣбникъ.» x8 with a period,
+     which became the work's display title and orphaned `work_excerpt_links.csv`. Excerpt titles now match with a final
+     period dropped (two works differing only by it would still stop the build).
+  2. `build_entities`, both automatic merges (same-name shared start date; reconcile_person_merges): the survivor was the
+     lowest id, so a person minted from a new 1911-12 entry could retire a long-standing record and orphan RG's curated
+     decisions (Аниханова's display override, Потанинъ's tenure note). Survivor is now: live before tombstone, then the
+     earliest first-attested season, then the lowest id. Production's existing merges are unchanged (control = production).
+  3. `build_production_credits`: «Сочин., постановка и танцы» -> author+staging; «Пантомима-балетъ», «Фантастическіи» (print
+     typo) added to the non-name words; an OVERRIDE for the 1911-12 Дочь Фараона line (as 1908-09; «Бруеша» = print typo for
+     Брукша, zoomed). `production_creator_forms.csv`: Армсгеймера, Бруеша, К. М. Куличевской. `production_creators.csv`: new
+     `kulichevskaya` -> roster Куличевская, Клавдія Михайловна (SP ballet 1890-1901, school ballet teacher 1900-12; the only
+     Куличевская, initials agree), confirmed on the #133 standard.
+  4. `docs/folios/staff_list_folios.csv`: 47 rows for the 1911-12 list pages, from RG's page map; graduates p001 = p. 153 (image
+     match; folio cut off in the shot).
+- *Control vs production:* every table identical except the 1911-12 season-totals rows (already committed in docs/season_stats).
+- *Integration vs control:* additions only for raw/analysis/events/performances/staff/productions (+1,673 events, +1,304
+  performances, +969 staff entries, +36 productions, +129 production dates, +95 credits). Changed existing rows are only
+  last_attested_season (819 persons), appearance counts (122 works), person_tenure ranges, 20 display names by majority vote
+  (e.g. Хейкель -> Гейкель, Пащеевъ Ѳедоровичъ -> Ѳедотовичъ: the print alternates, 8 vs 7 now) and 5 work titles by majority
+  (Морякъ Скиталецъ -> Морякъ-скиталецъ, Le Sphinx -> Le sphinx, ...). No person or work id lost; 0 person_link shift blocks.
+- *Season totals vs Repertoire:* Moscow ballet receipts exact to the kopeck (156,853 р. 75 к.; 53 vs 54 sessions); SP ballet
+  42 = 42 (receipts +4,735 р., as 1910-11's +5,251). SP «Московскаго Художественнаго театра 41»: the Михайловскій prints
+  exactly 41 events 26 Mar - 26 Apr 1912, no receipts, heading «Спектакли Московскаго Художественнаго театра.» once over
+  26 Mar -- needs a VISITING_RUNS entry (RG's call, as 1906-11). SP drama +11 after that, not chased (small non-ballet gap).
+- *Ballet lists vs Repertoire:* Moscow 58/58 dates exact. SP 59/71; the 12 are genuine source disagreements, both sources
+  read as printed (checked by Claude on the scans): list «Пробужденіе Флоры» «декабря 2, 5» is a list misprint for октября
+  (its own Жизель, on the same bills, prints «октября 2, 5»; Repertoire 2 and 5 Oct); list dates 26, 27, 28, 29 Dec, 1 Jan
+  and 19 Feb (Щелкунчикъ, Привалъ кавалеріи, Спящая красавица, Лебединое озеро, Талисманъ, Шопеніана, Эвника, Карнавалъ)
+  have no ballet in the Repertoire, which prints operas only at the Маріинскій those days (p. 26 zoomed: no УТРО row) --
+  probably performances off the Imperial stages; not yet in ballet_list_repertoire_disagreements.md.
+- *Moscow Art Theatre 1911-12 labelled (RG 2026-11-12: "Yes, label them"):* `VISITING_RUNS` gains 1911-12 Михайловскій
+  1912-03-26..04-26 -> season totals «Московскаго Художественнаго театра 41» = 41 Repertoire events. `VISITING_RUNS` now skips
+  a run whose season is not in the build (like the date overrides), so production builds stay valid before promotion;
+  control = production re-confirmed. SP drama after the label: 274 Repertoire sessions vs 257 printed (+17), not chased.
+
+**PROMOTED 2026-11-12 (RG: "Yes, promote").** Backup `outputs/full_run_pre_promote_backup_2026-11-12_1911-12/` (duckdb, parsed,
+manifest, printed page numbers, page headers, sqlite, receipts corrections). 1911-12 raw added to `outputs/full_run/raw`,
+manifest/page headers/printed page numbers extended, ballet lists loaded from `outputs/ballet_productions_all_2026-11-12/`
+(10-09 set + 1911-12), the 16 staged receipt corrections added to `receipts_print_typos.csv`; production rebuilt in place
+(logs `outputs/full_run/logs/`). Production = trial build except the 141 new 1911-12 persons' fresh ids; 0 shift blocks.
+full_run: 22 seasons, research.event 34,486, research.performance 32,140, research.work 3,047, research.person 2,760,
+research.production 664. `research_dataset.sqlite` rebuilt locally; HF / Cloud Run republish is Andy's. Still open: re-shoot
+pp. 130/132/134; RG's uncertain readings (above); the 12 SP list/Repertoire disagreements not yet in
+ballet_list_repertoire_disagreements.md; link_wikidata.py not run for the 141 new persons.

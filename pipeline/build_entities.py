@@ -815,19 +815,24 @@ def build_work(con: duckdb.DuckDBPyConnection) -> None:
     if curated_path.exists():
         by_title_genre: dict[tuple[str, str | None], list[str]] = defaultdict(list)
         by_title_only: dict[str, list[str]] = defaultdict(list)
+        # Excerpt titles are matched with any final period dropped: a work's display
+        # title is its most frequent printing, so a new season printing the same
+        # excerpt with a period (1911-12, «1-е д. ком. Нахлѣбникъ.» x8) must not
+        # silently orphan the curated row. Two works differing only by that period
+        # would give len(ex) == 2 and stop the build below, so nothing is guessed.
         for uid, t_, g_, _, key_ in work_rows:
             by_title_genre[(t_, g_)].append(uid)
             if not str(key_).startswith("curated:"):
-                by_title_only[t_].append(uid)  # a curated parent is never an excerpt
+                by_title_only[t_.rstrip(".")].append(uid)  # a curated parent is never an excerpt
         for row in _csv.DictReader(open(curated_path, encoding="utf-8")):
             if row.get("excerpt_genre"):
                 # matched on title + identity key (art form + script), not the exact
                 # printed genre, so a row survives consolidation of genre variants
                 key = _identity_genre(_fold_genre(row["excerpt_genre"]))
-                ex = [u for u in by_title_only.get(row["excerpt_title"], [])
+                ex = [u for u in by_title_only.get(row["excerpt_title"].rstrip("."), [])
                       if _identity_genre(_fold_genre(next(g for w, _, g, _, _ in work_rows if w == u))) == key]
             else:
-                ex = by_title_only.get(row["excerpt_title"], [])
+                ex = by_title_only.get(row["excerpt_title"].rstrip("."), [])
             if not row["parent_title"]:
                 # blank parent = RG ruled this excerpt stays UNLINKED; overrides the
                 # automatic matcher (2026-11-03: the 1891/1893 Михайловскій «драмы
@@ -1921,6 +1926,16 @@ def reconcile_person_merges(con: duckdb.DuckDBPyConnection) -> int:
         return 0
 
     parent: dict[str, str] = {}
+    # Survivor order (2026-11-12, #163): a live record before a tombstone, then the
+    # record attested earliest, then the lowest id. Lowest-id-only let a person minted
+    # from a new season's entry retire a long-standing record (1911-12: Потанинъ
+    # 79c28bf6 -> 41af3aff), orphaning every curated decision keyed to it. Existing
+    # merges are unchanged: each old component has exactly one live record.
+    _rank = {str(pid): (0 if sup is None else 1, first or "9999", str(pid)) for pid, sup, first in con.execute(
+        "SELECT person_id, superseded_by_person_id, first_attested_season FROM entities.person").fetchall()}
+
+    def _key(x: str) -> tuple:
+        return _rank.get(x, (1, "9999", x))
 
     def find(x: str) -> str:
         parent.setdefault(x, x)
@@ -1932,7 +1947,7 @@ def reconcile_person_merges(con: duckdb.DuckDBPyConnection) -> int:
     def union(a: str, b: str) -> None:
         ra, rb = find(a), find(b)
         if ra != rb:
-            root, child = (ra, rb) if ra < rb else (rb, ra)
+            root, child = (ra, rb) if _key(ra) < _key(rb) else (rb, ra)
             parent[child] = root
 
     for id1, id2 in pairs:
@@ -2218,6 +2233,12 @@ def merge_duplicate_persons(con: duckdb.DuckDBPyConnection) -> int:
             if any(frozenset((x, y)) in apart for x in ids for y in ids if x < y):
                 n_kept_apart += 1
                 continue
+            # Keep the record attested earliest (then the lowest id): a new season's
+            # entries are first minted as fresh persons, and keeping ids[0] let a
+            # random new id retire a long-standing person, orphaning every curated
+            # decision keyed to it (1911-12, #163: Аниханова 48434a09 -> 1e13bece).
+            first_seen = {m[0]: min((sc[0] for sc in m[2] if sc[0]), default="9999") for m in comp}
+            ids = sorted(ids, key=lambda x: (first_seen[x], x))
             survivor = ids[0]
             for loser in ids[1:]:
                 absorbed[loser] = survivor

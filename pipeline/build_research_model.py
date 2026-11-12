@@ -385,6 +385,10 @@ VISITING_RUNS = [
     ("1910-11", "Михайловскій", "1911-04-11", "1911-05-15", "Moscow Art Theatre",
      "season totals p. 58 print «Московскаго художественнаго театра 45»: the 45 Михайловскій events "
      "11 Apr - 15 May 1911; the troupe heading is printed once, over 11 Apr morning (RG, 2026-10-27)"),
+    ("1911-12", "Михайловскій", "1912-03-26", "1912-04-26", "Moscow Art Theatre",
+     "season totals p. 56 print «Московскаго Художественнаго театра 41»: the 41 Михайловскій events 26 Mar - 26 Apr 1912 "
+     "(Живой трупъ, Гамлетъ, Вишневый садъ, Братья Карамазовы, Мѣсяцъ въ деревнѣ, Нахлѣбникъ), no receipts; the heading "
+     "«Спектакли Московскаго Художественнаго театра.» is printed once, over 26 Mar (p. 46). RG, 2026-11-12: \"Yes, label them\""),
 ]
 
 #: Comedy-ballets are dramas that contain dancers (RG, 2026-10-12: "classify them
@@ -1600,6 +1604,10 @@ def build_art_forms(con: duckdb.DuckDBPyConnection) -> None:
             [troupe, f"run of an outside troupe ({troupe}), no heading printed: {evidence}",
              season, theater, d0, d1]).fetchone()[0]
         if not n:
+            # a run for a season not in this build (a scratch subset, or a season staged before
+            # promotion) is skipped, as validate_performance_dates does for its overrides
+            if not con.execute("SELECT 1 FROM perf_base WHERE season = ? LIMIT 1", [season]).fetchone():
+                continue
             raise SystemExit(f"VISITING_RUNS: {season} {theater} {d0}..{d1} matches no performance")
     con.execute("CREATE OR REPLACE TEMP TABLE art_title (title VARCHAR, genre VARCHAR, art_form VARCHAR, basis VARCHAR)")
     if ART_FORM_BY_TITLE_CSV.exists():
