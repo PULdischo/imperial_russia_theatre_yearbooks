@@ -416,7 +416,7 @@ OPERA_GENRE_RE = r"^(оп\.|опера$|опера-былина)"
 OPERETTA_GENRE_RE = r"^(опер\.|оперет|шут\.-оперет|опера-вод)"
 GERMAN_GENRE_RE = (r"^(Lustsp|Lustp|Lust\.|Schausp|Schwank|Schw\.|Oper|Posse|Trauersp|Volksst|Comödie|Komödie|Drama|"
                    r"Genrebild|Märchen|Charakter|Plauderei|Dr\.|Trag\.|Tragödie|dram\. Ged|dr\. Ged|Offiz|Rokoko|"
-                   r"Scherz|Liebesdrama|Natur\.|ein |tragische|dramat\. Plauder)")
+                   r"Scherz|Liebesdrama|Natur\.|ein |eine |tragische|dramat\. Plauder)")  # «eine Tragödie.»: Judith, 1911-12 (#163)
 #: A Latin-script title that reads as German (lower-cased title).
 GERMAN_TITLE_RE = r"(^|[ ,.!])(der|die|das|und|ein|eine|aus|von|zum|ich)([ ,.!]|$)"
 #: Houses where an operetta counts as opera ("they go with the company that

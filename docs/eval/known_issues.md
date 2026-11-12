@@ -25003,3 +25003,24 @@ full_run: 22 seasons, research.event 34,486, research.performance 32,140, resear
 research.production 664. `research_dataset.sqlite` rebuilt locally; HF / Cloud Run republish is Andy's. Still open: re-shoot
 pp. 130/132/134; RG's uncertain readings (above); the 12 SP list/Repertoire disagreements not yet in
 ballet_list_repertoire_disagreements.md; link_wikidata.py not run for the 141 new persons.
+
+**1911-12 blind audit DONE 2026-11-12 (RG: "Yes, start"; checklist A7).** Same method as #135: 6 pages drawn at random (seed
+1912; 3 SP, 3 Moscow: p003, p020, p037, p038, p042, p047), each read blind cell by cell on the scan before opening the
+transcription, then compared field by field; every disagreement re-zoomed. Brief and reports:
+`outputs/repertoire_1911-12/blind_audit/`. Fields compared 230 + 244 + 252 + 236 + 240 + 256 = **1,458; transcription errors 0**
+(1910-11: errors on 4 of 6 pages). Disagreements 31, all conventions, none a misreading: 23 title/genre separators (the
+transcription leaves the printed comma or period out of the title, as the season does), and «Наканунѣ, возможный случай.»
+x4 (stored as title «Наканунѣ» + genre «возможный случай.»; earlier seasons store it both ways, but every printing already
+folds into one research.work, 40 performances 1901-12, so nothing depends on it). p047's reader zoomed at 1.5x, not 3x
+(cells reported legible). New print typo: «ВВЧЕРЪ.» for «ВЕЧЕРЪ.» (p020, 27 Nov 1911, Большой session label).
+
+**1911-12 reconciliation DONE 2026-11-12 (RG: "Yes, start it"; checklist D2/D3).** Blind column reads of all six theaters
+(`docs/eval/scan_audit/1911-12_scan_reads.csv`, 1,673 sessions): every session and every receipt agrees with production;
+3 title cells differed and were re-read by Claude, all stored as printed or genuinely ambiguous. Three research-layer
+misclassifications found and fixed: Wagner's Ring printed «музык. драма.»/«музык. др.» classed Russian drama (13
+performances; RG: opera, `work_artform_overrides.csv`, extending the 2026-10-06 Валкирія ruling -- RG: "Wagner liked to call
+his operas 'musical dramas'"); «Judith, eine Tragödie.» classed French (GERMAN_GENRE_RE lacked «eine »); «Трагедія о Гамлетѣ …
+датскомъ.» unclassified (two aliases under RG's 2026-11-03 ruling). Each rebuild changed only those events. Ledger rows
+1911-12-01..13 in `docs/eval/reconciliation/outcome_ledger.csv`: corrected 4, classification 1, excluded_by_yearbook 1,
+yearbook_own 7 (provisional: Moscow opera +11.04, Moscow ballet +1 event, Moscow drama +2/+907.20, SP opera +3/+15,389.60,
+SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Moscow opera count, SP French, German, MXT 41.

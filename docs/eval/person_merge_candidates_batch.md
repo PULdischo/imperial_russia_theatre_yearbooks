@@ -291,3 +291,8 @@ BOTH «23. Ивановскій, Николай Павловичъ (съ 1 ію�
 is open -> RG. The merge was redone from the pre-batch backup without it (script comment explains). Live persons 2,622 -> 2,615;
 only those 7 people changed; 0 shift blocks; sqlite rebuilt. Display names show the graduate list's form, misprints included
 («Вольшакова», «Боронцовъ»), because one printing each ties and the earlier wins -- see the tie-break question.
+
+**Display names -- DEFERRED (RG 2026-11-12):** "Let's do a full audit of display names only [once] every season and every list
+is in the database." No tie-break change now. At that audit: the 86 live persons whose top printed spellings tie (the earlier
+printing wins today), incl. the merged 1911 graduates shown in the graduate list's form, misprints included («Вольшакова, Лидія»
+for Большакова 2-я, «Боронцовъ, Владиміръ» for Воронцовъ, «Александрова, Лидія» without «Павловна», ...).

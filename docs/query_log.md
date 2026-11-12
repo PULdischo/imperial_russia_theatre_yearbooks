@@ -28343,3 +28343,4 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 --   tally / tenure / service_period rows of those 22 people; research.person_appearance rows whose person changed = 35, all 22 names.
 -- Group B merge (11 people): before/after EXCEPT ALL: only those 11 persons' rows changed (person 2,731 -> 2,720; 11 appearances moved).
 -- Group B variants (7): rechecked company scans; Ивановъ withdrawn (p. 94 Ивановскій / Ивановъ 5-й both Николай Павловичъ); redone from backup; only 7 persons changed.
+## 2026-11-12 — 1911-12 reconciliation: compare_season_stats after the Ring/Judith/Гамлетъ fixes; blind column reads vs raw (outputs/repertoire_1911-12/column_reads/compare.py: 1,673 sessions, receipts 0 diffs, titles 3); subset search over SP opera/ballet/French and Moscow drama receipts (no 1-2 event subset equals any gap).

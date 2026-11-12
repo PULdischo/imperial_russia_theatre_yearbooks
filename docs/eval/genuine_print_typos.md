@@ -1118,6 +1118,8 @@ Dates and headers:
 - `repertoire_1911-12_p049` (printed p. 50), date column «81 Среда.» between «17 Вторн.» and «19 Четвергъ.» -- transposed 18 (zoomed by Claude too). `_MANUAL_DATE_OVERRIDES` -> 18 Apr 1912.
 
 Titles and words:
+- «ВВЧЕРЪ.» for «ВЕЧЕРЪ.», session label (p020, Большой, 27 Nov 1911; blind audit 2026-11-12).
+- «ВВЕЧЕРЪ.» (doubled В), Маріинскій session labels 25 Sep, 2 Oct and 11 Dec 1911; «Раймонда, 6ал.» (б printed like the digit 6), Маріинскій 14 Dec 1911 (blind column reads 2026-11-12).
 - «Снѣгурочкз» (p003, 12 Sep 1911); «Грова, др.» for Гроза (p010 Малый, 16 Oct); «Спектакль дли учащейся молодежи.» (p010 Большой, 16 Oct); «Лоэнгрииъ, оп.» (p016 Большой, 14 Nov).
 - «Ровизоръ, ориг. ком.» (p051 Александринскій, 24 Apr 1912); «Вишневым садъ» (p051 Михайловскій, 23 Apr evening).
 - «Герцогиня Паддуанская» with a double д throughout (p038, p040, p042, p046, p048, p052); «Гарцогиня» (p040, 24 Feb), «Герцогина» (p042, 6 Mar), «Герцсгиня Паддуанскяя» (p050, 19 Apr; the с could be a broken о -- uncertain).
