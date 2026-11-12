@@ -179,3 +179,25 @@ The 1907-08 lists were loaded in #145, which added 7 Repertoire ballet events wi
 
 - Not a disagreement about the date: the list's month is printed "феваля" (no р), a print typo; the day and year agree with the Repertoire.
 - The Repertoire cell itself has a printer's transposition, "1)-е 1 д." for "1) 1-е д.".
+
+## Addendum 2026-11-12: Petersburg 1911-12 (both scans read; issue #163, ledger row 1911-12-13)
+
+The SP list (`balletproductions_1911-12_SP_p000`/`p001`, printed pp. 63-64) gives 71 dates; 59 match the Repertoire. The
+other 12 are below, in section A's format. Both sources were read on their scans by Claude, and RG looked at the scans with
+Claude on 2026-11-12 (sheets `docs/eval/scan_audit/1911-12_ledger_ballet_{A_stats,B_lists}.png`). Each list entry's dates
+equal its printed «Всего». The Moscow list (p. 69): 58 of 58 dates match.
+
+| # | Season, city | Ballet (list entry) | List prints | Repertoire prints (Маріинскій; SP columns) | Evidence in the yearbook |
+|---|---|---|---|---|---|
+| A17 | 1911-12 SP | Пробужденіе Флоры, #12 (p. 63) | декабря 2, 5 [1911] | 2 Dec: Борисъ Годуновъ (p019, p. 20); 5 Dec: Евгеній Онѣгинъ (p021, p. 22). The Repertoire prints Пробужденіе Флоры + Жизель on **2 Oct** evening and **5 Oct** (p007, p. 8) | The list's own Жизель entry (#5) prints «октября 2, 5», the same two bills; the list gives Флора no October date |
+| A18 | 1911-12 SP | Привалъ кавалеріи, #11 (p. 63); Щелкунчикъ, #20 (p. 64) | декабря 26 [1911] | Золото Рейна, оп., 3592 р. 50 к. (p025, p. 26); no ballet in any SP column | p. 26 zoomed: no УТРО row in the Маріинскій column |
+| A19 | 1911-12 SP | Спящая красавица, #15 (p. 63) | декабря 27 [1911] | Дубровскій, оп., 4251 р. 40 к. (p025, p. 26); no ballet in any SP column | as A18 |
+| A20 | 1911-12 SP | Лебединое озеро, #10 (p. 63) | декабря 28 [1911] | Жизнь за Царя, оп., 2622 р. 78 к. (p025, p. 26); no ballet in any SP column | The receipts are at the level of the season's matinées, but no УТРО label is printed |
+| A21 | 1911-12 SP | Привалъ кавалеріи, #11 (p. 63); Щелкунчикъ, #20 (p. 64) | декабря 29 [1911] | Лакмэ, оп., 4361 р. 90 к. (p025, p. 26); no ballet in any SP column | as A18 |
+| A22 | 1911-12 SP | Талисманъ, #16 (p. 63) | января 1 [1912] | Маріинскій: dash (dark) (p027, p. 28); no ballet in any SP column | none |
+| A23 | 1911-12 SP | Карнавалъ, #8 (p. 63); Шопеніана, #19 (p. 64); Эвника, #21 (p. 64) | февраля 19 [1912] | Валкирія, музык. др., 2661 р. 78 к. (p037, p. 38); no ballet in any SP column | Matinée-level receipts, no УТРО label. The three ballets are given together on 7 and 11 Mar in both sources |
+
+- **Season totals (p. 56)** print SP ballet 42, equal to the Repertoire's 42 ballet events, not to the list's dated
+  performances.
+- **Open (RG 2026-11-12):** "perhaps the season reviews can clarify. Let's look at this when they come in." The 1911-12 SP
+  ballet Season Review is not yet scanned.

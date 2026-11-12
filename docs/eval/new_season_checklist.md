@@ -52,7 +52,7 @@ Status columns: done / partial / not done / n.a. Keep the table current when a s
 | D1 | Season totals transcribed | #147 | done |
 | D2 | compare_season_stats, every gap to a ledger outcome (`outcome_ledger.csv`) | reconciliation README | done 2026-11-12: 13 rows (1911-12-01..13); fixed on the way: Wagner's Ring «музык. драма» -> opera (RG), «Judith, eine Tragödie.» -> German, Гамлетъ «датскомъ» alias |
 | D3 | Blind column reads, every theater (receipts + titles) | scan_audit README (1896-97..1910-11) | done 2026-11-12: 1,673 sessions, every receipt as stored, 3 title cells re-read (all as stored or ambiguous) |
-| D4 | Ballet lists vs Repertoire, every lead read in both sources | #135, #146 | done (SP 12 explained); **not yet in ballet_list_repertoire_disagreements.md** |
+| D4 | Ballet lists vs Repertoire, every lead read in both sources | #135, #146 | done 2026-11-12: SP 12 as A17-A23 in ballet_list_repertoire_disagreements.md (open for the Season Review); Moscow 58/58 |
 | D5 | Opera productions lists vs Repertoire | 1910-11 ledger 14-15 | n.a. by RG's rule (opera lists archive only) unless RG reopens |
 | D6 | Season Reviews vs Repertoire (dates, casts) | #141 notes, review checks | n.a. until the 1911-12 reviews are scanned |
 
