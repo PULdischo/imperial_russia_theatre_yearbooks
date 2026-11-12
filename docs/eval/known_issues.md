@@ -24841,3 +24841,111 @@ read by Claude. Tested on a scratch copy built from the git index (not the unsta
 diffed: only those two mentions change work; the staged «Симонова» unlink (13789) goes in with this rerun; other differences are
 candidate-id order only. Production rebuilt (matcher -> build_reviews_duckdb -> assertions -> credits; text corrections step not
 needed). Backup `outputs/backups/vremena_goda_links_2026-11-10/`. sqlite not rebuilt (Andy).
+
+## Issue #163: new season 1911-12 (Repertoire + Roster lists + ballet lists) -- extracted, NOT yet scan-verified (2026-11-11)
+
+RG: "process the repertoire and spiski from the most recent scans", then "Yes, run it" on the ~3.1M-token estimate. Source:
+RG's scans of the 1912 Supplement (UMich volume, 1912 V-VII + Supplement bound together), filed 2026-11-11 and copied to
+`pdf/`. Same recipe as #135 (1910-11). Nothing touches `outputs/full_run`.
+
+**Repertoire 1911-12** (`outputs/repertoire_1911-12/`): 55 PDF pages, p000 = title, 54 table pages (printed pp. 2-55,
+30 Aug 1911 - 10 May 1912; printed page = PDF index + 1, read off the bottom strips). p. 56 = season totals.
+- *Calibration (free).* This copy's shots move the table by up to ~0.18 of the page width and change its scale between
+  pages of the same parity (two zoom settings: table width ~0.57 or ~0.69 of the frame), so no parity crop fits.
+  `crop_to_table.crop_for` now takes an exact page_id key first (as `column_group_for` already did), and `main()` crops
+  a season that has only parity/page keys page by page. `docs/repertoire_crop_bounds.json` gets 54 per-page entries
+  (table frame detected from its rules, 11 pages set by hand, every rectangle checked on contact sheets, right edges of
+  the x1=1.0 pages zoomed: no clipping). On the per-page crops the dividers line up (~0.14 / 0.41 / 0.68):
+  `docs/repertoire_column_bounds.json` gets 54 per-page entries, 34 with 3 measured dividers, 20 (mostly Moscow, Новый
+  column largely dashes) with the third extrapolated as 2*d1-d0.
+- *Paid passes:* headers 92K tokens (54/54), baseline 418K (54/54), row-level 1.67M (54/54, no row-detection
+  failures), column-wise 592K (24 ok + 30 partial), `repair_columnwise_merge.py` 77 attempts (33 tier-2, 3 tier-1, 4
+  unrecovered: Новый on p018/p026/p030/p032 -- baseline did not return it either).
+- *Parse* (`--extraction-source columnwise`, own page headers + printed page numbers): 1,634 events (1,112 performed,
+  522 no_performance), 1,274 performances. quality_checks 3-way: 1,239 flags (965 cross-extraction disagreements, 205
+  "Мариинскій" with и -- check on the scan whether this print really uses и, 43 row-level duplicate keys, 14
+  cross-theater date mismatches). Visible already: Новый has 219 events vs ~270 for the other theaters (missing columns,
+  the #119/#135 bug class), and "Новый театр"/"Большой театр" without ъ on some pages. Page-header oddity for the
+  sweep: p040 read as "24 февраля. 1912 г. 4 февраля." (expected 4 марта).
+- *Season totals* p. 56 transcribed into `docs/season_stats/_build.py` (zoom-checked; build 0 problems). New layout:
+  Petersburg Russian drama printed as two one-line venue entries, «въ Алекс. театрѣ» 234 (348,647 р. 52 к.) and «въ Мих.
+  театрѣ» 23 (11,668 р. 57 к.), no subtotal.
+
+**Roster lists 1911-12** (`outputs/roster_1911-12/`): 47 pages, baseline 494K tokens. Parsed 1,026 entries (1910-11:
+915), 10 quality flags (4 credit sums that don't add up, 3 digit-misread candidates, 3 page-top segment order). Shared
+edge pages leak neighbouring lists again: SP ballet p000 opens with 23 entries of the preceding list; SP ballet p010
+ends with the French drama troupe (RG: ignore French drama artists); MSK ballet p008 and musicians MSK p000 carry each
+other's entries; musicians SP p002 has surnames stored as heading_path.
+
+**Ballet productions lists 1911-12** (`outputs/ballet_productions_1911-12/`): 3 pages, raw_full only (25K tokens).
+
+**Billed total:** 3.29M tokens. **Not done yet:** full scan-read of the lists +
+leak removal, ballet-list verification, integration build. ProductionStats compare after integration.
+
+**Repertoire scan sweep DONE (RG: "Yes, start it", 2026-11-11).** 6 agents x 9 pages, brief
+`outputs/repertoire_1911-12/SWEEP_BRIEF.md` (1910-11's plus this season's known faults and #135's checker lessons); backup
+`raw_columnwise_repaired_pre_sweep_backup/`, one fix script per page in `sweep_zoom/<batch>/`, reports in `sweep_reports/`.
+Sessions changed 167 + 154 + 176 + 212 + 208 + 177 (~1,090). Main fixes: «Мариинскій» -> «Маріинскій театръ.» (the print has
+і, checked); whole Новый columns missing or partial rebuilt (p018, p022, p026, p030, p032, p042); one-row column shifts (p032
+Большой 21-26 Jan, p040 Малый 4 Mar, p021 Михайловскій 5/6 Dec, p023 Маріинскій split on the wrong day); header month/year
+spread onto every row removed, month labels only where the date column prints them; genres out of titles, printed periods
+restored, invented genres removed («др.» on Дивертиссементъ/Гамлетъ/кантата, Cyrillic genres on French plays, «Лустсп.»);
+banners/notes out of works and act excerpts out of annotations; the free-performance banners on 14 Nov, 6 Dec, 1 Feb restored
+on the morning sessions (as #119). **Consistency pass:** 62 genre-less titles lacked their final punctuation -- a recheck
+zoomed each: 58 print a period, 2 a semicolon, 1 a comma (all restored), 1 already right (`sweep_reports/periods_recheck.md`).
+Structure check: 54/54 pages have 3 theaters with identical date sets, theater names exactly the 6 printed forms, no mixed
+Latin/Cyrillic words.
+**Re-parse** (`parsed_final/`): 1,673 events (1,110 performed, 563 no_performance), 1,304 performances, 0 validation
+errors, date_undate and printed_page_number on every row; printed weekday vs Julian date: 1,670/1,670 agree. quality_checks:
+1,239 -> 1 flag («816 г. 50 к.», a print typo). Fixed in code: p040's header «...4 февраля.» (print typo) added to
+`_PAGE_HEADER_MONTH_SWAP_FIX` (its 2-4 March sessions had collided with p034/p036); «81 Среда.» (p049, zoomed) added to
+`_MANUAL_DATE_OVERRIDES` -> 1912-04-18 (skipped while 1911-12 is not in the run). 16 receipt print-typo corrections staged
+in `outputs/repertoire_1911-12/receipts_print_typos_1911-12_pending.csv` -- NOT in `pipeline/research_corrections/` yet,
+because build_research_model fails on a row that matches no event; add them at promotion. Typos logged in
+`genuine_print_typos.md`.
+**Uncertain readings for RG** (all kept as the checker's best reading): p008 1 Oct Малый «Горе отъ ума» receipts 1407 р. 88 к.
+(first digit in a different type; 7407?); p006 19 Sep Малый «72 р. 21 к.» (printed, very low); p015 12 Nov Александринскій
+genre after «Прохожіе» damaged («ком.» / «кэм.»?); p015 13 Nov «Морякъ-скиталецъ» hyphen faint; p024 15 Dec «Псковитянка»
+with a damaged н; p050 «Герцсгиня Паддуанскяя»; damaged zeros p049 «3761 р. 40 к.», p051 «4566 р. 20 к.»; p026 Новый 23 and
+29 Dec blank (not dashed) -> treated as dark.
+
+**Lists full scan-read DONE (RG: "Yes, start it", 2026-11-11)** -- `outputs/roster_1911-12/fullread/` (brief `BRIEF.md` =
+1910-11's, except that this season, having no person links yet, readers could add missing entries and remove
+neighbouring-list entries, each logged as ENTRY_ADDED/ENTRY_REMOVED). 5 readers, every entry zoomed; logs
+`reports/reader{A..E}_changes.csv` (490 + 494 + 445 + 511 + 612 rows), reports `reports/reader{A..E}.md`; pre-read backup
+`outputs/roster_1911-12/raw_pre_fullread_backup/`.
+- Removed as other lists: SP ballet p000 the 23 chorus entries (nos. 31-53) before «Балетная труппа»; SP ballet p010 the
+  11 French drama troupe entries; SP musicians p000 the last 4 French drama entries; MSK ballet p008 the 8 orchestra
+  entries; MSK musicians p000 the 10 ballet artists nos. 62-71; administration p002 one pseudo-row (Ростопчинъ's second
+  line «Назначенъ помощникомъ Управляющаго конторой...», moved into his tenure_note_text). None missing anywhere.
+- Re-ordered by me after the read (printed order; safe, no person links yet; `reports/reorder_changes.csv`): Брауэръ to
+  the top of musicians SP p001; Семеновъ (Ученикъ) after the Ученицы on graduates p000; Иващенко 2nd under Костюмерши on
+  productionteam p001; Чиновники XII кл. 1-4 straight after Литке on administration p002.
+- Big fixes: headings rebuilt on every ProductionTeam / TheaterSchoolStaff / Administration entry (1910-11 structure);
+  headings filled on all continuation pages; SP ballet p006 whole names split; 35 dropped ordinals restored (MSK) plus
+  Гончаровъ/Ивановъ 1-5 (SP); credits copied from a neighbour removed (Некрасова 1-я, Булгаковъ А.) and credits
+  continuing onto the next page restored (Другашева, Хасперъ, Муромская, Медалинскій; Чекрыгинъ 2-й's moved off Храписъ);
+  invented start dates / subjects removed (Пигулевскій, Погожевъ, Воронцовъ, Ивановъ 5-й, Гавриловъ, 4 preparatory-class
+  teachers); Морозовъ 1906 not 1896; Чудиновъ 1-й names swapped back.
+- Re-parse `outputs/roster_1911-12/parsed_final/`: 969 entries (1,026 before), 973 service rows, 1,609 credits; quality
+  flags 10 -> 4, all printed sums that don't add up (Крутицкая 80, Герберъ «Всего—15» for 151, Кшесинская 11, Богдановъ 77).
+- **Scan cut off -- RG to re-shoot (1912 Supplement):** p. 130 (MSK ballet right column, nos. 53-61), p. 132 (MSK
+  orchestra nos. 18-34), p. 134 (MSK orchestra nos. 87-102). Readings there are the readers' best from the visible part
+  plus the extraction; patronymics/dates at the cut edge unverified. readerD also listed p. 144 as cut -- it is NOT (the
+  whole page is in frame, checked by Claude 2026-11-11); its readings there (Врачебная часть, Moscow right column) still
+  need checking from the existing scan.
+- **Open, for the morning:** Мяздриковъ «(по сценѣ Петровъ)» stage name (put at the start of tenure_note_text; no
+  field); Обуховъ (TSS p003) rank and class split across rank_or_title/service_class (1910-11 keeps both in
+  rank_or_title); a «Дежурные врачи» row (administration p002) whose family_name is the heading -- compare 1910-11;
+  balletartists SP p001 "shape A" migration moved a bare heading into `instrument` -- check it is the Піанистъ;
+  musicians MSK p000 institution «Оркестры.» vs «МОСКОВСКІЕ ОРКЕСТРЫ.» on pp. 132-135; uncertain: Смирновъ П. operas
+  18/13, Кристерсонъ start 1896, Ферстратенъ date digit, Плаксинъ «Леонтьёвичъ».
+
+**Ballet productions lists DONE** (`outputs/ballet_productions_1911-12/`, checkerA): 36 entries (MSK 14, SP 22), 72 log
+rows (misread 44, structure 21, genuine_print 7); `parse_productions.py` -> `parsed_verified/`: 129 dates, numbering
+continuous, every date count = Всего, 0 unparsed. No premieres. Print slips kept: «балатъ», «Исполнеъ:», «Фантастическіи»,
+«21,», «Исполнена» (SP #3, #19).
+
+**Next:** integration build in a scratch dir (full_run + 1911-12 Repertoire `parsed_final` + lists `parsed_final` +
+ballet lists; add the 16 staged receipt corrections), season-stats compare, ballet lists vs Repertoire, control vs
+production diff, then RG decides on promotion.

@@ -1110,3 +1110,21 @@ person; raw keeps the print.
   балетмейстеромъ г. И. Петипа, солистомъ Его Величества, и Л. Ивановымъ». The 1904-05 review of the same ballet prints «г. М. Петипа»
   in the same sentence; no Petipa with «И.» is on any staff list. «И» for «М» (or his patronymic initial set alone). Linked to Marius
   (RG 2026-11-07).
+
+## Repertoire 1911-12, scan sweep 2026-11-11 (issue #163; read by Claude helpers on the scans, zoomed; raw keeps the print)
+
+Dates and headers:
+- `repertoire_1911-12_p040` (printed p. 41), page header «24 февраля. 1912 г. 4 февраля.» -- the end month should be марта (the table runs to 4 March; p. 40 prints «4 марта.»). Handled in `parse_and_validate._PAGE_HEADER_MONTH_SWAP_FIX`.
+- `repertoire_1911-12_p049` (printed p. 50), date column «81 Среда.» between «17 Вторн.» and «19 Четвергъ.» -- transposed 18 (zoomed by Claude too). `_MANUAL_DATE_OVERRIDES` -> 18 Apr 1912.
+
+Titles and words:
+- «Снѣгурочкз» (p003, 12 Sep 1911); «Грова, др.» for Гроза (p010 Малый, 16 Oct); «Спектакль дли учащейся молодежи.» (p010 Большой, 16 Oct); «Лоэнгрииъ, оп.» (p016 Большой, 14 Nov).
+- «Ровизоръ, ориг. ком.» (p051 Александринскій, 24 Apr 1912); «Вишневым садъ» (p051 Михайловскій, 23 Apr evening).
+- «Герцогиня Паддуанская» with a double д throughout (p038, p040, p042, p046, p048, p052); «Гарцогиня» (p040, 24 Feb), «Герцогина» (p042, 6 Mar), «Герцсгиня Паддуанскяя» (p050, 19 Apr; the с could be a broken о -- uncertain).
+- French/German at the Михайловскій: «Le vogage de Monsieur Perrichon» (p027, p029); «Le jeu de la morale et du hasard» (p031; probably for l'amour); «Le bois saeré» (p005); «L'épéron» / «L'épèron» (p007 / p009); «Liebesdrame» (p043).
+
+Receipts (research-layer values staged in `outputs/repertoire_1911-12/receipts_print_typos_1911-12_pending.csv`, to go into `pipeline/research_corrections/receipts_print_typos.csv` when 1911-12 is promoted):
+- «816 г. 50 к.» (p005 Михайловскій, 27 Sep 1911): г. for the rubles marker.
+- «2667 р. 78 р.» (p005 Маріинскій, 25 Sep morning): р. for the kopecks marker.
+- «1690 р. — в.» (p031 Михайловскій, 17 Jan 1912): в. for к.
+- About a dozen commas printed for periods after р or к («242 р, 25 к.», «2558 р. 65 к,» ...), and «1748 р. -- к.» (p035).

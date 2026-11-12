@@ -126,7 +126,14 @@ def crop_for(page_id: str, crops: dict) -> "Crop | None":
     seasons need this -- 1898-99 and 1899-00 shift too little to matter -- so
     a parity key is added only where it is needed and the season key remains
     the default.
+
+    An exact page_id key wins over both (as in `column_group_for`). Added
+    2026-11-11 for 1911-12 (UMich copy): the table moves by up to 0.18 of the
+    page width and changes scale between shots of the same parity, so no
+    single parity crop fits; each page carries its own hand-checked bounds.
     """
+    if page_id in crops:
+        return crops[page_id]
     season = season_of(page_id)
     if season is None:
         return None
@@ -260,6 +267,14 @@ def main():
 
     for season, pages in sorted(by_season.items()):
         crop = crops.get(season)
+        if crop is None and args.out_dir and all(crop_for(p.stem, crops) for p in pages):
+            # parity / per-page keys only (e.g. 1911-12): crop each page by its own entry
+            args.out_dir.mkdir(parents=True, exist_ok=True)
+            for p in pages:
+                im = cv2.imread(str(p))
+                cv2.imwrite(str(args.out_dir / p.name), crop_for(p.stem, crops).apply(im))
+            print(f"{season:<10}cropped {len(pages)} page(s), per-page/parity bounds -> {args.out_dir}")
+            continue
         if crop is None:
             print(f"{season:<10} no crop configured -- {len(pages)} page(s) left uncropped")
             continue

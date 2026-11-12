@@ -56,8 +56,14 @@ _PAGE_HEADER_RE = re.compile(
 # this override only ever corrects the *derived* month assignment used to
 # backfill date_undate, exactly the same verbatim-in/best-effort-derived-out
 # split as _MANUAL_DATE_OVERRIDES in validate_performance_dates.py.
+#
+# Also used for a misprinted end month: repertoire_1911-12_p040 prints
+# "24 февраля. 1912 г. 4 февраля." (scan-checked 2026-11-11, #163); its table
+# runs 24 Feb - 4 Mar with a «Мартъ.» divider row, and its twin p039 prints
+# "4 марта.". Without this, its 2-4 March sessions were dated February.
 _PAGE_HEADER_MONTH_SWAP_FIX = {
     "repertoire_1902-03_p008": ("октября", "ноября"),
+    "repertoire_1911-12_p040": ("февраля", "марта"),
 }
 
 

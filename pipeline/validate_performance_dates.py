@@ -144,6 +144,11 @@ _MANUAL_DATE_OVERRIDES: dict[tuple[str, str], tuple[str, str]] = {
     ('repertoire_1910-11_p055', '9 Четвергъ'): (
         '1911-05-19', 'scan-verified: book prints day as "9" (should be "19"), no trace of a "1"; RG 2026-10-06',
     ),
+    # Printed p. 50 (1911-12, St Petersburg): "81 Среда." between "17 Вторн." and "19 Четвергъ." -- transposed
+    # digits for the 18th (18 Apr 1912 was a Wednesday, old style). Zoomed 2026-11-11 (#163).
+    ('repertoire_1911-12_p049', '81 Среда'): (
+        '1912-04-18', 'scan-verified: book prints day as "81" (transposed "18"; between 17 Вторн. and 19 Четвергъ.)',
+    ),
     # 2026-10-09 (RG: "apply it"): the last 18 'unresolved' events, all scan-verified (zoomed) as printed exactly so.
     # Printed p. 19 (1898-99), last row: "28 Среда." directly after "15 Вторн."; the page's own header range ends
     # "16 декабря" -- the 16th was a Wednesday; Moscow had 3 empty placeholders on 16 Dec (all 3 theaters).
