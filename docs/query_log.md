@@ -28345,3 +28345,10 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 -- Group B variants (7): rechecked company scans; Ивановъ withdrawn (p. 94 Ивановскій / Ивановъ 5-й both Николай Павловичъ); redone from backup; only 7 persons changed.
 ## 2026-11-12 — 1911-12 reconciliation: compare_season_stats after the Ring/Judith/Гамлетъ fixes; blind column reads vs raw (outputs/repertoire_1911-12/column_reads/compare.py: 1,673 sessions, receipts 0 diffs, titles 3); subset search over SP opera/ballet/French and Moscow drama receipts (no 1-2 event subset equals any gap).
 -- 2026-11-12 1911-12 divertissement bills (research.performance verbatim_title like 'Дивертис%', 6) and excerpt titles without excerpt_of_work_id (5); after rebuild: 9 performances changed, no-discipline 20 -> 8.
+
+## 2026-11-12 — 1911-12 checklist C6: dancers in operas/dramas
+-- raw.person_entry_credit for balletartists_1911-12_* (364 entries): named_work credits are all ballets; operas/dramas only as
+--   category_totals (оперѣ/операхъ/драмѣ); grep of the raw JSON for «оп.»/«оперѣ» confirms (counts only, e.g. «въ 1 оперѣ—4»).
+-- research.performance 1911-12: includes_dance NULL on all 1,304; no «ком.-бал.», no title naming a dance. Works with dancer
+--   evidence in other seasons given in 1911-12: Демонъ (SP 4, Moscow 14), Жизнь за Царя (Moscow 10, SP 6), Князь Игорь (SP 7),
+--   Фаустъ (SP 9, Moscow 8) -- not marked (evidence is season-and-city only). Nothing added to works_with_dancers.csv.
