@@ -28400,3 +28400,10 @@ where record_name like 'Корсакъ%' or record_name like 'Бекке%';
 
 Result: both rows carry the new scan-check basis. Корсакъ's check covered the 1890-91 to 1894-95 rosters only
 (she is also listed in 1895-96, not re-read). research.jubilee_obituary unchanged by this reload.
+
+## 2026-11-12 — 1911-12 checklist D5: opera/drama production lists vs Repertoire
+-- docs/eval/scan_audit/compare_opera_drama_lists_1911-12.py: each list entry (158) matched to research.work by folded title within
+--   its company (opera / city's Russian drama / French drama), excerpts counted with the parent; list dates vs research.event dates.
+--   138 exact; disagreements read on the list scans by Claude and checked against the blind column reads
+--   (outputs/repertoire_1911-12/column_reads/*.csv): see docs/eval/opera_drama_list_repertoire_disagreements.md.
+-- research.season_stat_check 1911-12 SP: printed 618 events, Repertoire 637 (ledger 1911-12-10: SP Russian drama Repertoire +11).
