@@ -28301,3 +28301,17 @@ re-exported: docs/figures/explorer/reviews.json still prints «Весть»; sql
 --   candidate-id order only (Левенсонъ, Вольфъ-Израэль). review_credit, review_dance: identical.
 -- production after rebuild: review_mention ccdf6127 16 / d0e1ef23 2; review_assertion ccdf6127 17 (unchanged);
 --   review_credit ccdf6127 17, d0e1ef23 2 (unchanged); production = tested copy apart from candidate-id order.
+
+## 2026-11-11 — Which 1912 VII jubilee/obituary names are ballet people (scan-intake ballet check)
+
+```sql
+select p.display_name, a.city, string_agg(distinct a.institution, ' | ') inst, min(a.season), max(a.season)
+from research.person p join research.person_appearance a using(person_id)
+where regexp_matches(p.canonical_family_name,'^(Кшесинск|Легат|Колаковск|Черепанов|Делорм|Макарова-Юнев|Жерве|Читау|Яблочкин|Славин|Стрѣльск|Самойлов|Давыдов|Михайлова)')
+group by all order by 1
+```
+
+Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсовичъ (SP 1890-91–1905-06), Легатъ 1-й Николай Густавовичъ (SP 1890-91–1910-11),
+Макарова-Юнева Елена Александровна (SP 1900-01–1902-03), Черепанова Анна Андреевна (Moscow 1904-05–1910-11).
+Михайлова Марія Анемподистовна = Moscow ballet 1890-91–1896-97, but the 1912 jubilee «М. А. Михайловой» is not confirmed as her.
+Колаковскій Алексѣй Антоновичъ = Moscow orchestra (initials don't match «А. К. Колаковскаго»). Finding aid only, checked by Claude.
