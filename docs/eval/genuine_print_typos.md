@@ -1119,10 +1119,11 @@ Dates and headers:
 
 Titles and words:
 - «ВВЧЕРЪ.» for «ВЕЧЕРЪ.», session label (p020, Большой, 27 Nov 1911; blind audit 2026-11-12).
+- «Псковитяака, оп.» for Псковитянка (Большой 15 Dec 1911, p. 25): a printed а for н; RG confirmed 2026-11-12, stored as printed, aliased for matching.
 - «ВВЕЧЕРЪ.» (doubled В), Маріинскій session labels 25 Sep, 2 Oct and 11 Dec 1911; «Раймонда, 6ал.» (б printed like the digit 6), Маріинскій 14 Dec 1911 (blind column reads 2026-11-12).
 - «Снѣгурочкз» (p003, 12 Sep 1911); «Грова, др.» for Гроза (p010 Малый, 16 Oct); «Спектакль дли учащейся молодежи.» (p010 Большой, 16 Oct); «Лоэнгрииъ, оп.» (p016 Большой, 14 Nov).
 - «Ровизоръ, ориг. ком.» (p051 Александринскій, 24 Apr 1912); «Вишневым садъ» (p051 Михайловскій, 23 Apr evening).
-- «Герцогиня Паддуанская» with a double д throughout (p038, p040, p042, p046, p048, p052); «Гарцогиня» (p040, 24 Feb), «Герцогина» (p042, 6 Mar), «Герцсгиня Паддуанскяя» (p050, 19 Apr; the с could be a broken о -- uncertain).
+- «Герцогиня Паддуанская» with a double д throughout (p038, p040, p042, p046, p048, p052); «Гарцогиня» (p040, 24 Feb), «Герцогина» (p042, 6 Mar), «Герцогиня Паддуанскяя» (p050, 19 Apr; «Паддуанскяя» printed, the «о» of Герцогиня broken -- RG 2026-11-12).
 - French/German at the Михайловскій: «Le vogage de Monsieur Perrichon» (p027, p029); «Le jeu de la morale et du hasard» (p031; probably for l'amour); «Le bois saeré» (p005); «L'épéron» / «L'épèron» (p007 / p009); «Liebesdrame» (p043).
 
 Receipts (research-layer values staged in `outputs/repertoire_1911-12/receipts_print_typos_1911-12_pending.csv`, to go into `pipeline/research_corrections/receipts_print_typos.csv` when 1911-12 is promoted):

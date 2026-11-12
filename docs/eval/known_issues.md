@@ -25024,3 +25024,17 @@ his operas 'musical dramas'"); «Judith, eine Tragödie.» classed French (GERMA
 1911-12-01..13 in `docs/eval/reconciliation/outcome_ledger.csv`: corrected 4, classification 1, excluded_by_yearbook 1,
 yearbook_own 7 (provisional: Moscow opera +11.04, Moscow ballet +1 event, Moscow drama +2/+907.20, SP opera +3/+15,389.60,
 SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Moscow opera count, SP French, German, MXT 41.
+
+**1911-12 uncertain readings, RG's rulings (zoom sheet `docs/eval/scan_audit/1911-12_uncertain_readings_for_RG.png`).**
+- #2 «Прохожіе, кэм.» (Александринскій 12 Nov 1911, p. 16): RG 2026-11-12: "it's a broken о" -- stored «ком.» stands; no change.
+- #3 «Морякъ скиталецъ» (Маріинскій 13 Nov 1911 morning, p. 16): RG 2026-11-12 "yes no hyphen for this one" -- the sweep checker
+  had added the hyphen to match the other printings; stored without it now (`docs/eval/reconciliation/fix_1911_12_moryak_hyphen.py`).
+- #4 «Псковитяака» (Большой 15 Dec 1911, p. 25): RG 2026-11-12 "it's def a printed а, so store as typo" -- stored verbatim
+  (`fix_1911_12_pskovityaaka.py`), aliased to Псковитянка in work_title_aliases.csv, logged in genuine_print_typos.md.
+- #5 «Герцсгиня Паддуанскяя» (Малый 19 Apr 1912, p. 51): RG 2026-11-12 "looks like a broken o to me" -> «Герцогиня Паддуанскяя»
+  (`fix_1911_12_gertsoginya.py`); «Паддуанскяя» stays (print typo).
+- #7 4566 р. 20 к. (Маріинскій 25 Apr 1912, p. 52): RG 2026-11-12 "yes this is 4566 р. 20 к." -- stored figure stands.
+- #6 3761 р. 40 к. (Маріинскій 17 Apr 1912, p. 50): RG 2026-11-12 "yes, clearly a 0" -- stored figure stands.
+- #1 «1407 р. 88 к.» (Малый 1 Oct 1911, p. 9; first digit a slanted 7-like sort): RG 2026-11-12 "good i agree" -- 1407 stands.
+  Evidence: Moscow drama season total 266,615.70 is exceeded by 907.20 with 1407, by 6,907.20 with 7407; «Горе отъ ума» took
+  687-1,678 р. on its other Малый nights; the Малый's season maximum was 7,849.52 (Никулина jubilee). All seven readings settled.
