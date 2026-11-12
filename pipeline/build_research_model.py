@@ -477,6 +477,11 @@ RESEARCH_TITLE_CORRECTIONS = {
                        "1909, repertoire_1908-09_p047 (printed p. 48), scan-read by Claude 2026-10-26; "
                        "the 1908-09 productions list and Season Review both print «Ѳетида и Пелей» "
                        "(Petipa, music Delibes and Minkus); RG ruled it a print slip 2026-10-26"),
+    "Le vogage de Monsieur Perrichon": ("Le voyage de Monsieur Perrichon",
+                                        "genuine print typo (g for y), Михайловскій 7, 8, 9, 10, 12 Jan 1912 (printed "
+                                        "pp. 28, 30), outnumbering the one correct printing (1 Feb) in the majority vote; "
+                                        "Labiche's comedy, so named in the 1911-12 SP French list (p. 65, no. 36); RG "
+                                        "ruled it a typo 2026-11-12 (#163)"),
 }
 
 

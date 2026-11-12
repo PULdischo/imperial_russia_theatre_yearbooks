@@ -28352,3 +28352,10 @@ Result: ballet troupe: Кшесинскій 2-й Іосифъ Феликсови
 -- research.performance 1911-12: includes_dance NULL on all 1,304; no «ком.-бал.», no title naming a dance. Works with dancer
 --   evidence in other seasons given in 1911-12: Демонъ (SP 4, Moscow 14), Жизнь за Царя (Moscow 10, SP 6), Князь Игорь (SP 7),
 --   Фаустъ (SP 9, Moscow 8) -- not marked (evidence is season-and-city only). Nothing added to works_with_dancers.csv.
+
+## 2026-11-12 — 1911-12 checklist C7: new work titles
+-- research.work first seen 1911-12 (104, 20 excerpts) vs earlier works by folded title key and edit distance (outputs/c7_1911-12/new_works.csv);
+--   located each oddity's cell (research.performance + event + theater) and compared with the blind column reads.
+-- After the aliases + Гроза raw fix, test copy vs production: research.work 3,043 -> 3,030; 14 performances changed work (all intended);
+--   research.performance other columns: 2 rows (Гроза title; Ровизоръ discipline_basis «ком.»); event / person / person_appearance /
+--   production / production_work / review_assertion / person_tenure EXCEPT both ways: 0; person_link 0 shift blocks.

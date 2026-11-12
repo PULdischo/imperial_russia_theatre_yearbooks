@@ -42,7 +42,7 @@ Status columns: done / partial / not done / n.a. Keep the table current when a s
 | C4 | Performed events with no work: decided (annotation-only) | #141 | 5, same kinds as 1910-11; **not yet reviewed** |
 | C5 | Visiting troupe runs labelled | VISITING_RUNS | done (MXT, RG) |
 | C6 | Dancers in operas/dramas (`includes_dance`) for new works | 2026-10-12 | done 2026-11-12: nothing to mark. Both 1911-12 BalletArtists lists name only ballets in «Въ томъ числѣ» (364 entries; operas/dramas appear only as category totals, e.g. «въ 1 оперѣ—4»); no «ком.-бал.» and no title naming a dance. The four works with dancer evidence from other seasons (Демонъ, Жизнь за Царя, Князь Игорь, Фаустъ) stay unmarked here by the season-and-city rule. Re-check when the 1911-12 Season Reviews arrive (D6) |
-| C7 | New work titles: art-form overrides, title aliases, work merges by majority | #156, work-identity folding | **not checked** |
+| C7 | New work titles: art-form overrides, title aliases, work merges by majority | #156, work-identity folding | done 2026-11-12: 104 new works checked; 13 folded (1 raw fix, 10 typo aliases, 2 variant aliases, Снѣгурочка subtitle) with RG cell by cell; checked against the opera/drama production lists; open: «Tanzpoeme.» / «Variete.» (RG) |
 | C8 | Jubilee / benefit / obituary annotations catalogued | docs/jubilees_obituaries | **not done** for 1911-12 |
 
 ## D. Reconciliation (per season)

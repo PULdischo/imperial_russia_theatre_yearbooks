@@ -25060,3 +25060,36 @@ SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Mosc
   Общество, no receipts): RG 2026-11-12: "we might get more evidence from a season review. My instinct is that it's a special
   event at the theater." Left as stored (no art form, no item kind); not related to Verdi's «Балъ-маскарадъ» (always «оп.»)
   or the 1905 «Маскарадъ, диверт.». Revisit with the 1911-12 Season Reviews.
+
+**1911-12 checklist C6 / C7 (2026-11-12).**
+- C6 (dancers in operas/dramas): nothing to mark. Both 1911-12 BalletArtists lists name only ballets in «Въ томъ числѣ»;
+  operas and dramas appear only as category totals («въ 1 оперѣ—4»). No «ком.-бал.», no title naming a dance.
+- C7 (new titles): 104 works first seen in 1911-12 compared with every earlier work (folded titles, edit distance) and with
+  each other. Every cell below zoomed by Claude and shown to RG one at a time; RG's rulings:
+  - «Грова, др.» (Малый 16 Oct 1911 morning, p. 11): "a misprinted з" -> raw stores the intended «Гроза»
+    (`docs/eval/reconciliation/fix_1911_12_groza.py`; the blind column read had «Гроза»).
+  - Typos, stored as printed, aliased in `work_title_aliases.csv`: «Снѣгурочкз» (Маріинскій 12 Sep), «Вишневым садъ»
+    (Михайловскій 23 Apr evening, MXT), «Ровизоръ» (Александринскій 24 Apr), «Лоэнгрииъ» (Большой 14 Nov evening; RG first
+    read a damaged н, then confirmed a typo), «Гарцогиня» (24 Feb) and «Герцогина» (6 Mar) Паддуанская, «Убѣжденіе г-жи Обрэ»
+    (5 Mar; the Moscow drama list prints «Убѣжденія»), «Le vogage de Monsieur Perrichon» (all five January printings),
+    «Le bois saeré» (24 Sep).
+  - Variant spellings, NOT typos (RG: foreign words), aliased: «Les marionettes» (2 Feb; SP French list no. 19
+    «Les marionnettes», Pierre Wolff) and «Воители въ Гельголандѣ» (Александринскій 2 Feb morning) under «…Гельгеландѣ»
+    (Михайловскій 18 Jan; RG chose the label).
+  - «Снѣгурочка (Весенняя сказка)» (5 Большой bills with «оп.», 1 Маріинскій bill with no genre) -> Rimsky's opera. The
+    1911-12 opera lists name it so (SP no. 25, p. 62; Moscow no. 21, p. 68) and their dates cover every 1911-12 printing of
+    every form. RG: "Yes, the opera". The no-genre printing's alias supplies «оп.» for matching only.
+  - «Le vogage» outnumbers «voyage» 5 to 1 in the label vote, so `RESEARCH_TITLE_CORRECTIONS` labels the work «Le voyage de
+    Monsieur Perrichon».
+  - NOT merged: «Le jeu de la morale et du hasard» is Tristan Bernard's one-act comedy (SP French list no. 14, p. 64), not
+    Marivaux's «Le jeu de l'amour et du hasard»; «Papa» (Flers & Caillavet), «L'aventurier» (Capus), «Cavalleria rusticana,
+    drame.» (Verga) and «Fraeulein» (Louise Dartigues) are real distinct plays (same list).
+  - RG 2026-11-12: use the opera and drama production lists (`pdf/Spiski_OperaProductions/`, `pdf/Spiski_DramaProductions/`)
+    for cross-checks. Side finding for RG: the SP opera list (no. 21, p. 62) credits «Призракъ (2 и 3 д. оперы) по А. Н.
+    Апухтину (Годъ въ монастырѣ)» with «Музыка М. А. Даниловской» -- the curated parent «Призракъ» says composer not
+    identified.
+  - Still open for RG: «Tanzpoeme.» (Михайловскій, German troupe, 13 bills 4-15 Mar 1912, after a comedy) and «Variete.»
+    (2 bills, 23-24 Feb): stored as German drama / play; the title may mean dance. No German list among the scans.
+- Rebuild (test copy `outputs/c7_1911-12/test`, then promoted; backup `outputs/backups/c7_1911-12_2026-11-12/`): works 3,043 ->
+  3,030 (13 folded); 14 performances moved to the intended work; no other change to events, persons, appearances, productions,
+  review assertions or tenures; 0 shift blocks; sqlite rebuilt (republishing is Andy's).
