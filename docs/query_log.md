@@ -28401,6 +28401,29 @@ where record_name like 'Корсакъ%' or record_name like 'Бекке%';
 Result: both rows carry the new scan-check basis. Корсакъ's check covered the 1890-91 to 1894-95 rosters only
 (she is also listed in 1895-96, not re-read). research.jubilee_obituary unchanged by this reload.
 
+## 2026-11-12 — 1911-12 jubilee/obituary catalogue (checklist C8): annotations, death marks, links, production load
+
+`match_roster_deaths.py --export` and `match_repertoire_annotations.py --export` run in a scratch copy of
+docs/jubilees_obituaries against production (read-only), then the matchers and `build_catalogue.py`; only the
+1911-12 rows were taken. The two queries are the scripts' own (raw.person_entry `tenure_note_text like '%†%'`;
+raw.event_entry annotations with their performances). Also, for the Никулина date:
+
+```sql
+select e.date_undate, e.theater, e.time_of_day, p.performance_title, e.page_id
+from raw.event_entry e join raw.event_entry_performance p using(event_id)
+where e.season='1911-12' and p.performance_title ilike 'Большіе%' order by 1;
+```
+
+Result: 1911-12 has 106 annotated events, 15 with jubilee/farewell/memorial wording, and 6 roster «†» marks.
+13 rows were added (6 marks, all read on the scans and agreeing; 7 annotations); the other 8 annotations
+match 1910-11 section entries, whose date_check was filled. «Большіе и маленькіе» was first played 12 Dec
+1911 (the jubilee annotation), again 15 Dec (no annotation); the 1910-11 section prints «15 декабря»: a print
+conflict, both scans read. Links: 664 person entries, 323 linked -> 281 people; «М. А. Михайловой» (Mariinsky
+opera, 1912) decided no_record against the Moscow ballet Михайлова. Loader tested on a fresh copy
+(checks 0, second run identical, unchanged by build_research_model.py), then loaded with `--production`;
+production = copy (raw.jubilee_obituary_entry 715, entities.jubilee_obituary_person_link 664,
+research.jubilee_obituary 715).
+
 ## 2026-11-12 — 1911-12 checklist D5: opera/drama production lists vs Repertoire
 -- docs/eval/scan_audit/compare_opera_drama_lists_1911-12.py: each list entry (158) matched to research.work by folded title within
 --   its company (opera / city's Russian drama / French drama), excerpts counted with the parent; list dates vs research.event dates.

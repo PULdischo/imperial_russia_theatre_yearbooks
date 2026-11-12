@@ -8,9 +8,9 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry (702 rows, 655 of them person entries). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
+| `jubilees_obituaries_all_entries.csv` | Every entry (715 rows, 664 of them person entries; 13 rows for 1911-12 added 2026-11-12, see "1911-12" below). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
-| `jubilees_obituaries_person_links.csv` | Each of the 655 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
+| `jubilees_obituaries_person_links.csv` | Each of the 664 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `repertoire_date_check.csv`, `repertoire_annotations_matched.csv` | The Repertoire's annotations against the catalogue, both directions. |
@@ -240,7 +240,7 @@ says there is none. It is keyed by `entry_id`, the same id the Obsidian notes ca
   «Богдановъ, А. Н.» (Moscow, 1890-91). The initials conflict on the scans, so the case is also entry 42 in
   `docs/eval/uncertain_person_identities.md`.
 
-Coverage: 219 of the 266 core and mentions entries are linked (182 of 212 core). In all, 317 entries
+Coverage (before 1911-12): 219 of the 266 core and mentions entries are linked (182 of 212 core). In all, 317 entries
 point to 275 people (re-run 2026-11-12 after the 1911-12 person merges; two wrong matches to new 1911-12
 records, «г. Панчина 1-го» and «А. И. Южина», were decided as no record). As a check, no linked person has deaths in seasons more than two apart, or a jubilee or
 farewell after a death. Name variants were linked where the person is plainly the same one: Осипъ/Іосифъ,
@@ -258,15 +258,15 @@ or split later, re-run it.
 
 | Table | Rows | What |
 |---|---|---|
-| `raw.jubilee_obituary_entry` | 702 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
-| `entities.jubilee_obituary_person_link` | 655 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
-| `research.jubilee_obituary` | 702 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
+| `raw.jubilee_obituary_entry` | 715 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
+| `entities.jubilee_obituary_person_link` | 664 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
+| `research.jubilee_obituary` | 715 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
 
 **Loaded into production on 2026-11-12 with RG's approval** (backup of the database just before:
 `outputs/full_run/imperial_theaters.before_jubilees_2026-11-12.duckdb`). The script refuses `outputs/full_run`
 unless given `--production`, and the pipeline does not call it. Before the load it was tested on a fresh copy of
 production:
-- All integrity checks pass, and 317 links point to 275 people.
+- All integrity checks pass, and 317 links point to 275 people (323 -> 281 after the 1911-12 rows, loaded the same day the same way; backup `outputs/full_run/imperial_theaters.before_jubilees_1911-12_2026-11-12.duckdb`).
 - A second run gives the same result.
 - `pipeline/build_research_model.py` rebuilds the research layer on the copy without error and leaves the three
   tables unchanged; no link points at a missing person, and no jubilee or farewell falls after a recorded death.
@@ -282,7 +282,43 @@ Keeping it current:
 - **Wiring it into the build** (not done) means calling it after `build_research_model.py`. Adding it to
   `build_datasette.py`'s `TABLES` would also put it in the published sqlite, which Andy republishes.
 
+## 1911-12 (added 2026-11-12, season checklist C8)
+
+The 1912 issues' own jubilee and obituary sections (1912 VII) are **not scanned yet**, so 1911-12 comes only from
+the rosters' «†» marks and the Repertoire's annotations, taken from production with the scripts above
+(`--export` snapshots in a scratch copy; only the 1911-12 rows were appended, because a full rebuild from fresh
+snapshots also changes older seasons, see below). 13 rows:
+
+- **Six «†» marks**, each read on the roster scan (not blind, by Claude): Рязанцевъ (no. 93, p. 134) and
+  Соколовъ 1-й (no. 103, p. 135), `core`: the Moscow «Музыканты» list follows «Оркестръ оперы и балета» on p. 131,
+  the only orchestra heading in that list (`build/roster_orchestra_lookup.csv`); Аниханова (costume maker, p. 140) and
+  Смирнова (music teacher, ballet department, p. 147), `mentions`; Рыдзевскій and Розенбергъ (administration), `none`.
+  Рыдзевскій's mark reads «† 22 февраля 1911 г.» on the 1911-12 roster (p. 143), as printed.
+- **Seven Repertoire annotations**, all `none`: «Жизнь за Царя» 75 years (SP and Moscow, 27 Nov 1911), the
+  Александровскій лицей and 2-й кадетскій корпусъ jubilees, and the farewells of М. И. Фигнеръ, М. А. Михайлова
+  (Mariinsky opera; not the Moscow ballet Михайлова, decided in `build/person_link_decisions.csv`) and Delorme.
+- The other eight 1911-12 annotations are occasions the 1910-11 section had already announced. Their
+  `date_check` now says what the Repertoire prints: Серебряковъ, Ѳедотова, Ломоносовъ confirmed; Мичурина dated
+  by the Repertoire (26 Jan 1912); Островскій's anniversary marked on 30 Aug, 4 Sep and 26 Nov 1911.
+  **Никулина is a print conflict**: the section (p. 127) prints «15 декабря», the Repertoire (p. 23) has the
+  jubilee performance on Monday 12 Dec 1911; the same bill is repeated on 15 Dec with no annotation. Both scans
+  read 2026-11-12 by Claude.
+- Two matcher slips found on the way, fixed by hand here, not in the script: both «Жизнь за Царя» annotations
+  were matched to the «Ревизоръ» 75-year entry, and the 30 Aug line's «Н. Х. Рыбакова» (the father) to К. Н.
+  Рыбаковъ's jubilee. `match_repertoire_annotations.py` also checks dates only up to 1911.
+- Person links: 9 new person entries, 6 linked (the five roster marks' own entries + Смирнова). Totals now
+  323 linked entries -> 281 people.
+
+**Fresh snapshots also turn up rows for older seasons** that the October snapshots lacked, from database
+corrections since then (e.g. «†» marks restored in the person field audit: Бершадскій 1900-01, Маслова 1901-02,
+Николаева 3-я 1902-03; annotations such as «Въ пользу фонда … памятника А. С. Пушкину», 1901-02). These were
+**not** added; adding them is a separate pass.
+
 ## Not yet done
+
+- **1911-12 sections**: the 1912 VII jubilee and obituary pages are not scanned; when they are, catalogue them,
+  link the people and make the reading notes.
+- **Older-season rows from fresh snapshots** (see the 1911-12 section above): not added.
 
 - The supplements have not been checked for obituaries (deferred; see `unscanned_worth_getting.md`).
 - Coverage is limited to what was scanned: e.g. 1894-95 jubilee pp. 333-367 and

@@ -248,7 +248,7 @@ def main():
                 status = 'linked'
             else:
                 pid, status = '', d['decision']
-            basis = 'decided 2026-10-22: ' + d['basis']
+            basis = d['basis'] if d['basis'].startswith('decided ') else 'decided 2026-10-22: ' + d['basis']   # rows added later carry their own date
         elif row['status'] == 'proposed':
             status = 'linked'
             basis = {'roster_row': 'automatic: the death mark\'s own roster entry',
