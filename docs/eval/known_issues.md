@@ -23641,6 +23641,13 @@ that." Nothing is to be decided or marked before then. What exists to start from
 - **Mixed bills.** `research.event.art_forms` gives every evening on which ballet shares the bill
   with Russian or French drama (about 40), and the 32 crossover passages of the season reviews are
   in `docs/eval/ballet_in_opera_and_divertissement.md`.
+- **«Tanzpoeme.» and «Variete.», German troupe at the Михайловскій, 1911-12** (added 2026-11-12, RG: "leave them, add
+  both to the dancers leads"). «Tanzpoeme.» closes 13 bills, 4-16 Mar 1912 (printed pp. 40-44), each after a German comedy
+  («Heiligenwald», «Frauerl», «Die fünf Frankfurter», «Das Familienkind», «Jugend»; «Tanzpoeme,» with a comma on 16 Mar);
+  «Variete.» closes the 23 and 24 Feb bills («Flut über dir» + «Lottchens Geburtstag»). No genre, no performer, no receipts
+  printed; no German list among the 1911-12 production-list scans. Stored as German drama / play (the troupe's discipline);
+  NOT marked `includes_dance`. «Tanzpoeme» = "dance poems": probably a dance programme by a guest dancer or group; press
+  of March 1912 would likely name them (outside the Yearbook).
 - **Sources not yet used:** drama season reviews (only ballet and some opera reviews are scanned),
   librettos and programmes, RGIA Ф. 497.
 - **Rule already agreed for marking:** yes or blank, only in a season (and city) for which a source
@@ -25086,10 +25093,11 @@ SP drama +11/+2,037.71, SP ballet +4,735.50, SP lists 12 dates). Exact now: Mosc
     drame.» (Verga) and «Fraeulein» (Louise Dartigues) are real distinct plays (same list).
   - RG 2026-11-12: use the opera and drama production lists (`pdf/Spiski_OperaProductions/`, `pdf/Spiski_DramaProductions/`)
     for cross-checks. Side finding for RG: the SP opera list (no. 21, p. 62) credits «Призракъ (2 и 3 д. оперы) по А. Н.
-    Апухтину (Годъ въ монастырѣ)» with «Музыка М. А. Даниловской» -- the curated parent «Призракъ» says composer not
-    identified.
-  - Still open for RG: «Tanzpoeme.» (Михайловскій, German troupe, 13 bills 4-15 Mar 1912, after a comedy) and «Variete.»
-    (2 bills, 23-24 Feb): stored as German drama / play; the title may mean dance. No German list among the scans.
+    Апухтину (Годъ въ монастырѣ)» with «Музыка М. А. Данилевской» -- the curated parent «Призракъ» said composer not
+    identified. RG 2026-11-12: "Yes, update it" -> `curated_parent_works.csv` basis now cites the list (no DB change; the basis is not loaded).
+  - «Tanzpoeme.» (Михайловскій, German troupe, 13 bills 4-16 Mar 1912, after a comedy) and «Variete.» (2 bills, 23-24 Feb):
+    RG 2026-11-12: "leave them, add both to the dancers leads" -> left as German drama / play, added to «Dramas and plays
+    with dancers: leads».
 - Rebuild (test copy `outputs/c7_1911-12/test`, then promoted; backup `outputs/backups/c7_1911-12_2026-11-12/`): works 3,043 ->
   3,030 (13 folded); 14 performances moved to the intended work; no other change to events, persons, appearances, productions,
   review assertions or tenures; 0 shift blocks; sqlite rebuilt (republishing is Andy's).
