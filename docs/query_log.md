@@ -28450,3 +28450,23 @@ agreeing; 1 farewell) and 2 corrected annotation rows; other differences are reb
 Николаева 3-я's 1902-03 mark is RG's 2026-11-03 print-error ruling, noted. Links 671 / 329 -> 286 people.
 Loader tested on a fresh copy (checks 0, rerun identical, unchanged by build_research_model.py, person_death 313),
 then loaded with `--production`; production = copy (722 / 671 / 722).
+
+## 2026-11-12 — Review matcher truncation fix + 15 «no guessing» unlinks: test rebuild on a copy (NOT applied to production)
+
+RG approved the 9 Nov matcher fix (`candidate_ids` no longer cut at 8) and the 15 unlinks in
+docs/eval/review_mention_links.csv; the 9 relinks (Петровъ ×6, Смирнова ×2, «Федорову 2») are held for scan checks.
+Chain on two copies of production: match_review_mentions -> build_reviews_duckdb -> build_review_assertions ->
+build_review_credits, once with the committed matcher and once with the fix; every table diffed (EXCEPT ALL both ways),
+review_mention compared on (block_id, char_start, mention_type, surface) because mention_id is a sequence.
+
+```sql
+select p.block_id, p.surface, p.person_id, q.person_id
+from a.research.review_mention p join z.research.review_mention q using (block_id, char_start, mention_type, surface)
+where p.person_id is distinct from q.person_id;
+```
+
+Result: the fix itself changes no link (with vs without: 0 entity changes; candidate lists only). A rerun on today's
+database changes 53 person links: the 15 approved unlinks plus 38 from the database having moved on (1911-12 people
+added since the review links were built), e.g. Клемецкая linked ×7, Кирхгеймъ 1905-06 Луція -> Маргарита, «Павловой»
+1910-11 Евгенія -> Анна Матвѣевна, but «Павловой» 1912-13 -> Павловъ, Евгеній (a man), and Фокинъ/Фокина, Арендса,
+Померанцевъ, Сергѣевымъ, Голейзовскій unlinked; plus 3 new role mentions. Production not rebuilt: the 38 need RG.

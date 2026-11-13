@@ -1193,7 +1193,7 @@ def scan_block(text: str, block_type: str, lex: Lexicon,
             "surface": text[a:b], "normalised": fold(text[a:b]),
             "entity_id": eid,
             "candidates_n": len(ids),
-            "candidate_ids": "|".join(ids[:8]),
+            "candidate_ids": "|".join(ids),
             "link_method": method, "link_confidence": conf,
             "evidence": evidence, "rank_reason": why,
         })
