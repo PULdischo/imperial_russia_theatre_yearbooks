@@ -28470,3 +28470,16 @@ database changes 53 person links: the 15 approved unlinks plus 38 from the datab
 added since the review links were built), e.g. Клемецкая linked ×7, Кирхгеймъ 1905-06 Луція -> Маргарита, «Павловой»
 1910-11 Евгенія -> Анна Матвѣевна, but «Павловой» 1912-13 -> Павловъ, Евгеній (a man), and Фокинъ/Фокина, Арендса,
 Померанцевъ, Сергѣевымъ, Голейзовскій unlinked; plus 3 new role mentions. Production not rebuilt: the 38 need RG.
+
+## 2026-11-16 — Ballet Seasons by City artifact (design evidence + export)
+
+Design questions put to RG, each grounded in a query on research.*:
+- Works per season/city/art_form (research.performance ⋈ event ⋈ work): 1895-96 SP 17 ballets / 30 operas / 197 dramas, Moscow 18 / 29 / 86; 1905-06 SP 33 / 39 / 117 (+4 concert), Moscow 18 / 29 / 55. research.production holds ballet only (663 entries with a work), seasons 1890-91–1911-12 except 1905-06 and 1906-07. RG: ballet only.
+- Ballet excerpt performances (work.excerpt_of_work_id not null): 245. RG: under the parent ballet, own column.
+- production_credit role_category counts: music 725, author 668, source 133, libretto 115, staging 34, instrumentation 7; 0 of 1,682 credits lack a person_id. RG: role + display name, printed wording on hover.
+- Performed ballets with no list entry for that season+city (list seasons only): 15 (e.g. Щелкунчикъ Moscow 1892-93, Корсаръ SP 1892-93 and 1894-95). No-list seasons: 1905-06 SP 29 / Moscow 9 ballets, 1906-07 SP 24 / Moscow 12. RG: leave creators blank.
+- production.printed_total vs Repertoire: 664 entries all print a total; = full-ballet events 541, = full+excerpt events 606, neither 25. RG: show the list total, flag mismatches.
+
+Export: `uv run python docs/figures/explorer/export_season_data.py` -> seasons.json. Result: 22 seasons, 749 season-city-ballet rows, 129 season-ballets given in both cities, 26 flagged list totals (25 above + one entry filed under an excerpt compared with its own events). 1895-96 cross-check: SP 52 events with ballet, Moscow 44, 4 shared. Published privately at claude.ai/artifact/AP4cCEep1AAAXmRuBY6hET.
+
+Noted in passing (not chased): the 1911-12 SP list entry «Пробужденіе Флоры» (printed total 2) has no work_id, so it shows as a separate row beside the performed ballet of the same title.
