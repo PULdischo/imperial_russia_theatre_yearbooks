@@ -28483,3 +28483,14 @@ Design questions put to RG, each grounded in a query on research.*:
 Export: `uv run python docs/figures/explorer/export_season_data.py` -> seasons.json. Result: 22 seasons, 749 season-city-ballet rows, 129 season-ballets given in both cities, 26 flagged list totals (25 above + one entry filed under an excerpt compared with its own events). 1895-96 cross-check: SP 52 events with ballet, Moscow 44, 4 shared. Published privately at claude.ai/artifact/AP4cCEep1AAAXmRuBY6hET.
 
 Noted in passing (not chased): the 1911-12 SP list entry «Пробужденіе Флоры» (printed total 2) has no work_id, so it shows as a separate row beside the performed ballet of the same title.
+
+## 2026-11-16 — Dancer Tracker artifact (design evidence + export)
+
+Design questions put to RG, each grounded in a query on research.*:
+- Who is a dancer: 991 people with a BalletArtists appearance (research.person_appearance.entity_type); 317 with a Graduates appearance whose heading_path contains «балет», 47 of them in no BalletArtists list; 518 distinct linked performers in research.review_dance_performer. RG: troupe + ballet graduates (1,038 people).
+- What names a dancer at an event: Repertoire prints no casts. person_performance_tally: role 11,699 rows (601 people), category 17,859 (936), total 8,097 (943). review_dance: 919 dances, 56 with date_undate, 633 with work_id, 526 with a linked performer. RG: roles by season + review dances; Repertoire dates of the role's work shown only as possible events.
+- Tally role title -> Repertoire work, same season + city, titles folded (ѣ→е, і→и, ѳ→ф, final ъ dropped, punctuation stripped), matched against performance.verbatim_title and work.canonical_title: 10,305 of 11,699 match (88%), 52 match more than one work. Commonest misses: «Фиаметта» 175, «Фея куколь» 168, «Корсарь» 159 (look like transcription slips in raw tally labels; not chased).
+- Other evidence for the 1,038: review mentions 17,921 (831 people), jubilee/obituary 112 rows (88), person_death 54, person_assignment 10, other lists: TheaterSchoolStaff 37, Musicians 6, ProductionTeam 2, Administrators 2; Wikidata QID 56. RG: mentions, jubilees/death, other lists + assignments; no Wikidata.
+- Mentions on figure blocks: 1,288 of the linked mentions sit in review_passage blocks of type figure, whose text is in caption_text (text is null); export uses coalesce(text, caption_text) and labels them as picture captions.
+
+Export: `uv run python docs/figures/explorer/export_dancer_data.py` -> docs/figures/explorer/dancers/index.json + shard_00..31.json (25.8 MB in all, largest file 1.18 MB). Result: 1,038 dancers, 688 season/city/work event lists. Check: Кшесинская 2-я, Матильда Феликсовна — 22 appearances, 146 role lines, 50 tally lines, 35 review dances, 209 review passages, 5 jubilee/obituary rows; tenure start 1 June 1890 (SP, consistent). Published privately at claude.ai/artifact/JQwnmUEVsewQiKqCZnB1Gn.

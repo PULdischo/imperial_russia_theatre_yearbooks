@@ -1,0 +1,355 @@
+<title>Dancer Tracker</title>
+<meta charset="utf-8">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Fourth companion to the Ballet Explorer, Ballet Composers and Seasons by City: same CDH deck palette (single deliberate dark look).
+   Layout: search + result list, then the dancer: summary tiles, a 22-season career strip, then one card per season. */
+:root {
+  color-scheme: dark;
+  --bg: #2C3932; --panel: #36463D; --panel-2: #3F4F45; --rule: #6F7D73;
+  --text: #DFD2C4; --muted: #BDB2A5; --faint: #9C9488;
+  --sp: #8296AA; --sp-fill: #2F3F4C; --sp-text: #AFC0D1;
+  --mo: #D2BD9A; --mo-fill: #4A4537; --mo-text: #DCCAA8;
+  --hl: #E3B66B; --flag: #E39A7F; --school: #9DB89A;
+  --display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.45; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 40px;
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 22px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+header { display: grid; gap: 6px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(30px, 4.6vw, 52px); line-height: 1.1; margin: 0; }
+.sub { color: var(--muted); font-size: 16px; margin: 0; max-width: 78ch; }
+.finder { display: grid; gap: 10px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: end; }
+.field { display: grid; gap: 6px; min-width: 0; flex: 1 1 320px; }
+.lbl { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+input[type=search] { font: inherit; font-size: 18px; color: var(--text); background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 9px 12px; width: 100%; }
+input:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--mo); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 14px; color: var(--muted); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 7px 13px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--bg); background: var(--text); border-color: var(--text); font-weight: 600; }
+.results { max-height: 280px; overflow-y: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--panel); }
+.res { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; width: 100%; text-align: left; font: inherit; color: var(--text);
+  background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--rule) 45%, transparent); padding: 7px 12px; cursor: pointer; }
+.res:hover, .res.sel { background: var(--panel-2); }
+.res .meta { font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; text-align: right; }
+.res .alt { grid-column: 1 / -1; font-size: 12.5px; color: var(--faint); }
+.count { font-size: 13px; color: var(--faint); }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: 1px; }
+.tag.SP { background: var(--sp-fill); color: var(--sp-text); border: 1px solid var(--sp); }
+.tag.Moscow { background: var(--mo-fill); color: var(--mo-text); border: 1px solid var(--mo); }
+.tag.grad { color: var(--school); border: 1px solid var(--school); }
+.tag.flag { color: var(--flag); border: 1px solid var(--flag); }
+
+#dancer { display: grid; gap: 20px; }
+.who h2 { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1.12; margin: 0; }
+.who .printed { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.tile { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.tile h3 { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+.tile .big { font-family: var(--display); font-size: 24px; line-height: 1.15; }
+.tile p { margin: 0; font-size: 13.5px; color: var(--muted); }
+.tile .none { color: var(--faint); font-style: italic; font-size: 14px; }
+.note { font-size: 13px; color: var(--muted); border-left: 2px solid var(--flag); padding-left: 8px; }
+.note.ok { border-left-color: var(--rule); }
+
+/* career strip: a column per Yearbook season, a row per list/city */
+.strip-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 12px; background: var(--panel); padding: 10px 12px; }
+.strip { display: grid; grid-template-columns: 128px repeat(22, minmax(30px, 1fr)); gap: 3px; min-width: 820px; font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.strip .rh { color: var(--muted); font-weight: 600; align-self: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.strip .sh { color: var(--faint); text-align: center; writing-mode: vertical-rl; transform: rotate(180deg); justify-self: center; height: 52px; }
+.strip .c { height: 22px; border-radius: 3px; background: color-mix(in srgb, var(--rule) 22%, transparent); border: 0; padding: 0; font: inherit; font-size: 10.5px; color: var(--bg); font-weight: 700; }
+.strip button.c { cursor: pointer; }
+.strip .c.SP { background: var(--sp); }
+.strip .c.Moscow { background: var(--mo); }
+.strip .c.Graduates { background: var(--school); }
+.strip .c.other { background: var(--muted); }
+.strip .c.rev { background: color-mix(in srgb, var(--hl) 75%, var(--panel)); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; }
+
+.seasons { display: grid; gap: 14px; }
+.season { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; display: grid; gap: 12px; min-width: 0; scroll-margin-top: 16px; }
+.season > h3 { font-family: var(--display); font-weight: 400; font-size: 26px; margin: 0; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.season > h3 .n { font-family: var(--body); font-size: 13px; color: var(--faint); }
+.block { display: grid; gap: 6px; min-width: 0; }
+.block h4 { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.app { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--panel-2); font-size: 14px; }
+.app.SP { box-shadow: inset 3px 0 0 var(--sp); }
+.app.Moscow { box-shadow: inset 3px 0 0 var(--mo); }
+.app .hd { font-weight: 600; }
+.app .src, .src { font-size: 12px; color: var(--faint); }
+.cats { display: flex; flex-wrap: wrap; gap: 6px; }
+.cat { font-size: 13px; padding: 3px 9px; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cat b { color: var(--text); }
+.cat.total { border-color: var(--hl); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 520px; }
+th { text-align: left; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 6px 10px; border-bottom: 1px solid var(--rule); }
+td { padding: 6px 10px; border-bottom: 1px solid color-mix(in srgb, var(--rule) 40%, transparent); vertical-align: top; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .faint, .faint { color: var(--faint); font-size: 12.5px; }
+details > summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+details > summary:hover { color: var(--text); }
+.evlist { margin: 6px 0 2px; padding: 0; list-style: none; display: grid; gap: 1px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.evcap { font-size: 12px; color: var(--faint); font-style: italic; }
+.dance { font-size: 14px; padding: 6px 0; border-bottom: 1px solid color-mix(in srgb, var(--rule) 40%, transparent); display: grid; gap: 2px; }
+.dance:last-child { border-bottom: 0; }
+.dance q { quotes: none; color: var(--muted); font-style: italic; }
+.mention { font-size: 13.5px; color: var(--muted); white-space: pre-line; padding: 8px 10px; background: var(--panel-2); border-radius: 8px; }
+.mention mark { background: color-mix(in srgb, var(--hl) 35%, transparent); color: var(--text); border-radius: 2px; padding: 0 1px; }
+.mentions { display: grid; gap: 6px; margin-top: 6px; }
+.empty { color: var(--faint); font-style: italic; padding: 30px 0; text-align: center; }
+.foot { font-size: 12.5px; color: var(--faint); max-width: 90ch; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Ежегодникъ Императорскихъ театровъ · 1890/91–1911/12</div>
+    <h1>Dancer Tracker</h1>
+    <p class="sub">Choose a dancer to see everything the Yearbooks record about them: graduation, tenure, list entries each season, roles with printed counts, review dances and review mentions. Names and titles appear as printed.</p>
+  </header>
+
+  <section class="finder" aria-label="Find a dancer">
+    <div class="controls">
+      <div class="field">
+        <label class="lbl" for="q">Dancer</label>
+        <input id="q" type="search" autocomplete="off" placeholder="Кшесинская, Кшесинск, Kschessinska…" aria-controls="results">
+      </div>
+      <div class="field" style="flex:0 1 auto">
+        <span class="lbl">Troupe</span>
+        <div class="chips" role="group" aria-label="Troupe city">
+          <button class="chip" data-city="" aria-pressed="true">All</button>
+          <button class="chip" data-city="SP" aria-pressed="false">St Petersburg</button>
+          <button class="chip" data-city="Moscow" aria-pressed="false">Moscow</button>
+          <button class="chip" data-city="none" aria-pressed="false">Graduates not in a troupe</button>
+        </div>
+      </div>
+    </div>
+    <div class="count" id="count">Loading dancers…</div>
+    <div class="results" id="results" role="listbox" aria-label="Matching dancers"></div>
+  </section>
+
+  <section id="dancer" aria-live="polite"><div class="empty">Loading…</div></section>
+
+  <p class="foot">Repertoire bills print no casts, so the dates under a role are only the events at which that work was given in that season and city. They are not events the dancer is known to have danced. Roles and counts come from the yearly tallies printed in the troupe lists. A role title that matches no Repertoire work of that season and city shows no dates. Review dances and mentions are those linked to this person in the season reviews. Built from the research layer of imperial_theaters.duckdb.</p>
+</div>
+
+<script>
+const SEASONS = ['1890-91','1891-92','1892-93','1893-94','1894-95','1895-96','1896-97','1897-98','1898-99','1899-00','1900-01',
+  '1901-02','1902-03','1903-04','1904-05','1905-06','1906-07','1907-08','1908-09','1909-10','1910-11','1911-12'];
+const CITY = { SP: 'St Petersburg', Moscow: 'Moscow' };
+const LIST = { BalletArtists: 'Ballet troupe', Graduates: 'Graduates', TheaterSchoolStaff: 'School staff', Administrators: 'Administration',
+  ProductionTeam: 'Production staff', Musicians: 'Orchestra' };
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmtDate = (iso, prec) => {
+  if (!iso) return '';
+  const [y, m, d] = iso.slice(0, 10).split('-').map(Number);
+  if (prec === 'year') return String(y);
+  if (prec === 'month') return `${MONTHS[m - 1]} ${y}`;
+  return `${d} ${MONTHS[m - 1]} ${y}`;
+};
+const sLabel = s => s ? s.replace('-', '/') : '';
+
+/* search: fold pre-reform letters; Latin input compared through a loose transliteration skeleton */
+const fold = s => s.toLowerCase().replace(/ѣ/g, 'е').replace(/[іѵ]/g, 'и').replace(/ѳ/g, 'ф').replace(/ё/g, 'е').replace(/ъ/g, '');
+const TR = { а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ж:'zh',з:'z',и:'i',й:'i',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',
+  ф:'f',х:'kh',ц:'ts',ч:'ch',ш:'sh',щ:'shch',ы:'y',ь:'',э:'e',ю:'yu',я:'ya' };
+const translit = s => [...fold(s)].map(c => TR[c] ?? c).join('');
+const skel = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .replace(/shch|sch/g, 's').replace(/kh/g, 'h').replace(/zh/g, 'z').replace(/tz|ts/g, 'c').replace(/ch/g, 'c').replace(/sh/g, 's')
+  .replace(/[ij]u|yu/g, 'u').replace(/[ij]a|ya/g, 'a').replace(/[jy]e/g, 'e').replace(/[yj]/g, 'i').replace(/w/g, 'v')
+  .replace(/x/g, 'ks').replace(/ck|q/g, 'k').replace(/[^a-z0-9 ]/g, ' ').replace(/([a-z])\1+/g, '$1').replace(/\s+/g, ' ').trim();
+
+let IDX = [], EVENTS = {}, city = '', current = null;
+const shardCache = {};
+const $ = id => document.getElementById(id);
+
+function matches(d, q) {
+  if (!q) return true;
+  if (/[a-z]/i.test(q) && !/[а-яѣіѳ]/i.test(q)) return d._lat.includes(skel(q));
+  return d._cyr.includes(fold(q).replace(/\s+/g, ' '));
+}
+function renderResults() {
+  const q = $('q').value.trim();
+  const hits = IDX.filter(d => (city === '' || (city === 'none' ? !d.cities.length : d.cities.includes(city))) && matches(d, q));
+  $('count').textContent = `${hits.length} of ${IDX.length} dancers`;
+  $('results').innerHTML = hits.slice(0, 300).map(d => `<button class="res${current === d.id ? ' sel' : ''}" role="option" data-id="${d.id}">
+      <span>${esc(d.name)}${d.cities.map(c => `<span class="tag ${c}">${c === 'SP' ? 'SP' : 'Mos'}</span>`).join('')}${d.grad ? '<span class="tag grad">grad</span>' : ''}</span>
+      <span class="meta">${sLabel(d.first)}${d.last && d.last !== d.first ? '–' + sLabel(d.last) : ''} · ${d.n[0]} roles · ${d.n[1]} dances · ${d.n[2]} mentions</span>
+      ${d.printed.length ? `<span class="alt">also printed: ${esc(d.printed.join('; '))}</span>` : ''}</button>`).join('')
+    + (hits.length > 300 ? `<div class="res" style="cursor:default"><span class="faint">${hits.length - 300} more; type to narrow</span></div>` : '');
+}
+
+async function loadDancer(id) {
+  const d = IDX.find(x => x.id === id);
+  if (!d) return;
+  current = id;
+  if (location.hash !== '#p-' + id) history.replaceState(null, '', '#p-' + id);
+  renderResults();
+  $('dancer').innerHTML = '<div class="empty">Loading…</div>';
+  const sh = String(d.shard).padStart(2, '0');
+  try {
+    shardCache[sh] ??= await fetch(`dancers/shard_${sh}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  } catch (e) {
+    $('dancer').innerHTML = `<div class="empty">The data file for this dancer didn't load (${esc(e.message)}). Reload the page to try again.</div>`;
+    return;
+  }
+  if (current === id) renderDancer(shardCache[sh][id]);
+}
+
+function srcLine(a) {
+  const parts = [];
+  if (a.source_file) parts.push(esc(a.source_file) + (a.scan_page ? `, scan p. ${a.scan_page}` : ''));
+  if (a.folio) parts.push(`printed p. ${esc(a.folio)}`);
+  return parts.join(' · ');
+}
+const by = (arr, f) => arr.reduce((m, x) => ((m[f(x)] ??= []).push(x), m), {});
+
+function renderDancer(r) {
+  const apps = r.apps || [], roles = r.roles || [], tallies = r.tallies || [], dances = r.dances || [], ments = r.mentions || [];
+  const grads = apps.filter(a => a.list === 'Graduates');
+  const ballet = apps.filter(a => a.list === 'BalletArtists');
+  const others = apps.filter(a => a.list !== 'Graduates' && a.list !== 'BalletArtists');
+
+  // tiles
+  const gradTile = grads.length ? grads.map(g => `<div class="big">${sLabel(g.season)}</div>
+      <p>${esc(g.institution || '')} ${esc(g.heading || '')}</p>
+      ${g.note ? `<p>«${esc(g.note)}»</p>` : ''}${g.start ? `<p>from ${esc(g.start)}</p>` : ''}
+      <p class="src">${srcLine(g)}</p>`).join('') : '<div class="none">No Graduates-list entry in the database</div>';
+  const ten = (r.tenure || []).filter(t => t.list === 'BalletArtists' || t.list === 'Graduates');
+  const tenTile = ten.length ? ten.map(t => `<div class="big">${t.start_date ? fmtDate(t.start_date, t.start_precision) : '<span class="none">no date printed</span>'}</div>
+      <p>${LIST[t.list] || t.list}, ${CITY[t.city] || t.city} · listed ${sLabel(t.first_season)}${t.last_season !== t.first_season ? '–' + sLabel(t.last_season) : ''}${t.basis ? ` · ${esc(t.basis)}` : ''}</p>
+      ${t.later_period_start ? `<p>later period from ${fmtDate(t.later_period_start)}</p>` : ''}
+      ${t.ruling ? `<div class="note${/^UNRESOLVED/.test(t.ruling) ? '' : ' ok'}">${esc(t.ruling)}</div>` : ''}`).join('<hr style="border:0;border-top:1px solid var(--rule);width:100%;margin:4px 0">')
+    : '<div class="none">No tenure record</div>';
+  const tnotes = (r.tnotes || []).map(n => `<div class="note">${esc(n.printed_leaving || '')}${n.research_reading ? ` · reading: <b>${esc(n.research_reading)}</b>` : ''}<br>${esc(n.discrepancy || '')}${n.decided ? ` <span class="faint">(${esc(n.decided)})</span>` : ''}</div>`).join('');
+  const balletSeasons = [...new Set(ballet.map(a => a.season))];
+  const cities = [...new Set(ballet.map(a => a.city))];
+  const totals = tallies.filter(t => t.kind === 'total');
+  const totalSum = totals.reduce((s, t) => s + (parseFloat(t.times) || 0), 0);
+  const listTile = balletSeasons.length ? `<div class="big">${balletSeasons.length} season${balletSeasons.length > 1 ? 's' : ''}</div>
+      <p>${sLabel(balletSeasons[0])}–${sLabel(balletSeasons.at(-1))} · ${cities.map(c => CITY[c]).join(', ')}</p>
+      ${totals.length ? `<p>printed season totals add up to <b>${Math.round(totalSum)}</b> appearances (${totals.length} tallies)</p>` : ''}
+      <p>${roles.length} role lines · ${dances.length} review dances · ${ments.length} review passages</p>`
+    : '<div class="none">Not in any troupe list</div>';
+  const deathTile = (r.death || []).length || (r.jub || []).length ? `
+      ${(r.death || []).map(d => `<div class="big">${d.death_date ? fmtDate(d.death_date, d.death_precision) : 'Death recorded'}</div>
+        <p>${esc(d.source || '')}${d.season ? ', ' + sLabel(d.season) : ''}${d.printed_page ? `, p. ${esc(d.printed_page)}` : ''}</p>
+        ${d.printed_text ? `<p>«${esc(d.printed_text)}»</p>` : ''}`).join('')}
+      ${(r.jub || []).map(j => `<p><b>${esc(j.kind || '')}</b> ${sLabel(j.season)}${j.dates ? ` · ${esc(j.dates)}` : ''}${j.printed_page ? ` · p. ${esc(j.printed_page)}` : ''}${j.author ? ` · ${esc(j.author)}` : ''}<br>
+         ${j.evidence_verbatim ? `«${esc(j.evidence_verbatim)}»` : ''}${j.evidence_english ? `<br><span class="faint">${esc(j.evidence_english)}</span>` : ''}</p>`).join('')}`
+    : '<div class="none">None recorded</div>';
+  const otherTile = others.length || (r.assign || []).length ? `
+      ${Object.entries(by(others, a => a.list + '|' + a.city)).map(([k, xs]) => { const [l, c] = k.split('|');
+        return `<p><b>${LIST[l] || l}</b>, ${CITY[c] || c}: ${xs.map(x => sLabel(x.season)).join(', ')}${xs[0].subject ? ` · ${esc(xs[0].subject)}` : ''}${xs[0].rank ? ` · ${esc(xs[0].rank)}` : ''}</p>`; }).join('')}
+      ${(r.assign || []).map(a => `<p><b>${esc(a.kind)}</b> ${sLabel(a.season)}${a.destination ? ` → ${esc(a.destination)}` : ''}<br><span class="faint">«${esc(a.printed_line || '')}»</span></p>`).join('')}`
+    : '<div class="none">None</div>';
+
+  // career strip
+  const seasonsWith = new Set([...apps, ...roles, ...dances, ...ments, ...(r.jub || [])].map(x => x.season));
+  const roleN = by(roles, x => x.season + '|' + x.city);
+  const rows = [['SP', 'Troupe · St Petersburg'], ['Moscow', 'Troupe · Moscow']].map(([c, lab]) => [lab, s => {
+      const a = ballet.find(x => x.season === s && x.city === c);
+      return a ? `<button class="c ${c}" data-go="${s}" title="${sLabel(s)} ${CITY[c]}: ${(roleN[s + '|' + c] || []).length} role lines">${(roleN[s + '|' + c] || []).length || ''}</button>` : '<span class="c"></span>';
+    }]);
+  if (grads.length) rows.unshift(['Graduated', s => grads.some(g => g.season === s) ? `<button class="c Graduates" data-go="${s}" title="Graduates list ${sLabel(s)}"></button>` : '<span class="c"></span>']);
+  if (others.length) rows.push(['Other lists', s => { const o = others.filter(x => x.season === s);
+      return o.length ? `<button class="c other" data-go="${s}" title="${o.map(x => LIST[x.list] || x.list).join(', ')}"></button>` : '<span class="c"></span>'; }]);
+  if (dances.length || ments.length) rows.push(['Reviews', s => { const n = dances.filter(x => x.season === s).length + ments.filter(x => x.season === s).length;
+      return n ? `<button class="c rev" data-go="${s}" title="${n} review items">${n}</button>` : '<span class="c"></span>'; }]);
+  const strip = `<div class="strip-wrap"><div class="strip"><span></span>${SEASONS.map(s => `<span class="sh">${sLabel(s)}</span>`).join('')}
+      ${rows.map(([lab, f]) => `<span class="rh" title="${lab}">${lab}</span>${SEASONS.map(f).join('')}`).join('')}</div>
+      <div class="legend"><span><i style="background:var(--sp)"></i>St Petersburg list</span><span><i style="background:var(--mo)"></i>Moscow list</span><span class="faint">Numbers on list cells = role lines that season</span>
+      ${grads.length ? '<span><i style="background:var(--school)"></i>Graduates list</span>' : ''}${others.length ? '<span><i style="background:var(--muted)"></i>Other lists</span>' : ''}
+      <span><i style="background:var(--hl)"></i>Review dances + passages</span><span class="faint">Click a season to jump to it.</span></div></div>`;
+
+  // season cards
+  const cards = SEASONS.filter(s => seasonsWith.has(s)).map(s => {
+    const sa = apps.filter(a => a.season === s), sp = (r.periods || []).filter(p => p.season === s);
+    const sr = roles.filter(x => x.season === s), st = tallies.filter(x => x.season === s);
+    const sd = dances.filter(x => x.season === s), sm = ments.filter(x => x.season === s), sj = (r.jub || []).filter(x => x.season === s);
+    const appHtml = sa.map(a => {
+      const per = sp.filter(p => p.city === a.city && (p.list || 'BalletArtists') === a.list);
+      return `<div class="app ${a.list === 'BalletArtists' ? a.city : ''}">
+        <span class="hd">${LIST[a.list] || a.list}, ${CITY[a.city] || a.city}</span>
+        <span>${esc([a.institution, a.heading].filter(Boolean).join(' / '))}${a.rank ? ` · ${esc(a.rank)}` : ''}${a.title ? ` · ${esc(a.title)}` : ''}${a.service_class ? ` · ${esc(a.service_class)}` : ''}${a.subject ? ` · ${esc(a.subject)}` : ''}</span>
+        ${per.length ? per.map(p => `<span>service: ${esc(p.start_text || '?')}${p.end_text ? ` – ${esc(p.end_text)}` : ''}${p.end_type ? ` <span class="tag flag">${esc(p.end_type)}</span>` : ''}${p.date_correction ? ` <span class="faint">${esc(p.date_correction)}</span>` : ''}</span>`).join('') : (a.start ? `<span>from ${esc(a.start)}</span>` : '')}
+        ${a.note ? `<span>«${esc(a.note)}»</span>` : ''}${a.credits ? `<span class="faint">printed: ${esc(a.credits)}</span>` : ''}
+        <span class="src">${srcLine(a)}</span></div>`; }).join('');
+    const tallyHtml = Object.entries(by(st, t => t.city)).map(([c, ts]) => `<div class="cats">${cities.length > 1 ? `<span class="tag ${c}">${c === 'SP' ? 'SP' : 'Mos'}</span>` : ''}${ts.map(t =>
+        `<span class="cat${t.kind === 'total' ? ' total' : ''}">${esc(t.label)} <b>${esc(t.times_text ?? '')}</b></span>`).join('')}</div>`).join('');
+    const roleHtml = sr.length ? `<div class="tablewrap"><table><thead><tr><th>Work</th><th>Role</th><th style="text-align:right">Times</th><th>Repertoire dates of the work</th></tr></thead><tbody>
+      ${sr.map(x => {
+        const evs = (x.works || []).flatMap(([w, k]) => EVENTS[k] || []);
+        const evHtml = !x.works ? '<span class="faint">no Repertoire work of this title, season and city</span>'
+          : `<details><summary>${evs.length} event${evs.length === 1 ? '' : 's'}${x.works.length > 1 ? ` (${x.works.length} works share the title)` : ''}</summary>
+             <div class="evcap">The work was given on these dates. The cast is not printed.</div>
+             <ul class="evlist">${evs.map(e => `<li>${e[0] ? fmtDate(e[0]) : ''}${e[1] ? ` <span class="faint">«${esc(e[1])}»</span>` : ''}${e[2] && e[2] !== 'unspecified' ? ` · ${esc(e[2])}` : ''}${e[3] ? ` · ${esc(e[3])}` : ''}</li>`).join('')}</ul></details>`;
+        return `<tr><td>${esc(x.label)}${cities.length > 1 ? ` <span class="tag ${x.city}">${x.city === 'SP' ? 'SP' : 'Mos'}</span>` : ''}</td><td>${esc(x.role_name || '')}</td>
+          <td class="num">${esc(x.times_text ?? '')}${x.shared ? `<div class="faint">shared ${esc(x.shared)}</div>` : ''}</td><td>${evHtml}</td></tr>`; }).join('')}
+      </tbody></table></div>` : '';
+    const danceHtml = sd.map(d => `<div class="dance"><span><b>${esc(d.work || d.work_surface || '—')}</b>${d.dance ? ` · ${esc(d.dance)}` : ''}${d.alternate ? ' <span class="tag flag">alternate</span>' : ''}
+        <span class="tag ${d.city}">${d.city === 'SP' ? 'SP' : 'Mos'}</span></span>
+        ${d.text ? `<q>${esc(d.text)}</q>` : ''}
+        <span class="src">${d.date ? esc(d.date) + ' · ' : ''}review p. ${esc(d.folio || '?')} · ${esc(d.source || '')}${d.n_performers > 1 ? ` · ${d.n_performers} performers` : ''}</span></div>`).join('');
+    const mentHtml = sm.length ? `<details><summary>${sm.length} review passage${sm.length === 1 ? '' : 's'} naming them</summary><div class="mentions">${sm.map(m => {
+        let t = '', pos = 0;
+        for (const [a, b] of (m.hl || [])) { t += esc((m.text || "").slice(pos, a)) + "<mark>" + esc((m.text || "").slice(a, b)) + '</mark>'; pos = b; }
+        t += esc((m.text || "").slice(pos));
+        const text = m.text || ""; return `<div class="mention">${m.pre ? '… ' : ''}${t}${m.post ? ' …' : ''}
+          <div class="src">${m.caption ? 'picture caption · ' : ''}${esc(m.genre || '')} review, ${CITY[m.city] || m.city || ''}, p. ${esc(m.folio || '?')}${m.roles ? ` · role: ${esc(m.roles.join(', '))}` : ''}</div></div>`; }).join('')}</div></details>` : '';
+    const jubHtml = sj.map(j => `<div class="note ok"><b>${esc(j.kind)}</b>${j.dates ? ` · ${esc(j.dates)}` : ''} ${j.evidence_verbatim ? `«${esc(j.evidence_verbatim)}»` : ''}</div>`).join('');
+    return `<article class="season" id="s-${s}"><h3>${sLabel(s)}<span class="n">${sr.length} role lines · ${sd.length} review dances · ${sm.length} passages</span></h3>
+      ${appHtml ? `<div class="block"><h4>List entries</h4>${appHtml}</div>` : '<div class="block"><h4>List entries</h4><span class="faint">Not in a list this season</span></div>'}
+      ${tallyHtml ? `<div class="block"><h4>Printed tally</h4>${tallyHtml}</div>` : ''}
+      ${roleHtml ? `<div class="block"><h4>Roles</h4>${roleHtml}</div>` : ''}
+      ${danceHtml ? `<div class="block"><h4>Review dances</h4>${danceHtml}</div>` : ''}
+      ${jubHtml ? `<div class="block"><h4>Jubilee / obituary</h4>${jubHtml}</div>` : ''}
+      ${mentHtml ? `<div class="block"><h4>Review mentions</h4>${mentHtml}</div>` : ''}</article>`;
+  }).join('');
+
+  $('dancer').innerHTML = `<div class="who"><h2>${esc(r.name)}</h2>${(r.printed || []).length ? `<p class="printed">Also printed: ${esc(r.printed.join('; '))}</p>` : ''}</div>
+    <div class="tiles">
+      <div class="tile"><h3>Graduation</h3>${gradTile}</div>
+      <div class="tile"><h3>Tenure start</h3>${tenTile}${tnotes}</div>
+      <div class="tile"><h3>In the troupe lists</h3>${listTile}</div>
+      <div class="tile"><h3>Jubilees, obituaries, death</h3>${deathTile}</div>
+      <div class="tile"><h3>Other lists and assignments</h3>${otherTile}</div>
+    </div>
+    ${strip}
+    <div class="seasons">${cards}</div>`;
+}
+
+$('results').addEventListener('click', e => { const b = e.target.closest('button.res'); if (b?.dataset.id) loadDancer(b.dataset.id); });
+$('dancer').addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) document.getElementById('s-' + b.dataset.go)?.scrollIntoView({ block: 'start' }); });
+$('q').addEventListener('input', renderResults);
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter') { const b = $('results').querySelector('button.res'); if (b) loadDancer(b.dataset.id); } });
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+  city = c.dataset.city;
+  document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', String(x === c)));
+  renderResults();
+}));
+window.addEventListener('hashchange', () => { const m = location.hash.match(/^#p-([0-9a-f-]{36})$/); if (m && m[1] !== current) loadDancer(m[1]); });
+
+fetch('dancers/index.json').then(r => r.json()).then(d => {
+  IDX = d.dancers; EVENTS = d.events;
+  for (const x of IDX) { const all = [x.name, ...x.printed].join(' | '); x._cyr = fold(all); x._lat = skel(translit(all)); }
+  IDX.sort((a, b) => a._cyr.localeCompare(b._cyr, "ru"));
+  renderResults();
+  const m = location.hash.match(/^#p-([0-9a-f-]{36})$/);
+  const start = (m && IDX.find(x => x.id === m[1])) || IDX.find(x => x.name.startsWith('Кшесинская 2-я')) || IDX[0];
+  loadDancer(start.id);
+}).catch(e => { $('count').textContent = 'The dancer index did not load. Reload the page to try again.'; $('dancer').innerHTML = ''; });
+</script>
