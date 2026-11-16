@@ -57,7 +57,9 @@ select:focus-visible, .chip:focus-visible, .step:focus-visible, tr.b:focus-visib
   background: var(--panel-2); border: 1px solid var(--rule); border-radius: 8px; box-shadow: 0 6px 18px rgb(0 0 0 / .4);
   font-size: 13px; line-height: 1.35; color: var(--muted); font-variant-numeric: tabular-nums; }
 #tip b { color: var(--text); font-weight: 700; font-size: 14px; }
-.bar i { cursor: inherit; }
+.bar i { cursor: inherit; position: relative; }
+.bar i.seg-mate { outline: 2px solid var(--text); outline-offset: 1px; z-index: 1; }
+.bar i[data-both]:hover { outline: 2px solid var(--hl); outline-offset: 1px; z-index: 1; opacity: 1; }
 .bar.big { height: 24px; gap: 2px; }
 /* pop-up with every season */
 dialog#ctx { width: min(1100px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 0; border: 1px solid var(--rule); border-radius: 14px;
@@ -296,7 +298,7 @@ function segBar(s, c, big) {
   if (!total) return '<span class="bar none">no ballet recorded</span>';
   const base = c === 'SP' ? 'var(--pie-sp)' : 'var(--pie-mo)';
   return `<span class="bar${big ? ' big' : ''}">${items.map(b =>
-    `<i style="flex-grow:${b.events};background:${b.both ? 'var(--pie-both)' : base}" data-t="«${esc(b.title)}»${b.tag ? ' (' + esc(b.tag) + ')' : ''}"` +
+    `<i style="flex-grow:${b.events};background:${b.both ? 'var(--pie-both)' : base}" data-id="${esc(b.id)}" data-s="${s}" data-c="${c}"${b.both ? ' data-both=""' : ''} data-t="«${esc(b.title)}»${b.tag ? ' (' + esc(b.tag) + ')' : ''}"` +
     ` data-n="${CITY[c]}, ${lab(s)}: ${b.events} event${b.events === 1 ? '' : 's'} (${pct(b.events)})${b.excerpt ? `, ${b.excerpt} excerpt only` : ''}${b.both ? ' · also given in ' + (c === 'SP' ? 'Moscow' : 'St Petersburg') : ''}"></i>`).join('')}</span>`;
 }
 function tileBar(s, c) {
@@ -334,8 +336,18 @@ function placeTip(e) {
   if (y + h > innerHeight - 8) y = e.clientY - h - 12;
   tip.style.left = x + 'px'; tip.style.top = y + 'px';
 }
+// A shared ballet's segment outlines its partner: same ballet, same season, the other city's bar (on the page or in the pop-up).
+function clearMates() { for (const m of document.querySelectorAll('.bar i.seg-mate')) m.classList.remove('seg-mate'); }
+function markMate(seg) {
+  clearMates();
+  if (!seg || !seg.hasAttribute('data-both')) return;
+  const scope = seg.closest('dialog') || $('totals');
+  for (const m of scope.querySelectorAll(`.bar i[data-s="${seg.dataset.s}"][data-id="${CSS.escape(seg.dataset.id)}"]`))
+    if (m.dataset.c !== seg.dataset.c) m.classList.add('seg-mate');
+}
 document.addEventListener('pointerover', e => {
   const seg = e.target.closest && e.target.closest('.bar i[data-t]');
+  markMate(seg);
   if (!seg) { tip.hidden = true; return; }
   const host = seg.closest('dialog') || document.body;
   if (tip.parentNode !== host) host.append(tip);
@@ -344,9 +356,9 @@ document.addEventListener('pointerover', e => {
   tip.hidden = false; placeTip(e);
 });
 document.addEventListener('pointermove', e => { if (!tip.hidden) placeTip(e); });
-document.documentElement.addEventListener('pointerleave', () => { tip.hidden = true; });
+document.documentElement.addEventListener('pointerleave', () => { tip.hidden = true; clearMates(); });
 addEventListener('scroll', () => { tip.hidden = true; }, true);
-$('ctx').addEventListener('close', () => { tip.hidden = true; });
+$('ctx').addEventListener('close', () => { tip.hidden = true; clearMates(); });
 $('ctx-close').addEventListener('click', () => $('ctx').close());
 $('ctx').addEventListener('click', e => { if (e.target === $('ctx')) $('ctx').close(); });   // click on the backdrop closes
 
