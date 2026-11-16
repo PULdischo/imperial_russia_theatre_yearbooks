@@ -28471,6 +28471,107 @@ added since the review links were built), e.g. Клемецкая linked ×7, К
 1910-11 Евгенія -> Анна Матвѣевна, but «Павловой» 1912-13 -> Павловъ, Евгеній (a man), and Фокинъ/Фокина, Арендса,
 Померанцевъ, Сергѣевымъ, Голейзовскій unlinked; plus 3 new role mentions. Production not rebuilt: the 38 need RG.
 
+## 2026-11-14 — Where is К. Лядовъ credited for «Сатанилла»? (RG asked to see the scans)
+
+```sql
+SELECT work_id, canonical_title, art_form FROM research.work WHERE canonical_title ILIKE '%атанил%';
+SELECT person_id, display_name, wikidata_label FROM research.person WHERE canonical_family_name ILIKE 'Лядов%';
+-- ballet-list credits
+SELECT p.season, p.city, p.list_number, p.printed_page_number, p.source_file, pc.credit_order, pc.role_text, pc.name_printed
+FROM research.production_credit pc JOIN research.production p USING (production_id)
+WHERE p.list_title ILIKE '%атанил%' ORDER BY 1, 6;
+-- review credits
+SELECT page_id, season, printed_folio, role_text, printed_phrase, name_surface FROM research.review_credit
+WHERE (work_id = '839ac3d9-1a24-5431-8d01-eb0c4b38d6e8' OR work_surface ILIKE '%атанил%')
+  AND (person_id = '54aefe0e-9c00-5bc0-ad07-35b3eda8a6c4' OR name_surface ILIKE '%Лядов%'
+       OR person_candidate_ids LIKE '%54aefe0e-9c00-5bc0-ad07-35b3eda8a6c4%');
+SELECT * FROM research.source_page WHERE page_id = 'review_1896-97_MSK_ballet_p006';
+```
+
+Result: one work («Сатанилла», ballet) and one person (Лядовъ, К. = Konstantin Lyadov).
+5 ballet-list credits, all Moscow: 1890-91 p.38 no.7, 1891-92 p.37 no.9, 1892-93 p.39 no.12
+(«инструментована К. Лядовымъ»); 1896-97 p.40 no.10, 1897-98 p.40 no.10 («музыка Бенуа и К. Лядова»).
+Every list also credits Мазилье, Сенъ-Жоржа (соч.) and Бенуа (музыка). 1 review credit: 1896-97 Moscow
+ballet review p.371 (scan p.7 of 1896-97_SeasonReview_BalletMoscow.pdf), «инструментованной К. Лядовымъ».
+All six checked against the scans by Claude; the readings match.
+
+## 2026-11-16 — Ballets that appear only in Moscow (pass 1: excerpts as separate works)
+
+```sql
+WITH perf AS (
+  SELECT w.work_id, w.canonical_title, w.excerpt_of_work_id, e.city, e.season, t.canonical_name AS theater, e.event_id
+  FROM research.work w
+  JOIN research.performance p ON p.work_id = w.work_id
+  JOIN research.event e ON e.event_id = p.event_id
+  JOIN research.theater t ON t.theater_id = e.theater_id
+  WHERE w.art_form = 'ballet'
+)
+SELECT canonical_title,
+       excerpt_of_work_id IS NOT NULL AS is_excerpt,
+       count(DISTINCT event_id) AS n_events,
+       min(season) AS first_season, max(season) AS last_season,
+       count(DISTINCT season) AS n_seasons,
+       string_agg(DISTINCT theater, ', ') AS theaters
+FROM perf
+GROUP BY work_id, canonical_title, excerpt_of_work_id
+HAVING bool_and(city = 'Moscow')
+ORDER BY n_events DESC, canonical_title;
+```
+
+Result: 80 ballet work rows played only in Moscow, but most are excerpts (acts/scenes) stored as their own works, some of whose parent ballets were also played in SP. Superseded by pass 2. Side check: 238 ballet works with performances (109 seen in Moscow, 157 in SP); 17 ballet works have no Repertoire performance (list/review only).
+
+## 2026-11-16 — Ballets that appear only in Moscow (pass 2: excerpts rolled up to parent work)
+
+```sql
+WITH perf AS (
+  SELECT coalesce(w.excerpt_of_work_id, w.work_id) AS parent_id,
+         w.excerpt_of_work_id IS NOT NULL AS is_excerpt,
+         e.city, e.season, t.canonical_name AS theater, e.event_id
+  FROM research.work w
+  JOIN research.performance p ON p.work_id = w.work_id
+  JOIN research.event e ON e.event_id = p.event_id
+  JOIN research.theater t ON t.theater_id = e.theater_id
+  WHERE w.art_form = 'ballet'
+)
+SELECT pw.canonical_title, pw.art_form AS parent_art_form,
+       count(DISTINCT event_id) AS n_events,
+       count(DISTINCT CASE WHEN NOT is_excerpt THEN event_id END) AS n_events_whole,
+       min(season), max(season), count(DISTINCT season) AS n_seasons,
+       string_agg(DISTINCT theater, ', ') AS theaters
+FROM perf JOIN research.work pw ON pw.work_id = perf.parent_id
+GROUP BY pw.work_id, pw.canonical_title, pw.art_form
+HAVING bool_and(city = 'Moscow')
+ORDER BY n_events DESC, pw.canonical_title;
+```
+
+Result: 25 ballets with every Repertoire performance (whole or excerpt) in a Moscow theater. Largest: Золотая рыбка 34 events, Звѣзды 33, Кипрская статуя 28, Приключенія Флика и Флока 23, Хрустальный башмачекъ 23. Папоротникъ and Пери appear only as excerpts (1 event each).
+
+## 2026-11-16 — Ballets performed in St Petersburg, season 1910-11 (excerpts rolled up to parent work)
+
+```sql
+WITH perf AS (
+  SELECT coalesce(w.excerpt_of_work_id, w.work_id) AS parent_id,
+         w.excerpt_of_work_id IS NOT NULL AS is_excerpt,
+         t.canonical_name AS theater, e.event_id, e.date
+  FROM research.work w
+  JOIN research.performance p ON p.work_id = w.work_id
+  JOIN research.event e ON e.event_id = p.event_id
+  JOIN research.theater t ON t.theater_id = e.theater_id
+  WHERE w.art_form = 'ballet' AND e.city = 'SP' AND e.season = '1910-11'
+)
+SELECT pw.canonical_title,
+       count(DISTINCT event_id) AS n_events,
+       count(DISTINCT CASE WHEN NOT is_excerpt THEN event_id END) AS n_whole,
+       count(DISTINCT CASE WHEN is_excerpt THEN event_id END) AS n_excerpt,
+       min(date) AS first_date, max(date) AS last_date,
+       string_agg(DISTINCT theater, ', ') AS theaters
+FROM perf JOIN research.work pw ON pw.work_id = perf.parent_id
+GROUP BY pw.work_id, pw.canonical_title
+ORDER BY n_events DESC, pw.canonical_title;
+```
+
+Result: 27 ballets, all at the Маріинскій, across 50 distinct SP events with ballet in 1910-11. Most frequent: Капризы бабочки, Пробужденіе Флоры, Эвника (5 events each). Excerpt-only: Фіаметта (1 event). Side check: season event totals 1910-11 SP 871 / Moscow 833 (all event rows, incl. no_performance/not_captured).
+
 ## 2026-11-16 — Ballet Seasons by City artifact (design evidence + export)
 
 Design questions put to RG, each grounded in a query on research.*:
