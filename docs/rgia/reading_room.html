@@ -61,14 +61,21 @@ li.pg{display:grid;grid-template-columns:150px 1fr;gap:18px;padding-block:16px;b
 li.pg.s-read,li.pg.s-skip{opacity:.55}
 li.pg.s-key{box-shadow:inset 3px 0 0 var(--key);padding-left:10px}
 .thumb{width:150px;height:190px;max-width:100%;background-color:var(--low-bg);background-repeat:no-repeat;border:1px solid var(--rule);padding:0;display:block}
-button.thumb{cursor:pointer}
+button.thumb{cursor:zoom-in}
 button.thumb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-#viewer{border:1px solid var(--rule);border-radius:8px;padding:20px;max-width:min(560px,calc(100vw - 32px));background:var(--card);color:var(--ink)}
-#viewer::backdrop{background:rgba(0,0,0,.45)}
-.vtitle{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:0 0 10px}
-.vpath{font-family:var(--mono);font-size:.82rem;overflow-wrap:anywhere;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);user-select:all}
-.vhow{font-size:.85rem;color:var(--muted);margin:10px 0 14px}
-.vrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+#viewer{border:0;padding:0;margin:0;width:100vw;height:100vh;max-width:100vw;max-height:100vh;background:var(--paper);color:var(--ink)}
+#viewer[open]{display:flex;flex-direction:column}
+#viewer::backdrop{background:rgba(0,0,0,.6)}
+.vbar{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:var(--card);border-bottom:1px solid var(--rule)}
+.vtitle{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:0}
+.vbar .sp{flex:1 1 auto}
+.vstage{flex:1 1 auto;min-height:0;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:12px 16px}
+.vstage canvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto;cursor:zoom-in;background:var(--low-bg);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.vstage.actual canvas{max-width:none;max-height:none;cursor:zoom-out}
+.vmsg{max-width:62ch;padding:28px 4px;font-size:.92rem}
+.vmsg p{margin:0 0 12px}
+.vpath{font-family:var(--mono);font-size:.82rem;overflow-wrap:anywhere;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--card);user-select:all}
+.vrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .gl{font-family:var(--body);font-size:.8em;font-style:italic;color:var(--accent);margin-left:.2em;white-space:normal}
 .tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:12px;font-size:.88rem}
 .tools label{display:inline-flex;gap:6px;align-items:center;color:var(--muted)}
@@ -134,10 +141,18 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
   <div class="gbody" id="gbody"><p class="state">Loading…</p></div>
 </dialog>
 <dialog id="viewer" aria-labelledby="vtitle">
-  <p class="vtitle" id="vtitle"></p>
-  <div class="vpath" id="vpath"></div>
-  <p class="vhow" id="vhow"></p>
-  <div class="vrow"><button class="btn" id="vcopy">Copy file path</button><button class="btn" id="vclose">Close</button></div>
+  <div class="vbar">
+    <p class="vtitle" id="vtitle"></p>
+    <button class="btn" id="vprev" aria-label="Previous page">←</button>
+    <button class="btn" id="vnext" aria-label="Next page">→</button>
+    <button class="btn" id="vzoom">Actual size</button>
+    <span class="sp"></span>
+    <button class="btn" id="vcopy">Copy file path</button>
+    <button class="btn" id="vclose">Close</button>
+  </div>
+  <div class="vstage" id="vstage"></div>
+  <input type="file" id="vdir" webkitdirectory directory multiple hidden>
+  <input type="file" id="vfiles" accept="application/pdf,.pdf" multiple hidden>
 </dialog>
 
 <script>
@@ -157,18 +172,78 @@ async function boot(){
   db.collection('timeline').onSnapshot(s=>{ s.docs.forEach(d=>TL[d.id]=d.data().rows||[]); if(onTimeline()) paintTimelineSafe(); });
   db.collection('rg_reads').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RGR=m; if(onTimeline()) paintTimelineSafe(); });
 }
-function openViewer(d,page){
+/* ---------- page viewer: renders the page from RG's own PDFs, read in the browser (nothing is uploaded) ---------- */
+const PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+let PDFLIB=null, PDFFILES={}, PDFDOCS={}, VW={d:null,page:0}, VSEQ=0;
+function loadScript(src){ return new Promise((ok,no)=>{ const e=document.createElement('script'); e.src=src; e.onload=ok; e.onerror=()=>no(new Error('load')); document.head.appendChild(e); }); }
+async function pdfLib(){
+  if(PDFLIB) return PDFLIB;
+  // the worker script runs on the page itself (a separate worker cannot load here)
+  await loadScript(PDFJS+'pdf.worker.min.js'); await loadScript(PDFJS+'pdf.min.js');
+  return PDFLIB=window.pdfjsLib;
+}
+function addPdfFiles(list){
+  // file names as delivered: 497-18-196.pdf, «497-18-196 продолжение 2.pdf», sometimes with an en dash
+  let n=0;
+  for(const f of list){
+    const m=f.name.normalize('NFC').match(/^497[-–—]18[-–—](\d+)(?:\s+продолжение\s+(\d+))?\.pdf$/i);
+    if(!m) continue;
+    const parts=PDFFILES[m[1]]=PDFFILES[m[1]]||[], k=m[2]?+m[2]:0;
+    if(!parts.some(p=>p.k===k)){ parts.push({k,file:f}); parts.sort((a,b)=>a.k-b.k); n++; }
+  }
+  return n;
+}
+async function docsFor(delo){
+  if(PDFDOCS[delo]) return PDFDOCS[delo];
+  const lib=await pdfLib(), out=[];
+  for(const p of PDFFILES[delo]||[]){ const doc=await lib.getDocument({data:new Uint8Array(await p.file.arrayBuffer())}).promise; out.push(doc); }
+  return PDFDOCS[delo]=out;
+}
+function vmsg(html){ $('#vstage').classList.remove('actual'); $('#vstage').innerHTML=`<div class="vmsg">${html}</div>`; }
+async function openViewer(d,page){
+  VW={d,page}; const seq=++VSEQ;
+  const n=d.n_pages||Math.max(0,...(PAGES[d.id]||[]).map(x=>x.page));
   const r=(PAGES[d.id]||[]).find(x=>x.page===page)||{};
   $('#vtitle').textContent=`Д. ${d.delo} · PDF p. ${page}${r.folio?' · л. '+r.folio:''}`;
-  $('#vpath').textContent=d.pdf||'File location not recorded for this дело.';
+  $('#vprev').disabled=page<=1; $('#vnext').disabled=!!n&&page>=n;
   $('#vcopy').hidden=!d.pdf;
-  $('#vhow').textContent=`Paste the path into Acrobat's File → Open dialog (⇧⌘G in that dialog takes a typed path), then press ⇧⌘N and go to page ${page}.`;
   const dlg=$('#viewer'); if(!dlg.open) dlg.showModal();
+  if(!(PDFFILES[d.delo]||[]).length){
+    const linked=Object.keys(PDFFILES).length;
+    vmsg(`<p>${linked?`The folder you linked has no PDF for Д. ${esc(d.delo)}.`:'To see pages full size, link the folder that holds your RGIA PDFs. You do this once each time you open the Reading Room.'}</p>
+      <p>Choose the folder <b>pdf/RGIA_F497_Op18/dela</b> inside the project (or any folder containing the files named <span class="vpath" style="display:inline;padding:1px 5px">497-18-…pdf</span>). Your browser may ask whether to “upload” the files: nothing leaves your computer, the page only reads them.</p>
+      <div class="vrow"><button class="btn" id="vpickdir">Choose folder…</button><button class="btn" id="vpickfiles">Choose PDF files…</button></div>
+      ${d.pdf?`<p style="margin-top:14px">This дело's file: </p><div class="vpath">${esc(d.pdf)}</div>`:''}`);
+    $('#vpickdir').onclick=()=>$('#vdir').click(); $('#vpickfiles').onclick=()=>$('#vfiles').click();
+    return;
+  }
+  vmsg('<p>Opening the page…</p>');
+  try{
+    const docs=await docsFor(d.delo);
+    let i=page, doc=null;
+    for(const dc of docs){ if(i<=dc.numPages){ doc=dc; break; } i-=dc.numPages; }
+    if(seq!==VSEQ) return;
+    if(!doc){ vmsg(`<p>PDF page ${page} is beyond the end of the file(s) linked for Д. ${esc(d.delo)}.</p>`); return; }
+    const pg=await doc.getPage(i), base=pg.getViewport({scale:1});
+    const scale=Math.min(4,2600/Math.max(base.width,base.height)), vp=pg.getViewport({scale});
+    const c=document.createElement('canvas'); c.width=Math.round(vp.width); c.height=Math.round(vp.height);
+    c.setAttribute('role','img'); c.setAttribute('aria-label',`Д. ${d.delo}, PDF page ${page}`);
+    await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+    if(seq!==VSEQ) return;
+    const st=$('#vstage'); st.classList.remove('actual'); $('#vzoom').textContent='Actual size';
+    st.innerHTML=''; st.appendChild(c); st.scrollTo(0,0);
+  }catch(e){ if(seq===VSEQ) vmsg(`<p class="err">This page could not be shown (${esc(e.message||e)}). Reload the Reading Room and try again.</p>`); }
 }
+function stepViewer(dir){ if(!VW.d) return; const p=VW.page+dir; if(p<1) return; const n=VW.d.n_pages; if(n&&p>n) return; openViewer(VW.d,p); }
+$('#vdir').onchange=$('#vfiles').onchange=e=>{ const n=addPdfFiles(e.target.files); e.target.value=''; if(VW.d) openViewer(VW.d,VW.page); };
+$('#vprev').onclick=()=>stepViewer(-1); $('#vnext').onclick=()=>stepViewer(1);
 $('#vclose').onclick=()=>$('#viewer').close();
-$('#vcopy').onclick=async()=>{ const b=$('#vcopy');
-  try{ await navigator.clipboard.writeText($('#vpath').textContent); b.textContent='Copied'; }
-  catch(e){ const rg=document.createRange(); rg.selectNodeContents($('#vpath')); getSelection().removeAllRanges(); getSelection().addRange(rg); b.textContent='Selected — press ⌘C'; }
+$('#vzoom').onclick=()=>{ const st=$('#vstage'); const a=st.classList.toggle('actual'); $('#vzoom').textContent=a?'Fit to screen':'Actual size'; };
+$('#vstage').onclick=e=>{ if(e.target.tagName==='CANVAS') $('#vzoom').click(); };
+$('#viewer').addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.key==='ArrowLeft'){e.preventDefault();stepViewer(-1);} if(e.key==='ArrowRight'){e.preventDefault();stepViewer(1);} });
+$('#viewer').addEventListener('close',()=>{ document.getElementById('pg'+VW.page)?.scrollIntoView({block:'nearest'}); });
+$('#vcopy').onclick=async()=>{ const b=$('#vcopy'), t=VW.d?.pdf||'';
+  try{ await navigator.clipboard.writeText(t); b.textContent='Copied'; }catch(e){ b.textContent='Copy failed'; }
   setTimeout(()=>b.textContent='Copy file path',1800); };
 /* ---------- glossary ---------- */
 const LET='А-Яа-яЁёѢѣІіѲѳѴѵA-Za-z';
@@ -338,7 +413,7 @@ function paintPages(d){
   $('#pcount').textContent=`${vis.length} of ${rows.length} pages`;
   $('#pages').innerHTML=vis.length?vis.map(r=>{
     const mk=m[r.page]||{}, i=r.page-1, x=(i%g.cols)*g.w, y=Math.floor(i/g.cols)*g.h;
-    const thumb=d.sprite?`<button class="thumb" data-view="${r.page}" aria-label="Where to find PDF page ${r.page}" style="background-image:url('sprites/${esc(d.sprite)}');background-position:-${x}px -${y}px"></button>`:`<button class="thumb" data-view="${r.page}" aria-label="Where to find PDF page ${r.page}"></button>`;
+    const thumb=d.sprite?`<button class="thumb" data-view="${r.page}" aria-label="Open PDF page ${r.page} full size" style="background-image:url('sprites/${esc(d.sprite)}');background-position:-${x}px -${y}px"></button>`:`<button class="thumb" data-view="${r.page}" aria-label="Open PDF page ${r.page} full size"></button>`;
     const seen=new Set(), meta=[r.doc_type,r.script,r.date,r.from_to].filter(Boolean).map(x=>gloss(x,seen)).join(' · ');
     return `<li class="pg s-${mk.s||'none'}" id="pg${r.page}">${thumb}
       <div class="pbody">
