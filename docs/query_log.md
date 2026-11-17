@@ -28596,6 +28596,88 @@ Design questions put to RG, each grounded in a query on research.*:
 
 Export: `uv run python docs/figures/explorer/export_dancer_data.py` -> docs/figures/explorer/dancers/index.json + shard_00..31.json (25.8 MB in all, largest file 1.18 MB). Result: 1,038 dancers, 688 season/city/work event lists. Check: Кшесинская 2-я, Матильда Феликсовна — 22 appearances, 146 role lines, 50 tally lines, 35 review dances, 209 review passages, 5 jubilee/obituary rows; tenure start 1 June 1890 (SP, consistent). Published privately at claude.ai/artifact/JQwnmUEVsewQiKqCZnB1Gn.
 
+## 2026-11-16 — Ballets shared by Павлова 2-я, Преображенская and Карсавина
+
+Person lookup:
+
+```sql
+SELECT person_id, display_name FROM research.person WHERE display_name ILIKE '%Павлов%' OR display_name ILIKE '%Преображенск%' OR display_name ILIKE '%Карсавин%';
+```
+
+Result: Павлова 2-я, Анна Матвѣевна (18b3fd03…); Преображенская, Ольга Іосифовна (76d1b9b2…); Карсавина, Тамара Платоновна (382ca6b6…).
+
+Q1 (reviews):
+
+```sql
+-- Q1: reviews — same review date + work, all three named (role assertions or dance performers)
+WITH p(pid, who) AS (VALUES ('18b3fd03-5c54-4ace-a809-cc67d75407d4'::UUID,'Павлова'),('76d1b9b2-c5dc-4bb2-b6b1-25dbcc2167e5'::UUID,'Преображенская'),('382ca6b6-4fa5-482a-9b56-291e6b080a6d'::UUID,'Карсавина')),
+r AS (
+  SELECT a.season, a.city, a.date_undate, a.work_id, p.who, 'role: '||a.role_surface AS what FROM research.review_assertion a JOIN p ON a.performer_person_id=p.pid
+  UNION ALL
+  SELECT d.season, d.city, d.date_undate, d.work_id, p.who, 'dance: '||d.dance_surface FROM research.review_dance d JOIN research.review_dance_performer dp USING(dance_id) JOIN p ON dp.performer_person_id=p.pid
+)
+SELECT season, city, date_undate, w.canonical_title, count(DISTINCT who) n, string_agg(who||' ('||what||')', '; ' ORDER BY who) detail
+FROM r LEFT JOIN research.work w USING(work_id)
+GROUP BY ALL HAVING count(DISTINCT who)>=2 ORDER BY n DESC, date_undate;
+```
+
+Result: no dated review event names all three. Undated review mentions of all three in the same linked work, same season: Донъ-Кихотъ 1901-02, Ручей 1902-03, Волшебное зеркало 1903-04 (several more 3-way groups have no linked work, so not counted). Dated pairs: Раймонда 5 Sep 1904 (Карсавина+Преображенская); Донъ-Кихотъ 3 Mar 1907, 17 Oct 1907 and Времена года 29 Apr 1907 (Павлова+Преображенская). Two 1906-07 review dates come out as 1900-02-07/14 — likely a date-parse slip, logged not chased.
+
+Q2 (printed BalletArtists role tallies):
+
+```sql
+-- Q2: BalletArtists printed role tallies — same season, city and ballet (label) for all three
+WITH p(pid, who) AS (VALUES ('18b3fd03-5c54-4ace-a809-cc67d75407d4'::UUID,'Павлова'),('76d1b9b2-c5dc-4bb2-b6b1-25dbcc2167e5'::UUID,'Преображенская'),('382ca6b6-4fa5-482a-9b56-291e6b080a6d'::UUID,'Карсавина'))
+SELECT t.season, t.city, t.label, count(DISTINCT who) n,
+  string_agg(who||': '||coalesce(t.role_name,'?')||' ×'||coalesce(t.times_text,'?'), '; ' ORDER BY who) detail
+FROM research.person_performance_tally t JOIN p ON t.person_id=p.pid
+WHERE t.tally_kind='role'
+GROUP BY ALL HAVING count(DISTINCT who)=3 ORDER BY season, label;
+```
+
+Result: 11 season/ballet groups where all three have printed roles, all SP: Донъ-Кихотъ 1902-03, 1905-06, 1906-07, 1907-08, 1908-09; Ручей 1902-03; Талисманъ 1905-06; Времена года 1907-08; Египетскія ночи 1908-09; Спящая красавица 1908-09, 1909-10. Tally coverage: Павлова 1899-00–1911-12, Карсавина 1902-03–1911-12, Преображенская 1890-91–1910-11.
+
+## 2026-11-16 — Ballets shared by Павлова 2-я, Кшесинская 2-я and Карсавина
+
+Person lookup:
+
+```sql
+SELECT person_id, display_name FROM research.person WHERE display_name ILIKE '%Кшесинск%';
+```
+
+Result: 4 rows; used Кшесинская 2-я, Матильда Феликсовна (4168294b…), not Кшесинская 1-я Юлія.
+
+Q1 (reviews), same as the previous entry with Преображенская swapped for Кшесинская 2-я:
+
+```sql
+-- Q1: reviews — same review date + work, all three named (role assertions or dance performers)
+WITH p(pid, who) AS (VALUES ('18b3fd03-5c54-4ace-a809-cc67d75407d4'::UUID,'Павлова'),('4168294b-ff7a-4216-9dd6-0163b503a0aa'::UUID,'Кшесинская'),('382ca6b6-4fa5-482a-9b56-291e6b080a6d'::UUID,'Карсавина')),
+r AS (
+  SELECT a.season, a.city, a.date_undate, a.work_id, p.who, 'role: '||a.role_surface AS what FROM research.review_assertion a JOIN p ON a.performer_person_id=p.pid
+  UNION ALL
+  SELECT d.season, d.city, d.date_undate, d.work_id, p.who, 'dance: '||d.dance_surface FROM research.review_dance d JOIN research.review_dance_performer dp USING(dance_id) JOIN p ON dp.performer_person_id=p.pid
+)
+SELECT season, city, date_undate, w.canonical_title, count(DISTINCT who) n, string_agg(who||' ('||what||')', '; ' ORDER BY who) detail
+FROM r LEFT JOIN research.work w USING(work_id)
+GROUP BY ALL HAVING count(DISTINCT who)>=2 ORDER BY n DESC, date_undate;
+```
+
+Result: no dated review event names all three. Undated reviews with all three in one linked work, same season: Донъ-Кихотъ 1901-02, Волшебное зеркало 1903-04. Dated pairs (Кшесинская+Павлова): Дочь фараона 13 Feb 1905 and 25 Feb 1907; Фіаметта 7 Jan 1907.
+
+Q2 (printed BalletArtists role tallies):
+
+```sql
+-- Q2: BalletArtists printed role tallies — same season, city and ballet (label) for all three
+WITH p(pid, who) AS (VALUES ('18b3fd03-5c54-4ace-a809-cc67d75407d4'::UUID,'Павлова'),('4168294b-ff7a-4216-9dd6-0163b503a0aa'::UUID,'Кшесинская'),('382ca6b6-4fa5-482a-9b56-291e6b080a6d'::UUID,'Карсавина'))
+SELECT t.season, t.city, t.label, count(DISTINCT who) n,
+  string_agg(who||': '||coalesce(t.role_name,'?')||' ×'||coalesce(t.times_text,'?'), '; ' ORDER BY who) detail
+FROM research.person_performance_tally t JOIN p ON t.person_id=p.pid
+WHERE t.tally_kind='role'
+GROUP BY ALL HAVING count(DISTINCT who)=3 ORDER BY season, label;
+```
+
+Result: 6 season/ballet groups with all three, all SP: Донъ-Кихотъ 1902-03; Дочь фараона 1903-04, 1906-07, 1907-08, 1908-09; Спящая красавица 1907-08. Кшесинская 2-я role tallies cover 1890-91–1911-12 (146 rows).
+
 ## 2026-11-17 — Explore Works: box-office section (receipts of full ballet performances)
 
 Asked: add box-office receipts for each full performance of a ballet, season averages, and other relevant box-office information to the Explore Works artifact (FxCvP7RZwMZxKspxUaSxAR). RG's rulings: show both averages (ballet alone on the bill vs every event with the ballet); benefits/charity/free/reduced/school events left out of averages and listed separately; extras = city average for all ballets, morning vs evening, highest/lowest, season total (ballet alone); whole page re-exported from today's database (adds 1911-12).
