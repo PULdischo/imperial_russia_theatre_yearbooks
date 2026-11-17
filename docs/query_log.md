@@ -28595,3 +28595,58 @@ Design questions put to RG, each grounded in a query on research.*:
 - Mentions on figure blocks: 1,288 of the linked mentions sit in review_passage blocks of type figure, whose text is in caption_text (text is null); export uses coalesce(text, caption_text) and labels them as picture captions.
 
 Export: `uv run python docs/figures/explorer/export_dancer_data.py` -> docs/figures/explorer/dancers/index.json + shard_00..31.json (25.8 MB in all, largest file 1.18 MB). Result: 1,038 dancers, 688 season/city/work event lists. Check: Кшесинская 2-я, Матильда Феликсовна — 22 appearances, 146 role lines, 50 tally lines, 35 review dances, 209 review passages, 5 jubilee/obituary rows; tenure start 1 June 1890 (SP, consistent). Published privately at claude.ai/artifact/JQwnmUEVsewQiKqCZnB1Gn.
+
+## 2026-11-17 — Explore Works: box-office section (receipts of full ballet performances)
+
+Asked: add box-office receipts for each full performance of a ballet, season averages, and other relevant box-office information to the Explore Works artifact (FxCvP7RZwMZxKspxUaSxAR). RG's rulings: show both averages (ballet alone on the bill vs every event with the ballet); benefits/charity/free/reduced/school events left out of averages and listed separately; extras = city average for all ballets, morning vs evening, highest/lowest, season total (ballet alone); whole page re-exported from today's database (adds 1911-12).
+
+Scoping queries (events with a full ballet, i.e. art_form='ballet' and not an excerpt):
+
+```sql
+WITH b AS (SELECT DISTINCT e.* FROM research.event e JOIN research.performance p USING(event_id) JOIN research.work w USING(work_id)
+           WHERE w.art_form='ballet' AND w.excerpt_of_work_id IS NULL)
+SELECT city, count(*), count(receipts_total_kopecks), count(*) FILTER (WHERE n_works=1), count(receipts_total_kopecks) FILTER (WHERE n_works=1),
+       count(*) FILTER (WHERE is_benefit), count(*) FILTER (WHERE is_charity OR is_free OR is_reduced_price OR is_student_performance)
+FROM b GROUP BY 1;
+```
+
+Result: SP 1,065 events (927 with receipts; 698 ballet alone; 55 benefit; 47 other special); Moscow 1,035 (890; 868; 74; 46). No receipts printed in any event of 1890-91 or 1891-92; 1894-95 594 of 1,340 events.
+
+Benefit vs ordinary, ballet alone, with receipts (mean / median руб.): SP ordinary 586 events 2,830 / 2,852, benefit 23 events 6,404 / 6,163; Moscow ordinary 697 1,696 / 1,633, benefit 40 4,151 / 3,604, charity 1 1,393.
+
+Example given to RG (SP, ordinary, ballet alone): «Донъ-Кихотъ» avg vs all-SP-ballet avg — 1902-03 2,877 vs 2,470 (3 events); 1908-09 2,713 vs 3,208 (3); 1911-12 4,677 vs 4,469 (2).
+
+Export: docs/figures/explorer/export_ballet_data.py now writes per work `box` (every event with a full performance: date, session, receipts in kopecks, printed receipt, correction flag, shared bill + other works, special kind, page) and `box_base` (per season and city, mean of ordinary events with any full ballet, ballet alone and every event). 99 ballets (new: «Весеннія грёзы», 1911-12), 2,510 full performances; pre-1911-12 performance counts unchanged per work against the 10 Nov export.
+
+Spot check of the page against the database: «Коппелія», SP 1911-12, ordinary ballet-alone events with receipts = 3, mean 4,391 руб. — the page shows 4,391 р. (3).
+
+## 2026-11-17 — Explore Works: "Every season at a glance" pop-up for the chosen ballet
+
+RG's rulings: bars stay largest-first; chosen ballet bright beige, every other ballet grey (no both-cities gold); counts as on Ballet Seasons by City (every event that gave any of the ballet, full or excerpt only); right-hand figure = the chosen ballet's share and place ("4% · 11th of 23", ties share a place).
+
+export_ballet_data.py now writes `glance` (per season and city: work_id, events, full events), built with the same rule as export_season_data.py:
+
+```sql
+SELECT coalesce(w.excerpt_of_work_id, w.work_id)::VARCHAR, w.excerpt_of_work_id IS NOT NULL, e.season, e.city, e.event_id::VARCHAR
+FROM research.performance p JOIN research.work w USING (work_id) JOIN research.event e USING (event_id)
+WHERE w.art_form = 'ballet';   -- events counted as distinct event_ids per (season, city, parent ballet)
+```
+
+Check: every season-city's (work_id → events, full) equals docs/figures/explorer/seasons.json (Ballet Seasons by City, exported 16 Nov) — 0 mismatches.
+
+## 2026-11-17 — Ballet Seasons by City: "city premiere" — what the Yearbooks can and cannot tell
+
+First season a ballet (excerpts counted under it) appears in a city's Repertoire, 1891-92 on: 105 ballet-city pairs (SP 61, Moscow 44). research.work has no creation/premiere date; the only premiere-like field is research.production.is_premiere (the list's «*»).
+
+```sql
+WITH f AS (SELECT coalesce(w.excerpt_of_work_id, w.work_id) tw, e.city, min(e.season) fs
+           FROM research.performance p JOIN research.work w USING (work_id) JOIN research.event e USING (event_id)
+           WHERE w.art_form = 'ballet' GROUP BY ALL),
+o AS (SELECT f.*, (SELECT min(f2.fs) FROM f f2 WHERE f2.tw = f.tw AND f2.city <> f.city) other_first,
+             EXISTS (SELECT 1 FROM research.production r JOIN research.work w2 USING (work_id)
+                     WHERE coalesce(w2.excerpt_of_work_id, w2.work_id) = f.tw AND r.city = f.city AND r.season = f.fs AND r.is_premiere) star
+      FROM f WHERE fs > '1890-91')
+SELECT CASE WHEN other_first < fs THEN 'B' WHEN star THEN 'A' ELSE 'C' END, count(*) FROM o GROUP BY 1;
+```
+
+Result: A (first anywhere in the Yearbooks + «*» that season) 33; B (already given in the other city) 25; C (first anywhere, no «*») 47. None of the three buckets separates new ballets from pre-1890 repertoire on its own: B includes Коппелія SP 1891-92 and Донъ-Кихотъ SP 1901-02; C includes Павильонъ Армиды and Шопеніана as well as Сильфида and Пахита; A includes Лебединое озеро SP 1893-94. «*» on seasons that are not a first appearance: Эсмеральда Moscow 1902-03, Лебединое озеро SP 1894-95, Египетскія ночи / Евника / Шопеніана SP 1908-09, Талисманъ SP 1909-10.

@@ -194,6 +194,7 @@ footer { display: grid; gap: 8px; border-top: 1px solid var(--rule); padding-top
     <span><span class="sw"></span>given in both cities this season (full or excerpt); hover a row to find it in the other city</span>
     <span><b>Full</b> events with the whole ballet · <b>Exc.</b> events with only an excerpt · <b>List</b> total printed in the productions list</span>
     <span><span class="flag">≠</span> list total matches neither Repertoire count</span>
+    <span><span class="prem" style="margin-left:0">marked premiere</span> the productions list prints «*» before the entry (hover for what it does and does not mean)</span>
     <span>Bars: one segment per ballet, sized by its events, largest first; gold segments were given in both cities. Hover a segment for its title; click a bar to see every season</span>
   </div>
 
@@ -260,7 +261,7 @@ function titleCell(b) {
   let s = `<span class="ttl">«${esc(b.title)}»</span>`;
   if (b.tag) s += ` <span class="dim">(${esc(b.tag)})</span>`;
   if (b.both) s += '<span class="both-pill">both</span>';
-  if (b.entries.some(e => e.premiere)) s += '<span class="prem" title="Marked as a first performance in the productions list">new</span>';
+  if (b.entries.some(e => e.premiere)) s += '<span class="prem" title="The productions list prints «*» before this entry\'s number. The mark also appears on some revivals and new stagings of ballets given before, so it is the Yearbook\'s mark, not a ruling that this was the ballet\'s first performance.">marked premiere</span>';
   const lts = b.entries.map(e => e.list_title).filter(t => t && t !== b.title);
   if (lts.length) s += `<span class="sm">list: ${lts.map(t => '«' + esc(t) + '»').join(', ')}</span>`;
   if (b.entries.some(e => !e.linked)) s += '<span class="sm">list entry not linked to a work in the database</span>';
@@ -375,7 +376,7 @@ function render(s) {
   const tile = c => {
     const bl = d.cities[c].ballets, ev = d.cities[c].ballet_events;
     const xOnly = bl.filter(b => b.events && !b.full).length, isNew = bl.filter(b => b.entries.some(e => e.premiere)).length;
-    const note = [xOnly ? `${xOnly} as excerpts only` : '', isNew ? `${isNew} new in the list` : ''].filter(Boolean).join(' · ');
+    const note = [xOnly ? `${xOnly} as excerpts only` : '', isNew ? `${isNew} marked premiere` : ''].filter(Boolean).join(' · ');
     return `<div class="tot ${c}"><div class="who">${CITY[c]} · ${lab(s)}</div><div class="row"><div class="figs">` +
       `<div class="fig"><b>${n(c)}</b><span>ballet${n(c) === 1 ? '' : 's'} given</span>${note ? `<span class="sm">${note}</span>` : ''}</div>` +
       `<div class="fig"><b>${ev}</b><span>event${ev === 1 ? '' : 's'} with ballet</span></div></div></div>${tileBar(s, c)}</div>`;

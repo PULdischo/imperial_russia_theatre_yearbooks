@@ -137,12 +137,63 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
 .changes { display: flex; flex-wrap: wrap; gap: 6px; }
 .chg { font-size: 12.5px; font-weight: 600; color: var(--bg); background: var(--hl); border-radius: 999px; padding: 2px 9px; }
 .chg.minus { color: var(--hl); background: transparent; border: 1px solid var(--hl); }
-.chg.info { color: var(--muted); background: transparent; border: 1px dashed var(--rule); font-weight: 400; }
+.hintrow { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; justify-content: space-between; }
+.glbtn { font: inherit; font-size: 13px; font-weight: 600; color: var(--text); background: transparent; border: 1px solid var(--muted);
+  border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.glbtn:hover, .glbtn:focus-visible { background: var(--text); color: var(--bg); outline: none; }
+dialog#gl { width: min(1100px, 96vw); max-height: 90vh; padding: 0; border: 1px solid var(--rule); border-radius: 14px;
+  background: var(--bg); color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+dialog#gl::backdrop { background: rgba(10, 14, 12, .62); }
+.strips { display: grid; gap: 14px 22px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); }
+.strip { display: grid; gap: 2px; min-width: 0; background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 10px 10px 8px; }
+.strip.SP { border-top: 3px solid var(--sp); }
+.strip.Moscow { border-top: 3px solid var(--mo); }
+.strip .who { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 0 4px 6px; display: flex; justify-content: space-between; gap: 8px; }
+.strip.SP .who { color: var(--sp-text); }
+.strip.Moscow .who { color: var(--mo-text); }
+.strip .who span { color: var(--faint); letter-spacing: .06em; font-weight: 600; text-transform: none; }
+.srow { display: grid; grid-template-columns: 52px minmax(0, 1fr) 104px; gap: 8px; align-items: center; width: 100%;
+  font: inherit; font-size: 12.5px; color: var(--faint); background: transparent; border: 0; border-radius: 6px; padding: 2px 4px; cursor: pointer; text-align: left; font-variant-numeric: tabular-nums; }
+.srow.has { color: var(--text); }
+.srow:hover { background: var(--panel-2); }
+.srow:focus-visible { outline: 2px solid var(--mo); outline-offset: 1px; }
+.srow .pc { text-align: right; white-space: nowrap; }
+.gbar { display: flex; gap: 1.5px; height: 13px; min-width: 0; }
+.gbar i { display: block; height: 100%; min-width: 1px; flex-basis: 0; background: color-mix(in srgb, var(--faint) 38%, var(--panel)); }
+.gbar i.me { background: var(--text); min-width: 4px; box-shadow: 0 0 0 1.5px var(--bg), 0 0 0 2.5px var(--text); position: relative; z-index: 1; }
+.gbar i:first-child { border-radius: 3px 0 0 3px; }
+.gbar i:last-child { border-radius: 0 3px 3px 0; }
+.gbar i:only-child { border-radius: 3px; }
+.gbar.none { color: var(--faint); font-style: italic; font-size: 12px; align-items: center; }
+.legend svg { display: inline-block; width: auto; height: auto; vertical-align: -2px; margin-right: 6px; }
+.btable { min-width: 760px; }
+.btable td.spec { min-width: 200px; }
+.btable td.spec div + div { margin-top: 4px; }
+.btable th.r, .btable td.r { text-align: right; }
+.btable td.r { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.btable td.season { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.btable .sub2 { display: block; color: var(--faint); font-size: 12.5px; }
+.btable .up { color: #A9C99A; }
+.btable .down { color: #E59A8A; }
+.btable td.gap { color: var(--faint); font-style: italic; }
+.btable tr.sep td { border-top: 1px solid var(--rule); }
+.tablewrap.scroll { max-height: 560px; overflow-y: auto; }
+.tablewrap.scroll thead th { position: sticky; top: 0; z-index: 1; }
+.tag { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.tag.special { color: var(--bg); background: var(--hl); }
+.tag.shared { color: var(--muted); border: 1px dashed var(--rule); font-weight: 400; }
+.fix { color: var(--hl); cursor: help; }
+details.evlist summary { cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); padding: 4px 0 10px; }
+details.evlist summary:focus-visible { outline: 2px solid var(--mo); outline-offset: 2px; }
+.big { font-family: var(--display); font-size: 26px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.card .row2 { display: grid; gap: 2px; }
+.card .row2 + .row2 { border-top: 1px dashed var(--rule); padding-top: 8px; }
+.chg.info {color: var(--muted); background: transparent; border: 1px dashed var(--rule); font-weight: 400; }
 </style>
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Ежегодникъ Императорскихъ театровъ · ballet works, 1890/91–1910/11</div>
+    <div class="eyebrow">Ежегодникъ Императорскихъ театровъ · ballet works, 1890/91–1911/12</div>
     <h1 id="h1">Imperial Ballet Repertoire</h1>
     <p class="sub">Choose a ballet to see where and when it was performed, how the <i>Yearbook</i> printed its title, which excerpts (single acts, scenes or numbers) were given, and what each season's productions list says about it.</p>
   </header>
@@ -182,7 +233,7 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
         <span><i class="sw" style="background:var(--panel-2)"></i>no lists in the database</span>
       </div>
       <svg id="chart" viewBox="0 0 960 400" role="group" aria-label="Performances per season by city"></svg>
-      <div class="hint">Click a season to jump to it in the tables below.</div>
+      <div class="hint hintrow"><span>Click a season to jump to it in the tables below.</span><button type="button" class="glbtn" id="gl-open">Every season at a glance</button></div>
     </div>
     <div class="side">
       <div class="card work">
@@ -204,6 +255,38 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
       </div>
     </div>
   </div>
+
+  <section class="lists box" id="box">
+    <div class="eyebrow" id="b-head">Box office · full performances</div>
+    <div class="side" id="b-cards"></div>
+    <div class="chart">
+      <div class="legend">
+        <span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="var(--text)"/></svg>average, ballet alone on the bill</span>
+        <span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="var(--text)" stroke-width="2"/></svg>average, every event with the ballet</span>
+        <span><svg width="22" height="14" aria-hidden="true"><line x1="1" y1="7" x2="21" y2="7" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"/></svg>city average, all ballets (ballet alone)</span>
+        <span><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="2.6" fill="var(--muted)" opacity=".55"/></svg>one event</span>
+      </div>
+      <svg id="b-chart" viewBox="0 0 960 362" role="group" aria-label="Box-office receipts per season by city"></svg>
+      <div class="hint">Ordinary events only (benefits and other special events are left out of the chart and the averages). Click a season to jump to it in the table below.</div>
+    </div>
+    <div class="tablewrap">
+      <table class="btable">
+        <thead><tr><th>Season</th><th>City</th><th class="r">Events<br>with receipts</th><th class="r">Average<br>ballet alone</th><th class="r">Average<br>every event</th>
+          <th class="r">City average<br>all ballets</th><th class="r">Morning ·<br>evening · unspec.</th><th class="r">Total<br>ballet alone</th><th>Benefits and<br>special events</th></tr></thead>
+        <tbody id="b-seasons"></tbody>
+      </table>
+    </div>
+    <details class="evlist" id="b-evd" open>
+      <summary id="b-evs">Every event</summary>
+      <div class="tablewrap scroll">
+        <table class="btable">
+          <thead><tr><th>Date</th><th>City</th><th>Session</th><th class="r">Receipts</th><th>On the bill</th><th>Kind</th><th class="r">Page</th></tr></thead>
+          <tbody id="b-events"></tbody>
+        </table>
+      </div>
+    </details>
+    <p class="note" id="b-note"></p>
+  </section>
 
   <section class="lists" id="x-sec" hidden>
     <div class="eyebrow" id="x-head">Excerpt performances</div>
@@ -228,6 +311,18 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
     <p class="note"><b>Season review</b> opens what that city's review says about the ballet that season. <span class="chg">changes</span> are flagged automatically (gold outline) by comparing each entry with the previous one in the same city: number of acts or scenes, a prologue or apotheosis, creator names newly printed or no longer printed, a staging or dance credit, «соч.» becoming «либретто», and music «и другихъ». Story sources («сюжетъ …») and rewording are ignored. The flags point you to the text; they are not a ruling. <span class="star">*</span> the database records the entry as new (in the entries checked so far, the <i>Yearbook</i> marks this with an asterisk before the entry's number). List text is the database's transcription; it has not been checked against the scans, except the entries quoted on the presentation slides for «Спящая красавица», «Донъ-Кихотъ» and «Волшебное зеркало».</p>
   </section>
 
+  <dialog id="gl" class="pop" aria-labelledby="gl-title">
+    <div class="rv-head">
+      <div class="eyebrow">Every season at a glance</div>
+      <button class="x" id="gl-close" aria-label="Close">×</button>
+      <h2 id="gl-title"></h2>
+    </div>
+    <div class="rv-body">
+      <p class="note">One bar per season, split into a segment per ballet given that season, sized by its events (full and excerpt only), largest first. The chosen ballet is the bright segment. The figure at the right is its share of the season's ballet events and its place in that order (ballets with the same count share a place). Counts as on Ballet Seasons by City. Click a season to jump to it on this page.</p>
+      <div class="strips"><div class="strip SP" id="gl-SP"></div><div class="strip Moscow" id="gl-Moscow"></div></div>
+    </div>
+  </dialog>
+
   <dialog id="rv" aria-labelledby="rv-title">
     <div class="rv-head">
       <div class="eyebrow" id="rv-eyebrow"></div>
@@ -238,13 +333,13 @@ mark { background: color-mix(in srgb, var(--hl) 30%, transparent); color: var(--
   </dialog>
 
   <footer>
-    <p class="note">Two different ballets can share a title («Времена года», «Карнавалъ»); each is labelled with its printed genre and first season. Performances are full performances of the ballet in the Repertoire tables; excerpts (single acts, scenes or numbers) are counted separately and shown with the Excerpts switch. Data: production research database, exported 10 Nov 2026.</p>
+    <p class="note">Two different ballets can share a title («Времена года», «Карнавалъ»); each is labelled with its printed genre and first season. Performances are full performances of the ballet in the Repertoire tables; excerpts (single acts, scenes or numbers) are counted separately and shown with the Excerpts switch. Data: production research database, exported 17 Nov 2026.</p>
     <p class="note">Made with Claude Code (AI): drafting, layout and database queries. Data model, choice of what to show and editorial decisions by the author.</p>
   </footer>
 </div>
 
 <script>
-const SEASONS = Array.from({length: 21}, (_, i) => `${1890 + i}-${String(1891 + i).slice(2)}`);
+let SEASONS = Array.from({length: 22}, (_, i) => `${1890 + i}-${String(1891 + i).slice(2)}`);   // replaced by DATA.seasons on load
 const lab = s => s.replace('-', '/');
 const CITY = {SP: 'St Petersburg', Moscow: 'Moscow'};
 const $ = id => document.getElementById(id);
@@ -314,6 +409,7 @@ function render(i) {
     `<span><b>${w.cast}</b> cast statements</span>`;
 
   drawChart(w);
+  renderBox(w);
   $('x-sec').hidden = mode === 'full';
   $('lg-x').hidden = mode === 'full';
   $('x-head').textContent = `Excerpt performances (${w.xtotal})`;
@@ -484,7 +580,7 @@ $('rv-close').addEventListener('click', () => $('rv').close());
 $('rv').addEventListener('click', e => { if (e.target === $('rv')) $('rv').close(); });   // a click on the backdrop closes it
 
 function drawChart(w) {
-  const W = 960, X0 = 132, CW = (W - X0 - 8) / 21, ROW = 112, SPB = 150, MOB = 286, LY = 318;
+  const W = 960, X0 = 132, CW = (W - X0 - 8) / SEASONS.length, ROW = 112, SPB = 150, MOB = 286, LY = 318;
   const max = Math.max(1, ...SEASONS.flatMap(se => ['SP', 'Moscow'].map(k => { const n = counts(w, se, k); return n.f + n.x; })));
   const lists = new Set(w.lists.map(l => l.season + '|' + l.city));
   const noList = new Set(SEASONS.filter(s => !DATA.list_seasons.includes(s)));
@@ -495,10 +591,10 @@ function drawChart(w) {
     s += `<line x1="${x}" y1="22" x2="${x}" y2="${LY + 60}" stroke="var(--rule)" stroke-opacity=".45"/>`;
     if (k % 5 === 0) s += `<text x="${x + CW / 2}" y="14" font-size="14" fill="var(--faint)" text-anchor="middle">${lab(se)}</text>`;
   });
-  s += `<line x1="${X0 + 21 * CW}" y1="22" x2="${X0 + 21 * CW}" y2="${LY + 60}" stroke="var(--rule)" stroke-opacity=".45"/>`;
+  s += `<line x1="${X0 + SEASONS.length * CW}" y1="22" x2="${X0 + SEASONS.length * CW}" y2="${LY + 60}" stroke="var(--rule)" stroke-opacity=".45"/>`;
   for (const [city, base, col, txt] of [['SP', SPB, 'var(--sp)', 'var(--sp-text)'], ['Moscow', MOB, 'var(--mo)', 'var(--mo-text)']]) {
     s += `<text x="0" y="${base - 6}" font-size="16" font-weight="700" fill="${txt}">${CITY[city]}</text>`;
-    s += `<line x1="${X0}" y1="${base}" x2="${X0 + 21 * CW}" y2="${base}" stroke="var(--faint)"/>`;
+    s += `<line x1="${X0}" y1="${base}" x2="${X0 + SEASONS.length * CW}" y2="${base}" stroke="var(--faint)"/>`;
     SEASONS.forEach((se, k) => {
       const {f, x: xn} = counts(w, se, city), n = f + xn;
       if (!n) return;
@@ -528,6 +624,199 @@ function drawChart(w) {
   });
   $('chart').innerHTML = s;
 }
+// ---- Box office (full performances only; receipts are printed once per event, so a shared bill's receipt is the whole bill's)
+const KIND = {benefit: 'benefit', charity: 'charity', free: 'free', reduced: 'reduced prices', school: 'school performance'};
+const rub = k => k == null ? '—' : Math.round(k / 100).toLocaleString('en-US') + ' р.';
+const rubK = k => `${Math.floor(k / 100).toLocaleString('en-US')} р. ${String(k % 100).padStart(2, '0')} к.`;
+const mean = a => a.length ? a.reduce((x, e) => x + e.r, 0) / a.length : null;
+const avgN = a => a.length ? `${rub(mean(a))} <span class="n">(${a.length})</span>` : '—';
+function boxGroups(w) {
+  const g = {};
+  for (const e of w.box) (g[e.season + '|' + e.city] ||= []).push(e);
+  return g;
+}
+function renderBox(w) {
+  const ev = w.box, withR = ev.filter(e => e.r != null), ord = withR.filter(e => !e.kind), solo = ord.filter(e => !e.shared);
+  const noR = new Set(DATA.no_receipt_seasons || []), cities = ['SP', 'Moscow'].filter(c => ev.some(e => e.city === c));
+  $('b-head').textContent = `Box office · full performances (${ev.length} event${ev.length === 1 ? '' : 's'})`;
+  $('box').hidden = !ev.length;
+  if (!ev.length) return;
+  const byCity = (a, c) => a.filter(e => e.city === c);
+  const hiLo = c => {
+    const a = byCity(solo, c).slice().sort((x, y) => y.r - x.r);
+    if (!a.length) return '';
+    const one = (e, l) => `<span>${l} <b>${rub(e.r)}</b> <span class="n">${fmtDate(e.date)}${e.tod !== 'unspecified' ? ', ' + e.tod : ''}</span></span>`;
+    return `<div class="row2"><span class="city ${c}" style="justify-self:start">${CITY[c]}</span>${one(a[0], 'Highest')}${a.length > 1 ? one(a[a.length - 1], 'Lowest') : ''}</div>`;
+  };
+  const sess = c => {
+    const a = byCity(solo, c);
+    return `<div class="row2"><span class="city ${c}" style="justify-self:start">${CITY[c]}</span>` +
+      ['morning', 'evening', 'unspecified'].map(t => { const b = a.filter(e => e.tod === t);
+        return `<span>${t === 'unspecified' ? 'Session not printed' : t[0].toUpperCase() + t.slice(1)}: ${avgN(b)}</span>`; }).join('') + `</div>`;
+  };
+  const spec = withR.filter(e => e.kind);
+  const kinds = [...new Set(spec.map(e => e.kind))];
+  $('b-cards').innerHTML =
+    `<div class="card"><div class="lbl">Receipts printed</div>` +
+      `<div class="stat"><span><b>${withR.length}</b> of <b>${ev.length}</b> events</span>` +
+      `<span><b>${ev.filter(e => e.shared).length}</b> on a shared bill</span></div>` +
+      cities.map(c => `<div class="row2"><span class="city ${c}" style="justify-self:start">${CITY[c]}</span>` +
+        `<span>Average, ballet alone: <b>${avgN(byCity(solo, c))}</b></span><span>Average, every event: ${avgN(byCity(ord, c))}</span></div>`).join('') +
+    `</div>` +
+    `<div class="card"><div class="lbl">Highest and lowest · ballet alone</div>${cities.map(hiLo).join('') || '<span class="empty">no receipts</span>'}</div>` +
+    `<div class="card"><div class="lbl">Morning vs evening · ballet alone</div>${cities.map(sess).join('')}</div>` +
+    `<div class="card"><div class="lbl">Benefits and special events</div>` +
+      (spec.length ? cities.map(c => { const a = byCity(spec, c); return a.length ? `<div class="row2"><span class="city ${c}" style="justify-self:start">${CITY[c]}</span>` +
+        kinds.map(k => { const b = a.filter(e => e.kind === k); return b.length ? `<span>${KIND[k]}: ${avgN(b)}</span>` : ''; }).join('') + `</div>` : ''; }).join('')
+        : '<span class="empty">none with receipts</span>') + `</div>`;
+
+  // per-season table
+  const g = boxGroups(w);
+  let rows = '', last = null;
+  for (const se of SEASONS) for (const c of ['SP', 'Moscow']) {
+    const a = g[se + '|' + c];
+    if (!a) continue;
+    const sep = last && last !== se ? ' class="sep"' : '';
+    last = se;
+    const head = `<td class="season">${lab(se)}</td><td><span class="city ${c}">${CITY[c]}</span></td>`;
+    if (noR.has(se)) { rows += `<tr${sep} data-bseason="${se}">${head}<td class="r">0 / ${a.length}</td><td colspan="6" class="gap">no receipts printed in the Repertoire this season</td></tr>`; continue; }
+    const r = a.filter(e => e.r != null), o = r.filter(e => !e.kind), s = o.filter(e => !e.shared), sp = r.filter(e => e.kind);
+    const base = (DATA.box_base[se + '|' + c] || {});
+    let cmp = '';
+    if (s.length && base.solo) { const d = Math.round(100 * (mean(s) / base.solo[0] - 1)); cmp = `<span class="sub2 ${d >= 0 ? 'up' : 'down'}">this ballet ${d >= 0 ? '+' : '−'}${Math.abs(d)}%</span>`; }
+    const tods = ['morning', 'evening', 'unspecified'].map(t => { const b = s.filter(e => e.tod === t); return b.length ? rub(mean(b)) : '—'; }).join(' · ');
+    const alone = r.filter(e => !e.shared);
+    rows += `<tr${sep} data-bseason="${se}">${head}<td class="r">${r.length} / ${a.length}</td>` +
+      `<td class="r">${avgN(s)}</td><td class="r">${avgN(o)}</td>` +
+      `<td class="r">${base.solo ? rub(base.solo[0]) : '—'}${cmp}<span class="sub2">every event: ${base.all ? rub(base.all[0]) : '—'}</span></td>` +
+      `<td class="r">${tods}</td>` +
+      `<td class="r">${alone.length ? rub(alone.reduce((x, e) => x + e.r, 0)) : '—'}${alone.length ? `<span class="sub2">${alone.length} event${alone.length === 1 ? '' : 's'}</span>` : ''}</td>` +
+      `<td class="spec">${sp.length ? sp.map(e => `<div>${KIND[e.kind]} <b>${rub(e.r)}</b> <span class="n">${fmtDate(e.date)}${e.shared ? ', shared bill' : ''}</span></div>`).join('') : '<span class="n">—</span>'}</td></tr>`;
+  }
+  $('b-seasons').innerHTML = rows;
+
+  // every event
+  $('b-evs').textContent = `Every event (${ev.length})`;
+  $('b-events').innerHTML = ev.map(e =>
+    `<tr data-season="${e.season}"><td class="num" title="${esc(e.dv || '')}">${fmtDate(e.date)}</td><td><span class="city ${e.city}">${CITY[e.city]}</span></td>` +
+    `<td>${e.tod === 'unspecified' ? '<span class="n">—</span>' : e.tod}</td>` +
+    `<td class="r">${e.r == null ? '<span class="n">' + (noR.has(e.season) ? 'not printed this season' : 'none') + '</span>' : rubK(e.r)}` +
+      `${e.fix ? ` <span class="fix" title="Printed: ${esc(e.rv || '')}. The database corrects this figure (a print error or a dropped half-kopeck).">†</span>` : ''}</td>` +
+    `<td>${e.shared ? `<span class="tag shared">shared</span> + ${e.others.map(t => '«' + esc(t) + '»').join(', ')}` : '<span class="n">ballet alone</span>'}</td>` +
+    `<td>${e.kind ? `<span class="tag special">${KIND[e.kind]}</span>` : ''}</td><td class="r">${esc(e.page || '—')}</td></tr>`
+  ).join('');
+  $('b-note').innerHTML = `The Repertoire prints one receipt per event, for the whole bill. <b>Ballet alone</b> counts only events where this ballet was the only work; ` +
+    `<b>every event</b> also counts shared bills, where the receipt includes the other works. Averages, the chart, highest/lowest and morning/evening use ordinary events only: ` +
+    `events whose banner says benefit, charity, free, reduced prices or a school performance are left out and listed separately. ` +
+    `<b>City average</b> is the same calculation over every ballet given in that city that season (each event counted once); the percentage compares this ballet's ballet-alone average with it. ` +
+    `<b>Total</b> sums every ballet-alone event with receipts, special events included. Morning · evening · unspec. are ballet-alone averages by printed session; cells that print no session are “unspec.”. ` +
+    `No receipts are printed for 1890/91 and 1891/92. <span class="fix">†</span> the database corrects the printed figure (hover to see the print). ` +
+    `Dates as printed (Old Style). Receipts as transcribed; not re-checked against the scans for this page.`;
+  drawBoxChart(w);
+}
+function drawBoxChart(w) {
+  const NS = SEASONS.length, W = 960, X0 = 132, CW = (W - X0 - 8) / NS, H = 118, TOPS = {SP: 52, Moscow: 214};
+  const g = boxGroups(w), noR = new Set(DATA.no_receipt_seasons || []);
+  const vals = w.box.filter(e => e.r != null && !e.kind).map(e => e.r);
+  for (const se of SEASONS) for (const c of ['SP', 'Moscow']) { const b = (DATA.box_base[se + '|' + c] || {}).solo; if (b && g[se + '|' + c]) vals.push(b[0]); }
+  const maxR = Math.max(100000, ...vals) / 100, step = maxR > 8000 ? 2000 : 1000, top = Math.ceil(maxR / step) * step;
+  const Y = (c, k) => TOPS[c] + H - H * (k / 100) / top;
+  let s = '';
+  SEASONS.forEach((se, k) => {
+    const x = X0 + k * CW;
+    if (noR.has(se)) s += `<rect x="${x}" y="22" width="${CW}" height="${TOPS.Moscow + H - 22 + 4}" fill="var(--panel-2)"/>`;
+    s += `<line x1="${x}" y1="22" x2="${x}" y2="${TOPS.Moscow + H + 4}" stroke="var(--rule)" stroke-opacity=".45"/>`;
+    if (k % 5 === 0) s += `<text x="${x + CW / 2}" y="14" font-size="14" fill="var(--faint)" text-anchor="middle">${lab(se)}</text>`;
+  });
+  s += `<line x1="${X0 + NS * CW}" y1="22" x2="${X0 + NS * CW}" y2="${TOPS.Moscow + H + 4}" stroke="var(--rule)" stroke-opacity=".45"/>`;
+  const noRk = SEASONS.map((se, k) => noR.has(se) ? k : -1).filter(k => k >= 0);
+  if (noRk.length) s += `<text x="${X0 + (noRk[0] + noRk[noRk.length - 1] + 1) / 2 * CW}" y="${TOPS.Moscow + H + 22}" font-size="12.5" font-style="italic" fill="var(--faint)" text-anchor="middle">no receipts</text>`;
+  for (const [c, col, txt] of [['SP', 'var(--sp)', 'var(--sp-text)'], ['Moscow', 'var(--mo)', 'var(--mo-text)']]) {
+    const T = TOPS[c];
+    s += `<text x="0" y="${T - 10}" font-size="16" font-weight="700" fill="${txt}">${CITY[c]}</text>`;
+    for (let v = 0; v <= top; v += step) {
+      const y = T + H - H * v / top;
+      s += `<line x1="${X0}" y1="${y}" x2="${X0 + NS * CW}" y2="${y}" stroke="${v ? 'var(--rule)' : 'var(--faint)'}" stroke-opacity="${v ? .35 : 1}"/>`;
+      s += `<text x="${X0 - 6}" y="${y + 4}" font-size="12" fill="var(--faint)" text-anchor="end">${v.toLocaleString('en-US')}</text>`;
+    }
+    s += `<text x="0" y="${T + 14}" font-size="12" fill="var(--faint)">руб.</text>`;
+    // city average, all ballets: dashed segments joined across consecutive seasons the ballet was given
+    let pts = [];
+    const flush = () => { if (pts.length) s += `<polyline points="${pts.join(' ')}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"/>`; pts = []; };
+    SEASONS.forEach((se, k) => {
+      const b = (DATA.box_base[se + '|' + c] || {}).solo, x = X0 + k * CW;
+      if (b && g[se + '|' + c]) { pts.push(`${x + 4},${Y(c, b[0])}`, `${x + CW - 4},${Y(c, b[0])}`); } else flush();
+    });
+    flush();
+    SEASONS.forEach((se, k) => {
+      const a = (g[se + '|' + c] || []).filter(e => e.r != null && !e.kind);
+      if (!a.length) return;
+      const x = X0 + k * CW, cx = x + CW / 2;
+      a.forEach((e, i) => { s += `<circle cx="${x + 6 + (CW - 12) * ((i * 0.618) % 1)}" cy="${Y(c, e.r)}" r="2.6" fill="${col}" opacity=".5"><title>${fmtDate(e.date)}: ${rub(e.r)}${e.shared ? ' (shared bill)' : ''}</title></circle>`; });
+      const so = a.filter(e => !e.shared), base = (DATA.box_base[se + '|' + c] || {}).solo;
+      const tip = `${CITY[c]}, ${lab(se)}: ballet alone ${so.length ? rub(mean(so)) + ' (' + so.length + ')' : '—'}; every event ${rub(mean(a))} (${a.length})${base ? '; city average ' + rub(base[0]) : ''}`;
+      if (so.length < a.length) s += `<circle cx="${cx}" cy="${Y(c, mean(a))}" r="5" fill="var(--bg)" stroke="${col}" stroke-width="2"><title>${tip}</title></circle>`;
+      if (so.length) s += `<circle cx="${cx}" cy="${Y(c, mean(so))}" r="5.5" fill="${col}" stroke="var(--bg)" stroke-width="1.5"><title>${tip}</title></circle>`;
+    });
+  }
+  SEASONS.forEach((se, k) => {
+    if (!['SP', 'Moscow'].some(c => g[se + '|' + c])) return;
+    s += `<rect class="hit bhit" data-season="${se}" x="${X0 + k * CW}" y="22" width="${CW}" height="${TOPS.Moscow + H - 18}" tabindex="0" role="button" ` +
+         `aria-label="Go to ${lab(se)} in the box-office table"><title>${lab(se)}: go to this season in the table</title></rect>`;
+  });
+  $('b-chart').innerHTML = s;
+}
+// ---- Every season at a glance: the chosen ballet's segment in each season's bar (counts as on Ballet Seasons by City)
+const ORD = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+let BYID = null;
+function drawGlance(w) {
+  BYID ||= Object.fromEntries(DATA.works.map(x => [x.id, x]));
+  const name = id => { const x = BYID[id]; return x ? `«${x.title}»${x.tag ? ' (' + x.tag + ')' : ''}` : '?'; };
+  $('gl-title').innerHTML = `«${esc(w.title)}»` + (w.tag ? ` <span class="n" style="font-size:18px">(${esc(w.tag)})</span>` : '');
+  for (const c of ['SP', 'Moscow']) {
+    let given = 0;
+    const rows = SEASONS.map(se => {
+      const items = (DATA.glance[se + '|' + c] || []).slice().sort((a, b) => b[1] - a[1] || name(a[0]).localeCompare(name(b[0]), 'ru'));
+      const total = items.reduce((a, x) => a + x[1], 0);
+      const me = items.find(x => x[0] === w.id);
+      const rank = me ? 1 + items.filter(x => x[1] > me[1]).length : 0;
+      if (me) given++;
+      const pct = v => Math.round(100 * v / total) + '%';
+      const fig = me ? `${pct(me[1])} · ${ORD(rank)} of ${items.length}` : '—';
+      const bar = total ? `<span class="gbar">${items.map(x => {
+          const mine = x[0] === w.id, xc = x[1] - x[2];
+          const t = `${name(x[0])}, ${CITY[c]} ${lab(se)}: ${x[1]} event${x[1] === 1 ? '' : 's'}${xc ? ` (${x[2]} full, ${xc} excerpt only)` : ''}, ${pct(x[1])}` +
+                    (mine ? ` · ${ORD(rank)} of ${items.length}` : '');
+          return `<i style="flex-grow:${x[1]}"${mine ? ' class="me"' : ''} title="${esc(t)}"></i>`; }).join('')}</span>`
+        : '<span class="gbar none">no ballet recorded</span>';
+      return `<button type="button" class="srow${me ? ' has' : ''}" data-s="${se}" aria-label="${CITY[c]} ${lab(se)}: ${me ? fig.replace(' · ', ' of ballet events, ') : 'not given'}. Go to this season">` +
+        `<span>${lab(se)}</span>${bar}<span class="pc">${fig}</span></button>`;
+    }).join('');
+    $('gl-' + c).innerHTML = `<div class="who">${CITY[c]}<span>given in ${given} season${given === 1 ? '' : 's'}</span></div>` + rows;
+  }
+}
+$('gl-open').addEventListener('click', () => {
+  drawGlance(DATA.works[+$('work').value]);
+  $('gl').showModal();
+  $('gl').scrollTop = 0;
+});
+$('gl-close').addEventListener('click', () => $('gl').close());
+$('gl').addEventListener('click', e => {
+  if (e.target === $('gl')) { $('gl').close(); return; }
+  const r = e.target.closest('.srow'); if (!r) return;
+  $('gl').close(); goSeason(r.dataset.s);
+});
+function goBoxSeason(se) {
+  for (const r of document.querySelectorAll('.bhit')) r.classList.toggle('sel', r.dataset.season === se);
+  const rows = [...document.querySelectorAll(`#b-seasons tr[data-bseason="${se}"]`)];
+  for (const r of rows) { r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash'); }
+  if (rows[0]) rows[0].scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center'});
+}
+$('b-chart').addEventListener('click', e => { const h = e.target.closest('.bhit'); if (h) goBoxSeason(h.dataset.season); });
+$('b-chart').addEventListener('keydown', e => {
+  const h = e.target.closest('.bhit');
+  if (h && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); goBoxSeason(h.dataset.season); }
+});
 function goSeason(se) {
   for (const r of document.querySelectorAll('.hit')) r.classList.toggle('sel', r.dataset.season === se);
   const rows = [document.getElementById('row-' + se), ...($('x-sec').hidden ? [] : document.querySelectorAll(`#x-body tr[data-season="${se}"]`))].filter(Boolean);
@@ -557,6 +846,7 @@ $('filters').addEventListener('click', e => {
 
 fetch('ballets.json').then(r => r.json()).then(d => {
   DATA = d;
+  if (d.seasons) SEASONS = d.seasons;
   DATA.works.sort((a, b) => a.title.localeCompare(b.title, 'ru'));
   const fromHash = /^#w(\d+)(?:-(excerpts|both))?$/.exec(location.hash);
   if (fromHash && fromHash[2]) {
