@@ -1132,3 +1132,7 @@ Receipts (research-layer values staged in `outputs/repertoire_1911-12/receipts_p
 - «2667 р. 78 р.» (p005 Маріинскій, 25 Sep morning): р. for the kopecks marker.
 - «1690 р. — в.» (p031 Михайловскій, 17 Jan 1912): в. for к.
 - About a dozen commas printed for periods after р or к («242 р, 25 к.», «2558 р. 65 к,» ...), and «1748 р. -- к.» (p035).
+
+## «Рановины» for «Раковины» in the 1896 coronation programme (added 2026-11-23; checked by Claude on the scan, zoomed)
+
+Not a Yearbook: RGIA Ф. 497 оп. 18 д. 1420, the printed programme for the Большой театр gala of 17 May 1896 («Жемчужина»). PDF p. 28, «Танцовать будутъ», no. 3 «Combat des coraux et des métaux»: the bold group heading prints «Рановины» (н for к) before the list «г-жи Скорсюкъ, Востокова …». Same group is «Раковины» in the apotheosis list (pp. 29-31). Kept as printed in docs/rgia/dela/1420.jsonl.
