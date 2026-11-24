@@ -512,3 +512,11 @@ two «Корнетъ» players (Адамовъ, Михаилъ; Решке, Бо
   Поставленъ онъ былъ балетмейстеромъ Перро.» In 1855 two Petipas carried «М.»: Marius (then a dancer) and his wife Марія Сергѣевна
   Суровщикова-Петипа; other reviews print «М. С. Петипа» for her benefits (1859, 1860, 1865). No honorific here. Historical (pre-Yearbook);
   left unlinked, low priority (RG: Yearbook-period people first). Mention 12826, review_1900-01_SP_ballet_p031.
+
+## «Чекетти» (RGIA Д. 159 p. 111, Feb. 1895 register of the 4th issue) — Генрихъ or Жозефина? Open (RG 2026-11-24)
+
+«Чекетти /кв. № 126/», a subscriber to books 1 and 2 of the 4th issue, with no initial, first name or troupe. The Roster
+prints two SP ballet artists of that name every season 1890-91–1899-00: Генрихъ Цезаревичъ (also «Вторые балетмейстеры»,
+and from 1893-94 a school teacher as «Энрико») and Жозефина Валентиновна (query in docs/query_log.md, 2026-11-24). Close read
+(checked by Claude): docs/rgia/close_reads/159_p111.md. RG: leave open, to look at later. Would resolve it: another
+subscriber register or receipt-book stub (кв. № 126) giving an initial, or a deduction order naming the troupe member.
