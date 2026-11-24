@@ -114,6 +114,10 @@ covers, blanks and duplicate exposures join their neighbour or a wrapper run.
 3. Write `outputs/rgia_reading_room/seed/runs/d<delo>.json` to the artifact's
    `runs` collection (ArtifactData `set`, doc `d<delo>`).
 
+Each section also has a **Read closely** flag (RG 2026-11-24): separate from the piles, it marks
+sections worth deciphering; flagged sections are gathered on the Read-closely list (`#reading`).
+It is stored as `close: true` on the section's entry in `run_sorting` and does not count as a decision.
+
 RG's run decisions and any split/merge live in the artifact's `run_sorting`
 collection (hers; never write there). When every run of a дело is decided the
 page writes the дело's own `sorting` doc (union of Keep piles, or Set aside),
