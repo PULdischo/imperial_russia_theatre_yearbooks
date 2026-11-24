@@ -1077,7 +1077,8 @@ def main() -> None:
     # Row-level fixes (RG 2026-11-03, old-cast sweep follow-ups): docs/eval/review_assertion_overrides.csv, keyed by block,
     # role_surface and performer_surface ('*' = any). action set_date: the row takes `value` as its date (a block holding two
     # performances of different years, or a cast dated from a première mentioned in passing); action exclude: drop a row that
-    # is not a role assertion (a misparsed sentence). Every override must match at least one row.
+    # is not a role assertion (a misparsed sentence); action unlink_performer: keep the row, no performer link.
+    # Every override must match at least one row.
     ov_path = Path("docs/eval/review_assertion_overrides.csv")
     if ov_path.exists():
         ovs = list(csv.DictReader(open(ov_path, encoding="utf-8")))
@@ -1091,6 +1092,10 @@ def main() -> None:
                         r["date_undate"] = o["value"]
                     elif o["action"] == "exclude":
                         drop.add(i)
+                    elif o["action"] == "unlink_performer":
+                        # RG 2026-11-24: keep the assertion, drop a performer the roster-credit
+                        # fallback picked without proof (another season, another part)
+                        r["performer_person_id"], r["link_method"] = "", "curated-unlink"
                     else:
                         raise SystemExit(f"{ov_path}: unknown action {o['action']!r}")
         missing = [(o["block_id"], o["role_surface"], o["performer_surface"]) for o, n in zip(ovs, hit) if not n]

@@ -235,8 +235,8 @@ Recommendation: merge, as #133 / the 2026-10-12 graduate merges did. From the qu
   Владиміръ» (1910-11 graduate).
 - Булгаковъ Александръ Дмитріевичъ (1911-12 Moscow, «съ 1 іюня 1889 г. по 1 іюня 1909 г. и съ 24 октября 1910 г.») vs Булгаковъ
   Алексѣй Дмитріевичъ (1890-1909).
-- Егорова: in production the 1910-11 SP entry printed «Любовь» is linked to Егорова Марія Николаевна (0eea687d); the 1911-12
-  «Егорова, Любовь Александровна» is a new record. Check against RG's 2026-11-02 Егорова resplit.
+- Егорова: SUPERSEDED 2026-11-24 -- this note predates RG's 2026-11-02 resplit; 0eea687d is Любовь Александровна, not Марія
+  Николаевна (a3dee646). See "Added 2026-11-24: Егорова, Любовь Александровна" below.
 
 ### Group E -- the rest (112 new 1911-12 people with no exact namesake)
 Mostly genuine newcomers (start dates 1909-1912; the 1912 graduates). Not yet checked one by one for continuations under a
@@ -297,6 +297,50 @@ is in the database." No tie-break change now. At that audit: the 86 live persons
 printing wins today), incl. the merged 1911 graduates shown in the graduate list's form, misprints included («Вольшакова, Лидія»
 for Большакова 2-я, «Боронцовъ, Владиміръ» for Воронцовъ, «Александрова, Лидія» without «Павловна», ...).
 
+## Reopened 2026-11-24: Кирхгеймъ, Луція / Кирхгеймъ, Маргарита Фердинандовна -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, review link drift, docs/eval/review_link_drift_2026-11-24/). The 2026-11-12 note above
+("Not a match ... keep apart") rested on Маргарита's printed start «съ 24 іюля 1909 г.»; it was not an RG ruling. Read on the
+scans by Claude:
+- 1910-11 graduates (p. 153): «Окончили курсъ весною 1911 г.: … Кирхгеймъ, Луція», all placed «съ 1 іюня 1911 г.» in the SP troupe.
+- 1911-12 SP roster (p. 89): «34. Кирхгеймъ, Маргарита Фердинандовна (съ 24 іюля 1909 г.)» -- the only Кирхгеймъ; Луція is not listed.
+- No Кирхгеймъ in the 1909-10 or 1910-11 SP rosters (Карсавина is followed directly by Клемецкая), nor in the 1908-09 or
+  1909-10 graduate lists.
+- That page's start dates are unreliable: Клемецкая «съ 27 октября 1908 г.» though she joined 1 June 1910.
+For one person: Луція graduates 1911 and vanishes; Маргарита appears 1911-12 and nowhere earlier. Against: different first
+names, and the 1909 date as printed. Person ids: Луція 6e58793d -> Маргарита e3348f75. The four 1905-06 pupil mentions
+«в-ца Кирхгеймъ» are linked to Луція meanwhile (RG 2026-11-24).
+
+## Added 2026-11-24: Карлова, Софья Федоровна / Карлова, Софія Федоровна -- spelling variant, for RG, NOT applied
+
+Added at RG's request (2026-11-24, review link drift). One woman: SP graduate 1909-10 («Карлова, Софія», «съ 1 іюня 1910 г.»),
+then SP company no. 33 (1909-10, «Софья»), no. 31 (1910-11, «Софія») and no. 30 (1911-12, «Софія», «съ 19 декабря 1907 г.»).
+The 1911-12 Group A merge needed identical first names, so Софья/Софія stayed apart. Person ids: 8a28db27 (Софья) and 3de81bba (Софія).
+The four 1903-05 pupil mentions «Карлова» are linked to the Софья record meanwhile (RG 2026-11-24).
+
+## Added 2026-11-24: Померанцевъ, Ю. Н. / Померанцевъ, Юрій Николаевичъ -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, review link drift). «Ю. Н. Померанцева» is credited with the music in the Moscow ballet
+productions lists (1899-00 and 1901-02; person_source production_list, id 080a04a4) and in the 1901-02 Moscow review; Юрій
+Николаевичъ is the 1911-12 Moscow «Капельмейстеры балета», «съ 1 апрѣля 1910 г.» (roster, id 140eb30b). Same initials, both Moscow
+ballet musicians: almost certainly one man, a composer who later conducted the ballet. The two 1910-11 «дирижировалъ г.
+Померанцевъ» review mentions are linked to Юрій Николаевичъ meanwhile (RG 2026-11-24).
+
+## Added 2026-11-24: Егорова, Любовь Александровна (0eea687d) / Егорова, Любовь Александровна (28cd3752) -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, review link drift, item 7). One woman: SP ballet «Артистки», «съ 1 іюня 1898 г.»; 0eea687d holds
+1897-98 (pupil) .. 1910-11 (incl. the seasons moved to her by the 2026-11-02 resplit, uncertain-identities #54); 28cd3752 is the
+1911-12 entry, same name, same start, the only SP Егорова that season. Split only because 1911-12 was added after the resplit pinned
+her display name. The two 1912-13 review mentions (p. 141, «г-жа Егорова (4 спектакля)», «съ г-жей Егоровой») are linked to
+0eea687d meanwhile (RG 2026-11-24).
+
+## Added 2026-11-24: Сергѣевъ 1-й, Николай Георгіевичъ (1911-12, 50b3fbe3) -> Сергѣевъ, Николай Григорьевичъ (154c0f60) -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, review link drift, item 34). The 1911-12 SP «Артисты» entry «Сергѣевъ 1-й, Николай Георгіевичъ
+(съ 1 іюня 1894 г.)» is the same printing RG merged into Николай Григорьевичъ for 1909-11 on 2026-10-12 (uncertain identities #27;
+«Георгіевичъ» a print slip, genuine_print_typos.md); it stayed apart only because 1911-12 came in later. The 1906-07 review mention
+«режиссеромъ Н. С. Сергѣевымъ» is linked to 154c0f60 meanwhile.
+
 ## Added 2026-11-24: Ахмакова, Калерія Александровна / Ахмакова, Клавдія Александровна -- for RG, NOT applied
 
 Added at RG's request (2026-11-24, jubilee/obituary hand-offs, FOR_MAIN_THREAD.md). SP ballet troupe: 1890-91 no. 12 prints
@@ -304,6 +348,13 @@ Added at RG's request (2026-11-24, jubilee/obituary hand-offs, FOR_MAIN_THREAD.m
 (nos. 11, 12, 11, 10, 10, 9, 9) print «Клавдія Александровна», always «съ 30 января 1878 г.», ending «† 16 августа 1897 г.».
 Same surname, patronymic and start, unbroken seasons: almost certainly one woman. Raw stays as printed. Person ids: 95eaac1d
 (Калерія) and 3d48af0c (Клавдія). Not Ахмакова, Анна Александровна (Moscow, f16fbe64).
+
+## Added 2026-11-24: Гамлійзовскій, Кассіанъ (SP graduate 1908-09, bdae8b91) -> Галейзовскій, Кассіанъ Карловичъ (4f9e2bf4) -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, review link drift, item 6). The SP graduates list 1908-09 (p. 142) prints «Гамлійзовскій, Кассіанъ»,
+«съ 1 іюня 1909 г.»; the Moscow «Артисты» list has «Галейзовскій» (1909-11) / «Голейзовскій» (1911-12), Кассіанъ Карловичъ, «съ 1
+августа 1909 г.». One Кассіанъ in the class, the review prints «Голейзовскій» among the boys finishing in 1909; Kasyan Goleizovsky
+transferred to the Bolshoi on 1 Aug 1909 (docs/eval/review_person_variants.csv). The 1908-09 review mention is linked to 4f9e2bf4.
 
 ## Added 2026-11-24: Дровинъ, Карлъ Фердинандовичъ / Дровинъ, Антонъ Фердинандовичъ -- for RG, NOT applied
 

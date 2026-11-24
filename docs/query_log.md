@@ -28879,3 +28879,32 @@ select season, note_no, text_verbatim from raw.season_stat_dated_note where text
 Result: 11 of the October hand-offs are fixed; 4 are as printed (scans read); 4 remain open: «успѣшаго» for «усопшаго»
 (1893-94 opera p. 227), the «Яковлевъ 2-й» link (should be the 1892 graduate Яковлевъ, Владиміръ), and two merge candidates
 (Ахмакова Калерія/Клавдія Александровна; Дровинъ Карлъ/Антонъ Фердинандовичъ). Details in docs/jubilees_obituaries/FOR_MAIN_THREAD.md.
+
+## 2026-11-24 — Review link drift (38 items) decided by RG; review chain rebuilt and APPLIED to production
+
+```sql
+-- per mention: candidates with roster spans, e.g.
+select p.display_name, a.season, a.city, a.entity_type, a.heading_path, a.printed_start_text, a.tenure_note_text, a.printed_folio
+from research.person_appearance a join research.person p using (person_id)
+where a.printed_family_name like 'Егорова%' and a.season >= '1909-10';      -- likewise Парисъ, Сергѣевъ, Гол/Гал/Гам-зовск-, Фокин-
+-- rebuild on a copy (match_review_mentions -> build_reviews_duckdb -> build_review_assertions -> build_review_credits), then
+-- all 75 tables EXCEPT ALL both ways; review_mention keyed on (block_id, char_start, mention_type, surface):
+select p.block_id, p.surface, p.person_id, z.person_id from p.research.review_mention p
+join z.research.review_mention z using (block_id, char_start, mention_type, surface) where p.person_id is distinct from z.person_id;
+-- credits keyed on (block_id, char_start, role_category, name_surface, work_id); assertions on assertion_id
+```
+
+Result: all 38 ruled (docs/eval/review_link_drift_2026-11-24/decisions.md; rows in review_mention_links.csv). Last seven:
+«г-жа Егорова» 1912-13 ×2 -> Любовь Александровна 0eea687d; «мандолинѣ—г. Парисъ» 1905-06 unlinked; «режиссеромъ Н. С.
+Сергѣевымъ» (print has «Н. С.») -> Николай Григорьевичъ; «Голейзовскій» 1908-09 -> Кассіанъ 4f9e2bf4; «произведеній Фокина»
+1910-11 -> Михаилъ Михайловичъ (production had Вѣра Петровна); «Фокинъ» 1905-06, 1907-08 -> Михаилъ Михайловичъ. Merge batch +3
+(Егорова 0eea687d/28cd3752; Сергѣевъ 1-й Георгіевичъ 50b3fbe3; Гамлійзовскій bdae8b91), Group D Егорова note superseded.
+Diff vs production: 42 person links changed (15 approved 12 Nov unlinks + 26 rulings + «Яковлевъ 2-й» from the jubilees
+session), every one matching a ruled row; 1 text block («усопшаго»); 2 new unlinked mentions (Николаевская 1901-02, «Призракъ»
+1897-98) + 3 longer role spans; method labels only elsewhere. Two follow-on fixes RG approved: the credit reader picked Сергѣева,
+Надежда for «Н. С. Сергѣевымъ» by initials -> override row in review_credit_overrides.csv; the assertion reader's roster-credit
+fallback made 8 new performer links (full candidate lists) -> 6 accepted, 2 held via a new `unlink_performer` action
+(review_assertion_overrides.csv: 1764 «Фея Куколъ» Ѳедорова; 3203 1893-94 «г. Ѳедоровъ», who joined 1904). Production backed up to
+outputs/full_run/imperial_theaters.pre_review_drift_2026-11-24.duckdb (f2736a5) and replaced by the copy (4661c05); recheck vs
+backup: 42 changes; person mentions linked 19,980 -> 19,976; assertions with performer 2,527 -> 2,532. research_dataset.sqlite
+NOT rebuilt (Andy).
