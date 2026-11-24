@@ -28732,3 +28732,16 @@ SELECT CASE WHEN other_first < fs THEN 'B' WHEN star THEN 'A' ELSE 'C' END, coun
 ```
 
 Result: A (first anywhere in the Yearbooks + «*» that season) 33; B (already given in the other city) 25; C (first anywhere, no «*») 47. None of the three buckets separates new ballets from pre-1890 repertoire on its own: B includes Коппелія SP 1891-92 and Донъ-Кихотъ SP 1901-02; C includes Павильонъ Армиды and Шопеніана as well as Сильфида and Пахита; A includes Лебединое озеро SP 1893-94. «*» on seasons that are not a first appearance: Эсмеральда Moscow 1902-03, Лебединое озеро SP 1894-95, Египетскія ночи / Евника / Шопеніана SP 1908-09, Талисманъ SP 1909-10.
+
+## 2026-11-24 — Is «П. О. Бортновскій» (RGIA Д. 163 p. 4, Д. 168 p. 11) in the printed staff lists?
+
+Question: a 1909 bailiff's writ calls «дворянинъ Петръ Осиповичъ Б[о/а]ртновскій» the Yearbook's assistant editor;
+the редакція (Дризенъ) denied it. Does he appear in the Roster?
+```sql
+select p.family_name, p.first_name, p.patronymic, p.institution, p.heading_path, s.season
+from raw.person_entry p join raw.source_pages s using(page_id)
+where p.family_name ilike '%ртнов%' order by s.season;
+```
+Result: 17 rows, «Бартновскій, Петръ Осиповичъ», every season 1895-96 to 1911-12, С.-Петербургская Контора:
+«Канцелярскіе чиновники Конторы» 1895-96–1902-03, «Чиновники» 1903-04–1908-09 (1905-06 «Чиновники X кл»),
+«Счетное отдѣленіе / Чиновники» 1909-10–1911-12. No Yearbook post printed for him.
