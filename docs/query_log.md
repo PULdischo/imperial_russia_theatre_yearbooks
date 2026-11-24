@@ -28745,3 +28745,60 @@ where p.family_name ilike '%ртнов%' order by s.season;
 Result: 17 rows, «Бартновскій, Петръ Осиповичъ», every season 1895-96 to 1911-12, С.-Петербургская Контора:
 «Канцелярскіе чиновники Конторы» 1895-96–1902-03, «Чиновники» 1903-04–1908-09 (1905-06 «Чиновники X кл»),
 «Счетное отдѣленіе / Чиновники» 1909-10–1911-12. No Yearbook post printed for him.
+
+## 2026-11-24 — Where and when was «Фея куколъ» given? (RGIA Д. 189 p. 4, no. 5: a ballet programme received Jan 1898)
+
+```sql
+select w.canonical_title, e.city, e.season, count(*) n, min(e.date) d0, max(e.date) d1
+from research.performance p join research.work w using(work_id) join research.event e using(event_id)
+where w.canonical_title ilike '%фея кук%' group by all order by e.season, e.city;
+```
+
+Result: 19 rows. Moscow only from 1896-97 (6, first 1897-02-20) through 1900-01; 1897-98 Moscow 11 (1897-09-03 to 1898-04-12). SP first in 1902-03 (1903-02-16). So in Jan 1898 the ballet was in the Moscow repertoire only.
+
+## 2026-11-24 — Ballet names in RGIA Д. 163 pp. 57–68 (1904 salary-deduction orders for Yearbook subscriptions): who is in the printed Roster?
+
+Question: are the doubtful readings «Легатъ?/Алексне?» (p. 57), «Эглеръ? I» (p. 64), «Лазуко Ю.?» (p. 63) and «Галка?» (p. 63), and the other ballet names on these orders, in the 1903-04 / 1904-05 ballet Roster?
+```sql
+select s.season, s.city, p.family_name, p.first_name, p.patronymic
+from raw.person_entry p join raw.source_pages s using(page_id)
+where p.institution ilike '%балет%' and s.season in ('1903-04','1904-05')
+  and (p.family_name ilike 'Тихомір%' or p.family_name ilike 'Федоровъ%' or p.family_name ilike 'Ѳедоровъ%'
+    or p.family_name ilike 'Смирновъ%' or p.family_name ilike 'Чекрыгин%' or p.family_name ilike 'Пономарев%'
+    or p.family_name ilike 'Лазук%' or p.family_name in ('Алексне','Галка','Сазонова','Чернятина','Гавликовскій')
+    or p.family_name ilike 'Полякова%')
+order by 3,1;
+```
+(An earlier run of a wider variant, without the city column and with 'Легат%', 'Алекс%', 'Лек%', 'Лег%', 'Эглер%' patterns
+and heading_path ilike '%балет%', returned the same SP dancers plus Moscow and school rows; no «Эглеръ».)
+
+Result (SP ballet troupe, both seasons unless noted): Алексне, Наталія/Наталья Петровна; Гавликовскій, Николай Людвиговичъ;
+Галка, Ольга Матвѣевна; Лазуко, Петръ Степановичъ; Полякова, Елена Дмитріевна (Moscow: Анна Андреевна); Пономаревъ 2-й,
+Сергѣй Ивановичъ; Сазонова, Евгенія Николаевна; Смирновъ 2-й, Павелъ Григорьевичъ (Moscow 1904-05: Викторъ); Тихоміровъ 1-й,
+Сергѣй Михайловичъ and 2-й, Владиміръ Михайловичъ (Moscow: Василій / Алексѣй Дмитріевичи); Федоровъ 2-й, Леонидъ Ивановичъ
+(Moscow 1904-05: Михаилъ); Чекрыгинъ 1-й, Иванъ Ивановичъ; Чернятина, Александра Семеновна. No «Легатъ» reading is needed:
+«Алексне» is a printed SP dancer.
+
+```sql
+select s.season, s.city, p.family_name, p.first_name, p.patronymic, p.heading_path
+from raw.person_entry p join raw.source_pages s using(page_id)
+where (p.family_name ilike 'Эг%' or p.family_name ilike 'Ег%' or p.family_name ilike 'Э%лер%')
+  and s.season between '1900-01' and '1906-07' order by 3,1;
+```
+Result: no «Эглеръ» in any season 1900-01–1906-07. SP ballet has «Эрлеръ 1-я, Анна Александровна» and «Эрлеръ 2-я, Марія
+Александровна» (every season 1900-01–1906-07) and «Эрлеръ, Александръ Александровичъ» (1903-04–1905-06). Re-reading p. 64 at
+3× shows «Эрлеръ» (second letter has a descender) with «I[я]» and an abbreviated first name, «Анна?».
+
+## 2026-11-24 — «Сазонова (бал.)» and «Чекетти» as Yearbook subscribers (RGIA Д. 159 pp. 23, 111): who is in the Roster, 1890-91–1899-00?
+
+```sql
+select s.season, s.city, p.family_name, p.first_name, p.patronymic, p.institution, p.heading_path
+from raw.person_entry p join raw.source_pages s using(page_id)
+where (p.family_name ilike 'Чекетт%' or p.family_name ilike 'Сазонов%') and s.season between '1890-91' and '1899-00'
+order by 3,1;
+```
+
+Result: Сазонова, Евгенія (Николаевна): SP school pupil 1894-95, SP ballet troupe 1895-96 onward (every season to 1899-00);
+the only ballet Сазонова. Сазоновъ, Николай Ѳедоровичъ: drama-course teacher 1890-91–1891-92 (not ballet). Чекетти: TWO SP
+ballet artists every season 1890-91–1899-00, Генрихъ (Генріхъ) Цезаревичъ (also «Вторые балетмейстеры» 1890-91–1895-96, and
+as «Энрико Цезаревичъ» a school teacher from 1893-94) and Жозефина Валентиновна. A bare «Чекетти» could be either.
