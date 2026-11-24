@@ -28817,3 +28817,38 @@ select min(printed_folio),max(printed_folio),count(*) from research.review_page 
 ```
 
 Result: the printed 1896-97 Moscow ballet review is 16 pages, folios 365-380. All five titles in the manuscript appear in it: Цыганка/Брама/Фея кукол p.365; Сатанилла pp.370-374, 380; Фея кукол p.375; Конекъ p.380. So the Д. 196 pp.44-60 manuscript is very likely the copy for this printed review (title match only; text not collated).
+
+## 2026-11-24 — Which season review does RGIA Д. 196 PDF pp. 44–60 match? (season-by-season check plus passage-level comparison)
+
+```sql
+select p.season,p.city,
+ count(*) filter (where rp.text ilike '%Фея кукол%') feya,
+ count(*) filter (where rp.text ilike '%Сатанилл%') satanilla,
+ count(*) filter (where rp.text ilike '%Брам%') brama,
+ count(*) filter (where rp.text ilike '%Цыганк%') tsyganka
+from research.review_passage rp join research.review_page p using(page_id)
+where p.genre='Ballet' group by 1,2
+having feya+satanilla+brama>0 order by 1,2;
+
+select p.printed_folio, rp.block_index, substr(rp.text,1,260) t from research.review_passage rp join research.review_page p using(page_id)
+where p.season='1896-97' and p.city='Moscow' and p.genre='Ballet' and (rp.text ilike '%Фея кукол%' or rp.text ilike '%Сатанилл%' or rp.text ilike '%30 апр%' or rp.text ilike '%Мендес%бенеф%' or rp.text ilike '%бенеф%Мендес%')
+order by p.printed_folio, rp.block_index;
+```
+
+Result: 1896-97 Moscow is the only season review where all four titles appear together (Фея кукол 9 passages, Сатанилла 10, Брама 8, Цыганка 7); other seasons have at most two. The 1896-97 Moscow ballet review lines up with the manuscript event by event: Мендес's benefit, 9 Feb (p.368; the triage summary for MS p.46 reads "3 февраля", which needs checking on the scan); revival of «Сатанилла» at Рославлева's benefit, 16 Feb (p.370), with the 1849 history (p.371), later cast changes (pp.371-372), and no new scenery (p.374); first «Фея куколъ» at Джури's benefit, 20 Feb (p.375), synopsis pp.375-377, cast p.378; corps de ballet benefit, 22 Feb, and close of the season on 30 Apr with «Конекъ-горбунокъ» + «Фея куколъ» (p.380).
+
+## 2026-11-24 — Follow-up (no new query): Мендесъ benefit date in RGIA Д. 196
+
+The note in the entry above ("the triage summary for MS p.46 reads '3 февраля', which needs checking") was wrong. Read on the original images, checked by Claude: PDF p.45, last line, «9-го февраля состоялся бенефисъ балетмейстера І. Мендеса», which agrees with printed p.368. The «3-го февраля 1896 года» on PDF p.46 is the earlier staging of «Брама» in excerpts at Манохинъ's benefit in 1895-96. The triage summaries for pp.45-46 already said both of these correctly; the mix-up came from reading truncated summaries. No discrepancy between manuscript and print.
+
+## 2026-11-24 — Printed text of the 1896-97 Moscow ballet season review, for collation with the RGIA Д. 196 manuscript (PDF pp. 44–60)
+
+```sql
+select p.printed_folio, rp.block_index, rp.block_type, rp.text from research.review_passage rp join research.review_page p using(page_id)
+where p.season='1896-97' and p.city='Moscow' and p.genre='Ballet' order by p.page_id, rp.block_index;
+select page_id, block_index, block_type, substr(text,1,90), caption_text from raw.review_block where page_id='review_1896-97_MSK_ballet_p001' order by block_index;
+select block_index, enumerator from raw.review_block where page_id='review_1896-97_MSK_ballet_p001' and block_type='enumerated_list' order by block_index;
+select page_id, dance_surface from research.review_dance where page_id='review_1896-97_MSK_ballet_p001';
+```
+
+Result: 100 passages, folios 365–380. On folio 366 the «Цыганка» dance names sit in raw.review_block.enumerator (Valse, Les Bohemiens, Variation, Ensemble, Pas de fusils), not in the passage text; these match the manuscript's names exactly. research.review_dance has only 1 row («Pas de fusils») for that page — noted, not investigated.
