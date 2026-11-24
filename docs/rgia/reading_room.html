@@ -204,7 +204,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const $=s=>document.querySelector(s);
 const SUB=[['ed_contributors','Contributors'],['ed_illustrations','Illustrations'],['ed_print_finance','Print runs & finances'],['ed_editors','Editors & office']];
 let db=null, DELA=[], MARKS={}, SORT={}, RUNS={}, RSORT={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:'',pile:''}, delo:{f:'all',q:''}, search:'', trayDelo:null};
-const PILES=[['ballet','Ballet'],['editorial','Editorial'],['manuscripts','Manuscripts & drafts'],['sales','Sales & distribution'],['design','Design & production']], PILE_L=Object.fromEntries([...PILES,['set_aside','Set aside']]);
+const PILES=[['ballet','Ballet'],['editorial','Editors & contributors'],['manuscripts','Manuscripts & drafts'],['sales','Printing, sales & distribution'],['design','Design & production']], PILE_L=Object.fromEntries([...PILES,['set_aside','Set aside']]);
 
 /* ---------- data ---------- */
 async function boot(){

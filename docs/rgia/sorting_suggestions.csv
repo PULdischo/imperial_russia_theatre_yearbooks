@@ -2,13 +2,13 @@ delo,piles,why
 159,sales;ballet;editorial,"Sales and subscriptions 1891-1911; 19 ballet pages (ballet-troupe subscribers), 52 editorial (30 print runs & finances)."
 160,sales,"Moscow office sales correspondence; 8 print-run and finance pages, no ballet."
 161,sales;editorial,"Copies sent to the Warsaw theatres; 50 editorial pages, 10 of them editors & office."
-162,editorial;sales,Print-run counts for issues 1-4 (16 print-run and finance pages).
+162,sales,Print-run counts for issues 1-4 (16 print-run and finance pages); no editors or contributors.
 163,editorial;manuscripts;ballet;sales,"Contents material, mailing and payments; 57 editorial pages (18 editors & office), 10 ballet pages. Manuscripts: pp. 23-28, the Moscow production staff list sent for the Yearbook's lists."
 164,sales;editorial;manuscripts;ballet,"Copies sold; 17 editorial pages (8 illustrations). Manuscripts: pp. 20-21, Свѣтловъ's commissioned manuscript «Придворный балетъ»."
-165,editorial,"1899-1900 accounts: 77 editorial pages, incl. Diaghilev signing as editor and the Bakst receipt."
-166,editorial,"Budgets and draft budgets, incl. the 1909 relaunch; 36 editorial pages."
-168,editorial,"Дризенъ-era fees, prices and letter-books; 97 editorial pages (32 editors & office), 5 ballet."
-169,editorial,Ministry of the Court credit for the publication; 6 of 9 pages editorial.
+165,editorial;sales,1899-1900 accounts: Diaghilev signing as editor and the Bakst receipt (editors & contributors); 72 pages of printing costs.
+166,editorial;sales,"Budgets and draft budgets, incl. the 1909 relaunch: 15 pages on editors & office, 35 on costs."
+168,editorial;sales,"Дризенъ-era letter-books: contributors' fees and editors & office (32 pages each), plus prices and printing; 5 ballet."
+169,editorial;sales,Ministry of the Court credit for the publication; contributors and editors named (8 pages).
 181,sales;editorial,Copy counts per season 1891-1896 and the binder's letters (Шкваровъ letterhead).
 189,editorial;sales,"1898 incoming register: Petipa manuscript arriving, free copies, Angerer clichés."
 190,editorial;sales,"1899-Feb 1902 outgoing register: free copies, office correspondence."

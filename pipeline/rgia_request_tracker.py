@@ -9,7 +9,8 @@ record of what was ordered from RGIA and what came back. Tracking columns:
     date_received  when the files arrived
     notes          anything per-дело (not held, illegible, wrong file, ...)
     rg_piles       RG's sorting of a received дело, from the Reading Room's
-                   sorting tray: ballet / editorial / manuscripts / sales / design, ";"-joined
+                   sorting tray: ballet / editorial (= Editors & contributors) / manuscripts /
+                   sales (= Printing, sales & distribution) / design, ";"-joined
                    (several allowed), or set_aside. Never filled by Claude.
     rg_sort_note   RG's reason, verbatim
     rg_sort_date   the date she sorted it

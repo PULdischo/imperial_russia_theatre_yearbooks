@@ -56,7 +56,18 @@ to `marks`: that is RG's.
 ### Sorting step (after the page summaries)
 
 RG sorts each received дело (via its runs, below) into one or more Keep piles — **Ballet**, **Editorial**, **Sales &
-distribution**, **Design & production**, **Manuscripts & drafts** — or **Set aside**. Set-aside дела
+distribution**, **Design & production**, **Manuscripts & drafts** — or **Set aside**.
+
+What each Keep pile holds (RG narrowed Editorial 2026-11-24, so every pile sorts something specific; the
+keys stay `editorial` and `sales` so earlier decisions keep their meaning):
+
+| key | label | holds |
+|---|---|---|
+| `ballet` | Ballet | anything bearing on ballet, ballet music, dancers, ballet productions |
+| `editorial` | Editors & contributors | the people of the редакція: who held which role when (editors, assistants, «за редактора», secretary, office staff), contributors and authors, their fees and correspondence |
+| `manuscripts` | Manuscripts & drafts | manuscripts and drafts that made their way into print: drafts of lists, season reviews, articles, and source material supplied for them |
+| `sales` | Printing, sales & distribution | the Yearbook as an object and a product: print runs, printing and binding costs, budgets and credits, illustrations' production, advertising, prospectuses, subscriptions, copies sent, sold or given |
+| `design` | Design & production | designers and craftspeople: scenery, costume, props, machinists, workshops, their pay | Set-aside дела
 leave the register and sit on the **Set-aside shelf** (`#shelf`); nothing is
 deleted and the PDFs stay in `pdf/RGIA_F497_Op18/dela/` (RG, 2026-11-24: a
 label, not a move). Several Keep piles per дело are allowed.
