@@ -55,8 +55,8 @@ to `marks`: that is RG's.
 
 ### Sorting step (after the page summaries)
 
-RG sorts each received дело (via its runs, below) into one or more Keep piles — **Ballet**, **Editorial**, **Sales &
-distribution**, **Design & production**, **Manuscripts & drafts** — or **Set aside**.
+RG sorts each received дело (via its runs, below) into one or more Keep piles — **Ballet**, **Editors & contributors**,
+**Printing, sales & distribution**, **Designers & craftspeople**, **Manuscripts & drafts** — or **Set aside**.
 
 What each Keep pile holds (RG narrowed Editorial 2026-11-24, so every pile sorts something specific; the
 keys stay `editorial` and `sales` so earlier decisions keep their meaning):
@@ -67,7 +67,9 @@ keys stay `editorial` and `sales` so earlier decisions keep their meaning):
 | `editorial` | Editors & contributors | the people of the редакція: who held which role when (editors, assistants, «за редактора», secretary, office staff), contributors and authors, their fees and correspondence |
 | `manuscripts` | Manuscripts & drafts | manuscripts and drafts that made their way into print: drafts of lists, season reviews, articles, and source material supplied for them |
 | `sales` | Printing, sales & distribution | the Yearbook as an object and a product: print runs, printing and binding costs, budgets and credits, illustrations' production, advertising, prospectuses, subscriptions, copies sent, sold or given |
-| `design` | Design & production | designers and craftspeople: scenery, costume, props, machinists, workshops, their pay | Set-aside дела
+| `design` | Designers & craftspeople (was Design & production; renamed by RG 2026-11-24) | designers and craftspeople: scenery, costume, props, machinists, workshops, their pay |
+
+Set-aside дела
 leave the register and sit on the **Set-aside shelf** (`#shelf`); nothing is
 deleted and the PDFs stay in `pdf/RGIA_F497_Op18/dela/` (RG, 2026-11-24: a
 label, not a move). Several Keep piles per дело are allowed.
@@ -80,7 +82,7 @@ set_aside`, `why` = one line from the page counts and summaries), rerun
 into the printed Yearbook — drafts of lists, season reviews, articles, and source
 material supplied for them (e.g. staff lists sent for the Yearbook's lists). Part of
 the editorial history, kept as its own pile; suggest it alongside Editorial.
-Craftspeople's and designers' дела go to Design & production, not Set aside,
+Craftspeople's and designers' дела go to Designers & craftspeople, not Set aside,
 even with no ballet named. The suggestion is only shown; never write to
 `sorting`: it is RG's.
 
@@ -105,7 +107,7 @@ covers, blanks and duplicate exposures join their neighbour or a wrapper run.
 1. From the page summaries in `docs/rgia/dela/<delo>.jsonl`, write
    `docs/rgia/runs/<delo>.json` (format in `pipeline/rgia_runs.py`): each run's
    pages, title, dates, suggested piles, one-line why, and `unsure` where the
-   boundary or the piles are doubtful. Craftspeople/design → Design & production.
+   boundary or the piles are doubtful. Craftspeople/design → Designers & craftspeople.
 2. `uv run python pipeline/rgia_runs.py --dela <delo>`. **Ballet safety** (RG:
    "careful not to miss ballet-related stuff"): any page tagged ballet, or whose
    summary mentions ballet/dance/the Theatre School, or names a ballet from
