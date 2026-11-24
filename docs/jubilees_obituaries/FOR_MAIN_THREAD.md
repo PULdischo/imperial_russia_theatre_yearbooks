@@ -103,3 +103,30 @@ Found while linking (2026-10-22, from the database and the catalogue; no scans r
 
 - `unscanned_worth_getting.md` lists the unscanned jubilee and obituary pages, the closing issues of
   1910-1914 that should carry «Некрологи» and «Юбилеи» sections, and the supplements (deferred).
+
+## Status check, 2026-11-24 (current production; open items read on the scans by Claude)
+
+**Fixed since October:** «¼ года» -> «44 года» and «25-го января» -> «23-го января» (1900-01 Moscow opera); «Н. П. Пуни» ->
+«Н. Ц. Пуни»; the 1902-03 block now reads «М. Петипа»; «Доровеевъ» -> «Дороѳеевъ» (1892-95; «Дорофеевъ» 1890-92); the three
+missing ordinals (Ячменева 1-я, Брыкинъ 1-й, Александровъ 2-й); the wrong «г. Іогансона» -> Анна link is gone (now unlinked);
+duplicates merged: Трефилова, Петипа 1-я Марія Маріусовна, Боборыкинъ, Золотаренко.
+
+**As printed, nothing to fix:** «14 февраля 1910 г.» (1910-11 SP opera review, p. 120; the Repertoire has 1911); «2-го января
+1903 года» inside the 1901-02 SP ballet review (p. 189); «11 января 1909 г.» for Кюи and «10 января 1909 г.» for the Moscow
+кордебалет benefit on the 1909-10 season-stats page (p. 58; dated_notes.csv already notes it); «Калерія Александровна»
+Ахмакова, no. 12 in the 1890-91 SP roster (p. 58).
+
+**Still open (for RG):**
+- DONE 2026-11-24: `review_1893-94_SP_opera_p039__b004` «успѣшаго» -> «усопшаго» (p. 227; RG "Yes, correct it"), in
+  `docs/eval/review_text_corrections.csv` and applied to the merged review text; reaches production with the next review-chain rebuild.
+- `review_1891-92_SP_ballet_p017__b002` «Яковлевъ 2-й († 9 августа 1892 г.)» is still linked to Яковлевъ, Николай
+  Николаевичъ (listed to 1901-02). The review lists him among the 1892 graduates «(всѣ—съ 1 іюня 1892 г.)»; the 1891-92
+  graduate list has «Яковлевъ, Владиміръ», «1 іюня 1892 г.», a person record of his own.
+  RULED 2026-11-24 (RG "Yes, relink"): relink to Яковлевъ, Владиміръ (931f4063); row sent to the review-link-drift session,
+  which owns `docs/eval/review_mention_links.csv`; applied with its rebuild.
+- Ахмакова: «Калерія Александровна» (1890-91, as printed) and «Клавдія Александровна» (1891-98, † 16 августа 1897 г.) are two
+  person records; same patronymic and the same «съ 30 января 1878 г.» -- a merge candidate.
+  ADDED to the merge batch 2026-11-24 (RG "Yes, add it").
+- Дровинъ: «Карлъ Фердинандовичъ» (1890-91) and «Антонъ Фердинандовичъ» (1891-93) are still two person records; the
+  obituary prints «Антонъ-Карлъ» -- a merge candidate.
+  ADDED to the merge batch 2026-11-24 (RG "Yes, add it"), after reading the three roster pages on the scans.

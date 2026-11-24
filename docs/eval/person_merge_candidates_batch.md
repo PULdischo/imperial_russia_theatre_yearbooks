@@ -296,3 +296,19 @@ only those 7 people changed; 0 shift blocks; sqlite rebuilt. Display names show 
 is in the database." No tie-break change now. At that audit: the 86 live persons whose top printed spellings tie (the earlier
 printing wins today), incl. the merged 1911 graduates shown in the graduate list's form, misprints included («Вольшакова, Лидія»
 for Большакова 2-я, «Боронцовъ, Владиміръ» for Воронцовъ, «Александрова, Лидія» without «Павловна», ...).
+
+## Added 2026-11-24: Ахмакова, Калерія Александровна / Ахмакова, Клавдія Александровна -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, jubilee/obituary hand-offs, FOR_MAIN_THREAD.md). SP ballet troupe: 1890-91 no. 12 prints
+«Ахмакова, Калерія Александровна (съ 30 января 1878 г.)» (p. 58, read on the scan by Claude: as printed); 1891-92 to 1897-98
+(nos. 11, 12, 11, 10, 10, 9, 9) print «Клавдія Александровна», always «съ 30 января 1878 г.», ending «† 16 августа 1897 г.».
+Same surname, patronymic and start, unbroken seasons: almost certainly one woman. Raw stays as printed. Person ids: 95eaac1d
+(Калерія) and 3d48af0c (Клавдія). Not Ахмакова, Анна Александровна (Moscow, f16fbe64).
+
+## Added 2026-11-24: Дровинъ, Карлъ Фердинандовичъ / Дровинъ, Антонъ Фердинандовичъ -- for RG, NOT applied
+
+Added at RG's request (2026-11-24, jubilee/obituary hand-offs, FOR_MAIN_THREAD.md). Read on the scans by Claude: SP «Оркестръ
+Михайловскаго театра», «Вальдгорнъ», «съ 1 сентября 1884 г.» every year -- 1890-91 no. 17 «Карлъ Фердинандовичъ» (p. 80);
+1891-92 no. 16 and 1892-93 no. 14 «Антонъ Фердинандовичъ» (1892-93 p. 73, «† 3 октября 1892 г.»). The 1892-93 obituary
+(p. 506) names him «Дровинъ (Тробинъ), Антонъ-Карлъ», d. 3 Oct 1892. Same surname, patronymic, post and start, consecutive
+seasons: one man with a double first name. Raw stays as printed. Person ids: 6becff4e (Карлъ) and 43b9d18f (Антонъ).

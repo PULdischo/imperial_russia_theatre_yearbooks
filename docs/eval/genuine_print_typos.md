@@ -1136,3 +1136,9 @@ Receipts (research-layer values staged in `outputs/repertoire_1911-12/receipts_p
 ## «Рановины» for «Раковины» in the 1896 coronation programme (added 2026-11-23; checked by Claude on the scan, zoomed)
 
 Not a Yearbook: RGIA Ф. 497 оп. 18 д. 1420, the printed programme for the Большой театр gala of 17 May 1896 («Жемчужина»). PDF p. 28, «Танцовать будутъ», no. 3 «Combat des coraux et des métaux»: the bold group heading prints «Рановины» (н for к) before the list «г-жи Скорсюкъ, Востокова …». Same group is «Раковины» in the apotheosis list (pp. 29-31). Kept as printed in docs/rgia/dela/1420.jsonl.
+
+## Wrong years in dates, three volumes (added 2026-11-24; checked by Claude on the scans, each against the Repertoire)
+
+- 1901-02 SP ballet review (p. 189): «2-го января 1903 года, на сценѣ Маріинскаго театра, былъ данъ въ первый разъ въ сезонѣ … „Дочь Фараона“» -- the Repertoire has «Дочь Фараона» at the Маріинскій on 2 January 1902.
+- 1910-11 SP opera review (p. 120): «Капитанская дочка» Кюи «впервые поставленная на Маріинской сценѣ 14 февраля 1910 г. въ прощальный бенефисъ … О. О. Палечека» -- the Repertoire has the benefit on 14 February 1911.
+- 1909-10 season statistics (p. 58): «11 января 1909 г.—50-ти лѣтіе музык. дѣятельности Ц. А. Кюи» (Repertoire: 11 January 1910, Маріинскій) and, on the same page, Moscow «10 января 1909 г.—бенефисъ кордебалета» (Repertoire: 10 January 1910, Большой). The compositor set the previous year in January dates twice on one page.
