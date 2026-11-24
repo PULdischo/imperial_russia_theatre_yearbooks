@@ -146,6 +146,24 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
 .runrange{font-family:var(--mono);font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .tag.unsure{color:var(--med)}
 .runtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:.85rem}
+.runlist{margin-top:10px;border-top:1px solid var(--rule)}
+.runrow{display:grid;grid-template-columns:6.5rem 1fr auto;gap:4px 12px;align-items:baseline;padding:10px 4px;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none}
+.runrow:hover{background:var(--card)}
+.runrow.done{box-shadow:inset 3px 0 0 var(--ok)}
+.runrow .rt{font-family:var(--display);min-width:0}
+.runrow .rr{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
+@media (max-width:620px){.runrow{grid-template-columns:1fr}.runrow .rr{justify-content:flex-start}}
+.decide{position:sticky;top:0;z-index:4;background:var(--paper);border-bottom:1px solid var(--rule);padding:10px 0 12px;margin-top:10px}
+.runnav{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);text-decoration:none}
+a.btn{text-decoration:none;display:inline-block}
+.runpages li.rp{display:grid;grid-template-columns:90px 1fr;gap:14px;padding-block:12px;border-bottom:1px solid var(--rule)}
+.runpages li.rp.isb{box-shadow:inset 3px 0 0 var(--ballet);padding-left:10px}
+.thumb.sm{width:90px;height:114px}
+.keybtn{font:inherit;font-size:.78rem;border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:6px;padding:1px 8px;cursor:pointer;margin-left:auto}
+.keybtn[aria-pressed="true"]{color:var(--key);border-color:var(--key)}
+.bounds{margin-top:18px;font-size:.88rem;color:var(--muted)}
+.bounds summary{cursor:pointer}
 .trayhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px}
 @media (max-width:620px){li.delo{grid-template-columns:4rem 1fr}li.delo .r{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
   li.pg{grid-template-columns:1fr} .thumb{margin:0}}
@@ -195,8 +213,8 @@ async function boot(){
   db.collection('dela').onSnapshot(s=>{ DELA=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.delo-b.delo); route(); },
     e=>{ $('#view').innerHTML=`<p class="state err">Could not read the register (${esc(e.code)}). Reload the page to try again.</p>`; });
   // Claude's grouped runs per дело (read-only here) and RG's run decisions (run_sorting, hers)
-  db.collection('runs').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RUNS=m; if(location.hash==='#sort') paintTraySafe(); else stats(); });
-  db.collection('run_sorting').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RSORT=m; if(location.hash==='#sort') paintTraySafe(); });
+  db.collection('runs').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RUNS=m; if(onTray()) paintTraySafe(); else stats(); });
+  db.collection('run_sorting').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RSORT=m; if(onTray()) paintTraySafe(); });
   db.collection('sorting').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); SORT=m; repaintSort(); });
   db.collection('marks').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); MARKS=m; if(current()) paintMarksOnly(); else if(!onTimeline()&&!onSortView()) route(); });
   // timeline: Claude's acts/spans (read-only here) and RG's own readings (rg_reads, one doc per act)
@@ -336,8 +354,9 @@ function flash(msg){ const el=$('#saved'); if(!el) return; el.textContent=msg||'
 const current=()=>{ const h=location.hash.slice(1); return /^d\d+$/.test(h)?h:null; };
 window.addEventListener('hashchange',route);
 const onTimeline=()=>location.hash==='#timeline';
-const onSortView=()=>location.hash==='#sort'||location.hash==='#shelf';
-function route(){ stats(); if(onTimeline()) return showTimeline(); if(location.hash==='#sort') return showTray(); if(location.hash==='#shelf') return showShelf(); const id=current(); if(id){ const d=DELA.find(x=>x.id===id); if(d) return showDelo(d); } showHome(); }
+const onTray=()=>/^#sort(\/|$)/.test(location.hash);
+const onSortView=()=>onTray()||location.hash==='#shelf';
+function route(){ stats(); if(onTimeline()) return showTimeline(); if(onTray()) return showTray(); if(location.hash==='#shelf') return showShelf(); const id=current(); if(id){ const d=DELA.find(x=>x.id===id); if(d) return showDelo(d); } showHome(); }
 
 function stats(){
   const recv=DELA.filter(d=>d.received).length, req=DELA.filter(d=>d.requested).length;
@@ -526,7 +545,7 @@ function bindSort(root,again){
 function paintDeloSort(d){ const el=$('#dsort'); if(!el) return; el.innerHTML=sortControls(d); bindSort(el,()=>paintDeloSort(d)); }
 function repaintSort(){
   const a=document.activeElement; if(a&&a.matches&&a.matches('[data-snote]')) return;
-  if(location.hash==='#sort') return paintTraySafe();
+  if(onTray()) return paintTraySafe();
   if(location.hash==='#shelf') return showShelf();
   const id=current(); if(id){ stats(); const d=DELA.find(x=>x.id===id); if(d) paintDeloSort(d); return; }
   if(!onTimeline()) route();
@@ -588,75 +607,83 @@ function setBounds(d,fn){
     const [starts,clear]=fn([...base]); cur.starts=[...new Set(starts)].sort((a,b)=>a-b);
     clear.forEach(st=>delete cur.runs[st]); });
 }
+function trayTarget(){
+  // #sort = list of runs for the current дело; #sort/163/9 = just the run starting at p. 9 of Д. 163
+  const m=location.hash.match(/^#sort\/(\d+)(?:\/(\d+))?$/);
+  return m?{id:'d'+m[1],start:m[2]?+m[2]:null}:{id:null,start:null};
+}
 function showTray(){
   delete $('#view').dataset.delo;
-  $('#view').innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
-    <h2>Sorting tray</h2>
-    <p class="ground">One дело at a time, divided into runs: neighbouring pages that deal with the same business. Put each run in one or more Keep piles, or set it aside. Claude's suggestion is drawn from the page summaries and is only a suggestion. Every page that looks ballet-related is listed on its run, so nothing about ballet goes to the shelf unseen. If a boundary is wrong, split or merge runs. When every run is decided, the дело's own piles follow automatically. Nothing is deleted and the PDFs stay where they are.</p>
-    <div class="trayhead"><select id="traydelo" aria-label="Choose a дело"></select><button class="btn" id="trayprev">← Previous дело</button><button class="btn" id="traynext">Next дело →</button><span class="count" id="traycount" style="margin-left:0"></span><span class="saved" id="saved" aria-live="polite"></span></div>
-    <div id="tray" style="margin-top:12px"></div>`;
-  $('#home').onclick=e=>{e.preventDefault(); history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
+  $('#view').innerHTML='<div id="tray"></div><span class="saved" id="saved" aria-live="polite" style="position:fixed;right:16px;bottom:12px"></span>';
   paintTray();
 }
-function paintTraySafe(){ const a=document.activeElement; if(a&&a.matches&&a.matches('[data-rnote],[data-snote]')) return; paintTray(); }
+function paintTraySafe(){ const a=document.activeElement; if(a&&a.matches&&a.matches('[data-rnote]')) return; paintTray(); }
+const pileChips=(ps,cls='')=>ps.map(k=>`<span class="tag ${cls} p-${esc(k)}">${esc(PILE_L[k]||k)}</span>`).join(' ');
 async function paintTray(){
   const el=$('#tray'); if(!el) return showTray();
   stats();
-  const list=runDela();
-  const undecided=d=>effRuns(d).some(r=>!r.dec);
-  if(!ui.trayDelo||!list.find(d=>d.id===ui.trayDelo)) ui.trayDelo=(list.find(undecided)||list[0]||{}).id||null;
-  const sel=$('#traydelo');
-  sel.innerHTML=list.length?list.map(d=>{ const rs=effRuns(d), n=rs.filter(r=>r.dec).length; return `<option value="${d.id}" ${d.id===ui.trayDelo?'selected':''}>Д. ${d.delo} · ${n}/${rs.length} runs decided</option>`; }).join(''):'<option>No дела divided into runs yet</option>';
-  sel.onchange=()=>{ ui.trayDelo=sel.value; paintTray(); scrollTo(0,0); };
-  const i=list.findIndex(d=>d.id===ui.trayDelo);
-  $('#trayprev').disabled=i<=0; $('#traynext').disabled=i<0||i>=list.length-1;
-  $('#trayprev').onclick=()=>{ ui.trayDelo=list[i-1].id; paintTray(); scrollTo(0,0); };
-  $('#traynext').onclick=()=>{ ui.trayDelo=list[i+1].id; paintTray(); scrollTo(0,0); };
-  const notyet=DELA.filter(d=>d.received&&d.triaged&&!RUNS[d.id]).length;
-  const d=list[i];
-  if(!d){ $('#traycount').textContent=''; el.innerHTML=`<p class="state">No дело has been divided into runs yet. Claude prepares them from the page summaries.</p>`; return; }
-  const rs=effRuns(d), done=rs.filter(r=>r.dec).length;
-  $('#traycount').textContent=`${done} of ${rs.length} runs decided · ${notyet} received дела not divided yet`;
-  if(!PAGES[d.id]){ el.innerHTML='<p class="state">Loading pages…</p>'; await loadPages(d); if(ui.trayDelo!==d.id) return; }
-  const byPage=Object.fromEntries((PAGES[d.id]||[]).map(r=>[r.page,r]));
-  const fol=n=>byPage[n]?.folio?`л. ${esc(byPage[n].folio)}`:'';
-  const nb=rs.reduce((s,r)=>s+r.ballet.length,0);
-  el.innerHTML=`<div class="card"><div class="ch"><span class="pno">Д. ${d.delo}</span><span class="ct"><a href="#${d.id}">${gloss(d.title,new Set())}</a></span></div>
-      <div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''} · ${d.n_pages} pp · ${rs.length} runs · <span class="tag ballet">${nb} ballet-related pages</span></div>
-      ${pilesOf(d).length?`<div class="meta" style="margin-top:6px">This дело's piles (from your runs): ${pilesOf(d).map(k=>`<span class="tag p-${esc(k)}">${esc(PILE_L[k])}</span>`).join(' ')}</div>`:''}</div>`
-   +rs.map((r,j)=>{
-    const ps=r.dec?.piles||[], pages=[]; for(let n=r.start;n<=r.end;n++) if(byPage[n]) pages.push(byPage[n]);
-    const bset=new Set(r.ballet.map(b=>b.page));
-    const sc=x=>({high:3,medium:1}[x.relevance]||0)+(x.editorial?1:0);
-    const tops=pages.filter(x=>!bset.has(x.page)&&sc(x)>0).sort((a,b)=>sc(b)-sc(a)||a.page-b.page).slice(0,2);
-    const nh=pages.filter(x=>x.relevance==='high').length;
-    const sbtn=(k,l)=>`<button data-rp="${k}" data-rs="${r.start}" aria-pressed="${ps.includes(k)}">${l}</button>`;
-    return `<div class="card ${ps.length?'done':''}" id="run${r.start}">
-      <div class="ch"><span class="runrange">pp. ${r.start}–${r.end}${fol(r.start)?` · ${fol(r.start)}${r.end>r.start&&fol(r.end)?'–'+esc(byPage[r.end].folio):''}`:''}</span><span class="ct">${gloss(r.title,new Set())}</span>${r.unsure?'<span class="tag unsure">Claude unsure</span>':''}</div>
-      <div class="meta">${esc(r.dates)} · ${r.end-r.start+1} pp · ${nh} high</div>
-      ${r.ballet.length?`<div class="bpages"><span class="lbl">Ballet-related pages (${r.ballet.length})</span><div class="bchips">${r.ballet.map(b=>`<span class="bchip">${miniThumb(d,b.page,45)}<span><b>p. ${b.page}</b> · ${esc(b.signal)}<br>${gloss((byPage[b.page]?.gist||'').slice(0,140)+'…',new Set())}</span></span>`).join('')}</div></div>`:''}
-      ${tops.length?`<div class="tops">${tops.map(x=>`<div class="top">${miniThumb(d,x.page)}<div><b>PDF p. ${x.page}</b>${x.folio?` · л. ${esc(x.folio)}`:''} <span class="pill ${esc(x.relevance)}">${esc(x.relevance)}</span><p>${gloss((x.gist||'').slice(0,200)+((x.gist||'').length>200?'…':''),new Set())}</p></div></div>`).join('')}</div>`:''}
-      <div class="suggest"><b>Claude's suggestion:</b> ${esc(pileList(r.piles))}. ${gloss(r.why,new Set())} ${ps.join()!==r.piles.join()?`<button class="btn" data-ruse="${r.start}">Use suggestion</button>`:''}</div>
-      <div class="sortbox"><span class="lbl">Your piles</span>
-        <span class="seg" role="group" aria-label="Keep piles for pages ${r.start}–${r.end}">${PILES.map(([k,l])=>sbtn(k,l)).join('')}</span>
-        <span class="seg" role="group" aria-label="Set aside pages ${r.start}–${r.end}">${sbtn('set_aside','Set aside')}</span>
-        ${r.dec?.date?`<span class="meta">decided ${esc(r.dec.date)}</span>`:''}
-        <input class="pnote" data-rnote="${r.start}" value="${esc(r.dec?.note||'')}" placeholder="Why (optional)" aria-label="Your reason for pages ${r.start}–${r.end}">
+  const list=runDela(), t=trayTarget();
+  if(t.id&&list.find(d=>d.id===t.id)) ui.trayDelo=t.id;
+  if(!ui.trayDelo||!list.find(d=>d.id===ui.trayDelo)) ui.trayDelo=(list.find(d=>effRuns(d).some(r=>!r.dec))||list[0]||{}).id||null;
+  const i=list.findIndex(d=>d.id===ui.trayDelo), d=list[i];
+  if(!d){ el.innerHTML=`<p class="back"><a href="#top">← All дела</a></p><h2>Sorting tray</h2><p class="state">No дело has been divided into sections yet.</p>`; return; }
+  const rs=effRuns(d);
+  if(!PAGES[d.id]){ el.innerHTML='<p class="state">Loading…</p>'; await loadPages(d); if(ui.trayDelo!==d.id) return; }
+  const run=t.start!=null?rs.find(r=>r.start===t.start):null;
+  if(run) return paintRun(el,d,rs,run);
+  // ----- the дело as a short list: one line per section -----
+  const done=rs.filter(r=>r.dec).length;
+  el.innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
+    <div class="trayhead" style="margin-top:0"><h2 style="flex:1 1 auto">Д. ${d.delo}</h2>
+      ${i>0?`<a class="btn" href="#sort/${list[i-1].delo}" style="text-decoration:none">← Д. ${list[i-1].delo}</a>`:''}
+      ${i<list.length-1?`<a class="btn" href="#sort/${list[i+1].delo}" style="text-decoration:none">Д. ${list[i+1].delo} →</a>`:''}</div>
+    <div class="ct" style="font-family:var(--display);margin-top:4px">${gloss(d.title,new Set())}</div>
+    <p class="meta">${rs.length} sections · ${done} decided${pilesOf(d).length?` · this дело: ${pileChips(pilesOf(d))}`:''}</p>
+    <p class="meta">Click a section to open it. The ballet mark shows how many of its pages look ballet-related.</p>
+    <ol class="runlist">${rs.map(r=>`<li><a class="runrow ${r.dec?'done':''}" href="#sort/${d.delo}/${r.start}">
+        <span class="runrange">pp. ${r.start}–${r.end}</span>
+        <span class="rt">${gloss(r.title,new Set())}</span>
+        <span class="rr">${r.ballet.length?`<span class="tag ballet">♦ ${r.ballet.length}</span> `:''}${r.dec?pileChips(r.dec.piles):`<span class="meta">suggested</span> ${pileChips(r.piles,'sugg')}`}</span>
+      </a></li>`).join('')}</ol>`;
+  const h=$('#home'); if(h) h.onclick=e=>{e.preventDefault(); history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
+}
+function paintRun(el,d,rs,r){
+  // ----- one section: its decision, then only its pages -----
+  const j=rs.indexOf(r), prev=rs[j-1], next=rs[j+1], ps=r.dec?.piles||[];
+  const bset=new Map(r.ballet.map(b=>[b.page,b.signal]));
+  const pages=(PAGES[d.id]||[]).filter(x=>x.page>=r.start&&x.page<=r.end);
+  const g=d.sprite_geom||{w:150,h:190,cols:10};
+  const sbtn=(k,l)=>`<button data-rp="${k}" aria-pressed="${ps.includes(k)}">${l}</button>`;
+  el.innerHTML=`<p class="back"><a href="#sort/${d.delo}">← All sections of Д. ${d.delo}</a></p>
+    <div class="runrange">Д. ${d.delo} · section ${j+1} of ${rs.length} · pp. ${r.start}–${r.end}</div>
+    <h2 style="margin-top:4px">${gloss(r.title,new Set())}</h2>
+    <p class="meta">${esc(r.dates)}${r.ballet.length?` · <span class="tag ballet">♦ ${r.ballet.length} ballet-related page${r.ballet.length>1?'s':''}</span>`:''}${r.unsure?' · <span class="tag unsure">Claude unsure</span>':''}</p>
+    <div class="decide">
+      <p class="suggest" style="margin-top:0"><b>Claude suggests</b> ${pileChips(r.piles)} ${gloss(r.why,new Set())}</p>
+      <div class="sortbox">
+        ${ps.join()!==r.piles.join()?`<button class="btn primary" data-ruse>Accept suggestion</button><span class="meta">or choose:</span>`:'<span class="meta">Your choice:</span>'}
+        <span class="seg" role="group" aria-label="Keep piles">${PILES.map(([k,l])=>sbtn(k,l)).join('')}</span>
+        <span class="seg" role="group" aria-label="Set aside">${sbtn('set_aside','Set aside')}</span>
       </div>
-      ${ps.includes('set_aside')&&r.ballet.length?`<p class="warn">Set aside although ${r.ballet.length} page${r.ballet.length>1?'s look':' looks'} ballet-related (pp. ${r.ballet.map(b=>b.page).join(', ')}). Mark any you want with Key on the дело's page.</p>`:''}
-      <div class="runtools"><a href="#${d.id}" data-rgo="${r.start}">Open these pages</a>
-        ${r.end>r.start?`<label>Split before page <select data-rsplit="${r.start}" aria-label="Split pages ${r.start}–${r.end}"><option value="">…</option>${pages.slice(1).map(x=>`<option value="${x.page}">${x.page}</option>`).join('')}</select></label>`:''}
-        ${j<rs.length-1?`<button class="btn" data-rmerge="${r.start}" data-rnext="${rs[j+1].start}">Merge with next run</button>`:''}
-      </div></div>`;}).join('')
-   +`<div class="trayhead">${i<list.length-1?`<button class="btn" id="traynext2">Next дело →</button>`:''}</div>`;
-  el.querySelectorAll('[data-rp]').forEach(b=>b.onclick=()=>{ const r=rs.find(x=>x.start===+b.dataset.rs); runPile(d,r,b.dataset.rp); paintTray(); });
-  el.querySelectorAll('[data-ruse]').forEach(b=>b.onclick=()=>{ const r=rs.find(x=>x.start===+b.dataset.ruse); saveRunSort(d,cur=>{ cur.runs[r.start]={...(cur.runs[r.start]||{}),piles:[...r.piles],date:ymd()}; }); paintTray(); });
-  el.querySelectorAll('[data-rnote]').forEach(inp=>inp.onchange=()=>{ const st=+inp.dataset.rnote; saveRunSort(d,cur=>{ cur.runs[st]={piles:[],date:'',...(cur.runs[st]||{}),note:inp.value}; if(!cur.runs[st].piles.length&&!inp.value) delete cur.runs[st]; }); });
-  el.querySelectorAll('[data-rsplit]').forEach(x=>x.onchange=()=>{ const p=+x.value; if(!p) return; const st=+x.dataset.rsplit; setBounds(d,s=>[[...s,p],[st]]); paintTray(); });
-  el.querySelectorAll('[data-rmerge]').forEach(b=>b.onclick=()=>{ const st=+b.dataset.rmerge, nx=+b.dataset.rnext; setBounds(d,s=>[s.filter(v=>v!==nx),[st,nx]]); paintTray(); });
-  el.querySelectorAll('[data-rgo]').forEach(a=>a.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+a.dataset.rgo; });
-  el.querySelectorAll('.athumb[data-goto2]').forEach(x=>x.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+x.dataset.goto2; });
-  const n2=$('#traynext2'); if(n2) n2.onclick=()=>{ ui.trayDelo=list[i+1].id; paintTray(); scrollTo(0,0); };
+      <input class="pnote" data-rnote value="${esc(r.dec?.note||'')}" placeholder="Note (optional)" aria-label="Your note on this section" style="width:100%;box-sizing:border-box;margin-top:8px">
+      ${ps.includes('set_aside')&&r.ballet.length?`<p class="warn">Set aside, but ${bset.size>1?'pp. '+[...bset.keys()].join(', ')+' look':'p. '+[...bset.keys()][0]+' looks'} ballet-related. Mark any you want to keep with Key below.</p>`:''}
+      <div class="runnav">${prev?`<a class="btn" href="#sort/${d.delo}/${prev.start}">← Previous section</a>`:'<span></span>'}${next?`<a class="btn primary" href="#sort/${d.delo}/${next.start}">Next section →</a>`:`<a class="btn primary" href="#sort/${d.delo}">Back to the list</a>`}</div>
+    </div>
+    <ol class="runpages">${pages.map(x=>{ const mk=(marksFor(d.id).pages||{})[x.page]||{}, i=x.page-1, bs=bset.get(x.page);
+      return `<li class="rp ${bs?'isb':''}"><button class="thumb sm" data-view="${x.page}" aria-label="Open PDF page ${x.page} full size" style="${d.sprite?`background-image:url('sprites/${esc(d.sprite)}');background-size:${g.w*g.cols*0.6}px auto;background-position:-${(i%g.cols)*g.w*0.6}px -${Math.floor(i/g.cols)*g.h*0.6}px`:''}"></button>
+        <div class="pbody"><div class="head"><span class="pno">p. ${x.page}</span>${x.folio?`<span class="folio">л. ${esc(x.folio)}</span>`:''}<span class="pill ${esc(x.relevance)}">${esc(x.relevance)}</span>${bs?`<span class="tag ballet">Ballet · ${esc(bs)}</span>`:''}
+          <button class="keybtn" data-key="${x.page}" aria-pressed="${mk.s==='key'}">${mk.s==='key'?'★ Key':'☆ Key'}</button></div>
+        <p class="gist">${gloss(x.gist,new Set())}</p></div></li>`;}).join('')}</ol>
+    <details class="bounds"><summary>This section's boundaries look wrong</summary>
+      <div class="runtools">${r.end>r.start?`<label>Split it before page <select data-rsplit aria-label="Split before page"><option value="">…</option>${pages.slice(1).map(x=>`<option value="${x.page}">${x.page}</option>`).join('')}</select></label>`:''}
+      ${next?`<button class="btn" data-rmerge>Join it with the next section</button>`:''}</div></details>`;
+  el.querySelectorAll('[data-rp]').forEach(b=>b.onclick=()=>{ runPile(d,r,b.dataset.rp); paintTray(); });
+  const u=el.querySelector('[data-ruse]'); if(u) u.onclick=()=>{ saveRunSort(d,cur=>{ cur.runs[r.start]={...(cur.runs[r.start]||{}),piles:[...r.piles],date:ymd()}; }); paintTray(); };
+  const n=el.querySelector('[data-rnote]'); n.onchange=()=>saveRunSort(d,cur=>{ cur.runs[r.start]={piles:[],date:'',...(cur.runs[r.start]||{}),note:n.value}; if(!cur.runs[r.start].piles.length&&!n.value) delete cur.runs[r.start]; });
+  el.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>openViewer(d,+b.dataset.view));
+  el.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{ const on=((marksFor(d.id).pages||{})[b.dataset.key]||{}).s==='key'; saveMarks(d.id,{page:b.dataset.key,val:{s:on?'':'key'}}); paintTray(); });
+  const sp=el.querySelector('[data-rsplit]'); if(sp) sp.onchange=()=>{ const pg=+sp.value; if(!pg) return; setBounds(d,s=>[[...s,pg],[r.start]]); location.hash=`#sort/${d.delo}/${r.start}`; paintTray(); };
+  const mg=el.querySelector('[data-rmerge]'); if(mg) mg.onclick=()=>{ setBounds(d,s=>[s.filter(v=>v!==next.start),[r.start,next.start]]); paintTray(); };
 }
 function showShelf(){
   delete $('#view').dataset.delo; stats();
