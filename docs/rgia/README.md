@@ -55,8 +55,7 @@ to `marks`: that is RG's.
 
 ### Sorting step (after the page summaries)
 
-RG sorts each received дело on the Reading Room's **Sorting tray** (`#sort`)
-into one or more Keep piles — **Ballet**, **Editorial**, **Sales &
+RG sorts each received дело (via its runs, below) into one or more Keep piles — **Ballet**, **Editorial**, **Sales &
 distribution**, **Design & production** — or **Set aside**. Set-aside дела
 leave the register and sit on the **Set-aside shelf** (`#shelf`); nothing is
 deleted and the PDFs stay in `pdf/RGIA_F497_Op18/dela/` (RG, 2026-11-24: a
@@ -78,6 +77,34 @@ uv run python pipeline/rgia_request_tracker.py sorting --from <dir>
 ```
 
 A дело with no `sorting` doc is cleared in the log (she sent it back to the tray).
+
+### Runs: dividing a дело for the tray (RG 2026-11-24)
+
+RG sorts **one дело at a time, run by run**. A run is a stretch of neighbouring
+pages dealing with the same business (one correspondence, one ledger, one
+manuscript article); RG chose "grouped runs" over one-document-each or the
+archive's own divisions. Start a new run at a change of subject,
+correspondents, document kind, a large date jump, or an archival divider;
+covers, blanks and duplicate exposures join their neighbour or a wrapper run.
+
+1. From the page summaries in `docs/rgia/dela/<delo>.jsonl`, write
+   `docs/rgia/runs/<delo>.json` (format in `pipeline/rgia_runs.py`): each run's
+   pages, title, dates, suggested piles, one-line why, and `unsure` where the
+   boundary or the piles are doubtful. Craftspeople/design → Design & production.
+2. `uv run python pipeline/rgia_runs.py --dela <delo>`. **Ballet safety** (RG:
+   "careful not to miss ballet-related stuff"): any page tagged ballet, or whose
+   summary mentions ballet/dance/the Theatre School, or names a ballet from
+   `docs/rgia/ballet_titles.txt`, must sit in a run with the Ballet pile, or
+   the script refuses. Each such page is listed on the run's card.
+3. Write `outputs/rgia_reading_room/seed/runs/d<delo>.json` to the artifact's
+   `runs` collection (ArtifactData `set`, doc `d<delo>`).
+
+RG's run decisions and any split/merge live in the artifact's `run_sorting`
+collection (hers; never write there). When every run of a дело is decided the
+page writes the дело's own `sorting` doc (union of Keep piles, or Set aside),
+which `rgia_request_tracker.py sorting --from` copies into the log as before.
+To keep her run decisions in git, pull `run_sorting` with ArtifactData `list`
+and an `out_dir`, and copy the files verbatim to `docs/rgia/run_decisions/`.
 
 ### Editorial timeline step (after the page summaries)
 

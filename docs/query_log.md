@@ -28852,3 +28852,30 @@ select page_id, dance_surface from research.review_dance where page_id='review_1
 ```
 
 Result: 100 passages, folios 365–380. On folio 366 the «Цыганка» dance names sit in raw.review_block.enumerator (Valse, Les Bohemiens, Variation, Ensemble, Pas de fusils), not in the passage text; these match the manuscript's names exactly. research.review_dance has only 1 row («Pas de fusils») for that page — noted, not investigated.
+
+## 2026-11-24 — Ballet titles for the RGIA run tray's ballet safety check
+
+```sql
+select distinct canonical_title from research.work where art_form = 'ballet';
+```
+
+Result: written to `docs/rgia/ballet_titles.txt` (all ballet works incl. excerpts). Used only as a finding aid: `pipeline/rgia_runs.py` flags any RGIA page whose summary names one of these titles in «…», so a run containing it cannot be suggested for Set aside without Ballet. Distribution of research.work by art_form at the time: drama 2330, opera 328, ballet 255, operetta 43, concert 11, unassigned 63.
+
+## 2026-11-24 — Jubilee/obituary hand-offs (FOR_MAIN_THREAD.md): status in current production
+
+```sql
+select text from raw.review_block where block_id in ('review_1900-01_MSK_opera_p007__b003', 'review_1900-01_MSK_opera_p019__b002',
+  'review_1895-96_SP_ballet_p027__b007', 'review_1910-11_SP_opera_p009__b003', 'review_1902-03_SP_ballet_p019__b003',
+  'review_1893-94_SP_opera_p039__b004', 'review_1901-02_SP_ballet_p023__b002');
+select page_id, family_name, first_name, patronymic, tenure_note_text from raw.person_entry
+where family_name ilike 'Доро%еевъ' or family_name ilike 'Ахмаков%' or family_name ilike 'Яковлев%';
+select m.block_id, m.surface, p.display_name from research.review_mention m left join research.person p using (person_id)
+where m.block_id in ('review_1891-92_SP_ballet_p011__b007', 'review_1891-92_SP_ballet_p017__b002');
+select p.display_name, min(a.season), max(a.season) from research.person p left join research.person_appearance a using (person_id)
+where p.canonical_family_name similar to '(Трефилова|Петипа|Боборыкинъ|Дровинъ|Золотаренко)%' group by 1;
+select season, note_no, text_verbatim from raw.season_stat_dated_note where text_verbatim ilike '%Кюи%';
+```
+
+Result: 11 of the October hand-offs are fixed; 4 are as printed (scans read); 4 remain open: «успѣшаго» for «усопшаго»
+(1893-94 opera p. 227), the «Яковлевъ 2-й» link (should be the 1892 graduate Яковлевъ, Владиміръ), and two merge candidates
+(Ахмакова Калерія/Клавдія Александровна; Дровинъ Карлъ/Антонъ Фердинандовичъ). Details in docs/jubilees_obituaries/FOR_MAIN_THREAD.md.

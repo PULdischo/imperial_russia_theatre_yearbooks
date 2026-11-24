@@ -137,6 +137,15 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
 .top{display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px;flex:1 1 260px;min-width:0;font-size:.82rem}
 .top .athumb{height:114px}
 .top p{margin:0;color:var(--muted)}
+.bpages{margin-top:10px;border-left:3px solid var(--ballet);padding-left:10px}
+.bpages .lbl{color:var(--ballet)}
+.bchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.bchip{display:inline-flex;gap:6px;align-items:center;font-size:.8rem;border:1px solid var(--rule);border-radius:6px;padding:2px 6px;background:var(--card)}
+.bchip .athumb{width:45px;height:57px;flex:none}
+.warn{color:var(--high);font-size:.85rem;margin-top:6px}
+.runrange{font-family:var(--mono);font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.tag.unsure{color:var(--med)}
+.runtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-size:.85rem}
 .trayhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px}
 @media (max-width:620px){li.delo{grid-template-columns:4rem 1fr}li.delo .r{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
   li.pg{grid-template-columns:1fr} .thumb{margin:0}}
@@ -176,7 +185,7 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $=s=>document.querySelector(s);
 const SUB=[['ed_contributors','Contributors'],['ed_illustrations','Illustrations'],['ed_print_finance','Print runs & finances'],['ed_editors','Editors & office']];
-let db=null, DELA=[], MARKS={}, SORT={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:'',pile:''}, delo:{f:'all',q:''}, search:'', tray:[]};
+let db=null, DELA=[], MARKS={}, SORT={}, RUNS={}, RSORT={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:'',pile:''}, delo:{f:'all',q:''}, search:'', trayDelo:null};
 const PILES=[['ballet','Ballet'],['editorial','Editorial'],['sales','Sales & distribution'],['design','Design & production']], PILE_L=Object.fromEntries([...PILES,['set_aside','Set aside']]);
 
 /* ---------- data ---------- */
@@ -185,6 +194,9 @@ async function boot(){
   if(!db){ $('#view').innerHTML='<p class="state err">The register could not be loaded in this view. Open the page signed in to claude.ai.</p>'; return; }
   db.collection('dela').onSnapshot(s=>{ DELA=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.delo-b.delo); route(); },
     e=>{ $('#view').innerHTML=`<p class="state err">Could not read the register (${esc(e.code)}). Reload the page to try again.</p>`; });
+  // Claude's grouped runs per дело (read-only here) and RG's run decisions (run_sorting, hers)
+  db.collection('runs').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RUNS=m; if(location.hash==='#sort') paintTraySafe(); else stats(); });
+  db.collection('run_sorting').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RSORT=m; if(location.hash==='#sort') paintTraySafe(); });
   db.collection('sorting').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); SORT=m; repaintSort(); });
   db.collection('marks').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); MARKS=m; if(current()) paintMarksOnly(); else if(!onTimeline()&&!onSortView()) route(); });
   // timeline: Claude's acts/spans (read-only here) and RG's own readings (rg_reads, one doc per act)
@@ -514,7 +526,7 @@ function bindSort(root,again){
 function paintDeloSort(d){ const el=$('#dsort'); if(!el) return; el.innerHTML=sortControls(d); bindSort(el,()=>paintDeloSort(d)); }
 function repaintSort(){
   const a=document.activeElement; if(a&&a.matches&&a.matches('[data-snote]')) return;
-  if(location.hash==='#sort') return paintTray();
+  if(location.hash==='#sort') return paintTraySafe();
   if(location.hash==='#shelf') return showShelf();
   const id=current(); if(id){ stats(); const d=DELA.find(x=>x.id===id); if(d) paintDeloSort(d); return; }
   if(!onTimeline()) route();
@@ -523,41 +535,128 @@ function topPages(d){
   const sc=r=>({high:3,medium:1}[r.relevance]||0)+(r.ballet?2:0)+(r.editorial?1:0);
   return [...(PAGES[d.id]||[])].filter(r=>sc(r)>0).sort((a,b)=>sc(b)-sc(a)||a.page-b.page).slice(0,3);
 }
-function miniThumb(d,pg){
-  if(!d.sprite) return '<span class="athumb"></span>';
-  const g=d.sprite_geom||{w:150,h:190,cols:10}, k=90/g.w, i=pg-1;
-  return `<a class="athumb" href="#${d.id}" data-goto2="${pg}" aria-label="Open Д. ${d.delo}, PDF page ${pg}" style="background-image:url('sprites/${esc(d.sprite)}');background-size:${g.w*g.cols*k}px auto;background-position:-${(i%g.cols)*g.w*k}px -${Math.floor(i/g.cols)*g.h*k}px"></a>`;
+function miniThumb(d,pg,W=90){
+  const g=d.sprite_geom||{w:150,h:190,cols:10}, k=W/g.w, i=pg-1, sz=`width:${W}px;height:${Math.round(g.h*k)}px;`;
+  if(!d.sprite) return `<span class="athumb" style="${sz}"></span>`;
+  return `<a class="athumb" href="#${d.id}" data-goto2="${pg}" aria-label="Open Д. ${d.delo}, PDF page ${pg}" style="${sz}background-image:url('sprites/${esc(d.sprite)}');background-size:${g.w*g.cols*k}px auto;background-position:-${(i%g.cols)*g.w*k}px -${Math.floor(i/g.cols)*g.h*k}px"></a>`;
 }
-const TRAY_SIZE=12;
+/* ---------- run tray: one дело at a time, Claude's grouped runs, RG decides each run ---------- */
+const runDela=()=>DELA.filter(d=>d.received&&d.triaged&&RUNS[d.id]);
+function effRuns(d){
+  // Claude's runs, or RG's own boundaries (starts) if she split/merged; each run keyed by its start page
+  const R=RUNS[d.id]; if(!R) return [];
+  const mine=RSORT[d.id]||{}, cl=R.runs, last=cl[cl.length-1].end;
+  const starts=(mine.starts&&mine.starts.length)?[...mine.starts].sort((a,b)=>a-b):cl.map(r=>r.start);
+  return starts.map((st,i)=>{
+    const en=i+1<starts.length?starts[i+1]-1:last;
+    const exact=cl.find(r=>r.start===st&&r.end===en);
+    const over=cl.filter(r=>r.start<=en&&r.end>=st);
+    let piles=exact?exact.piles:[...new Set(over.flatMap(r=>r.piles))];
+    if(!exact&&piles.some(p=>p!=='set_aside')) piles=piles.filter(p=>p!=='set_aside');
+    const bp=over.flatMap(r=>r.ballet_pages||[]).filter(b=>b.page>=st&&b.page<=en);
+    return {start:st,end:en,exact:!!exact,
+      title:exact?exact.title:over.map(r=>r.title).join(' / '),
+      dates:exact?exact.dates:over.map(r=>r.dates).filter(Boolean).join('; '),
+      why:exact?exact.why:'You changed this boundary; the suggestion combines the runs it came from: '+over.map(r=>`pp. ${r.start}–${r.end} ${pileList(r.piles)}`).join('; '),
+      unsure:exact?!!exact.unsure:true, piles:normPiles(piles), ballet:bp,
+      dec:(mine.runs||{})[st]||null};
+  });
+}
+let rsWriting=Promise.resolve();
+function saveRunSort(d,mut){
+  const cur=structuredClone(RSORT[d.id]||{runs:{},starts:[]}); cur.runs=cur.runs||{}; cur.starts=cur.starts||[];
+  mut(cur); RSORT[d.id]=cur;
+  rsWriting=rsWriting.then(()=>db.doc('run_sorting/'+d.id).set(cur)).then(()=>flash(),e=>flash('Not saved: '+(e.code||'error')));
+  rollUp(d);
+}
+function rollUp(d){
+  // once every run is decided, the дело's own piles follow: the union of the Keep piles, or Set aside if every run is set aside
+  const rs=effRuns(d); if(!rs.length||rs.some(r=>!r.dec||!r.dec.piles?.length)) return;
+  const keep=[...new Set(rs.flatMap(r=>r.dec.piles).filter(p=>p!=='set_aside'))];
+  const piles=keep.length?keep:['set_aside'];
+  if(normPiles(piles).join()!==pilesOf(d).join()) saveSort(d.id,{piles,note:(SORT[d.id]||{}).note||'from runs'});
+}
+function runPile(d,r,k){
+  saveRunSort(d,cur=>{ let ps=[...((cur.runs[r.start]||{}).piles||[])];
+    if(k==='set_aside') ps=ps.includes('set_aside')?[]:['set_aside'];
+    else { ps=ps.filter(x=>x!=='set_aside'); ps=ps.includes(k)?ps.filter(x=>x!==k):[...ps,k]; }
+    cur.runs[r.start]={...(cur.runs[r.start]||{}),piles:normPiles(ps),date:ymd()};
+    if(!ps.length&&!cur.runs[r.start].note) delete cur.runs[r.start]; });
+}
+function setBounds(d,fn){
+  saveRunSort(d,cur=>{ const base=(cur.starts&&cur.starts.length)?cur.starts:RUNS[d.id].runs.map(r=>r.start);
+    const [starts,clear]=fn([...base]); cur.starts=[...new Set(starts)].sort((a,b)=>a-b);
+    clear.forEach(st=>delete cur.runs[st]); });
+}
 function showTray(){
   delete $('#view').dataset.delo;
-  if(!ui.tray.length) ui.tray=toSort().slice(0,TRAY_SIZE).map(d=>d.id);
   $('#view').innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
     <h2>Sorting tray</h2>
-    <p class="ground">Received дела you have not sorted yet, ${TRAY_SIZE} at a time. Put each in one or more Keep piles, or set it aside. Set-aside дела leave the register and wait on the <a href="#shelf">shelf</a>; nothing is deleted, the PDFs stay where they are, and one click brings a дело back. Claude's suggestion is drawn from the page summaries and is only a suggestion: the piles are yours.</p>
-    <div class="trayhead"><span class="count" id="traycount" style="margin-left:0"></span><button class="btn" id="nextbatch">Next batch</button><span class="saved" id="saved" aria-live="polite"></span></div>
+    <p class="ground">One дело at a time, divided into runs: neighbouring pages that deal with the same business. Put each run in one or more Keep piles, or set it aside. Claude's suggestion is drawn from the page summaries and is only a suggestion. Every page that looks ballet-related is listed on its run, so nothing about ballet goes to the shelf unseen. If a boundary is wrong, split or merge runs. When every run is decided, the дело's own piles follow automatically. Nothing is deleted and the PDFs stay where they are.</p>
+    <div class="trayhead"><select id="traydelo" aria-label="Choose a дело"></select><button class="btn" id="trayprev">← Previous дело</button><button class="btn" id="traynext">Next дело →</button><span class="count" id="traycount" style="margin-left:0"></span><span class="saved" id="saved" aria-live="polite"></span></div>
     <div id="tray" style="margin-top:12px"></div>`;
   $('#home').onclick=e=>{e.preventDefault(); history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
-  $('#nextbatch').onclick=()=>{ ui.tray=toSort().slice(0,TRAY_SIZE).map(d=>d.id); paintTray(); scrollTo(0,0); };
   paintTray();
-  Promise.all(ui.tray.map(id=>DELA.find(x=>x.id===id)).filter(Boolean).map(loadPages)).then(()=>{ if(location.hash==='#sort') paintTray(); });
 }
-function paintTray(){
+function paintTraySafe(){ const a=document.activeElement; if(a&&a.matches&&a.matches('[data-rnote],[data-snote]')) return; paintTray(); }
+async function paintTray(){
   const el=$('#tray'); if(!el) return showTray();
   stats();
-  const cards=ui.tray.map(id=>DELA.find(x=>x.id===id)).filter(Boolean), left=toSort().length;
-  $('#traycount').textContent=`${cards.filter(d=>pilesOf(d).length).length} of ${cards.length} in this batch sorted · ${left} left to sort in all`;
-  $('#nextbatch').hidden=!left;
-  el.innerHTML=cards.length?cards.map(d=>{
-    const tops=topPages(d);
-    return `<div class="card ${pilesOf(d).length?'done':''}">
-      <div class="ch"><span class="pno">Д. ${d.delo}</span><span class="ct"><a href="#${d.id}">${gloss(d.title,new Set())}</a></span></div>
-      <div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''} · ${d.n_pages} pp · ${d.n_high||0} high${d.n_ballet?` · <span class="tag ballet">${d.n_ballet} ballet</span>`:''}${d.n_editorial?` · <span class="tag editorial">${d.n_editorial} editorial</span>`:''}</div>
-      ${tops.length?`<div class="tops">${tops.map(r=>`<div class="top">${miniThumb(d,r.page)}<div><b>PDF p. ${r.page}</b>${r.folio?` · л. ${esc(r.folio)}`:''} <span class="pill ${esc(r.relevance)}">${esc(r.relevance)}</span><p>${gloss((r.gist||'').slice(0,220)+((r.gist||'').length>220?'…':''),new Set())}</p></div></div>`).join('')}</div>`:(PAGES[d.id]?'<p class="meta">No page rated high or medium.</p>':'<p class="meta">Loading pages…</p>')}
-      ${sortControls(d)}
-    </div>`;}).join(''):'<p class="state">Everything received has been sorted. New дела will appear here once their page guides are built.</p>';
-  bindSort(el,paintTray);
-  el.querySelectorAll('[data-goto2]').forEach(x=>x.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+x.dataset.goto2; });
+  const list=runDela();
+  const undecided=d=>effRuns(d).some(r=>!r.dec);
+  if(!ui.trayDelo||!list.find(d=>d.id===ui.trayDelo)) ui.trayDelo=(list.find(undecided)||list[0]||{}).id||null;
+  const sel=$('#traydelo');
+  sel.innerHTML=list.length?list.map(d=>{ const rs=effRuns(d), n=rs.filter(r=>r.dec).length; return `<option value="${d.id}" ${d.id===ui.trayDelo?'selected':''}>Д. ${d.delo} · ${n}/${rs.length} runs decided</option>`; }).join(''):'<option>No дела divided into runs yet</option>';
+  sel.onchange=()=>{ ui.trayDelo=sel.value; paintTray(); scrollTo(0,0); };
+  const i=list.findIndex(d=>d.id===ui.trayDelo);
+  $('#trayprev').disabled=i<=0; $('#traynext').disabled=i<0||i>=list.length-1;
+  $('#trayprev').onclick=()=>{ ui.trayDelo=list[i-1].id; paintTray(); scrollTo(0,0); };
+  $('#traynext').onclick=()=>{ ui.trayDelo=list[i+1].id; paintTray(); scrollTo(0,0); };
+  const notyet=DELA.filter(d=>d.received&&d.triaged&&!RUNS[d.id]).length;
+  const d=list[i];
+  if(!d){ $('#traycount').textContent=''; el.innerHTML=`<p class="state">No дело has been divided into runs yet. Claude prepares them from the page summaries.</p>`; return; }
+  const rs=effRuns(d), done=rs.filter(r=>r.dec).length;
+  $('#traycount').textContent=`${done} of ${rs.length} runs decided · ${notyet} received дела not divided yet`;
+  if(!PAGES[d.id]){ el.innerHTML='<p class="state">Loading pages…</p>'; await loadPages(d); if(ui.trayDelo!==d.id) return; }
+  const byPage=Object.fromEntries((PAGES[d.id]||[]).map(r=>[r.page,r]));
+  const fol=n=>byPage[n]?.folio?`л. ${esc(byPage[n].folio)}`:'';
+  const nb=rs.reduce((s,r)=>s+r.ballet.length,0);
+  el.innerHTML=`<div class="card"><div class="ch"><span class="pno">Д. ${d.delo}</span><span class="ct"><a href="#${d.id}">${gloss(d.title,new Set())}</a></span></div>
+      <div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''} · ${d.n_pages} pp · ${rs.length} runs · <span class="tag ballet">${nb} ballet-related pages</span></div>
+      ${pilesOf(d).length?`<div class="meta" style="margin-top:6px">This дело's piles (from your runs): ${pilesOf(d).map(k=>`<span class="tag p-${esc(k)}">${esc(PILE_L[k])}</span>`).join(' ')}</div>`:''}</div>`
+   +rs.map((r,j)=>{
+    const ps=r.dec?.piles||[], pages=[]; for(let n=r.start;n<=r.end;n++) if(byPage[n]) pages.push(byPage[n]);
+    const bset=new Set(r.ballet.map(b=>b.page));
+    const sc=x=>({high:3,medium:1}[x.relevance]||0)+(x.editorial?1:0);
+    const tops=pages.filter(x=>!bset.has(x.page)&&sc(x)>0).sort((a,b)=>sc(b)-sc(a)||a.page-b.page).slice(0,2);
+    const nh=pages.filter(x=>x.relevance==='high').length;
+    const sbtn=(k,l)=>`<button data-rp="${k}" data-rs="${r.start}" aria-pressed="${ps.includes(k)}">${l}</button>`;
+    return `<div class="card ${ps.length?'done':''}" id="run${r.start}">
+      <div class="ch"><span class="runrange">pp. ${r.start}–${r.end}${fol(r.start)?` · ${fol(r.start)}${r.end>r.start&&fol(r.end)?'–'+esc(byPage[r.end].folio):''}`:''}</span><span class="ct">${gloss(r.title,new Set())}</span>${r.unsure?'<span class="tag unsure">Claude unsure</span>':''}</div>
+      <div class="meta">${esc(r.dates)} · ${r.end-r.start+1} pp · ${nh} high</div>
+      ${r.ballet.length?`<div class="bpages"><span class="lbl">Ballet-related pages (${r.ballet.length})</span><div class="bchips">${r.ballet.map(b=>`<span class="bchip">${miniThumb(d,b.page,45)}<span><b>p. ${b.page}</b> · ${esc(b.signal)}<br>${gloss((byPage[b.page]?.gist||'').slice(0,140)+'…',new Set())}</span></span>`).join('')}</div></div>`:''}
+      ${tops.length?`<div class="tops">${tops.map(x=>`<div class="top">${miniThumb(d,x.page)}<div><b>PDF p. ${x.page}</b>${x.folio?` · л. ${esc(x.folio)}`:''} <span class="pill ${esc(x.relevance)}">${esc(x.relevance)}</span><p>${gloss((x.gist||'').slice(0,200)+((x.gist||'').length>200?'…':''),new Set())}</p></div></div>`).join('')}</div>`:''}
+      <div class="suggest"><b>Claude's suggestion:</b> ${esc(pileList(r.piles))}. ${gloss(r.why,new Set())} ${ps.join()!==r.piles.join()?`<button class="btn" data-ruse="${r.start}">Use suggestion</button>`:''}</div>
+      <div class="sortbox"><span class="lbl">Your piles</span>
+        <span class="seg" role="group" aria-label="Keep piles for pages ${r.start}–${r.end}">${PILES.map(([k,l])=>sbtn(k,l)).join('')}</span>
+        <span class="seg" role="group" aria-label="Set aside pages ${r.start}–${r.end}">${sbtn('set_aside','Set aside')}</span>
+        ${r.dec?.date?`<span class="meta">decided ${esc(r.dec.date)}</span>`:''}
+        <input class="pnote" data-rnote="${r.start}" value="${esc(r.dec?.note||'')}" placeholder="Why (optional)" aria-label="Your reason for pages ${r.start}–${r.end}">
+      </div>
+      ${ps.includes('set_aside')&&r.ballet.length?`<p class="warn">Set aside although ${r.ballet.length} page${r.ballet.length>1?'s look':' looks'} ballet-related (pp. ${r.ballet.map(b=>b.page).join(', ')}). Mark any you want with Key on the дело's page.</p>`:''}
+      <div class="runtools"><a href="#${d.id}" data-rgo="${r.start}">Open these pages</a>
+        ${r.end>r.start?`<label>Split before page <select data-rsplit="${r.start}" aria-label="Split pages ${r.start}–${r.end}"><option value="">…</option>${pages.slice(1).map(x=>`<option value="${x.page}">${x.page}</option>`).join('')}</select></label>`:''}
+        ${j<rs.length-1?`<button class="btn" data-rmerge="${r.start}" data-rnext="${rs[j+1].start}">Merge with next run</button>`:''}
+      </div></div>`;}).join('')
+   +`<div class="trayhead">${i<list.length-1?`<button class="btn" id="traynext2">Next дело →</button>`:''}</div>`;
+  el.querySelectorAll('[data-rp]').forEach(b=>b.onclick=()=>{ const r=rs.find(x=>x.start===+b.dataset.rs); runPile(d,r,b.dataset.rp); paintTray(); });
+  el.querySelectorAll('[data-ruse]').forEach(b=>b.onclick=()=>{ const r=rs.find(x=>x.start===+b.dataset.ruse); saveRunSort(d,cur=>{ cur.runs[r.start]={...(cur.runs[r.start]||{}),piles:[...r.piles],date:ymd()}; }); paintTray(); });
+  el.querySelectorAll('[data-rnote]').forEach(inp=>inp.onchange=()=>{ const st=+inp.dataset.rnote; saveRunSort(d,cur=>{ cur.runs[st]={piles:[],date:'',...(cur.runs[st]||{}),note:inp.value}; if(!cur.runs[st].piles.length&&!inp.value) delete cur.runs[st]; }); });
+  el.querySelectorAll('[data-rsplit]').forEach(x=>x.onchange=()=>{ const p=+x.value; if(!p) return; const st=+x.dataset.rsplit; setBounds(d,s=>[[...s,p],[st]]); paintTray(); });
+  el.querySelectorAll('[data-rmerge]').forEach(b=>b.onclick=()=>{ const st=+b.dataset.rmerge, nx=+b.dataset.rnext; setBounds(d,s=>[s.filter(v=>v!==nx),[st,nx]]); paintTray(); });
+  el.querySelectorAll('[data-rgo]').forEach(a=>a.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+a.dataset.rgo; });
+  el.querySelectorAll('.athumb[data-goto2]').forEach(x=>x.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+x.dataset.goto2; });
+  const n2=$('#traynext2'); if(n2) n2.onclick=()=>{ ui.trayDelo=list[i+1].id; paintTray(); scrollTo(0,0); };
 }
 function showShelf(){
   delete $('#view').dataset.delo; stats();
