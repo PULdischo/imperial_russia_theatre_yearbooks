@@ -5,7 +5,7 @@ Where were the volumes sent and sold before Baron Н. В. Дризенъ took th
 This file collects what the RGIA Ф. 497 оп. 18 дела received so far say about it,
 issue by issue and channel by channel.
 
-**Status: finding aid, 2026-11-02.** Every reading below was made by Claude (the main session
+**Status: finding aid, 2026-11-02; д. 808 and 1167 added 2026-11-24.** Every reading below was made by Claude (the main session
 or its reading agents) on zoomed crops of the ORIGINAL photos, unless marked otherwise. RG has
 not read these pages yet; treat every figure and name as a pointer to the page, not as a
 reading to cite.
@@ -120,6 +120,29 @@ SPb in 1a. Neither is "the" figure.
   - 18 issued to subscribers of III at 2 р. 50 к.
   - 2 to the Губернская типографія at 2 р. 25 к.
   - 58 left.
+- **Moscow's own book** (д. 808 л. 1-3, PDF pp. 2-6, checked by Claude; reads file 11):
+  - At the purchase, 424 copies were in Moscow. 123 of these had been sold (114) or given free (9)
+    «въ пользу издателей», leaving 301 «казенныхъ» copies; SPb had 1168.
+  - Of the 301: 223 sold by 1 Dec 1893 for 489 р. 60 к. «по разнымъ цѣнамъ», 78 left (отчетъ I).
+    By 1 June 1895 a further 40 were sold for 103 р. 50 к. and 1 was given free, leaving 37
+    (отчетъ II).
+  - The 1469 reconciled (д. 808 PDF p. 4): Типографія to Ц. Б. 1260; 8 free to «Бернсенъ?»
+    («при сборѣ объявленій по 2-му вып.»); 49 (struck line); 152 left in the Типографія.
+    Ц. Б. 1160 + Тип. 152 = SPb 1312; Moscow 157 + 144 = 301.
+  - The 301 does not match the «отправлено въ Московскую Контору» 186 of д. 181 л. 1-2 and
+    д. 159 л. 13 (§6, point 7).
+- **A Moscow seller's remittance** (д. 1167 л. 1-2, 8, PDF pp. 2-9, 23-25, checked by Claude;
+  reads file 12):
+  - On 14 Dec 1892 К. Здобновъ in Moscow sent 72 р. 90 к. «за проданные мною экземпляры» of
+    issue I, by a transfer from the Контора Юнкера in envelope № 1256, in Молчановъ's name.
+  - Hearing nothing, he wrote again on 16 Jan 1893. К. А. Петровъ of the Central Library replied
+    on 18 Jan that the money had arrived; Молчановъ had not written «по болѣзни?». Петровъ asked
+    how many copies Здобновъ had had, how many were left, and whether Левенсонъ's copies were
+    counted in his.
+  - Здобновъ answered on 22 Jan with an enclosed расчетъ (not in the дело). The only figures in
+    the letter: he had sent 20 copies to the Губернская типографія and got 6 back from them. For
+    the типографія's accounts he referred to the Moscow Контора's отношеніе of 11 Nov 1892
+    № 2102 (the p. 15 docket reads «№ 2112?»).
 - **Free copies of I**: see §3.1.
 
 ### Issue II (1891-92)
@@ -144,6 +167,9 @@ SPb in 1a. Neither is "the" figure.
     54 (24 to subscribers at 3 р.; 9 sold through the типографія at 3 р. 60 к.; 21 to
     subscribers at 2 р. 70 к.); 226 left. Money 161 р. 10 к.
     (д. 164, PDF pp. 6-9; prices reconcile with the money column; checked by Claude).
+  - Moscow's own book (д. 808 л. 5, PDF p. 8, checked by Claude): 564 received (555 + 9). To
+    1 Dec 1893: 269 sold for 557 р. 40 к., 15 free, 280 left. To 1 June 1895: 106 sold for
+    321 р. 90 к., 7 free, 167 left.
 
 ### Issue III (1892-93)
 
@@ -155,6 +181,18 @@ SPb in 1a. Neither is "the" figure.
   newspapers and journals 24.
 - **On hand 700**: Ц. Б. 541, Typography 14, Photography 20, Moscow 13, «отправлено
   дополнительно въ Московскую Контору» 112.
+- **The editor's cost report for III** (д. 1167 л. 15-16, PDF pp. 41-46, pencil «Черновикъ»,
+  checked by Claude; reads file 12):
+  - 4000 copies: 3900 on plain paper for sale and 100 honorary on «слоновая» (with «веленевая»
+    struck). 37 printed sheets, 588 pages, 345 drawings.
+  - Paper 1913 р. 22 к.; setting and printing 1483 р. 60 к.; bindings 130 р.; lithography 45 р.;
+    authors 495 р. + editor 2400 р.; small expenses 120 р. The брошюровка amount is blotted:
+    30 or 300 р.
+  - The written total is «102■7 р. 68 к.», with one digit blotted.
+  - The overspend draft: the estimate was 9269 р.; «10382» is written above it; the excess was
+    corrected from 1060 р. to 1113 р. (9269 + 1113 = 10382, the same cost of III as §1a). The
+    excess is explained by 7 extra sheets (784 р. 70 к.) and a one-off purchase of typographic
+    ornaments, whose sum is left blank. «За объявленія 567 р.» stands apart.
 - **Binder's deliveries**: 3386 copies from Шкваровъ between 17 Feb and 30 Apr 1894. Of these,
   500 went banderoled to the Typography office for subscribers, 12 to the censor and 2 to
   Молчановъ (д. 181 л. 5, PDF pp. 10-11).
@@ -163,6 +201,8 @@ SPb in 1a. Neither is "the" figure.
     (д. 162 л. 5 об., PDF p. 11).
   - In Moscow by 12 March 1894: 288 received; 266 issued to subscribers at 2 р. 50 к.; 9 sold
     at 4 р.; 13 left; money 701 р. (д. 164, PDF p. 7, 9).
+  - Moscow's own book (д. 808 л. 7, PDF p. 10, checked by Claude): 400 received by 1 June 1895;
+    328 sold for 868 р.; 10 free; 62 left.
 - **Instalment subscribers in Moscow**: I 166, II 199, III 204 (д. 164 л. 1, PDF pp. 3-4,
   12 March 1894, checked by Claude).
 - Issue III was the first printed in 3900 for sale. The runs of II-III against copies in
@@ -197,6 +237,8 @@ SPb in 1a. Neither is "the" figure.
   - Subscribers to IV through the Moscow Контора and Левенсонъ's printing house: 217 =
     27 paying at once + 165 by instalments + 25 at Левенсонъ (д. 164 л. 4, PDF p. 10,
     21 Dec 1894, checked by Claude).
+  - Moscow's own book (д. 808 л. 9, PDF p. 12, checked by Claude): 400 received by 1 June 1895;
+    265 sold for 902 р. 30 к.; 23 free; 17 sent to the Губ. Тип.; 95 left (pencil).
 - **Close of subscription.** On 5 April 1895 the SPb Контора asked Moscow to remit all money
   and return the receipt books (д. 159 л. 22, PDF pp. 44-45). Moscow replied that the money had
   gone to the Moscow branch of the Касса Министерства Императорскаго Двора (л. 23, PDF p. 46).
@@ -389,6 +431,13 @@ later), IV 241, V 210, VI 187 (the pencil figures are from the д. 162 ledger, �
 **The censor.** The binder delivered 10 of each part «для Цензуры» via the Typography, and
 5 to Молчановъ (д. 181 л. 4 об., 7-8, PDF pp. 9, 14-17). The issue II-III accounts have 12.
 
+- **Requests for free copies, 1895-96** (д. 1167 л. 5-7, PDF pp. 16-22, checked by Claude):
+  - The редакція of «Всемірная Иллюстрація», 26 Nov 1895, asked for a copy addressed to
+    П. А. Быковъ («Мы дадимъ обстоятельный отзывъ»). Resolution «Выдать».
+  - The Русское Театральное Общество's Театральное справочно-статистическое бюро in Moscow,
+    28 Sept 1896, № 158, signed «Управляющій Бюро А. Ярцевъ», asked Молчановъ for the current
+    issue and all previous ones for its reading room. Resolution «Выдать».
+
 ### 3.2 Subscriptions: theatre staff
 
 - **Instalments from the start.** Printed form «ПОДПИСКА ВЪ РАЗСРОЧКУ»: monthly 25 к. (I),
@@ -486,7 +535,15 @@ later), IV 241, V 210, VI 187 (the pencil figures are from the д. 162 ledger, �
   seven-point questionnaire on issues I-II «отдѣльно по Конторѣ и отдѣльно по Типографіи
   г. Левенсона» (д. 160 л. 2, PDF pp. 6-7, transcribed in the reads). Moscow remitted
   2195 р. 70 к. to the Moscow branch of the Касса Министерства under 11 receipts of 1894-95
-  (д. 159 л. 35, PDF pp. 64-65).
+  (д. 159 л. 35, PDF pp. 64-65). In March 1893, before issue II reached Moscow, Петровъ asked the
+  Moscow side (3 March, д. 1167 л. 3-4, PDF pp. 10-15) to get Левенсонъ's receipt books and
+  subscription money, and to have Левенсонъ report on issue I under seven heads (copies received
+  «во всѣхъ отдѣленіяхъ», to subscribers, sold by month, free, money and when, sold with
+  subscriptions to both issues, left). The same letter says «Въ субботу Ежегодникъ подносится
+  Государю и, вѣроятно, въ понедѣльникъ пошлется къ Вамъ первый транспортъ» (a plan; 6 and
+  8 March by my reckoning). Moscow's own book gives the same 2195 р. 70 к. for the period to
+  1 June 1895, after 1047 р. to 1 Dec 1893: 3242 р. 70 к. in all for issues I-IV, for 1231 copies
+  sold and 56 given free (д. 808 PDF p. 13 and the issue pages; my sums; nothing yet for V).
 - **Warsaw** (д. 161, checked by Claude): commission agent Іосифъ Львовичъ Гологовскій
   (spelled so in his signatures and the office's letters; «Гологоловскому» once,
   in Петровъ's рапортъ, л. 8 об., PDF p. 21).
@@ -573,15 +630,22 @@ All from the checked figures above; interpretation is marked.
   columns for VII («по 1 Янв. 1898 г.») left blank.
 - **Moscow's own accounts.** The «Москва» halves of д. 162 are blank. The Moscow reports of
   6 Dec 1893 (№ 2399) and 13 June 1895 (№ 862) are referred to but are not in the дела received.
+  Their figures, however, are copied into д. 808 as «отчетъ I» (to 1 Dec 1893) and «отчетъ II»
+  (to 1 June 1895), issues I-IV, so Moscow is now covered to mid-1895.
 - **Free lists after V.** None.
 - **Unread portions.** Several pencil name lists (д. 159 PDF pp. 10, 16-18) were too faint; on
   д. 159 PDF p. 97 the pencil totals (subscriber columns 361 / 356 / 335 / 3[нрзб], and a row
   17 / 17 / 17) cannot be tied to either the 1894-95 register or the 1895-96 block.
 - **Outstanding batch-1 дела likely to fill these gaps** (docs/rgia_request_log.csv):
   - **Д. 808** «Книга прихода и расхода экземпляров журнала „Ежегодник императорских
-    театров“»: the copy ledger, probably the continuation of д. 162 (VII onwards).
-  - **Д. 1167** «О „Ежегоднике императорских театров“», 17 Jan 1893 – 17 Nov 1904: the
-    general file for exactly the years with no copy accounts.
+    театров“»: READ 2026-11-24 (reads file 11). It is not a continuation for VII onwards: it is
+    a short book for issues I-V with only the Moscow pages filled, to 1 June 1895. It closes the
+    Moscow gap to that date and leaves VII-XVIII as open as before.
+  - **Д. 1167** «О „Ежегоднике императорских театров“», 17 Jan 1893 – 17 Nov 1904: READ
+    2026-11-24 for PDF pp. 2-25 and 41-46 (reads file 12). It holds only 15 leaves: Moscow
+    letters of 1893 about issue I, two free-copy requests of 1895-96, the cost report for III,
+    and (pp. 26-40, not read for this report) contributors' letters of 1904 and a printer's
+    apology. Despite its dates it has no copy accounts for VII-XVIII.
   - Д. 196, 200, 202 (manuscript material) are unlikely to bear on distribution.
 
 ---
@@ -598,3 +662,10 @@ Each needs her reading of the page. The evidence is in the reads files.
 4. д. 168 л. 2, PDF pp. 6-8: the agent's surname, Кишкинъ or Шишкинъ.
 5. д. 163 л. 38, PDF p. 70: the 1907 figure, 1626 or 1636.
 6. д. 162 л. 8 / 8 об., PDF pp. 17, 19: Moscow copies of issue V book III, 710 or 700.
+7. Issue I in Moscow: д. 808 л. 1 (PDF p. 2) has 301 crown copies (157 there at the purchase +
+   144 sent), but д. 181 л. 1-2 and д. 159 л. 13 say 186 were «отправлено въ Московскую Контору».
+   Do the 186 count something else? Also on д. 808 л. 1: who is «ст. секр. Петровымъ», who
+   authorised the purchase on 10 Oct 1892? And is the name on PDF p. 4 «Бернсену»?
+8. д. 1167 л. 15, PDF pp. 41-43: the blotted digits in the issue-III cost report. Is the
+   брошюровка 30 or 300 р.? Are the clichés 276 or 270 р.? What is the total? Also, on
+   л. 4 (PDF p. 12), what is «„Кн. Дадновъ?"»?
