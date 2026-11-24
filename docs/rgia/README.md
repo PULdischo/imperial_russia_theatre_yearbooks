@@ -15,6 +15,8 @@ page by page, and added to the **RGIA Reading Room** artifact
 | Reading Room page + seed data + thumbnail sheets | `outputs/rgia_reading_room/` | no, rebuilt from the two tracked files |
 | RG's own marks (read / key / skip) and notes | the Reading Room's `marks` collection, one doc per дело (`d159`, …) | no: pull with ArtifactData `list marks` |
 | Editorial timeline: dated acts and the spans built on them | `docs/rgia/editorial_acts.csv`, `docs/rgia/editorial_spans.csv` (design: `editorial_timeline_design.md`) | yes |
+| RG's sorting of each received дело into piles (sorting tray / set-aside shelf) | the Reading Room's `sorting` collection, one doc per дело (`d159`, …); copied into the log's `rg_piles`, `rg_sort_note`, `rg_sort_date` | yes once copied |
+| Claude's suggested pile(s) per дело, shown on the tray | `docs/rgia/sorting_suggestions.csv` → the `suggest` field of each `dela` doc | yes |
 | RG's own readings of timeline acts (date + note) | the Reading Room's `rg_reads` collection, one doc per act (`A001`, …) | no: pull with ArtifactData `list rg_reads` |
 | The PDFs themselves | wherever RG saves them (path in the log's `notes`) | no, too large |
 
@@ -50,6 +52,32 @@ new `sprites/<delo>.jpg` added to `files`, then write
 artifact's `dela` and `pages` collections with ArtifactData. Changes to the request
 log (new batches, received dates) need the `dela` docs rewritten too. Never write
 to `marks`: that is RG's.
+
+### Sorting step (after the page summaries)
+
+RG sorts each received дело on the Reading Room's **Sorting tray** (`#sort`)
+into one or more Keep piles — **Ballet**, **Editorial**, **Sales &
+distribution**, **Design & production** — or **Set aside**. Set-aside дела
+leave the register and sit on the **Set-aside shelf** (`#shelf`); nothing is
+deleted and the PDFs stay in `pdf/RGIA_F497_Op18/dela/` (RG, 2026-11-24: a
+label, not a move). Several Keep piles per дело are allowed.
+
+For each newly triaged дело, add one row to `docs/rgia/sorting_suggestions.csv`
+(`delo`, `piles` `;`-joined from `ballet / editorial / sales / design /
+set_aside`, `why` = one line from the page counts and summaries), rerun
+`rgia_reading_room.py`, and write the дело's `suggest` field with ArtifactData.
+Craftspeople's and designers' дела go to Design & production, not Set aside,
+even with no ballet named. The suggestion is only shown; never write to
+`sorting`: it is RG's.
+
+To record her decisions in git, pull them and copy them into the log:
+
+```
+# ArtifactData list collection=sorting out_dir=<dir>
+uv run python pipeline/rgia_request_tracker.py sorting --from <dir>
+```
+
+A дело with no `sorting` doc is cleared in the log (she sent it back to the tray).
 
 ### Editorial timeline step (after the page summaries)
 

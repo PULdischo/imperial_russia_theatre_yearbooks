@@ -121,6 +121,23 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
 .rgrow input[type=date]{font:inherit;font-size:.85rem;padding:3px 6px;border:1px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
 .ground{font-size:.88rem;max-width:72ch;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;background:var(--card);margin:10px 0 0}
 @media (max-width:620px){li.act{grid-template-columns:1fr}}
+/* sorting tray + set-aside shelf */
+.tag.p-ballet{color:var(--ballet)} .tag.p-editorial{color:var(--accent)} .tag.p-sales{color:var(--ok)} .tag.p-design{color:var(--key)} .tag.p-set_aside{color:var(--muted)}
+.tag.sugg{border-style:dashed;opacity:.8}
+.sortbox{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:10px}
+.sortbox .seg button[data-pile="set_aside"][aria-pressed="true"]{background:var(--muted);color:var(--paper)}
+.suggest{font-size:.88rem;border-left:3px dashed var(--accent);padding:4px 0 4px 10px;margin-top:10px;max-width:72ch}
+.suggest b{font-weight:700}
+.card{border:1px solid var(--rule);border-radius:8px;background:var(--card);padding:14px 16px;margin-bottom:14px}
+.card.done{box-shadow:inset 4px 0 0 var(--ok)}
+.card .ch{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.card .ct{font-family:var(--display);font-size:1.05rem;min-width:0}
+.card .ct a{color:var(--accent)}
+.tops{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.top{display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px;flex:1 1 260px;min-width:0;font-size:.82rem}
+.top .athumb{height:114px}
+.top p{margin:0;color:var(--muted)}
+.trayhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px}
 @media (max-width:620px){li.delo{grid-template-columns:4rem 1fr}li.delo .r{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
   li.pg{grid-template-columns:1fr} .thumb{margin:0}}
 @media (prefers-reduced-motion:no-preference){li.pg,li.delo{transition:opacity .15s}}
@@ -132,7 +149,7 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
     <div class="sig">РГИА · Ф. 497 «Дирекція Императорскихъ театровъ» · оп. 18</div>
     <p class="lede">Every дело you have requested, and for each one that has arrived, a page-by-page guide: what the page is about, whether it touches ballet or the Yearbook's editorial history, and your own marks. The summaries come from a quick machine read of the photographs. They tell you where to look; names marked “?” are doubtful and every reading needs checking against the scan.</p>
     <div class="stats" id="stats"></div>
-    <div class="tools"><label><input type="checkbox" id="glon"> Show English glosses after Russian terms</label><button class="btn" id="glbtn">Glossary</button><a class="btn" href="#timeline" style="text-decoration:none">Editorial timeline</a></div>
+    <div class="tools"><label><input type="checkbox" id="glon"> Show English glosses after Russian terms</label><button class="btn" id="glbtn">Glossary</button><a class="btn" href="#sort" style="text-decoration:none">Sorting tray</a><a class="btn" href="#shelf" style="text-decoration:none">Set-aside shelf</a><a class="btn" href="#timeline" style="text-decoration:none">Editorial timeline</a></div>
   </header>
   <main id="view"><p class="state">Loading the register…</p></main>
 </div>
@@ -159,7 +176,8 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $=s=>document.querySelector(s);
 const SUB=[['ed_contributors','Contributors'],['ed_illustrations','Illustrations'],['ed_print_finance','Print runs & finances'],['ed_editors','Editors & office']];
-let db=null, DELA=[], MARKS={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:''}, delo:{f:'all',q:''}, search:''};
+let db=null, DELA=[], MARKS={}, SORT={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:'',pile:''}, delo:{f:'all',q:''}, search:'', tray:[]};
+const PILES=[['ballet','Ballet'],['editorial','Editorial'],['sales','Sales & distribution'],['design','Design & production']], PILE_L=Object.fromEntries([...PILES,['set_aside','Set aside']]);
 
 /* ---------- data ---------- */
 async function boot(){
@@ -167,7 +185,8 @@ async function boot(){
   if(!db){ $('#view').innerHTML='<p class="state err">The register could not be loaded in this view. Open the page signed in to claude.ai.</p>'; return; }
   db.collection('dela').onSnapshot(s=>{ DELA=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.delo-b.delo); route(); },
     e=>{ $('#view').innerHTML=`<p class="state err">Could not read the register (${esc(e.code)}). Reload the page to try again.</p>`; });
-  db.collection('marks').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); MARKS=m; if(current()) paintMarksOnly(); else if(!onTimeline()) route(); });
+  db.collection('sorting').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); SORT=m; repaintSort(); });
+  db.collection('marks').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); MARKS=m; if(current()) paintMarksOnly(); else if(!onTimeline()&&!onSortView()) route(); });
   // timeline: Claude's acts/spans (read-only here) and RG's own readings (rg_reads, one doc per act)
   db.collection('timeline').onSnapshot(s=>{ s.docs.forEach(d=>TL[d.id]=d.data().rows||[]); if(onTimeline()) paintTimelineSafe(); });
   db.collection('rg_reads').onSnapshot(s=>{ const m={}; s.docs.forEach(d=>m[d.id]=d.data()); RGR=m; if(onTimeline()) paintTimelineSafe(); });
@@ -305,12 +324,13 @@ function flash(msg){ const el=$('#saved'); if(!el) return; el.textContent=msg||'
 const current=()=>{ const h=location.hash.slice(1); return /^d\d+$/.test(h)?h:null; };
 window.addEventListener('hashchange',route);
 const onTimeline=()=>location.hash==='#timeline';
-function route(){ stats(); if(onTimeline()) return showTimeline(); const id=current(); if(id){ const d=DELA.find(x=>x.id===id); if(d) return showDelo(d); } showHome(); }
+const onSortView=()=>location.hash==='#sort'||location.hash==='#shelf';
+function route(){ stats(); if(onTimeline()) return showTimeline(); if(location.hash==='#sort') return showTray(); if(location.hash==='#shelf') return showShelf(); const id=current(); if(id){ const d=DELA.find(x=>x.id===id); if(d) return showDelo(d); } showHome(); }
 
 function stats(){
   const recv=DELA.filter(d=>d.received).length, req=DELA.filter(d=>d.requested).length;
   const tri=DELA.filter(d=>d.triaged), b=tri.reduce((s,d)=>s+(d.n_ballet||0),0), e=tri.reduce((s,d)=>s+(d.n_editorial||0),0);
-  $('#stats').innerHTML=DELA.length?`<span class="pill recv">${recv} received</span><span class="pill wait">${req-recv} awaited</span><span class="pill none">${DELA.length-req} not yet requested</span><span class="tag ballet">${b} ballet pages</span><span class="tag editorial">${e} editorial pages</span>`:'';
+  $('#stats').innerHTML=DELA.length?`<span class="pill recv">${recv} received</span><span class="pill wait">${req-recv} awaited</span><span class="pill none">${DELA.length-req} not yet requested</span><span class="tag ballet">${b} ballet pages</span><span class="tag editorial">${e} editorial pages</span><a class="pill wait" href="#sort" style="text-decoration:none">${toSort().length} to sort</a><a class="pill none" href="#shelf" style="text-decoration:none">${DELA.filter(isSetAside).length} set aside</a>`:'';
 }
 
 /* ---------- home: the register of дела ---------- */
@@ -319,8 +339,9 @@ function showHome(){
   const h=ui.home;
   $('#view').innerHTML=`
   <div class="bar" role="toolbar" aria-label="Filter дела">
-    ${[['received','Received'],['awaited','Awaited'],['all','All requested & listed']].map(([k,l])=>`<button class="chipbtn" data-hf="${k}" aria-pressed="${h.f===k}">${l}</button>`).join('')}
+    ${[['received','Received'],['tosort','To sort'],['setaside','Set aside'],['awaited','Awaited'],['all','All requested & listed']].map(([k,l])=>`<button class="chipbtn" data-hf="${k}" aria-pressed="${h.f===k}">${l}</button>`).join('')}
     <select id="grp" aria-label="Group"><option value="">All groups</option>${groups.map(g=>`<option ${g===h.grp?'selected':''}>${esc(g)}</option>`).join('')}</select>
+    <select id="hpile" aria-label="Pile"><option value="">All piles</option>${PILES.map(([k,l])=>`<option value="${k}" ${k===h.pile?'selected':''}>${esc(l)}</option>`).join('')}</select>
     <input type="search" id="hq" placeholder="Search titles…" value="${esc(h.q)}" aria-label="Search titles">
     <span class="count" id="hcount"></span>
   </div>
@@ -334,6 +355,7 @@ function showHome(){
   if(!DELA.length){ $('#dela').innerHTML='<li class="state">The register is empty. Claude fills it from your request log.</li>'; return; }
   document.querySelectorAll('[data-hf]').forEach(b=>b.onclick=()=>{h.f=b.dataset.hf; showHome();});
   $('#grp').onchange=e=>{h.grp=e.target.value; paintDela();};
+  $('#hpile').onchange=e=>{h.pile=e.target.value; paintDela();};
   $('#hq').oninput=e=>{h.q=e.target.value; paintDela();};
   $('#sq').oninput=e=>{ui.search=e.target.value; clearTimeout(showHome.t); showHome.t=setTimeout(paintHits,250);};
   paintDela(); if(ui.search) paintHits();
@@ -341,7 +363,10 @@ function showHome(){
 function paintDela(){
   const h=ui.home, q=h.q.trim().toLowerCase();
   const rows=DELA.filter(d=>{
-    if(h.f==='received'&&!d.received) return false;
+    if(h.f==='received'&&(!d.received||isSetAside(d))) return false;
+    if(h.f==='tosort'&&!toSort().includes(d)) return false;
+    if(h.f==='setaside'&&!isSetAside(d)) return false;
+    if(h.pile&&!pilesOf(d).includes(h.pile)) return false;
     if(h.f==='awaited'&&(d.received||!d.requested)) return false;
     if(h.grp&&d.group!==h.grp) return false;
     if(q&&!(`${d.delo} ${d.title} ${d.group}`.toLowerCase().includes(q))) return false;
@@ -353,7 +378,7 @@ function paintDela(){
     const title=d.triaged?`<button data-open="${d.id}">${gloss(d.title,new Set())}</button>`:gloss(d.title,new Set());
     const counts=d.triaged?`<span class="prog">${d.n_pages} pp · ${done}/${d.n_pages} marked</span><span>${d.n_ballet?`<span class="tag ballet">${d.n_ballet} ballet</span> `:''}${d.n_editorial?`<span class="tag editorial">${d.n_editorial} editorial</span>`:''}</span><span class="prog">${SUB.filter(([k])=>d['n_'+k]).map(([k,l])=>`${l} ${d['n_'+k]}`).join(' · ')}</span>`:(d.received?'<span class="prog">guide not built yet</span>':'');
     return `<li class="delo"><span class="no">Д. ${d.delo}</span>
-      <div class="t">${title}<div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''}</div></div>
+      <div class="t">${title}<div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''}</div>${pileTags(d)}</div>
       <div class="r">${st}${counts}</div></li>`;}).join(''):'<li class="state">No дела match these filters.</li>';
   document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.open;});
 }
@@ -366,7 +391,7 @@ async function paintHits(){
     const t=[r.gist,r.doc_type,r.date,r.from_to,(r.key_names||[]).join(' ')].join(' ').toLowerCase();
     if(t.includes(q)) hits.push([d,r]);}));
   $('#scount').textContent=`${hits.length} pages`;
-  out.innerHTML=hits.length?hits.slice(0,200).map(([d,r])=>`<li><a href="#${d.id}" data-jump="${r.page}">Д. ${d.delo}, PDF p. ${r.page}${r.folio?', л. '+esc(r.folio):''}</a> <span class="pill ${esc(r.relevance)}">${esc(r.relevance)}</span>${r.ballet?' <span class="tag ballet">Ballet</span>':''} ${editTags(r)}<div class="meta">${gloss(r.gist,new Set())}</div></li>`).join(''):'<li class="state">No page summaries mention that.</li>';
+  out.innerHTML=hits.length?hits.slice(0,200).map(([d,r])=>`<li><a href="#${d.id}" data-jump="${r.page}">Д. ${d.delo}, PDF p. ${r.page}${r.folio?', л. '+esc(r.folio):''}</a>${isSetAside(d)?' <span class="tag p-set_aside">Set aside</span>':''} <span class="pill ${esc(r.relevance)}">${esc(r.relevance)}</span>${r.ballet?' <span class="tag ballet">Ballet</span>':''} ${editTags(r)}<div class="meta">${gloss(r.gist,new Set())}</div></li>`).join(''):'<li class="state">No page summaries mention that.</li>';
   out.querySelectorAll('[data-jump]').forEach(a=>a.onclick=()=>{ jumpTo=+a.dataset.jump; });
 }
 let jumpTo=null;
@@ -381,6 +406,7 @@ async function showDelo(d){
       <div class="sig">${esc(d.group)}${d.dates?' · '+esc(d.dates):''}${d.received?' · received '+esc(d.received):''}${d.link?` · <a href="${esc(d.link)}" target="_blank" rel="noopener">RGIA catalogue</a>`:''}</div>
       ${d.why?`<p class="why">${esc(d.why)}</p>`:''}
       ${d.notes?`<p class="why">${esc(d.notes)}</p>`:''}
+      ${d.triaged&&d.received?'<div id="dsort"></div>':''}
       <label class="notelabel" for="dnote">Your notes on this дело</label>
       <textarea id="dnote" placeholder="What it turned out to contain, what to follow up…"></textarea>
       <div class="bar" role="toolbar" aria-label="Filter pages">
@@ -395,6 +421,7 @@ async function showDelo(d){
     $('#pq').oninput=e=>{ui.delo.q=e.target.value; paintPages(d);};
     const dn=$('#dnote'); dn.value=marksFor(d.id).note||'';
     dn.onchange=()=>saveMarks(d.id,{note:dn.value});
+    paintDeloSort(d);
     await loadPages(d);
   }
   paintPages(d);
@@ -441,6 +468,110 @@ function paintMarksOnly(){
   const a=document.activeElement; if(a&&(a.matches('.pnote')||a.id==='dnote'||a.id==='pq')) return;
   const dn=$('#dnote'); if(dn) dn.value=marksFor(id).note||'';
   paintPages(d);
+}
+/* ---------- sorting: RG's piles per дело (collection `sorting`, hers; Claude only reads it) ---------- */
+const pilesOf=d=>(SORT[d.id]?.piles)||[];
+const isSetAside=d=>pilesOf(d).includes('set_aside');
+const toSort=()=>DELA.filter(d=>d.received&&d.triaged&&!pilesOf(d).length);
+const pileList=ps=>ps.map(k=>PILE_L[k]||k).join(' + ');
+function pileTags(d){
+  const ps=pilesOf(d);
+  if(ps.length) return `<div class="meta" style="margin-top:4px">${ps.map(k=>`<span class="tag p-${esc(k)}">${esc(PILE_L[k]||k)}</span>`).join(' ')}</div>`;
+  if(d.suggest&&d.received&&d.triaged) return `<div class="meta" style="margin-top:4px">Not sorted · Claude suggests ${d.suggest.piles.map(k=>`<span class="tag sugg p-${esc(k)}">${esc(PILE_L[k]||k)}</span>`).join(' ')}</div>`;
+  return '';
+}
+let sortWriting=Promise.resolve();
+function saveSort(id,patch){
+  const cur={piles:[],note:'',date:'',...(SORT[id]||{}),...patch};
+  if(patch.piles){ cur.piles=normPiles(cur.piles); cur.date=cur.piles.length?ymd():''; }
+  SORT[id]=cur;
+  const write=(!cur.piles.length&&!cur.note)?()=>db.doc('sorting/'+id).delete():()=>db.doc('sorting/'+id).set(cur);
+  sortWriting=sortWriting.then(write).then(()=>flash(),e=>flash('Not saved: '+(e.code||'error')));
+}
+const normPiles=ps=>[...new Set(ps)].sort((a,b)=>(PILES.findIndex(p=>p[0]===a)+9*(a==='set_aside'))-(PILES.findIndex(p=>p[0]===b)+9*(b==='set_aside')));
+function togglePile(d,k){
+  let ps=[...pilesOf(d)];
+  if(k==='set_aside') ps=ps.includes('set_aside')?[]:['set_aside'];
+  else { ps=ps.filter(x=>x!=='set_aside'); ps=ps.includes(k)?ps.filter(x=>x!==k):[...ps,k]; }
+  saveSort(d.id,{piles:ps});
+}
+function sortControls(d){
+  const ps=pilesOf(d), s=SORT[d.id]||{}, sg=d.suggest;
+  return `${sg?`<div class="suggest"><b>Claude's suggestion:</b> ${esc(pileList(normPiles(sg.piles)))}. ${esc(sg.why)} ${ps.join()!==normPiles(sg.piles).join()?`<button class="btn" data-usesugg="${d.id}">Use suggestion</button>`:''}</div>`:''}
+    <div class="sortbox">
+      <span class="lbl">Your piles</span>
+      <span class="seg" role="group" aria-label="Keep piles for Д. ${d.delo}">${PILES.map(([k,l])=>`<button data-pile="${k}" data-sid="${d.id}" aria-pressed="${ps.includes(k)}">${l}</button>`).join('')}</span>
+      <span class="seg" role="group" aria-label="Set aside Д. ${d.delo}"><button data-pile="set_aside" data-sid="${d.id}" aria-pressed="${ps.includes('set_aside')}">Set aside</button></span>
+      ${s.date?`<span class="meta">sorted ${esc(s.date)}</span>`:''}
+      <input class="pnote" data-snote="${d.id}" value="${esc(s.note||'')}" placeholder="Why (optional)" aria-label="Your reason for Д. ${d.delo}">
+    </div>`;
+}
+function bindSort(root,again){
+  root.querySelectorAll('[data-pile]').forEach(b=>b.onclick=()=>{ const d=DELA.find(x=>x.id===b.dataset.sid); togglePile(d,b.dataset.pile); again(); });
+  root.querySelectorAll('[data-usesugg]').forEach(b=>b.onclick=()=>{ const d=DELA.find(x=>x.id===b.dataset.usesugg); saveSort(d.id,{piles:[...d.suggest.piles]}); again(); });
+  root.querySelectorAll('[data-snote]').forEach(i=>i.onchange=()=>saveSort(i.dataset.snote,{note:i.value}));
+}
+function paintDeloSort(d){ const el=$('#dsort'); if(!el) return; el.innerHTML=sortControls(d); bindSort(el,()=>paintDeloSort(d)); }
+function repaintSort(){
+  const a=document.activeElement; if(a&&a.matches&&a.matches('[data-snote]')) return;
+  if(location.hash==='#sort') return paintTray();
+  if(location.hash==='#shelf') return showShelf();
+  const id=current(); if(id){ stats(); const d=DELA.find(x=>x.id===id); if(d) paintDeloSort(d); return; }
+  if(!onTimeline()) route();
+}
+function topPages(d){
+  const sc=r=>({high:3,medium:1}[r.relevance]||0)+(r.ballet?2:0)+(r.editorial?1:0);
+  return [...(PAGES[d.id]||[])].filter(r=>sc(r)>0).sort((a,b)=>sc(b)-sc(a)||a.page-b.page).slice(0,3);
+}
+function miniThumb(d,pg){
+  if(!d.sprite) return '<span class="athumb"></span>';
+  const g=d.sprite_geom||{w:150,h:190,cols:10}, k=90/g.w, i=pg-1;
+  return `<a class="athumb" href="#${d.id}" data-goto2="${pg}" aria-label="Open Д. ${d.delo}, PDF page ${pg}" style="background-image:url('sprites/${esc(d.sprite)}');background-size:${g.w*g.cols*k}px auto;background-position:-${(i%g.cols)*g.w*k}px -${Math.floor(i/g.cols)*g.h*k}px"></a>`;
+}
+const TRAY_SIZE=12;
+function showTray(){
+  delete $('#view').dataset.delo;
+  if(!ui.tray.length) ui.tray=toSort().slice(0,TRAY_SIZE).map(d=>d.id);
+  $('#view').innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
+    <h2>Sorting tray</h2>
+    <p class="ground">Received дела you have not sorted yet, ${TRAY_SIZE} at a time. Put each in one or more Keep piles, or set it aside. Set-aside дела leave the register and wait on the <a href="#shelf">shelf</a>; nothing is deleted, the PDFs stay where they are, and one click brings a дело back. Claude's suggestion is drawn from the page summaries and is only a suggestion: the piles are yours.</p>
+    <div class="trayhead"><span class="count" id="traycount" style="margin-left:0"></span><button class="btn" id="nextbatch">Next batch</button><span class="saved" id="saved" aria-live="polite"></span></div>
+    <div id="tray" style="margin-top:12px"></div>`;
+  $('#home').onclick=e=>{e.preventDefault(); history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
+  $('#nextbatch').onclick=()=>{ ui.tray=toSort().slice(0,TRAY_SIZE).map(d=>d.id); paintTray(); scrollTo(0,0); };
+  paintTray();
+  Promise.all(ui.tray.map(id=>DELA.find(x=>x.id===id)).filter(Boolean).map(loadPages)).then(()=>{ if(location.hash==='#sort') paintTray(); });
+}
+function paintTray(){
+  const el=$('#tray'); if(!el) return showTray();
+  stats();
+  const cards=ui.tray.map(id=>DELA.find(x=>x.id===id)).filter(Boolean), left=toSort().length;
+  $('#traycount').textContent=`${cards.filter(d=>pilesOf(d).length).length} of ${cards.length} in this batch sorted · ${left} left to sort in all`;
+  $('#nextbatch').hidden=!left;
+  el.innerHTML=cards.length?cards.map(d=>{
+    const tops=topPages(d);
+    return `<div class="card ${pilesOf(d).length?'done':''}">
+      <div class="ch"><span class="pno">Д. ${d.delo}</span><span class="ct"><a href="#${d.id}">${gloss(d.title,new Set())}</a></span></div>
+      <div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''} · ${d.n_pages} pp · ${d.n_high||0} high${d.n_ballet?` · <span class="tag ballet">${d.n_ballet} ballet</span>`:''}${d.n_editorial?` · <span class="tag editorial">${d.n_editorial} editorial</span>`:''}</div>
+      ${tops.length?`<div class="tops">${tops.map(r=>`<div class="top">${miniThumb(d,r.page)}<div><b>PDF p. ${r.page}</b>${r.folio?` · л. ${esc(r.folio)}`:''} <span class="pill ${esc(r.relevance)}">${esc(r.relevance)}</span><p>${gloss((r.gist||'').slice(0,220)+((r.gist||'').length>220?'…':''),new Set())}</p></div></div>`).join('')}</div>`:(PAGES[d.id]?'<p class="meta">No page rated high or medium.</p>':'<p class="meta">Loading pages…</p>')}
+      ${sortControls(d)}
+    </div>`;}).join(''):'<p class="state">Everything received has been sorted. New дела will appear here once their page guides are built.</p>';
+  bindSort(el,paintTray);
+  el.querySelectorAll('[data-goto2]').forEach(x=>x.onclick=()=>{ ui.delo={f:'all',q:''}; jumpTo=+x.dataset.goto2; });
+}
+function showShelf(){
+  delete $('#view').dataset.delo; stats();
+  const rows=DELA.filter(isSetAside);
+  $('#view').innerHTML=`<p class="back"><a href="#top" id="home">← All дела</a></p>
+    <h2>Set-aside shelf</h2>
+    <p class="ground">Дела you set aside: kept safe, out of the main register. Their page guides, your marks and the PDFs are all untouched. Search inside every received дело still finds them. “Back to the tray” clears your piles so you can sort the дело again.</p>
+    <div class="trayhead"><span class="count" style="margin-left:0">${rows.length} дела set aside</span><span class="saved" id="saved" aria-live="polite"></span></div>
+    <ol id="shelf">${rows.length?rows.map(d=>{ const s=SORT[d.id]||{};
+      return `<li class="delo"><span class="no">Д. ${d.delo}</span>
+        <div class="t"><a href="#${d.id}">${gloss(d.title,new Set())}</a><div class="meta">${esc(d.group)}${d.dates?' · '+esc(d.dates):''}${d.n_pages?` · ${d.n_pages} pp`:''}</div>${s.note?`<div class="ruling">${esc(s.note)}</div>`:''}</div>
+        <div class="r"><span class="prog">set aside ${esc(s.date||'')}</span><button class="btn" data-unshelve="${d.id}">Back to the tray</button></div></li>`;}).join(''):'<li class="state">Nothing set aside yet.</li>'}</ol>`;
+  $('#home').onclick=e=>{e.preventDefault(); history.pushState('',document.title,location.pathname); route(); scrollTo(0,0);};
+  document.querySelectorAll('[data-unshelve]').forEach(b=>b.onclick=()=>{ saveSort(b.dataset.unshelve,{piles:[]}); showShelf(); });
 }
 /* ---------- editorial timeline ---------- */
 let tlf={who:'',f:'all'};

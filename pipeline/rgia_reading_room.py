@@ -7,6 +7,9 @@ Inputs (all tracked in git):
   docs/rgia_request_log.csv        what was requested / received (rgia_request_tracker.py)
   docs/rgia/dela/<delo>.jsonl      page triage for each received дело
   docs/rgia/reading_room.html      the page itself (the one source of truth for it)
+  docs/rgia/sorting_suggestions.csv  Claude's suggested pile(s) per received дело, shown on
+                                   the sorting tray as "Claude's suggestion" (RG decides; her
+                                   decisions live in the artifact's `sorting` collection)
 
 Outputs, under outputs/rgia_reading_room/ (regenerable):
   index.html                       a copy of docs/rgia/reading_room.html, ready to publish
@@ -39,6 +42,8 @@ TRIAGE = ROOT / "docs" / "rgia" / "dela"
 DELA_IMG = ROOT / "outputs" / "rgia_dela"
 OUT = ROOT / "outputs" / "rgia_reading_room"
 PAGE = ROOT / "docs" / "rgia" / "reading_room.html"
+SUGGEST = ROOT / "docs" / "rgia" / "sorting_suggestions.csv"
+PILES = ("ballet", "editorial", "sales", "design", "set_aside")
 
 CELL_W, CELL_H, COLS = 150, 190, 10   # sprite geometry; the page reads these from the дело doc
 CHUNK_BYTES = 200_000
@@ -88,6 +93,16 @@ def main():
     with open(LOG, encoding="utf-8-sig") as fh:
         log = list(csv.DictReader(fh))
 
+    suggest = {}
+    if SUGGEST.exists():
+        with open(SUGGEST, encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                piles = [x for x in r["piles"].split(";") if x]
+                bad = set(piles) - set(PILES)
+                if bad or ("set_aside" in piles and len(piles) > 1):
+                    raise SystemExit(f"sorting_suggestions.csv, Д. {r['delo']}: bad piles {piles}")
+                suggest[r["delo"]] = {"piles": piles, "why": r["why"]}
+
     n_triaged = 0
     for row in log:
         delo = re.sub(r"\D", "", row["дело"])
@@ -106,6 +121,8 @@ def main():
             "pdf": pdf_path(row["notes"]),
             "triaged": False,
         }
+        if delo in suggest:
+            doc["suggest"] = suggest[delo]
         tf = TRIAGE / f"{delo}.jsonl"
         if tf.exists():
             pages = [json.loads(l) for l in tf.read_text(encoding="utf-8").splitlines() if l.strip()]
