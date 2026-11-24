@@ -9,7 +9,7 @@ record of what was ordered from RGIA and what came back. Tracking columns:
     date_received  when the files arrived
     notes          anything per-дело (not held, illegible, wrong file, ...)
     rg_piles       RG's sorting of a received дело, from the Reading Room's
-                   sorting tray: ballet / editorial / sales / design, ";"-joined
+                   sorting tray: ballet / editorial / manuscripts / sales / design, ";"-joined
                    (several allowed), or set_aside. Never filled by Claude.
     rg_sort_note   RG's reason, verbatim
     rg_sort_date   the date she sorted it
@@ -34,7 +34,7 @@ from pathlib import Path
 MASTER = Path("docs/rgia_request_log.csv")   # in docs/, not outputs/ -- outputs/ is gitignored
 TRACK = ["batch", "date_requested", "date_received", "notes"]
 SORT_COLS = ["rg_piles", "rg_sort_note", "rg_sort_date"]
-PILES = ("ballet", "editorial", "sales", "design", "set_aside")
+PILES = ("ballet", "editorial", "manuscripts", "sales", "design", "set_aside")
 
 
 def load():

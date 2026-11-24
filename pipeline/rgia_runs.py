@@ -3,7 +3,8 @@ seed for them.
 
 A *run* is a stretch of neighbouring PDF pages dealing with the same business
 (one correspondence, one ledger, one manuscript article ...). RG sorts each run
-into Keep piles (ballet / editorial / sales / design, several allowed) or Set
+into Keep piles (ballet / editorial / manuscripts / sales / design, several
+allowed) or Set
 aside, one дело at a time, on the Reading Room's tray. Claude's runs and
 suggestions live in docs/rgia/runs/<delo>.json:
 
@@ -39,7 +40,7 @@ TRIAGE = ROOT / "docs" / "rgia" / "dela"
 RUNS = ROOT / "docs" / "rgia" / "runs"
 TITLES = ROOT / "docs" / "rgia" / "ballet_titles.txt"
 OUT = ROOT / "outputs" / "rgia_reading_room" / "seed" / "runs"
-PILES = ("ballet", "editorial", "sales", "design", "set_aside")
+PILES = ("ballet", "editorial", "manuscripts", "sales", "design", "set_aside")
 
 KEYWORDS = re.compile(
     r"балет|балерин|танц|хореогр|кордебалет|балетм|Петип|"

@@ -122,7 +122,7 @@ li.act.rgread{box-shadow:inset 3px 0 0 var(--ok);padding-left:10px}
 .ground{font-size:.88rem;max-width:72ch;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;background:var(--card);margin:10px 0 0}
 @media (max-width:620px){li.act{grid-template-columns:1fr}}
 /* sorting tray + set-aside shelf */
-.tag.p-ballet{color:var(--ballet)} .tag.p-editorial{color:var(--accent)} .tag.p-sales{color:var(--ok)} .tag.p-design{color:var(--key)} .tag.p-set_aside{color:var(--muted)}
+.tag.p-ballet{color:var(--ballet)} .tag.p-editorial{color:var(--accent)} .tag.p-sales{color:var(--ok)} .tag.p-design{color:var(--key)} .tag.p-manuscripts{color:var(--high)} .tag.p-set_aside{color:var(--muted)}
 .tag.sugg{border-style:dashed;opacity:.8}
 .sortbox{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:10px}
 .sortbox .seg button[data-pile="set_aside"][aria-pressed="true"]{background:var(--muted);color:var(--paper)}
@@ -204,7 +204,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const $=s=>document.querySelector(s);
 const SUB=[['ed_contributors','Contributors'],['ed_illustrations','Illustrations'],['ed_print_finance','Print runs & finances'],['ed_editors','Editors & office']];
 let db=null, DELA=[], MARKS={}, SORT={}, RUNS={}, RSORT={}, PAGES={}, TL={acts:[],spans:[]}, RGR={}, ui={home:{f:'received',q:'',grp:'',pile:''}, delo:{f:'all',q:''}, search:'', trayDelo:null};
-const PILES=[['ballet','Ballet'],['editorial','Editorial'],['sales','Sales & distribution'],['design','Design & production']], PILE_L=Object.fromEntries([...PILES,['set_aside','Set aside']]);
+const PILES=[['ballet','Ballet'],['editorial','Editorial'],['manuscripts','Manuscripts & drafts'],['sales','Sales & distribution'],['design','Design & production']], PILE_L=Object.fromEntries([...PILES,['set_aside','Set aside']]);
 
 /* ---------- data ---------- */
 async function boot(){

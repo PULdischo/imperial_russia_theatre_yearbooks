@@ -56,15 +56,19 @@ to `marks`: that is RG's.
 ### Sorting step (after the page summaries)
 
 RG sorts each received дело (via its runs, below) into one or more Keep piles — **Ballet**, **Editorial**, **Sales &
-distribution**, **Design & production** — or **Set aside**. Set-aside дела
+distribution**, **Design & production**, **Manuscripts & drafts** — or **Set aside**. Set-aside дела
 leave the register and sit on the **Set-aside shelf** (`#shelf`); nothing is
 deleted and the PDFs stay in `pdf/RGIA_F497_Op18/dela/` (RG, 2026-11-24: a
 label, not a move). Several Keep piles per дело are allowed.
 
 For each newly triaged дело, add one row to `docs/rgia/sorting_suggestions.csv`
-(`delo`, `piles` `;`-joined from `ballet / editorial / sales / design /
+(`delo`, `piles` `;`-joined from `ballet / editorial / manuscripts / sales / design /
 set_aside`, `why` = one line from the page counts and summaries), rerun
 `rgia_reading_room.py`, and write the дело's `suggest` field with ArtifactData.
+**Manuscripts & drafts** (RG 2026-11-24): manuscripts and drafts that made their way
+into the printed Yearbook — drafts of lists, season reviews, articles, and source
+material supplied for them (e.g. staff lists sent for the Yearbook's lists). Part of
+the editorial history, kept as its own pile; suggest it alongside Editorial.
 Craftspeople's and designers' дела go to Design & production, not Set aside,
 even with no ballet named. The suggestion is only shown; never write to
 `sorting`: it is RG's.

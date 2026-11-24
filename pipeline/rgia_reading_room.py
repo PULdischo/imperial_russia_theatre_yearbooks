@@ -43,7 +43,7 @@ DELA_IMG = ROOT / "outputs" / "rgia_dela"
 OUT = ROOT / "outputs" / "rgia_reading_room"
 PAGE = ROOT / "docs" / "rgia" / "reading_room.html"
 SUGGEST = ROOT / "docs" / "rgia" / "sorting_suggestions.csv"
-PILES = ("ballet", "editorial", "sales", "design", "set_aside")
+PILES = ("ballet", "editorial", "manuscripts", "sales", "design", "set_aside")
 
 CELL_W, CELL_H, COLS = 150, 190, 10   # sprite geometry; the page reads these from the дело doc
 CHUNK_BYTES = 200_000
