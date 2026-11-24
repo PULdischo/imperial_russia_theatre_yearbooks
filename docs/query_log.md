@@ -28908,3 +28908,24 @@ fallback made 8 new performer links (full candidate lists) -> 6 accepted, 2 held
 outputs/full_run/imperial_theaters.pre_review_drift_2026-11-24.duckdb (f2736a5) and replaced by the copy (4661c05); recheck vs
 backup: 42 changes; person mentions linked 19,980 -> 19,976; assertions with performer 2,527 -> 2,532. research_dataset.sqlite
 NOT rebuilt (Andy).
+
+## 2026-11-24 — Latin «g.» for «г.» in the review text: 31 scan-checked corrections, rebuilt and APPLIED to production
+
+```python
+# corpus search over outputs/reviews/merged_full/review_block.csv (text):
+re.compile(r'(?<![A-Za-z])g\. ?(?:[А-ЯЁ]\. ?)?[А-ЯЁѢІѲ][^\s,.;:)]*')
+```
+```sql
+-- after the rebuild on a copy: same 75-table EXCEPT ALL diff as the drift entry above; then
+select count(*) from raw.review_block where regexp_matches(text, '(^|[^A-Za-z])g\. ?[А-ЯЁ]');   -- 0
+```
+
+Result: 31 occurrences in 30 blocks (1890-91..1907-08, ballet, opera and drama), every one at the start of a printed line.
+Scans read by Claude (two subagents + spot checks): 30 print «г.», one prints the plural «гг.» («сатиры— гг. Горскій,
+Никитинъ», 1893-94 opera p. 204). 29 rows added to docs/eval/review_text_corrections.csv (RG "Yes, check all 30").
+Rebuild diff: 2 person links, both ruled by RG — «г-жа и г. Чекетти» 1892-93 -> Энрико Цезаревичъ (was unlinked),
+«г. Іогансонъ» 1895-96 unlinked (was Анна Христіановна); 15 mentions bare -> honorific (same person); one G2 row in
+review_mention_links.csv re-keyed «Легатъ» -> «Легатъ 3-й» (same person); 3 dances gain their partner, 1 new assertion
+(«рыбака — г. Обуховъ»), 2 new credits (Хлюстинымъ linked, Ширяевымъ unresolved; later credit_ids renumbered). Production
+backed up to outputs/full_run/imperial_theaters.pre_gdot_fix_2026-11-24.duckdb (4661c05) and replaced (cea0901); 0 Latin
+«g.» left. research_dataset.sqlite NOT rebuilt (Andy).

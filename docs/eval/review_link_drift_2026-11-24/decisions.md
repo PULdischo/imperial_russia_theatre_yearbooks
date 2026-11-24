@@ -31,7 +31,7 @@ Expected in the rebuild diff, not drift: one RG-approved text correction (2026-1
 outputs/reviews/merged_full/review_block.csv): «успѣшаго» -> «усопшаго» in review_1893-94_SP_opera_p039__b004.
 
 Outside the 38 (written here so one session writes review_mention_links.csv): «Яковлевъ 2-й», SP 1891-92 (review_1891-92_SP_ballet_p017__b002) relinked from Яковлевъ, Николай Николаевичъ (a985e058) to Яковлевъ, Владиміръ (931f4063), the 1892 graduate who died 9 Aug 1892 -- RG 2026-11-24, via the jubilees/obituaries session. Expected in the rebuild diff.
-Tangent noted (not chased): review_1907-08_SP_ballet_p002__b006 transcribes «g. Фокинъ» with a Latin g; the print has Cyrillic «г.» (p. 94). Candidate for review_text_corrections.csv.
+Tangent noted: review_1907-08_SP_ballet_p002__b006 transcribed «g. Фокинъ» with a Latin g. FIXED 2026-11-24 with 30 more Latin «g.» found corpus-wide (query log, same day): Чекетти 1892-93 linked to Энрико Цезаревичъ, Іогансонъ 1895-96 unlinked (RG).
 
 ## Applied 2026-11-24
 
