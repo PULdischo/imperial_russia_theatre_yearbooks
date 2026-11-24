@@ -28802,3 +28802,18 @@ Result: Сазонова, Евгенія (Николаевна): SP school pupil
 the only ballet Сазонова. Сазоновъ, Николай Ѳедоровичъ: drama-course teacher 1890-91–1891-92 (not ballet). Чекетти: TWO SP
 ballet artists every season 1890-91–1899-00, Генрихъ (Генріхъ) Цезаревичъ (also «Вторые балетмейстеры» 1890-91–1895-96, and
 as «Энрико Цезаревичъ» a school teacher from 1893-94) and Жозефина Валентиновна. A bare «Чекетти» could be either.
+
+## 2026-11-24 — Does the printed 1896-97 Moscow ballet review match the RGIA Д. 196 manuscript chronicle (Цыганка, Брама, Сатанилла, Фея кукол, Конекъ)?
+
+```sql
+select table_schema, table_name from information_schema.tables where table_name ilike '%review%' order by 1,2;
+select * from research.review_page where season ilike '1896%' limit 50;
+select p.printed_folio, count(*) n, string_agg(distinct regexp_extract(rp.text,'(Фея кукол|Брама|Сатанилл|Цыганк|Конекъ|Конёк)',1),', ') hits
+from research.review_passage rp join research.review_page p using(page_id)
+where p.season='1896-97' and p.city='Moscow' and p.genre='Ballet'
+and regexp_matches(rp.text,'Фея кукол|Брама|Сатанилл|Цыганк|Конекъ')
+group by 1 order by 1;
+select min(printed_folio),max(printed_folio),count(*) from research.review_page where season='1896-97' and city='Moscow' and genre='Ballet';
+```
+
+Result: the printed 1896-97 Moscow ballet review is 16 pages, folios 365-380. All five titles in the manuscript appear in it: Цыганка/Брама/Фея кукол p.365; Сатанилла pp.370-374, 380; Фея кукол p.375; Конекъ p.380. So the Д. 196 pp.44-60 manuscript is very likely the copy for this printed review (title match only; text not collated).
