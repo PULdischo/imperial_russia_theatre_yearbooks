@@ -43,3 +43,25 @@ the «усопшаго» text fix, two new unlinked mentions and method labels. 
 
 Tangent noted (not chased): credits disagreeing with a scan-verified mention link, already in production: Головина 1904-05
 (credit Головинъ А. Я. / mention Марія Ивановна), Васильева 1905-06, Герберомъ 1894-95.
+
+## Outstanding (as of 2026-11-25)
+
+1. **SQLite republish (Andy).** research_dataset.sqlite predates both 2026-11-24 production rebuilds (drift rulings; «g.» fix).
+   review_credit credit_ids were renumbered by the «g.» rebuild (2 new credits), so the export changes beyond the ruled rows.
+2. **9 relinks held since 2026-11-12** (Петровъ ×6, Смирнова ×2, «Федорову 2»): docs/eval/review_mention_relinks_held_2026-11-12.csv,
+   waiting for scan checks.
+3. **Merge batch, 6 entries added 2026-11-24, not applied** (person_merge_candidates_batch.md): Кирхгеймъ Луція/Маргарита,
+   Карлова Софья/Софія, Померанцевъ Ю. Н./Юрій Николаевичъ, Егорова 0eea687d/28cd3752, Сергѣевъ 1-й Георгіевичъ 50b3fbe3,
+   Гамлійзовскій bdae8b91. For RG's merge pass.
+4. **Credits that disagree with a scan-verified mention link** (already in production): Головина 1904-05 (credit Головинъ,
+   Александръ Яковлевичъ; mention Марія Ивановна), Васильева 1905-06 costume making (credit Васильевъ, Василій Васильевичъ;
+   mention Маргарита Васильевна), Герберомъ 1894-95 music (credit «Герберъ, Ю.»; mention Александръ Юліевичъ). One of each pair is wrong.
+5. **New unresolved credit:** «помощникомъ балетмейстера г. Ширяевымъ» 1902-03 (p019__b004), visible since the «g.» fix.
+6. **Mention-typing noise, unlinked so harmless:** the two 1893-94 «Парисъ» mentions are the character Paris; «Призракъ» 1897-98
+   p027__b001 is the word in «Призракъ Бѣлой Дамы», typed as a work; «сестры мило-сердія — г-жа Николаевская» 1901-02 has no record.
+7. **Pipeline behaviour worth a rule, not just rows:** build_review_credits.py lets printed initials beat a ruled mention link
+   (fixed for «Н. С. Сергѣевымъ» by an override row); build_review_assertions.py's `spiski-credit-work` fallback links a performer
+   credited with *another* part in the work (2 held via `unlink_performer`). Each future rebuild must diff the derived tables too.
+8. **Data oddity:** research.person 0eea687d (Егорова, Любовь Александровна) carries canonical patronymic «Николаевна» — a leftover
+   of the 2026-11-02 resplit; display name is right. Check in the display-name audit (deferred until all seasons are loaded).
+9. **Unidentified:** the man «г. Іогансонъ» in the 1895-96 SP finale pas (unlinked by RG).
