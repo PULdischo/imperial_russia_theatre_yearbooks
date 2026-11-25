@@ -65,3 +65,16 @@ Tangent noted (not chased): credits disagreeing with a scan-verified mention lin
 8. **Data oddity:** research.person 0eea687d (Егорова, Любовь Александровна) carries canonical patronymic «Николаевна» — a leftover
    of the 2026-11-02 resplit; display name is right. Check in the display-name audit (deferred until all seasons are loaded).
 9. **Unidentified:** the man «г. Іогансонъ» in the 1895-96 SP finale pas (unlinked by RG).
+10. **Four older roster-credit performer links that fail a same-season test** (added 2026-11-25; found 2026-11-09 in the
+   truncation audit, never ruled). All in production, research.review_assertion:
+   - «Фея серебра — г-жа Крюгеръ» and «Принцесса Флорина — г-жа Никитина», 1902-03 SP (review_1902-03_SP_ballet_p019__b001/b002):
+     linked to Елизавета Крюгеръ and Варвара Никитина, both off the lists after 1893-94. The passage quotes the 1890 «Спящая
+     красавица» cast (Андерсонъ, Чекетти, …), so it is an old cast: under the no-people-from-old-casts rule these should be
+     unlinked and the blocks listed in review_historical_passages.csv. Needs RG's ruling.
+   - «чорта — г. Орловъ», 1901-02 SP (p025__b001): linked to Алексѣй Орловъ, a Moscow dancer, via a credit for the work only.
+   - «принцъ Авенанъ — г. Федоровъ», 1904-05 Moscow (p002__b007): linked to Павелъ Ѳедоровъ, who is on the Moscow lists for
+     1903-04 and 1905-06 but not 1904-05.
+11. **Re-run the general rules G1-G3 on the remaining ties now that candidate lists are complete** (added 2026-11-25). The rules
+   ran on 7 Nov against lists cut to 8 candidates, so surnames with many namesakes were never decided: e.g. 90 Moscow
+   «Ѳедорова» mentions from 1900-01 on are still tied, though most carry an ordinal that matches the lists (1-я Екатерина,
+   2-я Софія, 3-я Ольга). Do this before the surname-by-season groups (docs/research_layer_review_2026-11-03.md, item 1, "Next").
