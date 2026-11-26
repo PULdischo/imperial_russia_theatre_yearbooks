@@ -387,9 +387,9 @@ and dates against roster spans; one scan read):
   Легатъ Н. Г. goes to Легатъ 1-й (not Густавъ or Сергѣй). Ермоловъ И. А. and Токарева О. И. agree in full and
   are distinguished from same-surname relatives.
 - **Булгаковъ А. Д.** goes to the SP record Алексѣй Дмитріевичъ («съ 1 іюня 1889 г.», exactly 25 years). The Moscow
-  1911-12 record prints «Александръ Дмитріевичъ» with the same start date (p. 127, read on the scan by Claude). This is
-  the open Group D merge question in `docs/eval/person_merge_candidates_batch.md`; the jubilee (Moscow régisseur,
-  «Алексѣй») is new evidence for it. Left to RG; the link follows any merge.
+  1911-12 record prints «Александръ Дмитріевичъ» with the same start date (p. 127, read on the scan by Claude). With the
+  jubilee (Moscow régisseur, «Алексѣй») as further evidence, **RG merged the two records on 2026-11-25** (Group D in
+  `docs/eval/person_merge_candidates_batch.md`), so the record now runs 1890-91–1911-12.
 - No record: Садовская О. О. (drama, as in 1908-09), Ермолова А. Н. (drama; the record is the ballet dancer Елизавета
   Ивановна), and the memorial features for Григорьевъ, Соллогубъ, Чернышевъ and Юрьевъ (died 1863-1888, before the
   rosters).

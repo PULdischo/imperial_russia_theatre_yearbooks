@@ -1144,3 +1144,5 @@ Not a Yearbook: RGIA Ф. 497 оп. 18 д. 1420, the printed programme for the Б
 - 1909-10 season statistics (p. 58): «11 января 1909 г.—50-ти лѣтіе музык. дѣятельности Ц. А. Кюи» (Repertoire: 11 January 1910, Маріинскій) and, on the same page, Moscow «10 января 1909 г.—бенефисъ кордебалета» (Repertoire: 10 January 1910, Большой). The compositor set the previous year in January dates twice on one page.
 
 - **1914 VII (1913-14 Obituaries), p. 157, Григорьевъ А. А.:** «родившагося 1882 г.» for 1822 (the same sentence marks 50 years since his death in 1864). Read on the scan by Claude, 2026-11-25; kept as printed in `docs/jubilees_obituaries/`.
+
+- **1911-12 Moscow BalletArtists roster, p. 127, no. 5:** «Булгаковъ, Александръ Дмитріевичъ» for Алексѣй Дмитріевичъ. Read on the scan by Claude, 2026-11-25. This is an inference, not a reading: the same start date «съ 1 іюня 1889 г.» as Алексѣй's SP record, no Александръ Булгаковъ on any list before, and the 1914 VII jubilee (p. 143) names Алексѣй Дмитріевичъ as the Moscow régisseur. RG merged the two records on 2026-11-25. Kept as printed in raw.

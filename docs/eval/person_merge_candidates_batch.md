@@ -234,7 +234,12 @@ Recommendation: merge, as #133 / the 2026-10-12 graduate merges did. From the qu
 - Воронцовъ Владиміръ Петровичъ (1911-12 SP ballet, no start date) vs Воронцовъ Владиміръ Васильевичъ (1890-1912) and «Боронцовъ
   Владиміръ» (1910-11 graduate).
 - Булгаковъ Александръ Дмитріевичъ (1911-12 Moscow, «съ 1 іюня 1889 г. по 1 іюня 1909 г. и съ 24 октября 1910 г.») vs Булгаковъ
-  Алексѣй Дмитріевичъ (1890-1909).
+  Алексѣй Дмитріевичъ (1890-1909). **MERGED 2026-11-25 (RG: "yes, merge them")**: survivor 062313eb (Алексѣй), e8f5f71b
+  superseded. Basis: same start date «1 іюня 1889», the 1909-10 gap matches his leaving SP, no «Александръ Булгаковъ» on any
+  list 1890-91–1910-11, and the 1914 VII jubilee (p. 143) names «Алексѣй Дмитріевичъ», Moscow régisseur, 25 years on
+  1 June 1914. «Александръ» (p. 127, read on the scan by Claude) kept as printed and taken as a print slip. Applied with
+  `person_merge_manual.py --write` (backup `outputs/full_run/imperial_theaters.pre_merge_062313eb_2026-11-25.duckdb`), then
+  `rebuild_after_person_merge.sh`: research.person 2,713 -> 2,712, 0 shift blocks, 0 orphans, receipts unchanged. Revisable.
 - Егорова: SUPERSEDED 2026-11-24 -- this note predates RG's 2026-11-02 resplit; 0eea687d is Любовь Александровна, not Марія
   Николаевна (a3dee646). See "Added 2026-11-24: Егорова, Любовь Александровна" below.
 

@@ -28952,3 +28952,17 @@ SELECT count(*) FROM research.events_with_dancers_performance;
 ```
 
 Result (outputs/full_run duckdb, built 2026-11-24): 2,321 events — ballet on the bill 2,163; dancers known in a non-ballet item 156; both 2. 3,218 performance rows. Local research_dataset.sqlite (exported 2026-11-12) also has 2,321. Was 2,194 / 3,053 at creation (2026-10-29).
+
+## 2026-11-25 — Булгаковъ: is the Moscow 1911-12 «Александръ Дмитріевичъ» the SP «Алексѣй Дмитріевичъ»?
+
+```sql
+select season, city, entity_type, printed_first_name, printed_patronymic, tenure_note_text
+from research.person_appearance where printed_family_name like 'Булгаков%' order by season;
+```
+
+Result: «Алексѣй Дмитріевичъ», SP ballet artists, every season 1890-91–1908-09, always «(съ 1 іюня 1889 г.)». No Булгаковъ in 1909-10. 1910-11 Moscow: only Василій. 1911-12 Moscow: «Александръ Дмитріевичъ» «(съ 1 іюня 1889 г. по 1 іюня 1909 г. и съ 24 октября 1910 г.)» (p. 127, «Александръ» read on the scan) and Василій. No «Александръ Булгаковъ» on any list 1890-91–1910-11. Bears on Group D in docs/eval/person_merge_candidates_batch.md, with the 1914 VII jubilee of «Алексѣй Дмитріевичъ» (Moscow régisseur, 25 years on 1 June 1914).
+
+## 2026-11-25 — review mentions inside French-troupe tails of ballet reviews
+Q: how many `research.review_mention` rows sit in blocks the widened shared-page rule (French-troupe headings) newly marks foreign?
+Query: `raw.review_block` + `raw.review_page` through `pipeline/review_sections.foreign_block_indices`, old rule vs new; then `select count(*), count(distinct person_id) from research.review_mention where block_id in (<20 ids>)` on `outputs/full_run/imperial_theaters.duckdb`.
+A: 20 blocks newly foreign (six SP ballet reviews); 47 mentions, 0 people (works and the Михайловскій).
