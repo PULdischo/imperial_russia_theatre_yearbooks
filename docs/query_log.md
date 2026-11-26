@@ -29019,3 +29019,19 @@ debut items are outside the mention layer either way; 29 enumerated blocks carry
 name, but dance titles («Pas de séduction», «Grand pas d’action», «Valse» …) and one honorific («г-жи», 1904-05 MSK
 p015__b002, its list still linked) are not read. research.review_passage has no enumerator column, so those 6 opera blocks
 show empty text there. research_dataset.sqlite NOT rebuilt (Andy).
+
+## 2026-11-25 — Review layers rebuilt again for the «Гантенбергъ» repetition fix (review_1894-95_SP_ballet_p003__b007)
+
+```sql
+-- same chain on a fresh copy of production, same 73-table EXCEPT ALL diff and keyed comparisons as the entry above
+select count(*) from raw.review_block where text like '%сцена»—г-жа сцена»%';   -- 0 after
+```
+
+Result: the jubilees session's scan-verified fix («Общая сцена»—г-жа сцена»—г-жа сцена»—г-жа Гантенбергъ -> «Общая сцена»—г-жа
+Гантенбергъ, scan p. 197) reached merged_full at 20:57, after the first rebuild. Diff vs production: that one block in
+raw.review_block / research.review_passage; its 7 person mentions (Гантенбергъ, Чекетти, Гердтъ, Литавкинъ, Лукьяновъ,
+Горскій, Воронковъ) move 24 characters earlier with the same person, method and candidates; otherwise only tie order in
+candidate lists (6 assertions, 2 dance performers, 3 dance composers, 2 review_person page lists; sets identical). Counts
+unchanged (27,526 mentions, 2,690 assertions, 2,421 credits). Production replaced by the copy, build_research_model.py
+re-run, all 73 tables equal to the copy; alignment 0 shift blocks. Backup from the first rebuild still applies
+(imperial_theaters.before_review_rebuild_2026-11-25.duckdb). research_dataset.sqlite NOT rebuilt (Andy).
