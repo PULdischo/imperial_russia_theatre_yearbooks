@@ -29198,3 +29198,28 @@ parent'); 6 had a wrong work (Polca militaire -> «Спящая красавиц
 («Послѣ маскарада», «Весною»). No person link changed. Production backed up to
 outputs/full_run/imperial_theaters.before_named_dance_fix_2026-11-25.duckdb and replaced; build_research_model.py re-run, 73
 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite NOT rebuilt (Andy).
+
+## 2026-11-25 — check of the production review-layer rebuild
+Q: does production now have the 1913-14 SP ballet review, no mentions in the French-troupe tails, and the two text corrections; are the 1894-95 Moscow opera debut names (text only in `enumerator`) in the mention layer?
+Query (read-only, `outputs/full_run/imperial_theaters.duckdb`): counts of `raw.review_page` / `raw.review_block` / `research.review_mention` for `review_1913-14%`; `research.review_mention` rows in blocks `review_sections.foreign_block_indices` marks foreign in the six SP ballet reviews; text of `review_1894-95_SP_ballet_p003__b007`; «усопшаго»/«успѣшаго» in `raw.review_block`; mentions in `review_1894-95_MSK_opera_p033__b004..b009`.
+A: 1913-14: 5 pages, 32 blocks, 121 mentions; 0 mentions in the French tails; «Общая сцена»—г-жа Гантенбергъ fixed; усопшаго 1 / успѣшаго 0; the six debut items have NO mentions (the mention layer does not read `enumerator`).
+
+## 2026-11-25 — The 1913-14 «Papillons» mentions: link row, or not? Review-only works now duplicated by the 1912-13 Repertoire
+
+```sql
+select work_id, canonical_title, canonical_genre, art_form, work_source from research.work where canonical_title = 'Papillons';
+-- review-only works with a same-title Repertoire work, mentions on each, first Repertoire season
+select r.canonical_title, r.work_id, p.work_id, p.canonical_genre, p.appearance_count from research.work r
+join research.work p on lower(p.canonical_title) = lower(r.canonical_title) and p.work_source = 'repertoire'
+where r.work_source = 'review';
+-- then match_review_mentions.py on a copy of production (output to scratch), compared with entities.review_mention
+```
+
+Result: since the 1912-13 Repertoire promotion (ef3199a) research.work has two «Papillons»: review-only 98caa763 (2026-10-26,
+RG "okay let's do this"; the three 1912-13 review mentions link to it by rows in review_work_mention_links.csv) and Repertoire
+9afbca4d (пантомима-балетъ., 3 performances from 1912-13). Likewise «Исламей» (review 127a250f / Repertoire fd29ca30) and «Les
+préludes» (6b10b2bf / a0ed98d4), both first in the Repertoire 1912-13. («Фаустъ» is Perrot's ballet, deliberately separate;
+«Карнавалъ» predates tonight.) A matcher re-run against current production links the two 1913-14 «Papillons» mentions
+(p000__b005, p001__b002), «Исламей» and «Les préludes» 1913-14 to the REPERTOIRE works by title (quoted-exact, 1 candidate),
+with no link row; the 1912-13 mentions stay on the review-only works. 23 work-mention links change in all on that re-run
+(1893-94..1913-14), not yet examined. Nothing changed in production.
