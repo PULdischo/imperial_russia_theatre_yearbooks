@@ -25323,3 +25323,9 @@ date + session. Output `docs/eval/scan_audit/1912-13_scan_reads.csv`, 1,776 rows
   «Золото Рейна, ком.» (Большой 4 Mar) opera; its discipline_basis text says «printed genre оп.» although the cell prints
   «ком.» (cosmetic). The p048 header prints «23 марта» but the first row is 22 Mar (date column trusted, as stored).
 Nothing changed in the database.
+
+**1912-13 D3 «Kammermusiк» ruled by RG 2026-11-26:** "store cyrillic к in raw, use latin in research". Raw p049 (Михайловскій
+4 Apr 1913) now stores «Kammermusiк» (U+043A) with a `_fix_note`, in outputs/full_run/raw, raw_columnwise_repaired and
+integration_1912-13/raw (`docs/eval/reconciliation/fix_1912_13_kammermusik.py`); `work_title_aliases.csv` matches it to
+«Kammermusik», so research keeps the Latin title and the same work. Logged in genuine_print_typos.md. Production .duckdb NOT
+rebuilt here: the change is folded into the 1912-13 C build (Today's docket session), which diffs every table before loading.
