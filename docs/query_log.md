@@ -29180,3 +29180,21 @@ of the 14 dances still carry a work in research.review_dance (Polca militaire 18
 Садовникъ»); 8 have none. build_review_credits.py does not read the file, so credit 2347 (Сенъ-Санса) keeps «Принцъ Садовникъ».
 The other credits in those blocks (2343-2346, 1048) name their own ballets and are unaffected. The override file also cannot
 blank a work (it sets work_id only when one is given).
+
+## 2026-11-25 — Named dances with no parent ballet now honoured by both readers; APPLIED to production (RG: "Yes, fix both")
+
+```sql
+-- build_review_assertions.py then build_review_credits.py on a copy of production; 73-table EXCEPT ALL diff;
+select a.dance_id, a.dance_surface, a.work_surface, b.work_surface, b.work_source
+from p.research.review_dance a join z.research.review_dance b using (dance_id)
+where a.work_id is distinct from b.work_id or a.work_surface is distinct from b.work_surface;
+```
+
+Result: only research.review_dance (14 rows) and research.review_credit (3 rows) differ. review_dance: exactly the 14 dances
+docs/eval/review_dance_named.csv records with a blank parent_work_id now have no work (work_source 'named-dance list: no
+parent'); 6 had a wrong work (Polca militaire -> «Спящая красавица», Маршъ -> «Жизель», Mandolinata, Татарскій танецъ, «Послѣ
+маскарада», «Лебедь» -> «Принцъ Садовникъ»), 8 had no work_id but the previous dance's name as work_surface. review_credit:
+2347 Сенъ-Санса for «Лебедь» loses «Принцъ-садовникъ»; 1043 and 1045 were already blank and now keep their printed titles
+(«Послѣ маскарада», «Весною»). No person link changed. Production backed up to
+outputs/full_run/imperial_theaters.before_named_dance_fix_2026-11-25.duckdb and replaced; build_research_model.py re-run, 73
+tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite NOT rebuilt (Andy).

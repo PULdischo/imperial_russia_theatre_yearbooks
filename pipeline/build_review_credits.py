@@ -199,6 +199,9 @@ FLAGS = Path("docs/eval/review_credit_flags.csv")
 OVERRIDES = Path("docs/eval/review_credit_overrides.csv")
 #: a divertissement on the bill: what follows it is not the preceding work (2026-11-25)
 DIVERT = re.compile(r"дивертис", re.I)
+#: named dances recorded with NO parent ballet (blank parent_work_id): a credit at one of them
+#: has no work, like an unidentified title (RG 2026-11-25: Фокинъ's concert «Лебедь», 1907-08)
+NAMED_DANCES = Path("docs/eval/review_dance_named.csv")
 PART_WORDS = re.compile(r"картин|дѣйств|актъ|акт\.|прологъ|пролог|апоѳеоз|сцена|«|„", re.I)
 # words that do not count towards the cue-to-name distance: titles and the
 # act/scene count of a title line (`въ 4-хъ дѣйствіяхъ и 7-ми картинахъ`)
@@ -342,6 +345,11 @@ def main() -> None:
         if str(eid) not in non_governing:
             page_works[pid].append((bidx, cs, surface, str(eid)))
 
+    no_parent_dance: set[tuple[str, str, int]] = set()
+    if NAMED_DANCES.exists():
+        with open(NAMED_DANCES, encoding="utf-8") as f:
+            no_parent_dance = {(r["block_id"], r["surface"], int(r["occurrence"]))
+                               for r in csv.DictReader(f) if not (r["parent_work_id"] or "").strip()}
     out: list[dict] = []
     stats = collections.Counter()
 
@@ -445,12 +453,22 @@ def main() -> None:
         # г. Хлюстинымъ)», «Конекъ-горбунокъ» 1893-94), so the work they borrow is the right one;
         # a suite of numbers after the ballet is caught by the divertissement rule instead.
         # Quoted words that are not titles and literary sources do not count either.
+        # ... except a dance the named-dance list records with no parent ballet, which blocks
+        # like an unidentified title (keyed as build_review_assertions.py keys it: block, surface,
+        # occurrence among the block's work mentions of that surface)
         gov_ids = {id(m) for m in wms}
+        occ_of: dict[int, int] = {}
+        seen_surf: collections.Counter = collections.Counter()
+        for m in ms:
+            if m[2] == "work":
+                occ_of[id(m)] = seen_surf[m[5]]
+                seen_surf[m[5]] += 1
         titles = [m for m in ms if m[2] == "work"
-                  and (id(m) in gov_ids or (
-                      (m[9] or "").startswith(("quoted", "curated"))
-                      and (m[10] or "") not in ("quoted words, not a title", "literary or artistic source",
-                                                "dance number")))]
+                  and (id(m) in gov_ids
+                       or (block_id, m[5], occ_of[id(m)]) in no_parent_dance
+                       or ((m[9] or "").startswith(("quoted", "curated"))
+                           and (m[10] or "") not in ("quoted words, not a title", "literary or artistic source",
+                                                     "dance number")))]
         clauses = clause_bounds(masked)
         cues = find_cues(body)
         stops = [m.start() for m in STOP_RE.finditer(body)]

@@ -996,14 +996,22 @@ def main() -> None:
             inside = next((x for x in dances if x["block_id"] == block_id
                            and x["source"] == "cast list"
                            and x["span"][0] <= m[2] < x["span"][1]), None)
+            # A row with a BLANK parent_work_id is a decision too: the dance has no parent
+            # ballet (Фокинъ's concert «Лебедь», 1907-08; a separate divertissement), so it
+            # gets no work rather than the block's or page's nearest one (RG 2026-11-25).
             if inside:
                 if parent and parent[0]:
                     inside["work_id"], inside["work_surface"] = parent[0], parent[1]
                     inside["work_source"] = "named-dance list"
+                elif parent:
+                    inside["work_id"], inside["work_surface"] = "", ""
+                    inside["work_source"] = "named-dance list: no parent"
                 continue
             w_surface, w_id, w_source, iso_d, _ = work_and_date(m[2])
             if parent and parent[0]:
                 w_surface, w_id, w_source = parent[1], parent[0], "named-dance list"
+            elif parent:
+                w_surface, w_id, w_source = "", "", "named-dance list: no parent"
             dances.append({
                 "page_id": page_id, "block_id": block_id,
                 "season": page["season"], "city": page["city"],
