@@ -29035,3 +29035,31 @@ candidate lists (6 assertions, 2 dance performers, 3 dance composers, 2 review_p
 unchanged (27,526 mentions, 2,690 assertions, 2,421 credits). Production replaced by the copy, build_research_model.py
 re-run, all 73 tables equal to the copy; alignment 0 shift blocks. Backup from the first rebuild still applies
 (imperial_theaters.before_review_rebuild_2026-11-25.duckdb). research_dataset.sqlite NOT rebuilt (Andy).
+
+## 2026-11-25 — Do the 1912-13 genre-misprint overrides («Дочь фараона, оп.», «Золото Рейна, ком.») touch any production row?
+
+```sql
+select performance_title, genre, count(*) from raw.event_entry_performance
+where (performance_title ilike '%фараон%' and genre='оп.') or (performance_title ilike 'Золото Рейна%' and genre='ком.')
+group by 1,2
+```
+
+Result: 0 rows in outputs/full_run (production). The two work_artform_overrides.csv rows added for 1912-13 (issue #164) match only 1912-13 cells.
+
+## 2026-11-25 — Why two new 1913-14 review credits name the wrong work (credit_id 2413, 2415)
+
+```sql
+select credit_id, char_start, role_category, printed_phrase, name_surface, work_surface, work_source, link_method
+from research.review_credit where credit_id in (2413, 2415, 2416);
+select block_id, char_start, surface, work_id, candidates_n, link_method from research.review_mention
+where page_id in ('review_1913-14_SP_ballet_p000', 'review_1913-14_SP_ballet_p002') and mention_type in ('work', 'person');
+```
+
+Result: 2413 «балетъ г. Фокина «Papillons»» (p000__b005) -> «Раймонда», work_source `page-earlier`: «Papillons» is a
+review-only work, linked only by explicit rows in review_work_mention_links.csv (3 rows, all 1912-13), so its 1913-14 mention
+is unresolved; «Карнавала» is ambiguous (2 candidates); with no identified work in the block, the fallback took the last
+identified work in an earlier block of the page («Раймонда», b004). Person Фокинъ via `list-credit-other-work`. 2415
+«(поставленная въ сотрудничествѣ съ покойнымъ С. Г. Легатомъ)» (p002__b005) -> «Талисманъ», work_source `after-names`: the
+rule "a work within 6 characters after the names" (built for «балета Сенъ-Леона «Конекъ Горбунокъ»») fires on «Талисманъ»
+just after the closing parenthesis, though the participle refers back to «Фея Куколъ». Person С. Г. Легатъ correct. 2416
+(«Талисманъ» … «танцы поставлены г. Легатомъ») has the right work, person unresolved.
