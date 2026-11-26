@@ -25296,3 +25296,30 @@ work) and the 3 concerts (works by RG's 2026-11-26 ruling). B4: 0 half-kopeck re
 receipts_print_typos.csv applied (research.event receipts_source corrected_print_typo = 7); the other 13 non-standard
 receipt texts (missing period, «к» without period) parse to the printed sum. B6: 18 free-performance events (27-28 Aug
 jubilee, 14 Nov, 6 Dec, 20 Feb), all performed, none with receipts, banners on the morning sessions only.
+
+**1912-13 blind column reads DONE 2026-11-26 (checklist D3).** Same method as 1911-12: six readers, one per theater,
+read their column across all 60 pages blind (brief `outputs/repertoire_1912-13/column_reads/BRIEF.md`; no raw/parsed/DB
+access), then `column_reads/compare.py` joined their reads to `raw.event_entry` / `raw.event_entry_performance` on theater +
+date + session. Output `docs/eval/scan_audit/1912-13_scan_reads.csv`, 1,776 rows = every printed date (269, 26 Aug 1912 to
+21 May 1913, no gap in the date column) x 6 theaters, plus morning/evening pairs. Result:
+- **Structure:** all 1,776 sessions agree with production (no missing, extra, or dark-vs-performed session). The Новый column
+  is a dash on all 269 dates, as stored. Two cells are printed wholly blank (Большой 1 Mar 1913, Михайловскій 10 Sep 1912),
+  stored as dark.
+- **Receipts:** 1,053 printed figures, every one as stored. The one reader-uncertain figure, Михайловскій 11 Jan 1913
+  «57? р. 90 к.», is the cell RG ruled «582 р. 90 к.» on 2026-11-26.
+- **Titles** (compared letter by letter, ignoring punctuation and, by RG's convention, the item numbers «I.»/«1)»): 3 cells
+  differed; each re-zoomed by Claude at 4-7x (crops in `column_reads/zoom_claude_verdicts/`; checked by Claude, a finding aid):
+  - Михайловскій 2 Dec 1912 «I.es mines de Ganeffontaine»: a broken L (foot detached, reads I + dot); stored «Les» is the
+    letter printed, as with RG's 1911-12 broken-о rulings. No change.
+  - Александринскій 21-23 Feb, 17 and 21 Apr 1913 (7 cells), «Михаила Ѳеодоровича»: the reader typed Greek Θ for the fita;
+    production has Cyrillic Ѳ, which is right. No change.
+  - Михайловскій 4 Apr 1913 «Kammermusiк, Lustspied.»: the last letter of Kammermusik is an x-height, Cyrillic-shaped к
+    (wrong fount; the 3 Apr printing has a Latin k with ascender). Stored with Latin k. **For RG**
+    (`docs/eval/scan_audit/1912-13_kammermusik_for_RG.png`): keep Latin k, or store the wrong-fount к verbatim.
+- Medium-confidence cells (6, all agreeing with production): Алекс. 15 Mar «1650 р. 82 к.» (faint 0); Малый 19 Oct
+  «1575 р. 10 к.» and 20 Feb evening «1470 р. 80 к.» (barred 0); Большой 28 Apr evening «Дивертиссеметъ (Etudes)» (print slip,
+  stored the same); plus the two Михайловскій cells above.
+- Seen on the way, nothing wrong: «Дочь фараона, оп.» (Большой 17 Feb) is ballet in research (ballet-lists rule) and
+  «Золото Рейна, ком.» (Большой 4 Mar) opera; its discipline_basis text says «printed genre оп.» although the cell prints
+  «ком.» (cosmetic). The p048 header prints «23 марта» but the first row is 22 Mar (date column trusted, as stored).
+Nothing changed in the database.

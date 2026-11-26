@@ -29337,6 +29337,19 @@ receipts +10 р. (1,427,933 р. 72 к. -> 1,427,943 р. 72 к.; gap vs printed 3
 mention, credit, person or work changes. Backup outputs/full_run/imperial_theaters.before_1912-13_rulings_2026-11-26.duckdb;
 production replaced; 73 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite rebuilt locally;
 HF / Cloud Run republish is Andy's. Other rulings (#164 items 1-14) kept stored values; no data change.
+## 2026-11-26 — 1912-13 D3 (blind column reads): production session inventory before comparing
+
+```sql
+-- read-only, outputs/full_run/imperial_theaters.duckdb; run after the six blind readers had started (they never see it)
+select season, theater, time_of_day, event_status, count(*) from raw.event_entry
+where event_id like 'repertoire_1912-13%' group by all order by all;
+select count(*), count(date_undate), min(date_undate), max(date_undate) from raw.event_entry
+where event_id like 'repertoire_1912-13%';
+```
+
+Result: 1,776 sessions, every one dated, 1912-08-26 .. 1913-05-21. Per theater (performed / no_performance; morning+evening
+pairs included): Маріинскій 223/84, Александринскій 244/58, Михайловскій 205/81, Большой 237/72, Малый 242/61, Новый 0/269
+(the Новый column is dark for the whole season as stored -- the blind read will say whether the print agrees).
 ## 2026-11-26 — 1912-13 B sweeps (checklist B1-B6) on production
 
 ```sql
@@ -29354,3 +29367,23 @@ Result: B1 17 words, all real ь words; B2 0; B3 27 hits = «Крещенскі�
 2026-11-26), 0 headings; B4 0; B5 corrected_print_typo 7 (= the 7 csv rows), parsed 1,046, null 723; 20 non-standard
 receipt texts all parse to the printed sum; B6 18 banner events, all performed, all receipts null, 16 morning + 2 unspecified
 (27-28 Aug). No data change.
+
+## 2026-11-26 — 1912-13 D3: blind column reads compared with production; research-layer check of two genre slips
+
+```sql
+-- outputs/repertoire_1912-13/column_reads/compare.py (read-only): every blind-read session joined on theater + date + session
+select event_id, theater, cast(date_undate as varchar), time_of_day, event_status, receipts_text, annotation
+from raw.event_entry where season='1912-13';
+select p.event_id, p.performance_title, coalesce(p.genre,'') from raw.event_entry_performance p
+join raw.event_entry e using(event_id) where e.season='1912-13' order by p.event_id, p.performance_order;
+-- spot checks
+select event_id, event_status, receipts_text, annotation from raw.event_entry
+where season='1912-13' and theater like 'Большой%' and date_undate='1913-03-01';
+select event_id, verbatim_title, verbatim_genre, discipline, discipline_basis from research.performance
+where event_id like 'repertoire_1912-13%' and verbatim_title like any ('Дочь фараона%', 'Золото Рейна%');
+```
+
+Result: 1,776 read sessions = 1,776 production sessions, no structural difference; 1,053 printed receipts all as stored
+(Мих. 11 Jan 1913 = RG's 582 ruling); 3 title cells differ (broken L, Θ/Ѳ typing, 4 Apr «Kammermusiк» wrong-fount к for RG).
+Большой 1 Mar 1913 (printed blank) is stored no_performance. «Дочь фараона, оп.» p038 -> ballet; «Золото Рейна, ком.» p042 ->
+opera (basis text says «оп.»). Writeup under #164 in docs/eval/known_issues.md.
