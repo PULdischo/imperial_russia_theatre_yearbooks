@@ -29282,3 +29282,20 @@ a one-performance duplicate work «Конекъ-Горбунокъ или Цар
 (573151e6, 259 performances 1890-91..1912-13); any matcher re-run moves 19 review mentions (1893-94..1912-13), 7 assertions, 11
 credits and 5 dances onto it. A vs B: the main session's list-marker rule (3417398), 23 ballet blocks, +5 mentions, +1
 assertion, +8 dances, +75 dance performers; not examined yet. Production unchanged.
+
+## 2026-11-25 — List-marker rule (23 ballet blocks, 3417398): effect on the review layers, on a copy (not loaded)
+
+```sql
+-- run A (production's text) vs run B (current merged_full), both with the Fokine fix/fold; mentions in the changed blocks
+-- compared after shifting A's char_start by the block's length change; dances, assertions, credits, solos EXCEPT ALL
+select x.block_id, x.char_start + ch.shift, x.mention_type, x.surface, x.entity_id, x.link_method
+from a.entities.review_mention x join ch using (block_id);
+```
+
+Result: 23 blocks change (22 in text, 1 enumerator only). Mentions outside them identical; inside, all 312 existing mentions
+survive at shifted offsets with the same entity (hand decisions keyed by block/surface/occurrence intact), 2 change only their
+method label (Хомякова 1904-05, Улановъ 1899-00: no longer sentence-initial), 5 new unlinked dance-title mentions («Grand pas
+d’action», «Pas de séduction», «Pas militaire», «La Romanesque», «La Delivrance»). review_dance +8 (those titles plus Valse,
+Variation, Ensemble, Pas de fusils, «вальсъ и адажіо»; dance_ids renumber, hence +75 performer rows), 1 work_surface change
+(«tarantelle» shows «La Delivrance»); 1 new assertion (3248, «Les Bohemiens—г-жи Тимоѳеева»); credits unchanged; 3 assertions
+and 2 solos differ only in candidate order. Not loaded: waiting on the «Конекъ» duplicate work (entry above).
