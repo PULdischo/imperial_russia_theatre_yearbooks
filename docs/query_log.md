@@ -28942,3 +28942,13 @@ select string_agg(distinct season, ' ' order by season) from research.production
 ```
 
 Result: Repertoire, Administrators, BalletArtists, Musicians, ProductionTeam, TheaterSchoolStaff loaded 1890-91–1911-12; Graduates same minus 1907-08; season_stat_page 1891-92–1911-12 minus 1905-06; production_entry / research.production 1890-91–1904-05 + 1907-08–1911-12. Compared with pdf/: only 1912-13 Repertoire and 1912-13 ProductionStats are scanned but not loaded. Opera/drama production lists (archive only) not loaded, by design.
+
+## 2026-11-25 — Events with dancers: current size
+
+```sql
+SELECT dancer_reason, count(*) FROM research.events_with_dancers GROUP BY 1;
+SELECT count(*) FROM research.events_with_dancers_performance;
+-- sqlite export: SELECT count(*) FROM events_with_dancers;
+```
+
+Result (outputs/full_run duckdb, built 2026-11-24): 2,321 events — ballet on the bill 2,163; dancers known in a non-ballet item 156; both 2. 3,218 performance rows. Local research_dataset.sqlite (exported 2026-11-12) also has 2,321. Was 2,194 / 3,053 at creation (2026-10-29).
