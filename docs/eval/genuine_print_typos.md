@@ -1142,3 +1142,5 @@ Not a Yearbook: RGIA Ф. 497 оп. 18 д. 1420, the printed programme for the Б
 - 1901-02 SP ballet review (p. 189): «2-го января 1903 года, на сценѣ Маріинскаго театра, былъ данъ въ первый разъ въ сезонѣ … „Дочь Фараона“» -- the Repertoire has «Дочь Фараона» at the Маріинскій on 2 January 1902.
 - 1910-11 SP opera review (p. 120): «Капитанская дочка» Кюи «впервые поставленная на Маріинской сценѣ 14 февраля 1910 г. въ прощальный бенефисъ … О. О. Палечека» -- the Repertoire has the benefit on 14 February 1911.
 - 1909-10 season statistics (p. 58): «11 января 1909 г.—50-ти лѣтіе музык. дѣятельности Ц. А. Кюи» (Repertoire: 11 January 1910, Маріинскій) and, on the same page, Moscow «10 января 1909 г.—бенефисъ кордебалета» (Repertoire: 10 January 1910, Большой). The compositor set the previous year in January dates twice on one page.
+
+- **1914 VII (1913-14 Obituaries), p. 157, Григорьевъ А. А.:** «родившагося 1882 г.» for 1822 (the same sentence marks 50 years since his death in 1864). Read on the scan by Claude, 2026-11-25; kept as printed in `docs/jubilees_obituaries/`.

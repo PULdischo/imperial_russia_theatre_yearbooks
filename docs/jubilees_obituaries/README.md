@@ -8,7 +8,7 @@ with the ballet-relevant ones pulled out.
 
 | File | What it is |
 |---|---|
-| `jubilees_obituaries_all_entries.csv` | Every entry (722 rows, 671 of them person entries; 13 rows for 1911-12 and 7 for older seasons added 2026-11-12, see "1911-12" and "Snapshot refresh" below). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
+| `jubilees_obituaries_all_entries.csv` | Every entry (770 rows, 717 of them person entries; 13 rows for 1911-12 and 7 for older seasons added 2026-11-12, see "1911-12" and "Snapshot refresh" below; 48 rows for 1913-14 added 2026-11-25, see "1913-14"). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
 | `jubilees_obituaries_person_links.csv` | Each of the 671 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
@@ -345,6 +345,37 @@ snapshots also rewrites existing rows: rows with no name collide (the 1890-91 «
 rows swap `kind`, hand-recorded scan checks (`date_check`) are lost, and «On the bill» notes, roster headings and
 roles follow later database corrections. So the catalogue is now kept by appending; the scripts' outputs are compared
 in a scratch copy and only new rows are taken.
+
+## 1913-14 sections (added 2026-11-25)
+
+The 1914 VII sections «Юбилеи (1913—1914)» (pp. 141-152) and «Некрологи и памятки (1913—1914)» (pp. 153-177),
+`1914 Vol VII/1913-14_Jubilees.pdf` and `1913-14_Obituaries.pdf`, scanned and filed 2026-11-25. Both are complete in the
+scan: each opens on its half-title, and the obituaries close the issue («Редакторъ Баронъ Н. В. Дризенъ», p. 177).
+48 rows appended: 2 section headings, 14 jubilees, 22 obituaries, 10 memorial features (the «памятки»: 10, 20, 25, 50
+or 100 years since a death or birth: Акимова, Григорьевъ, Левкѣева, Ободовскій, Рубинштейнъ, Салтыковъ-Щедринъ,
+Соллогубъ В. А., Чернышевъ, Чеховъ, Юрьевъ). `season` is the volume's season, so
+some dates fall in autumn 1914.
+
+Same method as before: a first read (`first_read/L1_1913-14_jubilees.csv`, `L2_1913-14_obituaries.csv`; briefs
+`BRIEF_1913-14.md`, `BLIND_1913-14.md`) and a blind second read of every heading, date **and tier**
+(`blind_second_read/V6_…`, `V7_…`). All 46 headings, dates and tiers agree. Not checked further: roles, glosses, notes.
+
+**Ballet (11, all `core`, no `mentions`):** jubilees of Булгаковъ А. Д. (Moscow régisseur, 25 years), Гердтъ П. А.
+(70th birthday), Дриго Р. Е. (35 years), Легатъ Н. Г. (25 years), Преображенская О. О. (25 years) and Каратыгина К. А.
+(drama actress who began in the ballet); obituaries of Ермоловъ И. А. (Moscow ballet, dance teacher), Обуховъ М. К.,
+Панчина Нина А. (aged 19; her father А. С. Панчинъ has the 1907-08 obituary), Токарева О. И. (ballet department,
+then Maly drama) and Божовскій В. К.
+
+**Божовскій, ruled by RG 2026-11-25: `core`.** He was head of the Moscow монтировочная часть 1900-1912 (read on the
+scan, p. 156); the notice never names ballet. Both readers put him `core` under the designers/machinists ruling; RG
+kept that, unsure and open to revisiting, although she ruled the *assistant* head, Юмашевъ (1908-09), `mentions`.
+
+Print slips noted, kept as printed: Григорьевъ «родившагося 1882 г.» for 1822 (read on the scan by Claude; in
+`docs/eval/genuine_print_typos.md`); Рыкалова once «Н. П.» for Н. В. (p. 168, first and second readers agree;
+not re-read by Claude).
+
+`see_also` was filled by hand from surname matches. Not done yet: person links (`build/link_persons.py`), the load
+into production, and the Obsidian reading notes (single machine reading + translation, DashScope, billed).
 
 ## Not yet done
 

@@ -36,7 +36,7 @@ sections are in:
 | 1910 VII and VIII | ILL (UMich), on loan to 2026-12-11 | Not yet scanned. Would cover deaths and jubilees of 1909–10. |
 | 1912 VII | Princeton | Marked "Up next". |
 | 1913 VII | ILL (UMich), on loan to 2026-12-11 | Marked "Up next". |
-| 1914 VII | ILL (UMich), on loan to 2026-12-06 | |
+| 1914 VII | ILL (UMich), on loan to 2026-12-06 | Scanned and catalogued 2026-11-25 (README, "1913-14 sections"). |
 
 For each: shoot the contents page and the annual index first, then the two sections whole — the
 ballet entries are scattered through them alphabetically and cannot be picked out from the
