@@ -1,0 +1,40 @@
+credit_id,season,city,block_id,role_category,name_surface,old_rule,old_work,new_rule,new_work,new_work_surface,verdict_checked_by_claude_in_text
+194,1893-94,Moscow,review_1893-94_MSK_ballet_p008__b003,scenery,Сергѣева,after-names,Конекъ-горбунокъ,clause,Конекъ-горбунокъ,Ханская юрта,no change (rule label only)
+425,1895-96,SP,review_1895-96_SP_ballet_p016__b003,scenery,Перминовымъ,after-names,Конекъ-горбунокъ,clause,Конекъ-горбунокъ,Площадь въ селѣ,no change (rule label only)
+426,1895-96,SP,review_1895-96_SP_ballet_p016__b003,scenery,Ивановымъ,after-names,Конекъ-горбунокъ,clause,Конекъ-горбунокъ,Покой во дворцѣ хана,no change (rule label only)
+427,1895-96,SP,review_1895-96_SP_ballet_p016__b003,scenery,Перминовымъ,after-names,Конекъ-горбунокъ,clause,Конекъ-горбунокъ,Волшебный островъ,no change (rule label only)
+608,1897-98,Moscow,review_1897-98_MSK_ballet_p019__b003,staging,Манохинымъ,page-earlier,Звѣзды,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+649,1897-98,SP,review_1897-98_SP_ballet_p014__b004,scenery,Аллегри,after-names,Дочь микадо,clause,Дочь микадо,Залъ во дворцѣ микадо,no change (rule label only)
+964,1900-01,SP,review_1900-01_SP_ballet_p020__b003,music,Глазуновымъ,after-names,Раймонда,block,Раймонда,Раймонда,no change (rule label only)
+1040,1901-02,Moscow,review_1901-02_MSK_ballet_p004__b003,author,Горскимъ,page,Конекъ-горбунокъ,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1041,1901-02,Moscow,review_1901-02_MSK_ballet_p004__b003,staging,Горскимъ,page,Конекъ-горбунокъ,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1042,1901-02,Moscow,review_1901-02_MSK_ballet_p004__b003,music,Шопена,page,Конекъ-горбунокъ,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1043,1901-02,Moscow,review_1901-02_MSK_ballet_p004__b003,music,Гольдштейна,page,Конекъ-горбунокъ,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1044,1901-02,Moscow,review_1901-02_MSK_ballet_p004__b003,music,Венявскаго,page,Конекъ-горбунокъ,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1091,1901-02,SP,review_1901-02_SP_ballet_p001__b003,music,Глазунова,after-names,Раймонда,block,Раймонда,Раймонда,no change (rule label only)
+1104,1901-02,SP,review_1901-02_SP_ballet_p003__b002,music,Кроткова,after-names,Пробужденіе Флоры,clause,Капризы бабочки,Капризы Бабочки,fixed: right work now (was wrong)
+1250,1902-03,Moscow,review_1902-03_MSK_ballet_p000__b005,author,Горскимъ,block,Коппелія,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1251,1902-03,Moscow,review_1902-03_MSK_ballet_p000__b005,staging,Горскимъ,block,Коппелія,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1254,1902-03,Moscow,review_1902-03_MSK_ballet_p001__b001,staging,Горскимъ,page,Эсмеральда,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+1267,1902-03,SP,review_1902-03_SP_ballet_p000__b002,music,Кроткова,after-names,Щелкунчикъ,clause,Капризы бабочки,Капризы Бабочки,fixed: right work now (was wrong)
+1323,1902-03,SP,review_1902-03_SP_ballet_p003__b003,choreography,Петипа,after-names,Фіаметта,clause,Фіаметта,Фіаметта,no change (rule label only)
+1324,1902-03,SP,review_1902-03_SP_ballet_p003__b003,staging,Петипа,after-names,Фіаметта,clause,Фіаметта,Фіаметта,no change (rule label only)
+1325,1902-03,SP,review_1902-03_SP_ballet_p003__b003,choreography,Иванова,after-names,Фіаметта,clause,Фіаметта,Фіаметта,no change (rule label only)
+1326,1902-03,SP,review_1902-03_SP_ballet_p003__b003,staging,Иванова,after-names,Фіаметта,clause,Фіаметта,Фіаметта,no change (rule label only)
+1396,1902-03,SP,review_1902-03_SP_ballet_p020__b004,music,Корещенко,after-names,Ручей,clause,Волшебное зеркало,Волшебное зеркало,fixed: right work now (was wrong)
+1399,1902-03,SP,review_1902-03_SP_ballet_p020__b004,music,Минкуса,after-names,Фея куколъ,clause,Ручей,Ручей,fixed: right work now (was wrong)
+1400,1902-03,SP,review_1902-03_SP_ballet_p020__b004,music,Делиба,after-names,Фея куколъ,clause,Ручей,Ручей,fixed: right work now (was wrong)
+1738,1904-05,SP,review_1904-05_SP_ballet_p015__b002,staging-revival,Гердтомъ,after-names,Граціелла,clause,Голубая георгина,Голубой Георгины,fixed: right work now (was wrong)
+2223,1906-07,SP,review_1906-07_SP_ballet_p011__b005,music,Делиба,after-names,Испытаніе Дамиса,clause,Корсаръ,Корсаръ,fixed: right work now (was wrong)
+2241,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,staging,Горскимъ,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2242,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,music,Рубинштейна,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2243,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,music,Гиро,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2244,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,instrumentation,Арендсомъ,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2245,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,music,Шопена,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2246,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,instrumentation,Арендсомъ,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2247,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,music,Рубинштейна,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2248,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,music,Грига,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2249,1907-08,Moscow,review_1907-08_MSK_ballet_p001__b002,music,Рубинштейна,block,Жизель,divertissement,,,"fixed: separate divertissement, work blank (was the preceding ballet)"
+2359,1908-09,Moscow,review_1908-09_MSK_ballet_p002__b002,costume_design,Коровина,after-names,Раймонда,block,Раймонда,Раймонда,no change (rule label only)
+2413,1913-14,SP,review_1913-14_SP_ballet_p000__b005,ballet_by,Фокина,page-earlier,Раймонда,unidentified title,,Papillons,"fixed: unidentified title «Papillons», work blank (was «Раймонда»)"
+2415,1913-14,SP,review_1913-14_SP_ballet_p002__b005,staging,Легатомъ,after-names,Талисманъ,clause,Фея куколъ,Фея Куколъ,fixed: right work now (was wrong)

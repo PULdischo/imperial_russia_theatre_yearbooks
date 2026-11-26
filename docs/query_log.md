@@ -29120,3 +29120,19 @@ such mentions, link_method 'curated'), so the credit's work_id is the parent bal
 failure. Corrected sample: list-credit-other-work 30 read: 4 wrong (1400, 2347, 2246, 1730), 1 uncertain, 3 no work; lists
 cannot check 20: 3 wrong (2243, 2247 — one 1907-08 suite — and 1010), 1 uncertain; list-credit 12/12 right. Extrapolated:
 roughly 110 of 2,421 credits (about 1 in 20; plausible range 2-9%) name the wrong work. Sample file corrected.
+
+## 2026-11-25 — Draft rule fixes for the review-credit reader, run on a copy (production unchanged)
+
+```sql
+-- build_review_credits.py (draft) on a copy of outputs/full_run/imperial_theaters.duckdb, then credits keyed on
+-- (block_id, char_start, role_category, name_surface, occurrence) compared with production for work_id, work_source,
+-- work_surface, person_id
+```
+
+Result: 2,421 credits both sides, none added or lost, no person changed. 39 rows differ: 8 now carry the right work («Ручей»
+×2, «Корсаръ», «Фея куколъ», «Капризы бабочки» ×2, «Волшебное зеркало», «Голубая георгина»); 18 in separate divertissements
+now have no work (Горскій 1901-02 ×5, 1902-03 ×3, 1907-08 ×9; Манохинъ 1897-98), all previously credited to the preceding
+ballet; «Papillons» 1913-14 no longer «Раймонда»; 12 change only the rule label. All 39 read in the text by Claude: no
+regressions. A first version that also let dance numbers block was dropped: it blanked ~12 correct credits for dances
+printed act by act inside a ballet (1893-94 and 1906-07 «Конекъ-горбунокъ», «Les amours de Diane»). Left wrong: «Лебедь»
+1907-08 (a stand-alone number; needs an override). List: docs/eval/review_credit_rule_draft_2026-11-25.csv.

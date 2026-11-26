@@ -37,6 +37,18 @@ How a credit is read (rules, no model):
    block, else the one work the page names, else the last work of the previous
    page (a list that runs over a page). Only works the matcher identified
    govern; an unidentified title never does.
+   DRAFT 2026-11-25 (awaiting RG; docs/eval/review_credit_rule_draft_2026-11-25.csv):
+   - an unidentified quoted title in the cue, just after the names or last in
+     the clause before the cue blocks the fallbacks: the work stays blank and
+     `work_surface` keeps the printed title (`балетъ г. Фокина «Papillons»`
+     was credited to «Раймонда"). Dance numbers, quoted words that are not
+     titles and literary sources do not block;
+   - "just after the names" does not reach across a closing bracket or into
+     the next clause (`«Фея Куколъ» (поставленная … С. Г. Легатомъ),
+     «Талисманъ»`; `«Ручей» … музыка Минкуса и Делиба; «Фея куколъ»`);
+   - a divertissement printed between the borrowed work and the credit leaves
+     the work blank (`work_source` = `divertissement`): Горскій's divertissement
+     after «Коппелія» is not «Коппелія».
 5. **Person.** In this order: the person the productions lists credit on this
    work with that surname (preferring the same role; not for design, which the
    lists never credit); the same with a near-spelling (`Нюйтера`, `Гершелемъ`
@@ -184,6 +196,8 @@ FOREIGN = re.compile(r"за\s+границ\w*|въ\s+Париж\w*|въ\s+Лон
                      r"въ\s+Берлин\w*|Дягилев\w*|заграниц\w*", re.I)
 FLAGS = Path("docs/eval/review_credit_flags.csv")
 OVERRIDES = Path("docs/eval/review_credit_overrides.csv")
+#: a divertissement on the bill: what follows it is not the preceding work (DRAFT 2026-11-25)
+DIVERT = re.compile(r"дивертис", re.I)
 PART_WORDS = re.compile(r"картин|дѣйств|актъ|акт\.|прологъ|пролог|апоѳеоз|сцена|«|„", re.I)
 # words that do not count towards the cue-to-name distance: titles and the
 # act/scene count of a title line (`въ 4-хъ дѣйствіяхъ и 7-ми картинахъ`)
@@ -282,8 +296,8 @@ def main() -> None:
     mentions: dict[str, list[tuple]] = collections.defaultdict(list)
     for r in con.execute("""
         SELECT block_id, mention_id, mention_type, char_start, char_end, surface, entity_id,
-               candidates_n, candidate_ids, link_method
-        FROM entities.review_mention WHERE mention_type IN ('person', 'work')
+               candidates_n, candidate_ids, link_method, unlinked_reason
+        FROM entities.review_mention WHERE mention_type IN ('person', 'work', 'dance_number')
         ORDER BY block_id, char_start""").fetchall():
         mentions[r[0]].append(r)
 
@@ -422,6 +436,20 @@ def main() -> None:
         pms = [m for m in ms if m[2] == "person"]
         # only works the matcher identified govern a credit
         wms = [m for m in ms if m[2] == "work" and m[6] and str(m[6]) not in non_governing]
+        # DRAFT 2026-11-25 (not yet ruled by RG): a quoted title the matcher could not identify
+        # (a review-only work with no link row such as «Papillons» in 1913-14, an ambiguous
+        # title) still marks the spot a work would govern from, so a credit there must not
+        # borrow a neighbouring work. Dance numbers do NOT count: most are printed act by act
+        # INSIDE the ballet before them («Въ 4-мъ дѣйствіи: … «Татарскій танецъ» (поставленный
+        # г. Хлюстинымъ)», «Конекъ-горбунокъ» 1893-94), so the work they borrow is the right one;
+        # a suite of numbers after the ballet is caught by the divertissement rule instead.
+        # Quoted words that are not titles and literary sources do not count either.
+        gov_ids = {id(m) for m in wms}
+        titles = [m for m in ms if m[2] == "work"
+                  and (id(m) in gov_ids or (
+                      (m[9] or "").startswith(("quoted", "curated"))
+                      and (m[10] or "") not in ("quoted words, not a title", "literary or artistic source",
+                                                "dance number")))]
         clauses = clause_bounds(masked)
         cues = find_cues(body)
         stops = [m.start() for m in STOP_RE.finditer(body)]
@@ -491,18 +519,29 @@ def main() -> None:
                 if after:
                     return [after[0]], "caption-after"
                 return ([before[-1]], "block") if before else ([], "")
-            inside = [w for w in wms if start <= w[3] < end_cue]
+            # DRAFT 2026-11-25: at each governing position the nearest TITLE decides; if the
+            # matcher could not identify it, the work is left blank (work_surface keeps the
+            # printed title) instead of falling through to a neighbouring work
+            def unidentified(w) -> bool:
+                return id(w) not in gov_ids
+            inside = [w for w in titles if start <= w[3] < end_cue]
             if inside:
-                return inside[:1], "cue"
+                return (inside[:1], "cue") if not unidentified(inside[0]) else (inside[:1], "unidentified title")
             in_cl_after = [w for w in wms if names_end <= w[3] < c1]
             if in_cl_after and re.match(r"\s*:", body[names_end:names_end + 3]):
                 return in_cl_after, "clause-after"
-            right_after = [w for w in wms if names_end <= w[3] <= names_end + 6]
+            # DRAFT 2026-11-25: not across a closing bracket or into the next clause --
+            # «Фея Куколъ» (поставленная … С. Г. Легатомъ), «Талисманъ»: the staging is of
+            # «Фея Куколъ»; «Ручей» … музыка Минкуса и Делиба; «Фея куколъ»: music of «Ручей»
+            right_after = [w for w in titles if names_end <= w[3] <= names_end + 6
+                           and w[3] < c1 and ")" not in masked[names_end:w[3]]]
             if right_after:
-                return right_after[:1], "after-names"
-            in_cl_before = [w for w in wms if c0 <= w[3] < start]
+                return (right_after[:1], "after-names") if not unidentified(right_after[0]) \
+                    else (right_after[:1], "unidentified title")
+            in_cl_before = [w for w in titles if c0 <= w[3] < start]
             if in_cl_before:
-                return [in_cl_before[-1]], "clause"
+                w = in_cl_before[-1]
+                return ([w], "clause") if not unidentified(w) else ([w], "unidentified title")
             in_cl_after = [w for w in wms if names_end <= w[3] < c1]
             if in_cl_after and re.match(r"\s*:", body[names_end:names_end + 3]):
                 return in_cl_after, "clause-after"
@@ -511,12 +550,19 @@ def main() -> None:
                 return near_after[:1], "clause-after"
             before = [w for w in wms if w[3] < start]
             if before:
+                # DRAFT 2026-11-25: a divertissement printed between that work and the credit
+                # is a separate item on the bill (1907-08 Moscow: «Жизель», then Горскій's
+                # дивертиссементъ (Études) -- its numbers are not «Жизель»'s)
+                if DIVERT.search(masked[before[-1][3]:start]):
+                    return [], "divertissement"
                 return [before[-1]], "block"
             if in_cl_after:
                 return in_cl_after, "clause-after"
             return [], ""
 
-        def page_fallback():
+        def page_fallback(start: int):
+            if DIVERT.search(masked[:start]):     # DRAFT 2026-11-25, as in governing()
+                return [("", "")], "divertissement"
             pw = page_works.get(page_id, [])
             if len({w[3] for w in pw}) == 1:
                 return [(pw[0][2], pw[0][3])], "page"
@@ -532,11 +578,14 @@ def main() -> None:
         def emit(names, anon, rs, start, end_cue, limit, c0, c1, part, how_extra="", plural=False):
             names_end = names[-1][1] if names else end_cue
             gov, wsrc = governing(start, end_cue, names_end, c0, c1)
-            work_rows = [(w[5], str(w[6])) for w in gov]
+            # an unidentified title keeps its printed surface and no work_id (DRAFT 2026-11-25)
+            work_rows = [(w[5], str(w[6]) if id(w) in gov_ids else "") for w in gov]
             if plural and wsrc in ("block", "clause", "page", ""):
                 work_rows, wsrc = [("", "")], "several works"
+            elif wsrc == "divertissement":
+                work_rows = [("", "")]
             elif not work_rows:
-                work_rows, wsrc = page_fallback()
+                work_rows, wsrc = page_fallback(start)
             prior = [d for d in dates if d[0] <= start and d[2]]
             date = prior[-1][3] if prior else None
             sent = body[c0:c1]
