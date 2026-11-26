@@ -10,7 +10,7 @@ with the ballet-relevant ones pulled out.
 |---|---|
 | `jubilees_obituaries_all_entries.csv` | Every entry (770 rows, 717 of them person entries; 13 rows for 1911-12 and 7 for older seasons added 2026-11-12, see "1911-12" and "Snapshot refresh" below; 48 rows for 1913-14 added 2026-11-25, see "1913-14"). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
-| `jubilees_obituaries_person_links.csv` | Each of the 671 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"). |
+| `jubilees_obituaries_person_links.csv` | Each of the 717 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"; the 46 for 1913-14 added 2026-11-25, not yet loaded into production). |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `repertoire_date_check.csv`, `repertoire_annotations_matched.csv` | The Repertoire's annotations against the catalogue, both directions. |
@@ -374,8 +374,32 @@ Print slips noted, kept as printed: Григорьевъ «родившагос�
 `docs/eval/genuine_print_typos.md`); Рыкалова once «Н. П.» for Н. В. (p. 168, first and second readers agree;
 not re-read by Claude).
 
-`see_also` was filled by hand from surname matches. Not done yet: person links (`build/link_persons.py`), the load
-into production, and the Obsidian reading notes (single machine reading + translation, DashScope, billed).
+`see_also` was filled by hand from surname matches.
+
+**Person links (2026-11-25).** `build/link_persons.py` was re-run on current production. The 671 older rows came out
+unchanged, so the 46 new person entries were simply added. **10 linked -> 10 people; 36 no record.** 10 of the 11 core
+entries are linked. The exception is Каратыгина К. А.: there is no record, because she left the ballet before 1890-91,
+and her 1908-09 jubilee has none either. The other 35 with no record are drama, opera, literary and French-troupe people
+whom the rosters do not list. Twelve decisions are in `build/person_link_decisions.csv` (all from catalogue role, city
+and dates against roster spans; one scan read):
+- Linked: Преображенская (Осиповна/Іосифовна, as in 1908-09). Панчина, Нина Александровна goes to the 1911-12 SP
+  graduate «Панчина, Нина»; she is the daughter, not А. С. Панчинъ or «г. Панчинъ 1-й», neither of whom has a record.
+  Легатъ Н. Г. goes to Легатъ 1-й (not Густавъ or Сергѣй). Ермоловъ И. А. and Токарева О. И. agree in full and
+  are distinguished from same-surname relatives.
+- **Булгаковъ А. Д.** goes to the SP record Алексѣй Дмитріевичъ («съ 1 іюня 1889 г.», exactly 25 years). The Moscow
+  1911-12 record prints «Александръ Дмитріевичъ» with the same start date (p. 127, read on the scan by Claude). This is
+  the open Group D merge question in `docs/eval/person_merge_candidates_batch.md`; the jubilee (Moscow régisseur,
+  «Алексѣй») is new evidence for it. Left to RG; the link follows any merge.
+- No record: Садовская О. О. (drama, as in 1908-09), Ермолова А. Н. (drama; the record is the ballet dancer Елизавета
+  Ивановна), and the memorial features for Григорьевъ, Соллогубъ, Чернышевъ and Юрьевъ (died 1863-1888, before the
+  rosters).
+- Гердтъ and Дриго were linked automatically to the same records as their earlier entries. Божовскій and Обуховъ were
+  linked automatically.
+
+Totals now: 717 person entries; **339 linked -> 293 people**.
+
+Not done yet: the load into production (needs RG's go-ahead), and the Obsidian reading notes (single machine
+reading + translation, DashScope, billed).
 
 ## Not yet done
 
