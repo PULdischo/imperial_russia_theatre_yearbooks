@@ -28978,3 +28978,8 @@ select surface, entity_id from entities.review_mention where block_id='review_18
 ```
 
 Result: the 1891-92 SP graduates («Ученики», p. 253) are Бекъ (to Moscow), Никитинъ, Облаковъ, Пащенко, Тихомировъ Владиміръ, Тихомировъ Сергѣй and Яковлевъ Владиміръ, all «1 іюня 1892 г.», the same six names as the review's list of entrants (review_1891-92_SP_ballet_p017 block 2). «Яковлевъ, Владиміръ» (931f4063) has no other appearance. The only male Яковлевъ in the SP ballet then is Николай Николаевичъ (from 1880, to 1901-02). The review-mention layer links «Яковлевъ 2-й» to 931f4063. The catalogue link for this death notice (kind death_notice, not an obituary; decided 2026-10-22, before this record existed) still says no_record.
+
+## 2026-11-25 — check of the 1913-14 jubilee/obituary production load
+Q: does production hold what the linking session reported after loading 1913-14?
+Query (read-only, `outputs/full_run/imperial_theaters.duckdb`): row counts of `raw.jubilee_obituary_entry`, `entities.jubilee_obituary_person_link`, `research.jubilee_obituary`; linked rows and distinct `person_id`; 1913-14 rows / linked / core; linked `person_id` absent from `research.person`.
+A: 770 / 717 / 770; 340 linked -> 294 people; 1913-14: 48 rows, 10 linked, 11 core; 0 dangling links.
