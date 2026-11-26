@@ -29320,3 +29320,20 @@ list-marker rule; no «Конекъ» drift (0 of the 19). Assertions 2,690 -> 2
 1211), same rows. Dances 919 -> 927 (8 from rejoined titles; «tarantelle» surface), performers 3,066 -> 3,141 (renumbered). Backup
 outputs/full_run/imperial_theaters.before_fokine_fold_konek_listmarker_2026-11-25.duckdb; production replaced;
 build_research_model.py re-run, 73 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite NOT rebuilt (Andy).
+## 2026-11-26 — 1912-13 uncertain readings ruled by RG; production rebuilt for the two raw changes
+
+```sql
+-- raw: p029 «572 р. 90 к.» -> «582 р. 90 к.» (RG reads 8); p054 «1808 р: 35 к.» -> «1808 р. 35 к.» (RG: period + speck),
+-- its receipts_print_typos.csv row removed. Full raw chain (parse -> qc -> build_duckdb -> entities -> dates -> productions
+-- -> credits -> creators -> season stats -> research model -> alignment) on a copy of production; 73-table EXCEPT ALL diff.
+select event_id, receipts_total_kopecks, receipts_source, receipts_verbatim from research.event
+where event_id in ('repertoire_1912-13_p029__s029', 'repertoire_1912-13_p054__s001');
+```
+
+Result: 4 of 73 tables differ, all from these two events. raw.event_entry / analysis.event_entry: the two receipts texts
+(p054 kopecks now parse as «35», were «: 35»). research.event: p029 57,290 -> 58,290 kop.; p054 total unchanged at 180,835,
+receipts_source corrected_print_typo -> parsed, correction note cleared. research.season_stat_check 1912-13 SP: Repertoire
+receipts +10 р. (1,427,933 р. 72 к. -> 1,427,943 р. 72 к.; gap vs printed 3,087 р. 63 к. -> 3,097 р. 63 к.). No review,
+mention, credit, person or work changes. Backup outputs/full_run/imperial_theaters.before_1912-13_rulings_2026-11-26.duckdb;
+production replaced; 73 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite rebuilt locally;
+HF / Cloud Run republish is Andy's. Other rulings (#164 items 1-14) kept stored values; no data change.

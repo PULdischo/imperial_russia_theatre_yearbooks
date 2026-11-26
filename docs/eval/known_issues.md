@@ -25237,3 +25237,44 @@ VISITING_RUNS wording (RG's yes). full_run: 23 seasons, research.event 36,262, r
 3,140, research.person 2,712 (query_log 2026-11-25). `research_dataset.sqlite` rebuilt locally; HF / Cloud Run republish
 is Andy's. Still open: uncertain readings and convention questions above; new-season checklist steps (A7 blind audit,
 B, C, D2 ledger, D3 blind column reads, E: no 1912-13 lists or ballet lists yet -- the Supplement spiski are unscanned).
+
+**RG rulings on the uncertain readings (2026-11-26), one at a time.**
+1. p029 Михайловскій 11 Jan 1913 receipts: RG reads the faint third digit as **8** -> «582 р. 90 к.» (was the best
+   reading «572 р. 90 к.»; Claude's zoom favoured 2, alternatives 3/8). Changed in `outputs/full_run/raw/`,
+   `outputs/repertoire_1912-13/raw_columnwise_repaired/` and `outputs/integration_1912-13/raw/` (old-value assertion).
+   Re-parse + production rebuild held until the rest of the list is ruled, so it runs once.
+2. RG 2026-11-26: non-ballet cells don't need the same scan checking -- the stored best reading stands. Kept as stored,
+   no raw change: p045 Александринскій 15 Mar «1650 р. 82 к.» (drama; Claude's zoom shows a faint narrow oval, fits 0);
+   p054 Большой 17 Apr «1808 р: 35 к.» («Валкирія», opera with no dances; colon kept, so its receipts_print_typos row
+   stands); p028 «трудового»; p018 «траги-ком.»; p040 «хрон.»; «Вторн.» on the Moscow pages (the weekday text, the date
+   number is unaffected). Still for RG: p056 Большой 23 Apr blurred title read «Жизнь за Царя» -- an opera with dances,
+   so it counts as ballet-relevant.
+3. p056 Большой 23 Apr: RG confirms «Жизнь за Царя» (blurred title compared with the clean 30 Apr printing in the same
+   column). Kept as stored. All uncertain readings now ruled; convention questions next.
+   Correction (same day): RG asked to rule on the item-2 readings herself after all (p045, p054, p028, p018, p040,
+   «Вторн.»); they are open again, taken one at a time with zooms. Rulings follow below.
+4. p045 Александринскій 15 Mar: RG reads **0** -> «1650 р. 82 к.» confirmed, kept as stored.
+5. p054 Большой 17 Apr: RG reads **a period plus a speck**, not a colon -> raw «1808 р. 35 к.» in all three raw copies;
+   its row removed from `pipeline/research_corrections/receipts_print_typos.csv` (and the 1912-13 pending copy) and the
+   example dropped from `genuine_print_typos.md`. The kopecks now parse directly (180,835 kop.), so the event total is unchanged.
+6. p028 Большой 28 Dec evening banner: RG reads **«трудового»**, kept as stored.
+7. p018 Малый 11 Nov evening: RG reads **«траги-ком.»** (line-end hyphen kept), as stored.
+8. p040 Малый 22 Feb morning item 3: RG reads **a period** («хрон.»), as stored.
+9. «Вторн.» on the Moscow pages: RG confirms **«Вторн.»** (н/и identical in the bold date face; «Втори.» is not a word), as stored.
+   All uncertain readings now ruled: raw changes p029 («582 р. 90 к.») and p054 («1808 р. 35 к.», typo row removed);
+   everything else as stored. Convention questions next.
+10. Convention: descriptive endings («сказаніе въ лицахъ.», «отрывки изъ драмат. поэмы.», «сцены изъ романа.»,
+    «отрывки изъ романа.») **stay in the genre field** (RG), matching 1910-11's «отрывки изъ романа (1-я часть).» and
+    «сцены изъ деревенской жизни.». No change.
+11. Convention: concert cells **stay stored as works with no genre** (RG: "for now, but know we can always adjust that
+    later"), matching the 22 earlier concert cells 1890-91..1911-12. Revisable; if changed, change all seasons together.
+12. Convention: numbered programme items **stored without their printed numerals** («I.», «1)»); order kept in
+    performance_order (RG, after seeing p054 Малый 21 Apr). No change.
+13. Convention: a free-performance banner that runs into a dark theater's column is **not repeated on the dark cell**
+    (RG; p018 14 Nov, p038 20 Feb), matching production (346 of 347 banner events are performed; one 1910-11 dark exception). No change.
+14. Convention: apostrophes. Raw text keeps ’ or ' as each reader typed (both occur in every season: research.work 23
+    curly / 131 straight). RG chose the middle path: **fold ’ to ' only in the title-matching key**, so a work printed
+    both ways is recognised as one; displayed and raw titles unchanged. On checking, this is ALREADY how matching works:
+    build_entities._match_key strips every non-letter, non-digit character (since 2026-10-05; its docstring cites
+    «Chez l'Avocat»/«Chez l’Avocat»). Query: no two research.work titles differ only by apostrophe. No code change.
+    Side find, not chased: «Ou n’oublie pas» vs «On n'oublie pas» are two works -- an Ou/On misreading, not an apostrophe.
