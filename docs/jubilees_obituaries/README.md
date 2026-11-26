@@ -10,7 +10,7 @@ with the ballet-relevant ones pulled out.
 |---|---|
 | `jubilees_obituaries_all_entries.csv` | Every entry (770 rows, 717 of them person entries; 13 rows for 1911-12 and 7 for older seasons added 2026-11-12, see "1911-12" and "Snapshot refresh" below; 48 rows for 1913-14 added 2026-11-25, see "1913-14"). `source_type` says where each comes from: `section` (357: the scanned sections, stand-alone articles and other files), `review` (87 + 7 work milestones), `roster` (101 death marks), `repertoire` (112 + 10 institutional or event anniversaries). Check columns: `date_check`, `tier_check`. |
 | `jubilees_obituaries_ballet_only.csv` | The subset with `relevance` = `core` or `mentions`. |
-| `jubilees_obituaries_person_links.csv` | Each of the 717 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"; the 46 for 1913-14 added 2026-11-25, not yet loaded into production). |
+| `jubilees_obituaries_person_links.csv` | Each of the 717 person entries linked to a `research.person` record, or marked as having none (2026-10-22; see "Links to the people in the database"; the 46 for 1913-14 added and loaded into production 2026-11-25). |
 | `unscanned_worth_getting.md` | Jubilee, obituary and memorial items the Yearbooks contain that are not in the scans, ranked. |
 | `AUDIT_2026-10-10.md` | What has been verified, how far, and the known gaps. |
 | `repertoire_date_check.csv`, `repertoire_annotations_matched.csv` | The Repertoire's annotations against the catalogue, both directions. |
@@ -204,12 +204,12 @@ A fourth, Пуни, was not a conflict: the review page prints «Н. Ц. Пун�
 ## Reading notes in Obsidian (Russian and English)
 
 `build/build_obsidian_notes.py` writes one note for every ballet-relevant entry (`core` or `mentions`)
-that has a full text: 79 obituaries, 27 jubilees and 12 articles and memorials, 118 notes. One-line
+that has a full text: 84 obituaries, 33 jubilees and 12 articles and memorials, 129 notes (11 for 1913-14 added 2026-11-25). One-line
 notices from the reviews, rosters and Repertoire get no note. The notes live in the Obsidian vault under
 `Jubilees and obituaries/`, with an index note listing them by season.
 
 **They are for reading, not citing.** The Russian is a single machine reading of each page
-(`pipeline/run_reviews.py`, 220 pages, not checked against the scans) and the English is a machine
+(`pipeline/run_reviews.py`, 232 pages, not checked against the scans) and the English is a machine
 translation of it (`pipeline/translate_reviews.py`). Quote from the scan.
 
 Each note carries the catalogue's fields as properties, the text as a two-column table
@@ -252,21 +252,21 @@ The links are decisions and can be revised: change a row in `build/person_link_d
 `person_id`s follow production, and the script follows merges (`superseded_by_person_id`). If people are merged
 or split later, re-run it.
 
-## Loading into the database (in production since 2026-11-12)
+## Loading into the database (in production since 2026-11-12; 1913-14 loaded 2026-11-25)
 
 `build/load_jubilees_obituaries.py --db <file>` writes three tables:
 
 | Table | Rows | What |
 |---|---|---|
-| `raw.jubilee_obituary_entry` | 722 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
-| `entities.jubilee_obituary_person_link` | 671 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
-| `research.jubilee_obituary` | 722 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
+| `raw.jubilee_obituary_entry` | 770 | The catalogue verbatim, plus `entry_id` and `catalogue_row`. |
+| `entities.jubilee_obituary_person_link` | 717 | The person links and their basis, from `jubilees_obituaries_person_links.csv`. |
+| `research.jubilee_obituary` | 770 | The queryable table. `person_id` points to `research.person` and follows later merges; `is_person` and `link_status` are included. |
 
 **Loaded into production on 2026-11-12 with RG's approval** (backup of the database just before:
 `outputs/full_run/imperial_theaters.before_jubilees_2026-11-12.duckdb`). The script refuses `outputs/full_run`
 unless given `--production`, and the pipeline does not call it. Before the load it was tested on a fresh copy of
 production:
-- All integrity checks pass, and 317 links point to 275 people (323 -> 281 after the 1911-12 rows, 329 -> 286 after the snapshot refresh, each loaded the same day the same way; backups `outputs/full_run/imperial_theaters.before_jubilees_olderseasons_2026-11-12.duckdb` and `outputs/full_run/imperial_theaters.before_jubilees_1911-12_2026-11-12.duckdb`).
+- All integrity checks pass, and 317 links point to 275 people (323 -> 281 after the 1911-12 rows, 329 -> 286 after the snapshot refresh, each loaded the same day the same way; 340 -> 294 with the 1913-14 rows and the Яковлевъ 2-й revision, loaded 2026-11-25 the same way, backup `outputs/full_run/imperial_theaters.before_jubilees_1913-14_2026-11-25.duckdb`; backups `outputs/full_run/imperial_theaters.before_jubilees_olderseasons_2026-11-12.duckdb` and `outputs/full_run/imperial_theaters.before_jubilees_1911-12_2026-11-12.duckdb`).
 - A second run gives the same result.
 - `pipeline/build_research_model.py` rebuilds the research layer on the copy without error and leaves the three
   tables unchanged; no link points at a missing person, and no jubilee or farewell falls after a recorded death.
@@ -419,8 +419,16 @@ in `build/person_link_decisions.csv`.
 
 Totals now: 717 person entries; **340 linked -> 294 people**.
 
-Not done yet: the load into production (needs RG's go-ahead), and the Obsidian reading notes (single machine
-reading + translation, DashScope, billed).
+**Loaded into production 2026-11-25 (RG's go-ahead)**: 770 rows, 717 person entries, 340 linked -> 294 people. It was tested
+on a copy first: all checks pass, a second run gives the same result, and `build_research_model.py` leaves the tables
+unchanged. Production then matched the tested copy exactly.
+
+**Reading notes made 2026-11-25** for the 11 core entries: 12 pages read (`run_reviews.py`, prompt `review_system_lines.txt`,
+78,055 tokens), 41 blocks translated (23,741 tokens), and written into the vault. The model typed two capitals headings
+(«М. К. ОБУХОВЪ.», «Н. А. ПАНЧИНА.», p. 165) as bylines, so `--segment` now also takes a capitals byline that prints the
+entry's name as its heading. No older block changed. Каратыгина and Преображенская now have two jubilee notes each,
+so both notes' titles carry the season. Their 1908-09 notes were renamed to «… (1908-09)»; both had empty «My notes»,
+and no other note linked to the old titles.
 
 ## Not yet done
 

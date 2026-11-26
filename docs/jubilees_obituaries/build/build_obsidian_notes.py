@@ -97,7 +97,9 @@ def heading_names(b: list, keys: list[str]) -> bool:
     """headings print the name in either order and sometimes in the genitive ("произведеній Н. И. Куликова")"""
     h = norm(b[3])
     stem = lambda k: re.sub(r'(ій|ый|ой|ая|ъ|ь|а|я)$', '', k)
-    return b[2] == 'heading' and any(k in h or (len(k) > 5 and stem(k) in h) for k in keys[-1:] + keys[:-1])
+    # the model sometimes types a capitals name heading as a byline («М. К. ОБУХОВЪ.», 1913-14 p. 165)
+    is_head = b[2] == 'heading' or (b[2] == 'byline' and b[3] == b[3].upper() and len(b[3]) < 60)
+    return is_head and any(k in h or (len(k) > 5 and stem(k) in h) for k in keys[-1:] + keys[:-1])
 
 
 def segment() -> None:
