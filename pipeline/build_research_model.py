@@ -168,6 +168,15 @@ PARENT_GENRE_BALLET_TITLES = {
     "Концертный и балетный дивертиссемент":
         "the printed title names ballet and concert together (Маріинскій, 7 Jan 1906, charity evening); "
         "no single genre assigned, parent genre ballet (RG, 2026-10-12)",
+    # Фокинъ's three new ballets of 1912-13 (Маріинскій, 30 Sep, 3 and 7 Oct 1912, 31 Mar 1913), on ballet bills
+    # with «Эвника», «Карнавалъ», «Павильонъ Армиды». No 1912-13 ballet productions list is loaded and the printed
+    # genres are not read as ballet, so the fallback had made them Russian drama (RG 2026-11-25: "Fix it, then fold").
+    "Papillons": "Фокинъ's ballet: «Papillons», пантомима-балетъ М. М. Фокина (1912-13 SP ballet review f. 142); "
+                 "Маріинскій ballet bills 1912-13 (RG, 2026-11-25)",
+    "Исламей": "Фокинъ's ballet: «Исламей», Восточная фантазія на музыку Балакирева (1912-13 SP ballet review "
+               "ff. 140, 142, 143); Маріинскій ballet bills 1912-13 (RG, 2026-11-25)",
+    "Les préludes": "Фокинъ's ballet: «балетъ въ одномъ дѣйствіи «Les préludes»», поставленный М. М. Фокинымъ (1912-13 "
+                    "SP ballet review ff. 141, 143); Маріинскій ballet bill 31 Mar 1913 (RG, 2026-11-25)",
 }
 
 #: ---------------------------------------------------------------------------

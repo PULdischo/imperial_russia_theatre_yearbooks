@@ -29260,3 +29260,25 @@ re-run now also brings ~23 work-link changes from the 1912-13 Repertoire promoti
 préludes» to Repertoire works classed as drama), pending RG. review_mention 27,526 unchanged. Production backed up to
 outputs/full_run/imperial_theaters.before_opera_debut_repair_2026-11-25.duckdb and replaced; build_research_model.py re-run, 73
 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite NOT rebuilt (Andy).
+
+## 2026-11-25 — Fokine 1912-13 works classed ballet + review-only «Papillons»/«Исламей»/«Les préludes» folded: copy built, NOT loaded
+
+```sql
+-- PARENT_GENRE_BALLET_TITLES += Papillons, Исламей, Les préludes (build_research_model.py); review_work_mention_links.csv (9
+-- rows) and review_credit_overrides.csv (1 row) repointed to the Repertoire works; 3 rows removed from review_work_approved.csv.
+-- Full chain on a copy, run A against production's review text (merged_full/review_block.csv.bak, = raw.review_block, 0 diff),
+-- run B against current merged_full; 73-table EXCEPT ALL diffs prod vs A and A vs B; keyed comparisons as before.
+select w.work_id, w.canonical_title, w.canonical_genre, w.appearance_count, min(e.season), max(e.season), count(p.performance_id)
+from research.work w left join research.performance p using (work_id) left join research.event e using (event_id)
+where w.canonical_title ilike 'Конекъ%горбун%' group by all;
+```
+
+Result, prod vs A (my change): the three works are ballet («ballet productions list: Фокинъ's ballet …» basis), their 7
+performances discipline ballet / St. Petersburg ballet, the 4 events (30 Sep, 3, 7 Oct 1912, 31 Mar 1913) ballet only;
+research.work 3,140 -> 3,137 (review-only rows retired). Mentions: 9 curated 1912-13 rows now on the Repertoire works, 4 1913-14
+mentions newly linked (quoted-exact); credits: 16 to the twins, 2413 «Papillons» (after-names); 1 assertion gains «Papillons»,
+1913-14 «Chopeniana» cast no longer borrows «Раймонда». BLOCKER, not part of this change: the 1912-13 Repertoire promotion made
+a one-performance duplicate work «Конекъ-Горбунокъ или Царь-Дѣвица» [бал.] (0c1a6a7a, Moscow 7 Nov 1912) beside «Конекъ-горбунокъ»
+(573151e6, 259 performances 1890-91..1912-13); any matcher re-run moves 19 review mentions (1893-94..1912-13), 7 assertions, 11
+credits and 5 dances onto it. A vs B: the main session's list-marker rule (3417398), 23 ballet blocks, +5 mentions, +1
+assertion, +8 dances, +75 dance performers; not examined yet. Production unchanged.
