@@ -29150,3 +29150,15 @@ Result: only research.review_credit differs, in exactly the 39 credits reviewed 
 outputs/full_run/imperial_theaters.before_credit_rules_2026-11-25.duckdb and replaced; build_research_model.py re-run, 73 tables
 equal to the copy; alignment 0 shift blocks. review_credit 2,421 (divertissement 18, unidentified title 1). research_dataset.sqlite
 NOT rebuilt (Andy).
+
+## 2026-11-25 — Is Фокинъ's «Лебедь» (Сенъ-Сансъ, for Павлова 2-я) mentioned anywhere else in the Yearbook data?
+
+```sql
+select block_id, text from raw.review_block where regexp_matches(text, '(?i)лебед|cygne|Сен[ъь]-?Санс');
+-- and every VARCHAR column of raw.* / research.* (reviews excluded): regexp '(?i)лебед[ьяеи](?!н)|cygne', not Лебедев-
+```
+
+Result: one mention only — review_1907-08_SP_ballet_p014__b007 («По частной иниціативѣ г. Фокинымъ было поставлено нѣсколько
+красивыхъ номеровъ: «Лебедь», музыка Сенъ-Санса для г-жи Павловой 2-й»). Other «лебед-» hits are «Лебединое озеро», its
+swan dances («Entrée des cygnes», «Grand pas des cygnes») and its libretto, or the surname Лебедевъ. Nothing in the Repertoire
+or other tables: the only other hits are «Le chant du cygne», a French comedy on the Repertoire bills, and «Лебеди-ное озеро» split across a line in two tallies.
