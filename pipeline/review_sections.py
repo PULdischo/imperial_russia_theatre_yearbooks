@@ -115,5 +115,7 @@ def block_body(b: dict) -> str:
     if not text.strip():
         return e
     t = text.lstrip()
+    if t.startswith(e):          # the text already repeats it («Grand pas…»)
+        return text
     joiner = "" if e.endswith(("«", "„", "(")) or t[:1] in ",.;:—–-»“)" else " "
     return e + joiner + t

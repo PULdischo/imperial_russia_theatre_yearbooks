@@ -988,15 +988,19 @@ Left open:
   re-translated (18,356 tokens) and 26 files rewritten. A fresh build matches
   every file. The mention layer was not changed here (the review-layer rebuild
   session was asked to report whether it reads `enumerator`).
-- **Six 1894-95 Moscow opera debut paragraphs repaired at the source, same
-  day (RG).** They are plain paragraphs in the print (scan p033), but extraction
-  had put each whole paragraph in `enumerator`. A new table,
-  `docs/eval/review_block_repairs.csv` (`enumerator_to_text`), applied by
-  `apply_review_text_corrections.py`, moves the text to `text`, so the mention,
-  credit and assertion readers now see them. Production needs a review-chain
-  rebuild for this, handed to the review-layer rebuild session. 23 other items
-  keep a leading dance title in `enumerator` with real text after it: they are
-  in the reading files (`block_body()`), but not yet in the mention layer.
+- **List-marker text rejoined by RULE, same day (RG: "go with the rule";
+  she is wary of the number of hand fixes).** `apply_review_text_corrections.py`
+  now rejoins any `enumerator` holding more than a plain marker into `text`
+  (same join as `review_sections.block_body()`) and clears it; a block whose
+  `text` was empty becomes a paragraph. That covers 29 blocks: 23 ballet list
+  items whose dance title, act or cut-off first words («и», «г-жи», «1-й,»)
+  sat in `enumerator`, and the six 1894-95 Moscow opera debut paragraphs. The
+  rule reproduces the six earlier hand repairs exactly, so their table
+  (`docs/eval/review_block_repairs.csv`) was retired. Four fragment blocks were
+  checked on the scans first. One block already repeated its «, which the join
+  now skips (the 1894-95 Moscow reading file had shown «««»). Production needs
+  the mention matcher re-run for the 23. Opera reviews are outside the mention
+  layer (Ballet only), so the six debut names stay unlinked.
 - Not built into the database's review layer (mentions, assertions).
 
 **STATUS 2026-09-28 — the corpus is extracted, merged and translated.**
