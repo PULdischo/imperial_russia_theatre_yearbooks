@@ -25357,3 +25357,10 @@ Group B: «4-е д. Эрнани» (Малый 28 Jan 1906) linked as an excerpt
 «Kammermusiк» art form: the raw Cyrillic к made the Cyrillic-title rule class 4 Apr 1913 as Russian drama; `art_form_by_performance.csv`
 row -> German drama (only mixed-script word in the corpus). **C curation LOADED to production 2026-11-26** (RG "Yes, load it"):
 works 3,136 -> 3,109, 1912-13 performances with no art form 51 -> 12; details in query_log. C6 waits for the 1912-13 BalletArtists lists.
+
+**1912-13 reconciliation D2 DONE 2026-11-26 (RG: "Yes, commit").** compare_season_stats re-run on production after the C
+curation: every category's event count now agrees except SP drama (+2); ledger rows 1912-13-01..09 in
+`docs/eval/reconciliation/outcome_ledger.csv`: 6 charity/concert evenings with no receipts not counted by the yearbook (01),
+7 receipt print slips corrected (09), and 7 receipt gaps the yearbook's own, provisional (D3 read every receipt as stored; no
+one or two events equal any gap). Lead in 1912-13-06: the Moscow opera gap equals the Большой full-house figure 5,183 р. 80 к.
+Working files `outputs/d2_1912-13/`. Ballet gaps (Moscow -999.40, SP -1.00) may be revisited with the season reviews.

@@ -29407,3 +29407,17 @@ by the Cyrillic-title rule; the only mixed-script word in the corpus -> art_form
 Backup outputs/full_run/imperial_theaters.before_1912-13_C_curation_2026-11-26.duckdb; production replaced; 73 tables equal to the
 copy; alignment 0 shift blocks; outputs/reviews/mentions CSVs replaced by the build's (backup _backup_mentions_before_1912-13_C_2026-11-26);
 research_dataset.sqlite rebuilt locally (republish is Andy's).
+## 2026-11-26 — 1912-13 D2: season totals vs Repertoire after the C curation
+
+```sql
+-- pipeline/compare_season_stats.py --db outputs/full_run/imperial_theaters.duckdb --out-dir outputs/d2_1912-13
+-- pipeline/season_stats_receipt_candidates.py ...; outputs/d2_1912-13/odd_events.py (mixed/unknown/no-work events);
+-- outputs/d2_1912-13/subsets.py (one event or a pair equal to each gap)
+select cast(e.date as varchar), t.canonical_name, e.receipts_verbatim from research.event e join research.theater t using(theater_id)
+where e.season = '1912-13' and e.receipts_total_kopecks is null and e.event_status = 'performed';
+```
+
+Result: Moscow 479 / 476 events, receipts -6,273.40 (opera -5,183.80, ballet -999.40, drama -90.20); SP 672 / 667, +3,097.63
+(drama 289/287 -8,617.39, French +10,716.02, opera +1,000.00, ballet -1.00). Event surplus = 6 charity/concert evenings
+without receipts + SP drama 2. No single event or pair equals any gap except Moscow opera = any of 8 «Хованщина» full houses
+(5,183.80) and an unrelated SP pair for the drama+French net. Ledger 1912-13-01..09. No data change.
