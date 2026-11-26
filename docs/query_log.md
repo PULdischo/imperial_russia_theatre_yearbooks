@@ -29104,3 +29104,19 @@ neighbour (Papillons, La fille mal gardée, «Лебедь»); a quoted scene/de
 a dance suite attached to the ballet before it (Горскій's 1907-08 suite -> «Жизель», 3 credits); after-names crossing a list
 boundary (Делиба 1902-03, 1906-07). Rough extrapolation: ~200 credits (about 1 in 10) name the wrong work, concentrated
 outside the list-confirmed group; samples small, reads are finding aids. Judgments: docs/eval/review_credit_work_sample_2026-11-25.csv.
+
+## 2026-11-25 — CORRECTION to the review-credit sample check above
+
+```sql
+select r.credit_id, r.work_surface, w.canonical_title, r.work_source
+from research.review_credit r left join research.work w using (work_id) where credit_id in (89, 1596, 721, 384, 1171, ...);
+select link_method, count(*) from entities.review_mention where mention_type = 'work' and candidates_n = 0 and entity_id is not null group by 1;
+```
+
+Result: 5 of the 12 credits I scored wrong are RIGHT. I judged them by work_surface, not by work_id. Four scene titles («Лѣсъ»,
+«Залъ во дворцѣ», «Паркъ передъ замкомъ Дорисъ…», «Внутренность храма богини Куанонъ») are curated scene-to-work links (244
+such mentions, link_method 'curated'), so the credit's work_id is the parent ballet («Кольцо любви», «Волшебное зеркало»,
+«Раймонда», «Даита»); 1171's work_id is «Спящая красавица» (surface «Сильвія» is stale). "Scene title taken as a work" is NOT a
+failure. Corrected sample: list-credit-other-work 30 read: 4 wrong (1400, 2347, 2246, 1730), 1 uncertain, 3 no work; lists
+cannot check 20: 3 wrong (2243, 2247 — one 1907-08 suite — and 1010), 1 uncertain; list-credit 12/12 right. Extrapolated:
+roughly 110 of 2,421 credits (about 1 in 20; plausible range 2-9%) name the wrong work. Sample file corrected.
