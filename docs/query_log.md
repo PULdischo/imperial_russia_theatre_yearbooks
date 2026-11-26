@@ -29299,3 +29299,24 @@ d’action», «Pas de séduction», «Pas militaire», «La Romanesque», «La 
 Variation, Ensemble, Pas de fusils, «вальсъ и адажіо»; dance_ids renumber, hence +75 performer rows), 1 work_surface change
 («tarantelle» shows «La Delivrance»); 1 new assertion (3248, «Les Bohemiens—г-жи Тимоѳеева»); credits unchanged; 3 assertions
 and 2 solos differ only in candidate order. Not loaded: waiting on the «Конекъ» duplicate work (entry above).
+
+## 2026-11-25 — APPLIED: Fokine works ballet, review-only twins folded, «Конекъ» duplicate merged, list-marker rule (RG)
+
+```sql
+-- work_title_aliases.csv += «Конекъ-Горбунокъ или Царь-Дѣвица» -> «Конекъ-горбунокъ» (case variant of RG's 2026-10-23 alias;
+-- repertoire_1912-13_p016, Moscow 7 Nov 1912, the only such printing). Full chain on a copy of production with current
+-- merged_full: build_entities -> build_review_persons -> build_review_works -> build_research_model -> match_review_mentions
+-- -> build_reviews_duckdb -> build_review_assertions -> build_review_credits; 73-table EXCEPT ALL diff; mentions keyed with the
+-- rejoined blocks' offsets shifted; credits, assertions, dances, performances compared by key
+select * from z.entities.work_id_crosswalk except select * from p.entities.work_id_crosswalk;
+```
+
+Result vs production, every change explained: «Конекъ» duplicate 0c1a6a7a retired into 573151e6 (crosswalk +1; «Конекъ-горбунокъ»
+259 -> 260 performances); research.work 3,140 -> 3,136 (3 review-only + the duplicate); «Papillons», «Исламей», «Les préludes»
+ballet, their 7 performances discipline ballet, 4 events ballet only; entities.review_work 20 -> 17. Mentions 27,526 -> 27,531:
+13 link changes, all the fold (9 1912-13 to the Repertoire works, 4 1913-14 newly linked), +5 unlinked dance titles from the
+list-marker rule; no «Конекъ» drift (0 of the 19). Assertions 2,690 -> 2,691 (+3248 «Les Bohemiens»; 3245 gains «Papillons»;
+3244 «Chopeniana» 1913-14 no longer «Раймонда»). Credits 2,421: 16 to the twins, 2413 -> «Papillons»; 2 offsets shifted (1202,
+1211), same rows. Dances 919 -> 927 (8 from rejoined titles; «tarantelle» surface), performers 3,066 -> 3,141 (renumbered). Backup
+outputs/full_run/imperial_theaters.before_fokine_fold_konek_listmarker_2026-11-25.duckdb; production replaced;
+build_research_model.py re-run, 73 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite NOT rebuilt (Andy).
