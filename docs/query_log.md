@@ -29223,3 +29223,22 @@ préludes» (6b10b2bf / a0ed98d4), both first in the Repertoire 1912-13. («Фа
 (p000__b005, p001__b002), «Исламей» and «Les préludes» 1913-14 to the REPERTOIRE works by title (quoted-exact, 1 candidate),
 with no link row; the 1912-13 mentions stay on the review-only works. 23 work-mention links change in all on that re-run
 (1893-94..1913-14), not yet examined. Nothing changed in production.
+
+## 2026-11-25 — Before folding the review-only «Papillons» / «Исламей» / «Les préludes»: their 1912-13 Repertoire twins are classed as drama
+
+```sql
+select canonical_title, canonical_genre, art_form, art_form_basis from research.work
+where work_id in ('9afbca4d-…' /* Papillons */, 'fd29ca30-…' /* Исламей */, 'a0ed98d4-…' /* Les préludes */);
+select e.date_undate, t.canonical_name, p.performance_order, p.verbatim_title, p.verbatim_genre, p.discipline, p.discipline_basis
+from research.event e join research.performance p using (event_id) left join research.theater t using (theater_id)
+where e.event_id in (select event_id from research.performance where work_id in (…));
+select e.season, e.city, p.discipline, count(*) from research.performance p join research.event e using (event_id)
+where e.season in ('1911-12', '1912-13') group by all;
+```
+
+Result: all 7 performances of the three works (Маріинскій, 30 Sep, 3 and 7 Oct 1912, 31 Mar 1913) have discipline «Russian
+drama», company «St. Petersburg Russian drama», basis "Cyrillic title, printed genre пантомима-балетъ. / восточная фант. /
+симф. поэма."; the same bills' «Эвника», «Карнавалъ» and «Павильонъ Армиды» are ballet (in the productions lists). Work
+art_form: «Papillons» ballet (printed genre, work-identity rule), «Исламей» and «Les préludes» drama. The fallback that treats
+an unlisted Cyrillic title as Russian drama fired because no 1912-13 ballet productions list is loaded and these genre strings
+are not read as ballet. Other 1912-13 SP ballets (Фея куколъ, Коппелія, Раймонда …) are ballet. Fold NOT done; for RG.
