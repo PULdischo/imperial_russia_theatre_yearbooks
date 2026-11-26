@@ -969,9 +969,15 @@ Left open:
   mention layer obeys the same rule: at the next review-layer rebuild 47
   `research.review_mention` rows in those blocks go (French plays and the
   Михайловскій; no people). Production not rebuilt.
-- **The other bilingual files are stale.** A fresh build from `merged_full/`
-  differs from 44 of the files built 2026-10-09 (38 after the six rebuilt above) (later text corrections).
-  The fix is a rebuild, not an edit.
+- **Stale bilingual files REBUILT, same day (RG).** 39 files differed from a
+  fresh build: 341 blocks corrected since translation (dates, numbers,
+  ordinals, names, ъ/ь), whose stored English still followed the old text
+  (e.g. 1902-03 Moscow, a caption corrected to «Эсмеральда», балетъ, still read
+  "Death of Death"). Those 341 re-translated (277,854 tokens), their rows
+  replaced in `translations.csv` (old copy in the backup folder above), and all
+  39 files rewritten. A fresh build now matches every file.
+  **Keep in mind:** a text correction does not trigger re-translation. After
+  any future correction, re-translate the changed blocks before rebuilding.
 - **10 older blocks have no translation** (1894-95 MSK opera 6; one each in
   1893-94 MSK, 1895-96 MSK and SP, 1896-97 MSK ballet), probably from later
   block splits.
