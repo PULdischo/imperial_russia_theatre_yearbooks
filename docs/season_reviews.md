@@ -978,9 +978,16 @@ Left open:
   39 files rewritten. A fresh build now matches every file.
   **Keep in mind:** a text correction does not trigger re-translation. After
   any future correction, re-translate the changed blocks before rebuilding.
-- **10 older blocks have no translation** (1894-95 MSK opera 6; one each in
-  1893-94 MSK, 1895-96 MSK and SP, 1896-97 MSK ballet), probably from later
-  block splits.
+- **"10 untranslated blocks" were list markers, FIXED same day.** 4 were
+  empty footnotes. The other 6 (1894-95 Moscow opera debuts, Максаковъ,
+  Муранская…) hold all their text in `enumerator`, with `text` empty. Neither the
+  reading files nor the translator read `enumerator`, so every list item lost its
+  marker: 438 items, 29 of them with real words there («Pas de séduction»,
+  «Дѣйствіе I.»). Both now use `block_body()` in `pipeline/review_sections.py`;
+  plain markers («1)», «а)») are copied onto the English. The 29 were
+  re-translated (18,356 tokens) and 26 files rewritten. A fresh build matches
+  every file. The mention layer was not changed here (the review-layer rebuild
+  session was asked to report whether it reads `enumerator`).
 - Not built into the database's review layer (mentions, assertions).
 
 **STATUS 2026-09-28 — the corpus is extracted, merged and translated.**

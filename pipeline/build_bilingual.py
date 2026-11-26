@@ -46,7 +46,7 @@ GENRE = {"Ballet": "Ballet", "Opera": "Opera", "All": "Ballet and Opera"}
 # mention layer has to obey it too (pipeline/review_sections.py).
 from review_sections import (                      # noqa: E402
     PLATE, SECTION_HEADING, OWN_HEADING,
-    section_heading_index, foreign_heading_index)
+    section_heading_index, foreign_heading_index, block_body, is_short_marker)
 # blocks with no reading value in a translation file
 SKIP = {"byline"}
 
@@ -149,11 +149,16 @@ def build(parsed_dir: Path, out_dir: Path, translations: dict[str, str],
                 kind = b["block_type"]
                 if kind in SKIP:
                     continue
-                raw = (b["caption_text"] if kind in PLATE else b["text"]) or ""
+                raw = block_body(b)
                 ru = reflow(raw)
                 if not ru:
                     continue
                 en = translations.get(b["block_id"], "")
+                # a plain list marker is language-neutral: show it on the English too
+                e = (b.get("enumerator") or "").strip()
+                if en and kind == "enumerated_list" and is_short_marker(e) \
+                        and not en.lstrip().startswith(e):
+                    en = f"{e} {en.lstrip()}"
                 if kind in PLATE:
                     page_plates.append((f"p{page_no(pid)} · {folio or '—'}", ru, en))
                 else:

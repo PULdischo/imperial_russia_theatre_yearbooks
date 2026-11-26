@@ -37,6 +37,8 @@ csv.field_size_limit(10_000_000)
 
 DASHSCOPE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
 PLATE = {"figure"}
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from review_sections import block_body  # noqa: E402
 
 SYSTEM = """You translate late-19th-century Russian theatre prose into English.
 
@@ -67,7 +69,8 @@ Rules:
 
 
 def block_text(b: dict) -> str:
-    return (b["caption_text"] if b["block_type"] in PLATE else b["text"]) or ""
+    # includes an enumerated item's marker (pipeline/review_sections.py)
+    return block_body(b)
 
 
 def reflow(t: str) -> str:

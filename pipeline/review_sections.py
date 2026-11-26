@@ -27,6 +27,8 @@ this is a read-time filter both consumers apply.
 """
 from __future__ import annotations
 
+import re
+
 #: blocks that belong to a photographic plate rather than the running review
 PLATE = {"figure"}
 #: a review's own section heading, as printed
@@ -84,3 +86,34 @@ def foreign_block_indices(page_blocks: list[dict], *, is_first_page: bool,
         if f is not None:
             out.update(range(f, len(page_blocks)))
     return out
+
+
+#: a plain list marker («1)», «12.», «а)», «I.»): language-neutral, so the
+#: reading files copy it onto the English as well as the Russian.
+_SHORT_MARKER = re.compile(r"[\dIVXLCабвгдежзa-h]{1,4}[).]|[\dIVX]{1,4}")
+
+
+def is_short_marker(enumerator: str) -> bool:
+    return bool(_SHORT_MARKER.fullmatch((enumerator or "").strip()))
+
+
+def block_body(b: dict) -> str:
+    """A block's full running text, INCLUDING an enumerated item's marker.
+
+    The extraction puts a list item's marker in `enumerator`, and sometimes
+    more than a marker: «Pas de séduction», «Дѣйствіе I.», and for six 1894-95
+    Moscow opera debut items the WHOLE text (their `text` is empty). Until
+    2026-11-25 the reading files and the translator read `text` only, so those
+    words were missing from both.
+    """
+    if b.get("block_type") == "figure":
+        return b.get("caption_text") or ""
+    text = b.get("text") or ""
+    e = (b.get("enumerator") or "").strip()
+    if b.get("block_type") != "enumerated_list" or not e:
+        return text
+    if not text.strip():
+        return e
+    t = text.lstrip()
+    joiner = "" if e.endswith(("«", "„", "(")) or t[:1] in ",.;:—–-»“)" else " "
+    return e + joiner + t
