@@ -396,7 +396,12 @@ and dates against roster spans; one scan read):
 - Гердтъ and Дриго were linked automatically to the same records as their earlier entries. Божовскій and Обуховъ were
   linked automatically.
 
-Totals now: 717 person entries; **339 linked -> 293 people**.
+**One older link revised the same day (RG):** «Яковлевъ 2-й» († 9 Aug 1892, 1891-92 review notice), no record since
+2026-10-22, is now linked to the 1891-92 SP graduate «Яковлевъ, Владиміръ» (p. 253, «1 іюня 1892 г.»). That graduate
+list, loaded after the October decision, has the same six men as the review's list of new entrants. The reasoning is
+in `build/person_link_decisions.csv`.
+
+Totals now: 717 person entries; **340 linked -> 294 people**.
 
 Not done yet: the load into production (needs RG's go-ahead), and the Obsidian reading notes (single machine
 reading + translation, DashScope, billed).
