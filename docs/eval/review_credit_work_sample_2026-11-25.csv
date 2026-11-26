@@ -1,0 +1,63 @@
+credit_id,stratum,verdict,mechanism,note
+2255,list-credit-other-work,no work,work not identified,«Золотая рыбка» context; work blank
+466,list-credit-other-work,right,,
+1433,list-credit-other-work,right,,
+2374,list-credit-other-work,right,,Brahms insert number in «Конекъ-Горбунокъ»
+2389,list-credit-other-work,right,,
+1587,list-credit-other-work,right,,
+1082,list-credit-other-work,right,,
+2017,list-credit-other-work,right,,
+1400,list-credit-other-work,wrong,after-names across a list boundary,«Ручей» … музыка Минкуса и Делиба; «Фея куколъ» -> Delibes credited to «Фея куколъ»
+1726,list-credit-other-work,right,,
+1668,list-credit-other-work,no work,work not identified,Жизель-type entry (соч. С. Жоржа Т. Готье и Коралли); work blank
+69,list-credit-other-work,right,,
+1527,list-credit-other-work,right,,
+2347,list-credit-other-work,wrong,work not identified,«Лебедь» музыка Сенъ-Санса -> «Принцъ Садовникъ» (block fallback)
+1216,list-credit-other-work,uncertain,page-earlier fallback,variation (музыка Симона) -> «Жавотта»; ballet on the page not confirmed
+640,list-credit-other-work,right,,
+1429,list-credit-other-work,right,,numbered dances of «Золотая рыбка» over a page break
+189,list-credit-other-work,plausible,,«Лезгинка» (поставлена г. Хлюстинымъ) -> «Конекъ-горбунокъ»
+2246,list-credit-other-work,wrong,dance suite attached to preceding ballet,Горскій's suite (Les feuilles tombées … ) -> «Жизель»
+2408,list-credit-other-work,right,,
+742,list-credit-other-work,plausible,,Mazurka inserted at the end -> «Синяя борода»
+1171,list-credit-other-work,wrong,curated row / work not identified,Чайковскаго («Спящая Красавица») -> «Сильвія»
+1457,list-credit-other-work,no work,work not identified,
+751,list-credit-other-work,right,,
+2371,list-credit-other-work,right,,
+648,list-credit-other-work,right,,
+1462,list-credit-other-work,right,,
+1730,list-credit-other-work,wrong,work not identified,«Тщетная предосторожность. La fille mal gardée» музыка Гертеля -> «Калькабрино»
+1426,list-credit-other-work,right,,
+1683,list-credit-other-work,right,,Bébé variation in «Фея куколъ»
+1466,lists cannot check,right,,
+89,lists cannot check,wrong,scene title taken as work,4-й картины «Лѣсъ» (decor by Вальцъ) -> work «Лѣсъ»
+2080,lists cannot check,right,,
+295,lists cannot check,right,,
+1596,lists cannot check,wrong,scene title taken as work,головные уборы … Терменъ -> «Залъ во дворцѣ»
+1464,lists cannot check,right,,
+721,lists cannot check,wrong,scene title taken as work,Ламбинъ -> «Паркъ передъ замкомъ Дорисъ …»
+141,lists cannot check,right,,
+2247,lists cannot check,wrong,dance suite attached to preceding ballet,Рубинштейна -> «Жизель»
+1487,lists cannot check,right,,
+1010,lists cannot check,wrong,work not identified,historical Черрито/Перро cast (Маркитантка) -> «Камарго» (page-earlier)
+1463,lists cannot check,right,,
+384,lists cannot check,wrong,scene title taken as work,«Внутренность храма богини Куанонъ» (2-я картина) as work
+608,lists cannot check,uncertain,page-earlier fallback,divertissement Цыганскій танецъ (Манохинъ) -> «Звѣзды»
+2243,lists cannot check,wrong,dance suite attached to preceding ballet,Гиро -> «Жизель»
+603,lists cannot check,right,,
+2200,lists cannot check,right,,
+1428,lists cannot check,right,,
+183,lists cannot check,right,,
+2409,lists cannot check,right,,
+1459,list-credit,right,,
+459,list-credit,right,,
+925,list-credit,right,,
+82,list-credit,right,,
+1196,list-credit,right,,
+1617,list-credit,right,,
+1402,list-credit,right,,
+1751,list-credit,right,,
+2073,list-credit,right,,
+980,list-credit,right,,
+1955,list-credit,right,,
+992,list-credit,right,,

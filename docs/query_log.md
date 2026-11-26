@@ -29086,3 +29086,21 @@ select (select count(*) from research.work),(select count(*) from research.perso
 ```
 
 Result: 23 seasons, 36,262 events (includes no_performance / not_captured rows). 1912-13: Moscow 881 events (479 performed), SP 895 (672 performed); 1,307 performances. Totals: research.work 3,140, research.person 2,712, research.performance 33,447.
+
+## 2026-11-25 — How often does a review credit name the wrong work? (sample read by Claude, text not scans)
+
+```sql
+select work_source, count(*), count(*) filter (where link_method = 'list-credit') ... from research.review_credit group by 1;
+select link_method, count(*) from research.review_credit group by 1;
+-- random samples (order by hash(credit_id)) with the block text around char_start:
+--   30 of 254 link_method 'list-credit-other-work'; 20 of the ~500 the lists cannot check (department, printed-only,
+--   mention-link, department-other-city, first-name) with a work; 12 of 1,607 'list-credit'
+```
+
+Result (production, 2,421 credits): 1,607 list-credit + 51 spelling/role-from-list are confirmed by the productions lists;
+12/12 sampled right. list-credit-other-work 254: 30 read, 20 right, 2 plausible, 5 wrong, 1 uncertain, 3 no work. Lists cannot
+check ~509: 20 read, 12 right, 7 wrong, 1 uncertain. Mechanisms: the true work not identified, so a fallback borrows a
+neighbour (Papillons, La fille mal gardée, «Лебедь»); a quoted scene/decor title taken as a work («Лѣсъ», «Залъ во дворцѣ»);
+a dance suite attached to the ballet before it (Горскій's 1907-08 suite -> «Жизель», 3 credits); after-names crossing a list
+boundary (Делиба 1902-03, 1906-07). Rough extrapolation: ~200 credits (about 1 in 10) name the wrong work, concentrated
+outside the list-confirmed group; samples small, reads are finding aids. Judgments: docs/eval/review_credit_work_sample_2026-11-25.csv.
