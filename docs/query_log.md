@@ -29063,3 +29063,15 @@ identified work in an earlier block of the page («Раймонда», b004). Pe
 rule "a work within 6 characters after the names" (built for «балета Сенъ-Леона «Конекъ Горбунокъ»») fires on «Талисманъ»
 just after the closing parenthesis, though the participle refers back to «Фея Куколъ». Person С. Г. Легатъ correct. 2416
 («Талисманъ» … «танцы поставлены г. Легатомъ») has the right work, person unresolved.
+
+## 2026-11-25 — How often does the credit reader's "work right after the names" rule cross a bracket or list marker?
+
+```sql
+select r.credit_id, r.season, r.block_id, r.char_start, r.name_surface, r.work_surface, b.text
+from research.review_credit r join raw.review_block b using (block_id) where r.work_source = 'after-names';
+-- then in Python: reflowed text between the credited name and the governing work contains ')'
+```
+
+Result: 197 `after-names` credits; 2 cross a ')'. 2415 (1913-14, «Фея Куколъ» staging credited to «Талисманъ», already
+known) and 2223 (1906-07 SP p011__b005): «2) «Корсаръ» (Le jardin animé), музыка Л. Делиба. 3) «Испытаніе Дамиса»» —
+Delibes's music credited to «Испытаніе Дамиса», the next numbered item. Both wrong; the other 195 not checked one by one.
