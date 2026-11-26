@@ -389,6 +389,10 @@ VISITING_RUNS = [
      "season totals p. 56 print «Московскаго Художественнаго театра 41»: the 41 Михайловскій events 26 Mar - 26 Apr 1912 "
      "(Живой трупъ, Гамлетъ, Вишневый садъ, Братья Карамазовы, Мѣсяцъ въ деревнѣ, Нахлѣбникъ), no receipts; the heading "
      "«Спектакли Московскаго Художественнаго театра.» is printed once, over 26 Mar (p. 46). RG, 2026-11-12: \"Yes, label them\""),
+    ("1912-13", "Михайловскій", "1913-04-15", "1913-05-14", "Moscow Art Theatre",
+     "season totals p. 62 print «Московскаго Художественнаго театра 41»: the 41 Михайловскій events 15 Apr - 14 May 1913; "
+     "the heading «Спектакли Московскаго Художественнаго Театра.» is printed once, in the 15 Apr cell (p. 52), no "
+     "receipts. RG, 2026-11-25: \"Yes, label them\""),
 ]
 
 #: Comedy-ballets are dramas that contain dancers (RG, 2026-10-12: "classify them
@@ -1258,7 +1262,9 @@ def load_supplied_performances(con: duckdb.DuckDBPyConnection) -> int:
         genre = (row.get("work_genre") or "").strip()
         w = con.execute("""SELECT work_id FROM research.work
                            WHERE canonical_title = ? AND excerpt_of_work_id IS NULL
-                             AND (? = '' OR canonical_genre = ?)""", [row["work_title"], genre, genre]).fetchall()
+                             AND (? = '' OR rtrim(canonical_genre, '.') = rtrim(?, '.'))""", [row["work_title"], genre, genre]).fetchall()
+        # (2026-11-25, #164: a final period on the genre is not identity -- the work's display genre is a majority
+        # vote between «сюита» and «сюита.», and 1912-13's three «сюита.» flipped it, so the exact match broke.)
         if len(w) != 1:
             raise SystemExit(f"supplied_performances.csv: {row['work_title']!r} matches {len(w)} works")
         if adds:
@@ -2348,9 +2354,12 @@ def build_research_model(con: duckdb.DuckDBPyConnection) -> None:
         JOIN title_correction tc ON tc.verbatim_title = w.canonical_title
         JOIN entities.work t
           ON t.canonical_title = tc.corrected_title
-         AND t.canonical_genre IS NOT DISTINCT FROM w.canonical_genre
+         AND rtrim(t.canonical_genre, '.') IS NOT DISTINCT FROM rtrim(w.canonical_genre, '.')
          AND t.work_id <> w.work_id
     """)
+    # (2026-11-25, #164: compare genres without a final period -- the surviving work's display genre is a majority
+    # vote, and «Шопеніана»'s flipped from «сюита» to «сюита.» when 1912-13 was added, leaving the misprinted
+    # «Шоиеніана» row («сюита») unmerged, as a one-performance "drama".)
     merges = con.execute("SELECT count(*) FROM work_merge").fetchone()[0]
     if merges:
         for f, t, title in con.execute("""

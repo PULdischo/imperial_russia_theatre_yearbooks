@@ -25113,3 +25113,127 @@ annotation-only events (RG's 2026-10-09 decision). The 10 Mar heading lacked «�
 RG 2026-11-12: "mark it as charity like the others" -> `EVENT_FLAG_RES` is_charity also matches «литературнаго фонда»
 (2eb95e7; only that event changed). The Dalcroze demonstration (rhythmic gymnastics) is a possible lead for movement / dance
 outside the ballet company; not marked.
+
+## Issue #164: new season 1912-13 Repertoire -- extracted, NOT yet scan-verified (2026-11-25)
+
+RG: "process the 1912-13 Repertoire table", then "Yes, run it" on the ~3.1M-token estimate, then "Yes, fix and re-run" on
+~0.95M more for row-level. Source: RG's scans of the 1913 Supplement (UMich volume, due 12/11), pp. 1-61, filed 2026-11-25
+(`pdf/RepertoireTables/ForUpload_1912-13_Repertoire.pdf`). Same recipe as #163. Nothing touches `outputs/full_run`.
+
+**Scan check on arrival** (`outputs/repertoire_1912-13/scancheck/`): every page read on contact sheets, left edges of the
+Moscow pages zoomed: no cut-off text, no blur on any table page; no re-shoots needed.
+
+**Repertoire 1912-13** (`outputs/repertoire_1912-13/`): 61 PDF pages, p000 = title, 60 table pages (printed pp. 2-61,
+26 Aug 1912 - 21 May 1913; printed page = PDF index + 1, read off every crop's bottom strip). p. 62 (season totals) is a
+separate file, `pdf/Spiski_ProductionStats/1912-13_ProductionStats.pdf`, not yet transcribed.
+- *Calibration (free).* Per-page keys again (the table moves and changes scale between shots). Automatic frame detection
+  failed on this copy (faint, curved rules; fingers; page stack), so x0/x1/y1 were read by eye off 5%-gridded sheets and
+  y0 set from each page's measured top rule (`calib/`); every crop checked on top/bottom/left/right montages.
+  `_detect_vertical_dividers` on each crop; 5 spurious candidates dropped by hand, 21 pages with one divider extrapolated;
+  all 60 overlaid and checked. Both configs carry `_note_1912-13`.
+- *Paid passes:* headers 103K (60/60), baseline 454K (60/60), column-wise 649K (30 ok + 30 partial),
+  `repair_columnwise_merge.py` 97 attempts (40 tier-2, 5 tier-1, 6 unrecovered: p057/p059 Маріинскій + Александринскій
+  (May pages, almost all dashes), p003 Михайловскій, p012 Новый; token use not logged).
+- *Row-level, two runs.* Full-image row detection (as #163) failed on 25 pages (24 Moscow: "only found 1 grid line") and
+  under-split 6 more (p004 2 rows for 10 dates, p007 1, p047 2, p003/p038/p048 6): 1.07M tokens for 35 pages. Free tests
+  showed detection works on the table crops, after two fixes now in `row_detect.detect_rows` (opt-in, default off, no
+  other season changes): `top_border_band_frac` (drop the kept outer top border, which registers on some pages only, so
+  the image top is the header top) and `close_open_bottom` (THIS PRINT HAS NO BOTTOM RULE -- the last row is open, so the
+  page's last dated row was silently dropped; adds a boundary where the vertical rules end). `run_pilot.py` passes them as
+  `--top-border-band-frac 0.05 --close-open-bottom` with `--cropped-images --header-line-count 1`. Re-run on the 31 weak
+  pages: 936K tokens, 31/31 ok, row counts match the printed dates (p004 11 = 10 dates + one УТРО/ВЕЧЕРЪ split). Known
+  leftovers for the sweep: p018 18/19 Nov in one row crop; p047/p048/p052 last row split by a stray line.
+  `raw_rowlevel_combined/` = 29 full-image pages + the 31 crop pages.
+- **Billed total:** ~3.21M tokens logged (+ the repair's resample calls, not logged).
+- *Parse* (`parsed/`, `--extraction-source columnwise`, own page headers + printed page numbers): 1,728 events (1,146
+  performed, 582 no_performance), 1,289 performances; date_undate and printed_page_number on every row; the 9 "validation"
+  rows are Мариинскій -> Маріинскій auto-fixes only. quality_checks 3-way: 1,289 flags (1,052 cross-extraction
+  disagreements, 115 modernized theater spelling, 83 row-level duplicate keys, 18 cross-theater date mismatches, 11
+  duplicate content, 10 dark rows with content). Visible already: Новый 275 events vs ~290 for the other theaters (the
+  #119/#135/#163 missing-column class), and «Новый/Большой/Малый театр» without ъ on 52 events.
+
+**Next:** full scan-verified sweep (6 agents x 10 pages, #163's brief + this season's faults), then consistency pass,
+re-parse, season totals p. 62, integration trial build, RG decides on promotion.
+
+**Repertoire scan sweep DONE (RG: "Yes, start it", 2026-11-25).** 6 agents x 10 pages, brief
+`outputs/repertoire_1912-13/SWEEP_BRIEF.md` (1911-12's plus this season's faults); backup
+`raw_columnwise_repaired_pre_sweep_backup/`, one fix script per page in `sweep_zoom/<batch>/`, reports in `sweep_reports/`.
+Sessions changed 180 + 185 + 180 + 142 + 205 + 211 (~1,100). Main fixes: missing columns rebuilt (p002 Новый, p003
+Михайловскій, p012 Новый, p057 + p059 Маріинскій and Александринскій); one-day column shifts (p012 Большой from 13 Oct, p026
+Большой 26-27 Dec), УТРО/ВЕЧЕРЪ splits on the wrong day (p006, p010) and 15/16 Apr swapped (p051); single dashes read as
+morning/evening pairs merged (~20); «Мариинскій» -> «Маріинскій театръ.», missing ъ and final periods on the names;
+header month/year spread onto every row removed, month labels only where printed; genres out of titles, printed
+periods restored, invented genres removed (траг./др./драм. on programme items, Cyrillic genres on French/German plays);
+banners/notes out of works; free-performance banners in full on the morning sessions; the German company heading
+(4 Mar) as annotation; the Romanov tercentenary pages p039/p040 rebuilt.
+**Consistency pass (Claude, scripts in `sweep_zoom/consistency/`):** (1) batch1 had dropped printed credits from the
+1812-centenary programmes -- restored verbatim inside the title as printed («Увертюра «Двѣнадцатый годъ», П. И.
+Чайковскаго.», «…, А. И. Бахметьева.»; precedent 1911-12 «Апоѳеозъ—Слава А. Н. Островскому.»), outer «» stripped
+(production: 2 of 16,467 titles keep them); (2) batch3 had dropped the final period from genre-less titles: all 17 such
+titles zoomed, 16 print a period (restored), p054 «…Шуйскій» does not (print slip, kept); (3) p030 «Втори.» -> «Вторн.»
+(earlier seasons: Вторн. 921x, Втори. 0x); (4) p011/p014 date_text aligned across the shared date column (11 sessions);
+(5) p029 «57? р. 90 к.» -> best reading «572 р. 90 к.» (zoomed: top arc + stroke down-left). Structure check: 60/60 pages
+have 3 theaters with identical date sets, theater names exactly the 6 printed forms, no mixed Latin/Cyrillic words.
+**Re-parse** (`parsed_final/`): 1,776 events (1,151 performed, 625 no_performance), 1,307 performances, 0 validation
+errors, date_undate and printed_page_number on every row (26 Aug 1912 - 21 May 1913); printed weekday vs Julian date:
+1,776/1,776 agree. quality_checks: 1,289 -> 0 flags. Print typos logged in `genuine_print_typos.md`.
+**Uncertain readings for RG** (all stored as the best reading): p029 Михайловскій 11 Jan receipts «572 р. 90 к.» (third
+digit faint: 2, 3 or 8 -- needs another copy); p045 Александринскій 15 Mar «1650 р. 82 к.» (last rouble digit broken);
+p054 Большой 17 Apr «1808 р: 35 к.» (colon or speck); p056 Большой 23 Apr title blurred, read «Жизнь за Царя»; p028
+banner «трудов?го» stored «трудового» (alt. «трудоваго»); p018 Малый 11 Nov «траги-ком.» (alt. «трагиком.»); p040 «хрон.»
+(period or comma); «Вторн.» on the Moscow pages (н/и identical in the bold date face). Convention questions: descriptive
+endings stored as genre («сказаніе въ лицахъ.», «отрывки изъ драмат. поэмы.», «сцены изъ романа.»); concert cells
+(«Концертъ въ пользу инвалидовъ.», 25 Mar; Andreev jubilee concert 2 Apr) stored as works with no genre; numbered
+programme items stored without their «I.»/«1)» numerals; free-performance banners not repeated on a dark theater whose
+column they span; apostrophes ’ vs ' left as each reader typed (production mixes both). New for VISITING_RUNS at
+integration: «Спектакли Московскаго Художественнаго Театра.» from 15 Apr 1913 at the Михайловскій.
+
+**Next:** season totals p. 62, integration trial build in a scratch dir (control = production), season-stats compare,
+then RG decides on promotion.
+
+**Season totals + trial build (RG: "Yes, go on", 2026-11-25).**
+- *Season totals* p. 62 transcribed into `docs/season_stats/_build.py` (zoom-checked; build 0 problems): same layout as
+  1910-11, SP drama 287 (387,862 р. 86 к.), opera 170, ballet 50 (236,384 р. 20 к.), French 95, German 24 (no receipts),
+  Moscow Art Theatre 41 (no receipts); Moscow drama 245, opera 175, ballet 56 (172,832 р. 30 к.).
+- *Trial build* (`outputs/integration_1912-13/`, `chain.sh`; control = production inputs on today's code,
+  `outputs/control_1912-13/`). The integration runs from a private copy of pipeline/ (`pipeline_copy/`, docs/ linked in) so
+  the 8 staged receipt corrections (`outputs/repertoire_1912-13/receipts_print_typos_1912-13_pending.csv`: «1036 р: 14 к.»,
+  «1133 р. 94 р.», «3595 р, 05 к.», «4379 р, 40 к.», «1571 р, 45 к.», «1727 р, 65 к.», «1727 р. 69к.», «1808 р: 35 к.»)
+  never touch the shared research_corrections file while other sessions build. Fixes needed on the way:
+  1. `work_artform_overrides.csv`: «Дочь фараона, оп.» -> ballet (Большой 17 Feb 1913) and «Золото Рейна, ком.» -> opera
+     (Большой 4 Mar), both zoomed by Claude; no production row has either form (query_log 2026-11-25). Without them the
+     build stopped («'Дочь фараона' matches 2 works»).
+  2. `build_research_model.py`: the title-correction merge and the supplied-performance lookup compared genres as exact
+     strings. 1912-13's three «Шопеніана, сюита.» flipped the work's majority display genre from «сюита» to «сюита.», so
+     the misprinted «Шоиеніана» (1909-10 p047) and the review-supplied 1906-07 performance (both «сюита») fell out of the
+     ballet into a one-performance "drama" work. Both now ignore a final period. Control before/after the fix: identical
+     except the review tables (being rebuilt by the parallel review session today).
+  3. `VISITING_RUNS`: 1912-13 Михайловскій 15 Apr - 14 May 1913 = exactly 41 events = the printed «Московскаго
+     Художественнаго театра 41»; heading printed once in the 15 Apr cell. CONFIRMED by RG 2026-11-25 ("Yes, label them").
+- *Control vs production:* identical except the new 1912-13 season-totals rows and the review tables (parallel session).
+- *Integration vs control:* additions only for raw/analysis/events/performances (+1,776 events, +1,307 performances, +60
+  pages, +110 works); 0 existing events changed, 0 persons changed, nothing lost; 0 person_link shift blocks. Changed
+  existing rows: appearance counts (108 works), majority-vote display titles/genres (La Douloureuse -> La douloureuse,
+  «Не такъ живи какъ хочется» -> with commas, Faust «eine Tragödie.», Nathan der Weise «ein dramatisches Gedicht.», Le million
+  «pièce.», Орфей и Эвридика «оп.»), «4-е д. Эрнани» now an excerpt of «Эрнани», and the wording of discipline_basis on 15
+  older performances.
+- *Season totals vs Repertoire* (`season_stats_compare/`): Moscow ballet 56 = 56 (receipts -999 р. 40 к.), opera 175 = 175,
+  drama 245 vs 242; SP French 95 = 95, German 24 = 24, MXT 41 = 41, opera 170 vs 169, drama 287 vs 277, ballet 50 vs 46 +
+  5 ballet+drama bills (receipts together 236,383 р. 20 к. vs printed 236,384 р. 20 к.: 1 rouble). Not yet reconciled
+  (checklist D2; ballet lists D4 need the 1912-13 Supplement spiski, not yet scanned).
+**Next:** RG decides on promotion; at promotion add the 8 receipt rows to
+`pipeline/research_corrections/receipts_print_typos.csv`, the 1912-13 raw/manifest/headers/page numbers to full_run, rebuild.
+
+**PROMOTED 2026-11-25 (RG: "Yes, promote").** Coordinated first with the parallel "Rebuild the review layer in production"
+session (it had finished and would not write production again that night; no uncommitted pipeline/ edits of its own).
+Backup `outputs/full_run_pre_promote_backup_2026-11-25_1912-13/` (duckdb, manifest, printed page numbers, page headers,
+receipts corrections, sqlite). 60 raw pages added to `outputs/full_run/raw`; manifest, `all_page_headers.csv` and
+printed page numbers extended by exactly 60 lines each (original line endings kept); the 8 staged receipt corrections
+added to `pipeline/research_corrections/receipts_print_typos.csv` (103/103 rows applied); production rebuilt in place
+from raw (`outputs/integration_1912-13/promote.sh`, logs `outputs/full_run/logs/*_1912-13.log`). Pre-promotion vs new
+production: additions only (+1,776 events, +1,307 performances, +60 pages, +9 season-stats lines) plus the changes the
+trial build predicted; review tables unchanged; 0 person_link shift blocks. Production = trial build except the
+VISITING_RUNS wording (RG's yes). full_run: 23 seasons, research.event 36,262, research.performance 33,447, research.work
+3,140, research.person 2,712 (query_log 2026-11-25). `research_dataset.sqlite` rebuilt locally; HF / Cloud Run republish
+is Andy's. Still open: uncertain readings and convention questions above; new-season checklist steps (A7 blind audit,
+B, C, D2 ledger, D3 blind column reads, E: no 1912-13 lists or ballet lists yet -- the Supplement spiski are unscanned).

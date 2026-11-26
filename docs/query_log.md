@@ -29075,3 +29075,14 @@ from research.review_credit r join raw.review_block b using (block_id) where r.w
 Result: 197 `after-names` credits; 2 cross a ')'. 2415 (1913-14, «Фея Куколъ» staging credited to «Талисманъ», already
 known) and 2223 (1906-07 SP p011__b005): «2) «Корсаръ» (Le jardin animé), музыка Л. Делиба. 3) «Испытаніе Дамиса»» —
 Delibes's music credited to «Испытаніе Дамиса», the next numbered item. Both wrong; the other 195 not checked one by one.
+
+## 2026-11-25 — Production after promoting 1912-13 (issue #164): seasons, events, 1912-13 counts
+
+```sql
+select count(distinct season), count(*) from research.event;
+select city, count(*), count(*) filter (where event_status='performed') from research.event where season='1912-13' group by 1 order by 1;
+select count(*) from research.performance p join research.event e using(event_id) where e.season='1912-13';
+select (select count(*) from research.work),(select count(*) from research.person),(select count(*) from research.performance);
+```
+
+Result: 23 seasons, 36,262 events (includes no_performance / not_captured rows). 1912-13: Moscow 881 events (479 performed), SP 895 (672 performed); 1,307 performances. Totals: research.work 3,140, research.person 2,712, research.performance 33,447.

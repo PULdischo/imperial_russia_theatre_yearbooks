@@ -1930,5 +1930,786 @@
     "extrapolated": false,
     "source": "measured 2026-11-11 on the page's own crop: 3 dividers",
     "evenly_spaced": true
+  },
+  "_note_1912-13": "1912-13 (UMich copy): per-page keys on per-page crops (docs/repertoire_crop_bounds.json _note_1912-13). _detect_vertical_dividers on each crop, 2026-11-25. Spurious extra candidates dropped by hand (p001 0.547, p003 0.635/0.824, p040 0.583, p045 0.807). 2 dividers only on 21 pages (mostly Moscow, Новый largely dashes): third extrapolated as 2*d1-d0. p009 detection noisy: kept 0.404/0.682, first extrapolated as 2*d1-d2. All 60 overlaid and checked on contact sheets.",
+  "repertoire_1912-13_p001": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1411,
+      0.4213,
+      0.7024
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p002": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1423,
+      0.4219,
+      0.7015
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p003": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1443,
+      0.4275,
+      0.7128
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p004": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1485,
+      0.4284,
+      0.7009
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p005": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1349,
+      0.4151,
+      0.6955
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p006": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1309,
+      0.4179,
+      0.6951
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p007": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1334,
+      0.4105,
+      0.689
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p008": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1394,
+      0.4201,
+      0.7008
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p009": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1267,
+      0.4044,
+      0.6821
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p010": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1343,
+      0.4166,
+      0.6989
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p011": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.155,
+      0.4249,
+      0.6959
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p012": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1387,
+      0.428,
+      0.7173
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p013": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1463,
+      0.4165,
+      0.6874
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p014": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1255,
+      0.4135,
+      0.7015
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p015": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1526,
+      0.4189,
+      0.6861
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p016": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.128,
+      0.4238,
+      0.7196
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p017": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1323,
+      0.4108,
+      0.6908
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p018": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1327,
+      0.4174,
+      0.7021
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p019": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1428,
+      0.4153,
+      0.6887
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p020": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1265,
+      0.4093,
+      0.6921
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p021": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1335,
+      0.4043,
+      0.6762
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p022": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1383,
+      0.4229,
+      0.6978
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p023": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1374,
+      0.4153,
+      0.6937
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p024": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1323,
+      0.419,
+      0.7057
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p025": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1484,
+      0.424,
+      0.6994
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p026": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1307,
+      0.4179,
+      0.7051
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p027": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1365,
+      0.4169,
+      0.6994
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p028": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1386,
+      0.4233,
+      0.708
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p029": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1382,
+      0.4098,
+      0.6822
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p030": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1248,
+      0.4065,
+      0.6882
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p031": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1521,
+      0.4311,
+      0.7099
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p032": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1482,
+      0.4275,
+      0.6978
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p033": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1413,
+      0.4128,
+      0.6855
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p034": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1412,
+      0.4218,
+      0.693
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p035": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1356,
+      0.4124,
+      0.6902
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p036": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1335,
+      0.4186,
+      0.7037
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p037": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1392,
+      0.4131,
+      0.6871
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p038": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1407,
+      0.423,
+      0.7053
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p039": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1406,
+      0.4142,
+      0.689
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p040": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1395,
+      0.4221,
+      0.7047
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p041": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1497,
+      0.4232,
+      0.6967
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p042": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1447,
+      0.4238,
+      0.6927
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p043": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1379,
+      0.4015,
+      0.6656
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p044": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1488,
+      0.4273,
+      0.7058
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p045": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1443,
+      0.414,
+      0.6843
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p046": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.145,
+      0.4232,
+      0.6925
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p047": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1323,
+      0.4088,
+      0.6855
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p048": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1385,
+      0.4201,
+      0.6927
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p049": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1381,
+      0.4169,
+      0.6962
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p050": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.134,
+      0.4133,
+      0.6926
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p051": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1412,
+      0.418,
+      0.6957
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p052": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1278,
+      0.4116,
+      0.6842
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p053": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1349,
+      0.4051,
+      0.6773
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p054": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1396,
+      0.4242,
+      0.7088
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p055": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1295,
+      0.4046,
+      0.6788
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p056": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1352,
+      0.419,
+      0.6929
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p057": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1388,
+      0.4105,
+      0.6822
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p058": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1331,
+      0.4246,
+      0.7029
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p059": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1253,
+      0.3978,
+      0.6703
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": true,
+    "source": "measured 2026-11-25 on the page's own crop (one divider extrapolated)",
+    "evenly_spaced": true
+  },
+  "repertoire_1912-13_p060": {
+    "format": "single",
+    "date_side": "left",
+    "dividers": [
+      0.1372,
+      0.4213,
+      0.6944
+    ],
+    "n_pages_agreeing": 1,
+    "extrapolated": false,
+    "source": "measured 2026-11-25 on the page's own crop: 3 dividers",
+    "evenly_spaced": true
   }
 }

@@ -995,10 +995,29 @@ def _adaptive_pads(row_boundaries: list[np.ndarray], row_pad: int,
     return pads
 
 
+def _vertical_rules_bottom(gray: np.ndarray, pad: int = 6) -> int | None:
+    """Lowest y where at least two of the table's vertical rules still run
+    (see detect_rows' `close_open_bottom`). None if no vertical rules found."""
+    h, w = gray.shape
+    bw = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
+                               cv2.THRESH_BINARY_INV, 25, 10)
+    ver = cv2.morphologyEx(bw, cv2.MORPH_OPEN,
+                           cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(40, h // 25))))
+    n_lines = (cv2.dilate(ver, np.ones((1, 9), np.uint8)) > 0)
+    # count distinct vertical runs per row: transitions along x
+    counts = (np.diff(n_lines.astype(np.int8), axis=1) == 1).sum(axis=1)
+    ys = np.where(counts >= 2)[0]
+    if len(ys) == 0:
+        return None
+    return int(min(h - 1, ys.max() + pad))
+
+
 def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
                  row_pad: int = 25, analysis: PageAnalysis | None = None,
                  presence_frac: float = 0.5,
-                 outer_top_border: bool = True) -> list[RowCrop]:
+                 outer_top_border: bool = True,
+                 top_border_band_frac: float | None = None,
+                 close_open_bottom: bool = False) -> list[RowCrop]:
     """Main entry point. Detects grid lines on the page (or uses an
     already-reviewed/corrected `analysis` from `analyze_page` +
     `insert_row_boundary`/`delete_row_boundary` -- pass one in to crop
@@ -1064,6 +1083,24 @@ def detect_rows(image_path: Path, out_dir: Path, header_line_count: int = 1,
     else:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         curves = _detect_line_curves(gray, presence_frac=presence_frac)
+        # 2026-11-25 (1912-13, UMich copy; both options default off, so no
+        # other season changes). Per-page crops of this copy keep the table's
+        # outer top rule, but it registers as a curve on some pages and not
+        # on others, so the header/row split shifted page to page.
+        # `top_border_band_frac` drops any curve in the top band (the outer
+        # border) so that, with outer_top_border=False, curves[0] is always
+        # the header-bottom rule and the image top is the header top.
+        if top_border_band_frac is not None:
+            curves = [c for c in curves if c.mean() >= top_border_band_frac * gray.shape[0]]
+        # This print has NO bottom rule: the last row is open (the vertical
+        # rules just stop), so no curve bounds it and detect_rows silently
+        # dropped the page's last dated row. `close_open_bottom` adds a flat
+        # boundary where the table's vertical rules end.
+        if close_open_bottom and curves:
+            bottom = _vertical_rules_bottom(gray)
+            last = float(curves[-1].mean())
+            if bottom is not None and bottom - last > 40:
+                curves = list(curves) + [np.full(gray.shape[1], bottom, dtype=curves[-1].dtype)]
     # `outer_top_border=False` means the table's own outer top rule is not in
     # frame -- which is exactly what pipeline/crop_to_table.py produces, since
     # a crop tight enough to exclude fingers and the fore-edge also cuts the

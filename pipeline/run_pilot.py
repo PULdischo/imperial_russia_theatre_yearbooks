@@ -193,7 +193,9 @@ async def process_page_rowlevel(client: AsyncOpenAI, sem: asyncio.Semaphore, row
                                  model: str, repertoire_prompt: str, repertoire_schema: dict,
                                  header_line_count: int,
                                  corrected_analysis_dir: Path | None = None,
-                                 outer_top_border: bool = True) -> dict:
+                                 outer_top_border: bool = True,
+                                 top_border_band_frac: float | None = None,
+                                 close_open_bottom: bool = False) -> dict:
     """Row-isolated Repertoire extraction (known_issues.md #1/#49): detect
     each dated row locally (free, no API cost), crop it with the header
     reattached and zero neighboring-row content, then issue one API call
@@ -240,7 +242,9 @@ async def process_page_rowlevel(client: AsyncOpenAI, sem: asyncio.Semaphore, row
     try:
         row_crops = detect_rows(image_path, row_crops_dir / page_id,
                                  header_line_count=header_line_count, analysis=analysis,
-                                 outer_top_border=outer_top_border)
+                                 outer_top_border=outer_top_border,
+                                 top_border_band_frac=top_border_band_frac,
+                                 close_open_bottom=close_open_bottom)
     except Exception as e:
         log_row.update(status="row_detect_failed", elapsed_seconds=f"{time.monotonic() - t0:.1f}",
                         error=str(e))
@@ -561,7 +565,9 @@ async def main_async(args):
                                    args.row_crops_dir, args.model, repertoire_prompt,
                                    repertoire_schema, args.header_line_count,
                                    args.corrected_analysis_dir,
-                                   outer_top_border=not args.cropped_images)
+                                   outer_top_border=not args.cropped_images,
+                                   top_border_band_frac=args.top_border_band_frac,
+                                   close_open_bottom=args.close_open_bottom)
             for row in rows
         ]
     else:
@@ -646,6 +652,13 @@ def main():
                     help="the --images-dir holds pages already cropped to the table "
                          "(pipeline/crop_to_table.py), so the table's own outer top "
                          "rule is out of frame -- see detect_rows(outer_top_border=)")
+    ap.add_argument("--top-border-band-frac", type=float, default=None,
+                    help="with --cropped-images: drop detected rules in this top fraction of the "
+                         "crop (a kept outer border), so the image top is the header top "
+                         "(1912-13 per-page crops use 0.05; row_detect.detect_rows)")
+    ap.add_argument("--close-open-bottom", action="store_true",
+                    help="add a row boundary where the table's vertical rules end, for prints "
+                         "with no bottom rule (1912-13; row_detect.detect_rows)")
     ap.add_argument("--column-level", action="store_true",
                      help="column-wise Repertoire extraction (known_issues.md #68) -- reads the "
                           "date column and each theater column independently, no row-boundary "
