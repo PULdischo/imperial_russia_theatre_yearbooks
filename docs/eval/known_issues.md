@@ -25278,3 +25278,12 @@ B, C, D2 ledger, D3 blind column reads, E: no 1912-13 lists or ballet lists yet 
     build_entities._match_key strips every non-letter, non-digit character (since 2026-10-05; its docstring cites
     «Chez l'Avocat»/«Chez l’Avocat»). Query: no two research.work titles differ only by apostrophe. No code change.
     Side find, not chased: «Ou n’oublie pas» vs «On n'oublie pas» are two works -- an Ou/On misreading, not an apostrophe.
+
+**1912-13 blind audit DONE 2026-11-26 (RG: "start the A7 blind audit"; checklist A7).** Same method as #135 / 1911-12: 6 pages
+drawn at random (seed 1913; SP p011, p027, p033; Moscow p010, p020, p056), each read blind cell by cell on the scan before
+opening the transcription, then compared field by field; every disagreement re-zoomed. Brief and reports:
+`outputs/repertoire_1912-13/blind_audit/`. Fields compared 262 + 238 + 226 + 240 + 232 + 224 = **1,422; transcription errors 0**
+(1911-12: 1,458 / 0). Disagreements were form only: readers left the printed period off theater names («Большой театръ.»,
+63 on p020/p056; the headers print it) or kept the title/genre comma (not a stored field). Noted, not an error: p010 Большой
+11 Oct «Русланъ и Людмила» receipts print «4062 р. 80 к.» (zoomed by Claude beside 9 Oct «4063 р. 80 к.»: the 2 is clear), while
+the house's other full-house figures on the page are 4063 р. 80 к.; stored as printed, not called a slip.
