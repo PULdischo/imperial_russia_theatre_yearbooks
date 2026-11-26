@@ -37,7 +37,8 @@ How a credit is read (rules, no model):
    block, else the one work the page names, else the last work of the previous
    page (a list that runs over a page). Only works the matcher identified
    govern; an unidentified title never does.
-   DRAFT 2026-11-25 (awaiting RG; docs/eval/review_credit_rule_draft_2026-11-25.csv):
+   Added 2026-11-25 (RG: "Yes, rebuild"; the 39 changed credits, each read in the text, are in
+   docs/eval/review_credit_rule_draft_2026-11-25.csv):
    - an unidentified quoted title in the cue, just after the names or last in
      the clause before the cue blocks the fallbacks: the work stays blank and
      `work_surface` keeps the printed title (`балетъ г. Фокина «Papillons»`
@@ -196,7 +197,7 @@ FOREIGN = re.compile(r"за\s+границ\w*|въ\s+Париж\w*|въ\s+Лон
                      r"въ\s+Берлин\w*|Дягилев\w*|заграниц\w*", re.I)
 FLAGS = Path("docs/eval/review_credit_flags.csv")
 OVERRIDES = Path("docs/eval/review_credit_overrides.csv")
-#: a divertissement on the bill: what follows it is not the preceding work (DRAFT 2026-11-25)
+#: a divertissement on the bill: what follows it is not the preceding work (2026-11-25)
 DIVERT = re.compile(r"дивертис", re.I)
 PART_WORDS = re.compile(r"картин|дѣйств|актъ|акт\.|прологъ|пролог|апоѳеоз|сцена|«|„", re.I)
 # words that do not count towards the cue-to-name distance: titles and the
@@ -436,7 +437,7 @@ def main() -> None:
         pms = [m for m in ms if m[2] == "person"]
         # only works the matcher identified govern a credit
         wms = [m for m in ms if m[2] == "work" and m[6] and str(m[6]) not in non_governing]
-        # DRAFT 2026-11-25 (not yet ruled by RG): a quoted title the matcher could not identify
+        # 2026-11-25 (RG approved): a quoted title the matcher could not identify
         # (a review-only work with no link row such as «Papillons» in 1913-14, an ambiguous
         # title) still marks the spot a work would govern from, so a credit there must not
         # borrow a neighbouring work. Dance numbers do NOT count: most are printed act by act
@@ -519,7 +520,7 @@ def main() -> None:
                 if after:
                     return [after[0]], "caption-after"
                 return ([before[-1]], "block") if before else ([], "")
-            # DRAFT 2026-11-25: at each governing position the nearest TITLE decides; if the
+            # 2026-11-25: at each governing position the nearest TITLE decides; if the
             # matcher could not identify it, the work is left blank (work_surface keeps the
             # printed title) instead of falling through to a neighbouring work
             def unidentified(w) -> bool:
@@ -530,7 +531,7 @@ def main() -> None:
             in_cl_after = [w for w in wms if names_end <= w[3] < c1]
             if in_cl_after and re.match(r"\s*:", body[names_end:names_end + 3]):
                 return in_cl_after, "clause-after"
-            # DRAFT 2026-11-25: not across a closing bracket or into the next clause --
+            # 2026-11-25: not across a closing bracket or into the next clause --
             # «Фея Куколъ» (поставленная … С. Г. Легатомъ), «Талисманъ»: the staging is of
             # «Фея Куколъ»; «Ручей» … музыка Минкуса и Делиба; «Фея куколъ»: music of «Ручей»
             right_after = [w for w in titles if names_end <= w[3] <= names_end + 6
@@ -550,7 +551,7 @@ def main() -> None:
                 return near_after[:1], "clause-after"
             before = [w for w in wms if w[3] < start]
             if before:
-                # DRAFT 2026-11-25: a divertissement printed between that work and the credit
+                # 2026-11-25: a divertissement printed between that work and the credit
                 # is a separate item on the bill (1907-08 Moscow: «Жизель», then Горскій's
                 # дивертиссементъ (Études) -- its numbers are not «Жизель»'s)
                 if DIVERT.search(masked[before[-1][3]:start]):
@@ -561,7 +562,7 @@ def main() -> None:
             return [], ""
 
         def page_fallback(start: int):
-            if DIVERT.search(masked[:start]):     # DRAFT 2026-11-25, as in governing()
+            if DIVERT.search(masked[:start]):     # 2026-11-25, as in governing()
                 return [("", "")], "divertissement"
             pw = page_works.get(page_id, [])
             if len({w[3] for w in pw}) == 1:
@@ -578,7 +579,7 @@ def main() -> None:
         def emit(names, anon, rs, start, end_cue, limit, c0, c1, part, how_extra="", plural=False):
             names_end = names[-1][1] if names else end_cue
             gov, wsrc = governing(start, end_cue, names_end, c0, c1)
-            # an unidentified title keeps its printed surface and no work_id (DRAFT 2026-11-25)
+            # an unidentified title keeps its printed surface and no work_id (2026-11-25)
             work_rows = [(w[5], str(w[6]) if id(w) in gov_ids else "") for w in gov]
             if plural and wsrc in ("block", "clause", "page", ""):
                 work_rows, wsrc = [("", "")], "several works"

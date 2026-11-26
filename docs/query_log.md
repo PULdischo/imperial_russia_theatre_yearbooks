@@ -29136,3 +29136,17 @@ ballet; «Papillons» 1913-14 no longer «Раймонда»; 12 change only the
 regressions. A first version that also let dance numbers block was dropped: it blanked ~12 correct credits for dances
 printed act by act inside a ballet (1893-94 and 1906-07 «Конекъ-горбунокъ», «Les amours de Diane»). Left wrong: «Лебедь»
 1907-08 (a stand-alone number; needs an override). List: docs/eval/review_credit_rule_draft_2026-11-25.csv.
+
+## 2026-11-25 — Review-credit rule fixes APPLIED to production (RG: "Yes, rebuild")
+
+```sql
+-- build_review_credits.py on a copy of production (which now holds the 1912-13 Repertoire, ef3199a); 73-table EXCEPT ALL
+-- diff and the keyed credit comparison of the draft entry above
+select work_source, count(*) from research.review_credit where work_source in ('divertissement', 'unidentified title') group by 1;
+```
+
+Result: only research.review_credit differs, in exactly the 39 credits reviewed in the draft (row-for-row identical); the
+1912-13 promotion had left every review table as built earlier tonight. Production backed up to
+outputs/full_run/imperial_theaters.before_credit_rules_2026-11-25.duckdb and replaced; build_research_model.py re-run, 73 tables
+equal to the copy; alignment 0 shift blocks. review_credit 2,421 (divertissement 18, unidentified title 1). research_dataset.sqlite
+NOT rebuilt (Andy).
