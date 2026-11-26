@@ -29337,3 +29337,20 @@ receipts +10 р. (1,427,933 р. 72 к. -> 1,427,943 р. 72 к.; gap vs printed 3
 mention, credit, person or work changes. Backup outputs/full_run/imperial_theaters.before_1912-13_rulings_2026-11-26.duckdb;
 production replaced; 73 tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite rebuilt locally;
 HF / Cloud Run republish is Andy's. Other rulings (#164 items 1-14) kept stored values; no data change.
+## 2026-11-26 — 1912-13 B sweeps (checklist B1-B6) on production
+
+```sql
+-- B1 title words ending in ь; B2 genre repeated in title; B3 headings stored as works; B4 half-kopeck receipts;
+-- B5 receipts_source counts + non-standard receipt texts; B6 free-performance banner events
+select distinct w from (select unnest(regexp_extract_all(performance_title, '([А-Яа-яѣіѳЁё]+ь)(?:[^А-Яа-яѣіѳЁё]|$)', 1)) w
+  from raw.event_entry_performance where event_id like 'repertoire_1912-13%');
+select performance_title from raw.event_entry_performance where event_id like 'repertoire_1912-13%'
+  and regexp_matches(lower(performance_title), 'бенефис|спектакл|въ пользу|юбиле|сезонъ|вечеръ|концерт|bénéfice|benefiz|abschied|réouverture|clôture');
+select receipts_source, count(*) from research.event where event_id like 'repertoire_1912-13%' group by 1;
+select event_id, time_of_day, receipts_text from raw.event_entry where event_id like 'repertoire_1912-13%' and annotation ilike '%безплатн%';
+```
+
+Result: B1 17 words, all real ь words; B2 0; B3 27 hits = «Крещенскій вечеръ…» x24 (a play) + 3 concerts (works, RG
+2026-11-26), 0 headings; B4 0; B5 corrected_print_typo 7 (= the 7 csv rows), parsed 1,046, null 723; 20 non-standard
+receipt texts all parse to the printed sum; B6 18 banner events, all performed, all receipts null, 16 morning + 2 unspecified
+(27-28 Aug). No data change.

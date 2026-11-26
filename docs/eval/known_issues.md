@@ -25287,3 +25287,12 @@ opening the transcription, then compared field by field; every disagreement re-z
 63 on p020/p056; the headers print it) or kept the title/genre comma (not a stored field). Noted, not an error: p010 Большой
 11 Oct «Русланъ и Людмила» receipts print «4062 р. 80 к.» (zoomed by Claude beside 9 Oct «4063 р. 80 к.»: the 2 is clear), while
 the house's other full-house figures on the page are 4063 р. 80 к.; stored as printed, not called a slip.
+
+**1912-13 B sweeps DONE 2026-11-26 (RG: "Yes, B sweeps"; checklist B1-B6), queried on production.** B1: 17 title words end
+in ь, all real ь words (Жизнь, Князь Игорь, Король, Царь, рыцарь, ночь, любовь, Гибель, Жизель, Дочь, Израиль, Недоросль,
+Уріэль, Юдиѳь, часть); no ъ/ь slip. B2: 0 titles repeat their genre. B3: 27 hits, none a heading stored as a work --
+«Крещенскій вечеръ, или Все, что хотите» (24, a play; comma printed in some cells and not others, stored as printed, one
+work) and the 3 concerts (works by RG's 2026-11-26 ruling). B4: 0 half-kopeck receipts. B5: all 7 1912-13 rows of
+receipts_print_typos.csv applied (research.event receipts_source corrected_print_typo = 7); the other 13 non-standard
+receipt texts (missing period, «к» without period) parse to the printed sum. B6: 18 free-performance events (27-28 Aug
+jubilee, 14 Nov, 6 Dec, 20 Feb), all performed, none with receipts, banners on the morning sessions only.
