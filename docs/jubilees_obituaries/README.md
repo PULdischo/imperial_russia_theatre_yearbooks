@@ -20,6 +20,23 @@ with the ballet-relevant ones pulled out.
 | `blind_second_read/` | An independent second reading of every heading name and date (V1–V5). |
 | `build/` | `compare_readings.py` (first vs second read → `reading_comparison.csv`) and `build_catalogue.py` (writes the two CSVs above); `build_obsidian_notes.py` (the Russian/English reading notes, see below). |
 
+## The catalogue is hand-maintained (decided 2026-11-25)
+
+`jubilees_obituaries_all_entries.csv` is **source data kept by hand**, like the gold transcriptions in
+`docs/eval/gold/`. It is not a build output. The copy in git is the master. It holds work that exists nowhere else: the
+second-read tier checks, `date_check` and `tier_check`, RG's rulings, corrections read on the scans, the hand-entered
+1890-91 «Смѣсь» articles, and later fixes. `build_catalogue.py` made the first version (October 2026) and is now only a
+tool for **finding new candidate rows**. Run it in a scratch copy, compare its output with the catalogue, and append
+only the rows the catalogue lacks. Never let it overwrite the catalogue: a full run rewrites settled rows (see
+"Snapshot refresh"). Edit existing rows directly in the CSV, and keep `jubilees_obituaries_ballet_only.csv` (the core
+and mentions subset) in step with it.
+
+Making the script reproduce the catalogue exactly was considered and set aside (RG, 2026-11-25). It would mean an
+overrides file holding every hand change, applied to frozen snapshots, with a byte-identical check. That is worth
+doing only if every database-derived row has to be rebuilt (a new column for all rows, a refresh after large
+database corrections) or the project passes to someone who expects an end-to-end pipeline. The person links and the
+production tables are not affected: `link_persons.py` and the loader rebuild them from the CSV every time.
+
 ## Stand-alone articles on one person
 
 Six scanned articles are not under a «Юбилеи» or «Некрологи» heading in the Yearbook but share the
@@ -434,8 +451,8 @@ and no other note linked to the old titles.
 
 - **1911-12 sections**: the 1912 VII jubilee and obituary pages are not scanned; when they are, catalogue them,
   link the people and make the reading notes.
-- **`build_catalogue.py` is not reproducible** (see "Snapshot refresh"): fixing that would mean folding the hand-made
-  changes (scan checks, rulings, the 1890-91 articles) into the script.
+- **`build_catalogue.py` does not reproduce the catalogue**, by decision: the catalogue is kept by hand (see "The
+  catalogue is hand-maintained").
 
 - The supplements have not been checked for obituaries (deferred; see `unscanned_worth_getting.md`).
 - Coverage is limited to what was scanned: e.g. 1894-95 jubilee pp. 333-367 and
