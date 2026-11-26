@@ -29242,3 +29242,21 @@ drama», company «St. Petersburg Russian drama», basis "Cyrillic title, printe
 art_form: «Papillons» ballet (printed genre, work-identity rule), «Исламей» and «Les préludes» drama. The fallback that treats
 an unlisted Cyrillic title as Russian drama fired because no 1912-13 ballet productions list is loaded and these genre strings
 are not read as ballet. Other 1912-13 SP ballets (Фея куколъ, Коппелія, Раймонда …) are ballet. Fold NOT done; for RG.
+
+## 2026-11-25 — 1894-95 Moscow opera spring-debut blocks repaired (enumerator -> text); review tables rebuilt in production
+
+```sql
+-- build_reviews_duckdb.py from merged_full (after review_block_repairs.csv, enumerator_to_text) with the mention CSV production
+-- was built from; then build_review_assertions.py, build_review_credits.py, build_research_model.py; 73-table EXCEPT ALL diff
+select count(*), count(*) filter (where text is not null), count(*) filter (where block_type = 'paragraph'), count(enumerator)
+from raw.review_block where block_id between 'review_1894-95_MSK_opera_p033__b004' and 'review_1894-95_MSK_opera_p033__b009';
+```
+
+Result: 6 / 6 / 6 / 0. Only raw.review_block and research.review_passage differ from production, in exactly those 6 blocks
+(text now filled, enumerator cleared, block_type paragraph). No mention, assertion or credit changes: match_review_mentions.py
+scans Ballet reviews only (--genre Ballet), so the six singers (Максаковъ, Васильева, Миллеръ, Соколова-Фрелихъ, Нивинская,
+Муранская) are still not in the mention layer, and neither are any opera names. The matcher was deliberately not re-run: a
+re-run now also brings ~23 work-link changes from the 1912-13 Repertoire promotion (incl. «Papillons» / «Исламей» / «Les
+préludes» to Repertoire works classed as drama), pending RG. review_mention 27,526 unchanged. Production backed up to
+outputs/full_run/imperial_theaters.before_opera_debut_repair_2026-11-25.duckdb and replaced; build_research_model.py re-run, 73
+tables equal to the copy; alignment 0 shift blocks. research_dataset.sqlite NOT rebuilt (Andy).
