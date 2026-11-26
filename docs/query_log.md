@@ -28966,3 +28966,15 @@ Result: «Алексѣй Дмитріевичъ», SP ballet artists, every seas
 Q: how many `research.review_mention` rows sit in blocks the widened shared-page rule (French-troupe headings) newly marks foreign?
 Query: `raw.review_block` + `raw.review_page` through `pipeline/review_sections.foreign_block_indices`, old rule vs new; then `select count(*), count(distinct person_id) from research.review_mention where block_id in (<20 ids>)` on `outputs/full_run/imperial_theaters.duckdb`.
 A: 20 blocks newly foreign (six SP ballet reviews); 47 mentions, 0 people (works and the Михайловскій).
+
+## 2026-11-25 — Яковлевъ 2-й († 9 Aug 1892): is there now a record for him?
+
+```sql
+select person_id, season, city, entity_type, heading_path, printed_family_name, printed_first_name, printed_patronymic, tenure_note_text
+from research.person_appearance where printed_family_name like 'Яковлев%' and season<='1894-95' order by season;
+select printed_family_name, printed_first_name, tenure_note_text from research.person_appearance
+where season='1891-92' and city='SP' and entity_type='Graduates' and heading_path like 'Ученики%';
+select surface, entity_id from entities.review_mention where block_id='review_1891-92_SP_ballet_p017__b002' and mention_type='person';
+```
+
+Result: the 1891-92 SP graduates («Ученики», p. 253) are Бекъ (to Moscow), Никитинъ, Облаковъ, Пащенко, Тихомировъ Владиміръ, Тихомировъ Сергѣй and Яковлевъ Владиміръ, all «1 іюня 1892 г.», the same six names as the review's list of entrants (review_1891-92_SP_ballet_p017 block 2). «Яковлевъ, Владиміръ» (931f4063) has no other appearance. The only male Яковлевъ in the SP ballet then is Николай Николаевичъ (from 1880, to 1901-02). The review-mention layer links «Яковлевъ 2-й» to 931f4063. The catalogue link for this death notice (kind death_notice, not an obituary; decided 2026-10-22, before this record existed) still says no_record.
