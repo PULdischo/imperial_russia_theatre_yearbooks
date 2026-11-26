@@ -28983,3 +28983,39 @@ Result: the 1891-92 SP graduates («Ученики», p. 253) are Бекъ (to M
 Q: does production hold what the linking session reported after loading 1913-14?
 Query (read-only, `outputs/full_run/imperial_theaters.duckdb`): row counts of `raw.jubilee_obituary_entry`, `entities.jubilee_obituary_person_link`, `research.jubilee_obituary`; linked rows and distinct `person_id`; 1913-14 rows / linked / core; linked `person_id` absent from `research.person`.
 A: 770 / 717 / 770; 340 linked -> 294 people; 1913-14: 48 rows, 10 linked, 11 core; 0 dangling links.
+
+## 2026-11-25 — Season Reviews layers rebuilt in production (1913-14 SP ballet, French-troupe tails, text corrections)
+
+```sql
+-- production state, read-only: 1913-14 rows; mentions in the blocks review_sections.foreign_block_ids() now drops (72 blocks)
+select count(*) from research.review_mention where season = '1913-14';
+select mention_type, count(*), count(entity_id) from entities.review_mention join fb using (block_id) group by 1;
+-- chain on a copy: build_review_persons -> build_review_works -> build_research_model -> match_review_mentions
+--   -> build_reviews_duckdb -> build_review_assertions -> build_review_credits; then all 73 tables EXCEPT ALL both ways;
+-- review_mention keyed on (block_id, char_start, mention_type, surface); assertions on assertion_id;
+-- dance performers on (dance_id, position); credits on (block_id, char_start, role_category, name_surface, work_id)
+```
+```python
+# enumerator check, outputs/reviews/merged_full/review_block.csv: enumerated_list blocks whose enumerator is more than
+# a list marker (regex [\dIVXLCабвгдежзa-h]{1,4}[).]|[\dIVX]{1,4}); match_review_mentions.py reads b["text"] or b["caption_text"]
+```
+
+Result: text corrections already all in merged_full (dry run: 0 pending; «усопшаго» already in production). Production already
+held the 1913-14 pages, blocks, mentions and assertions (loaded 20:21 from a matcher run before the widened rule), but not its
+credits or source pages. Diff copy vs production, all explained: review_mention 27,573 -> 27,526, the 47 rows in 5 of the
+dropped French-troupe blocks (41 works, 4 theaters, 2 roles, 0 people; 6 of them 1913-14: 127 -> 121); linked work mentions
+3,126 -> 3,087; linked person mentions 20,020 unchanged; no entity_id, link_method or candidates_n changed on any other
+mention (mention_ids renumber; 312 rows differ only in the ORDER of tied candidate_ids, same sets; likewise 10 assertions, 16
+dance performers, 3 dance composers, 2 review_person page lists). review_assertion 2,690, same assertion_ids. review_credit
+2,412 -> 2,421: all old credits unchanged (same credit_id; mention_id renumbered to the same mention), +9 for 1913-14.
+research.source_page 2,915 -> 2,920 (the 5 1913-14 review pages). research.person_death 318 -> 319: Яковлевъ, Владиміръ
+(931f4063) † 9 Aug 1892, from the jubilees session's link (b1b65b3) that production's research layer had not yet been rebuilt
+for. Backup outputs/full_run/imperial_theaters.before_review_rebuild_2026-11-25.duckdb; production replaced by the copy,
+build_research_model.py re-run on it, all 73 tables equal to the copy; person_link alignment 0 shift blocks.
+Two new 1913-14 credits name the right person with the wrong work: «балетъ г. Фокина «Papillons»» credited to «Раймонда»
+(p000__b005); «Фея Куколъ» (… «съ покойнымъ С. Г. Легатомъ») credited to «Талисманъ» (p002__b005). Not changed: for RG
+(review_credit_overrides.csv). Enumerator: the matcher never reads it, and scans Ballet only, so the six 1894-95 Moscow opera
+debut items are outside the mention layer either way; 29 enumerated blocks carry more than a marker (23 Ballet): no person
+name, but dance titles («Pas de séduction», «Grand pas d’action», «Valse» …) and one honorific («г-жи», 1904-05 MSK
+p015__b002, its list still linked) are not read. research.review_passage has no enumerator column, so those 6 opera blocks
+show empty text there. research_dataset.sqlite NOT rebuilt (Andy).
