@@ -28929,3 +28929,16 @@ review_mention_links.csv re-keyed «Легатъ» -> «Легатъ 3-й» (sam
 («рыбака — г. Обуховъ»), 2 new credits (Хлюстинымъ linked, Ширяевымъ unresolved; later credit_ids renumbered). Production
 backed up to outputs/full_run/imperial_theaters.pre_gdot_fix_2026-11-24.duckdb (4661c05) and replaced (cea0901); 0 Latin
 «g.» left. research_dataset.sqlite NOT rebuilt (Andy).
+
+## 2026-11-25 — Which Repertoire tables and spiski in pdf/ are not yet loaded?
+
+```sql
+describe raw.source_pages;
+select entity_type, string_agg(distinct season, ' ' order by season) from raw.source_pages group by 1 order by 1;
+select regexp_extract(source_file,'[^/]*$') f, count(*) from raw.source_pages where season>='1908' group by 1 order by 1;
+select string_agg(distinct season, ' ' order by season) from raw.season_stat_page;
+select string_agg(distinct season, ' ' order by season) from raw.production_entry;
+select string_agg(distinct season, ' ' order by season) from research.production;
+```
+
+Result: Repertoire, Administrators, BalletArtists, Musicians, ProductionTeam, TheaterSchoolStaff loaded 1890-91–1911-12; Graduates same minus 1907-08; season_stat_page 1891-92–1911-12 minus 1905-06; production_entry / research.production 1890-91–1904-05 + 1907-08–1911-12. Compared with pdf/: only 1912-13 Repertoire and 1912-13 ProductionStats are scanned but not loaded. Opera/drama production lists (archive only) not loaded, by design.
