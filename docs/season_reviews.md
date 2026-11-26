@@ -988,6 +988,15 @@ Left open:
   re-translated (18,356 tokens) and 26 files rewritten. A fresh build matches
   every file. The mention layer was not changed here (the review-layer rebuild
   session was asked to report whether it reads `enumerator`).
+- **Six 1894-95 Moscow opera debut paragraphs repaired at the source, same
+  day (RG).** They are plain paragraphs in the print (scan p033), but extraction
+  had put each whole paragraph in `enumerator`. A new table,
+  `docs/eval/review_block_repairs.csv` (`enumerator_to_text`), applied by
+  `apply_review_text_corrections.py`, moves the text to `text`, so the mention,
+  credit and assertion readers now see them. Production needs a review-chain
+  rebuild for this, handed to the review-layer rebuild session. 23 other items
+  keep a leading dance title in `enumerator` with real text after it: they are
+  in the reading files (`block_body()`), but not yet in the mention layer.
 - Not built into the database's review layer (mentions, assertions).
 
 **STATUS 2026-09-28 — the corpus is extracted, merged and translated.**

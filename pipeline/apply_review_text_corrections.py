@@ -43,6 +43,13 @@ CORRECTIONS = Path("docs/eval/review_text_corrections.csv")
 # Same file parse_reviews.py reads, so a folio is stated in exactly one place.
 FOLIOS = Path("docs/review_folio_corrections.csv")
 FIELDS = ("text", "caption_text")
+# Whole-block repairs a find/replace cannot express (added 2026-11-25).
+# `enumerator_to_text`: the extraction put a whole printed paragraph in the
+# list-marker field and left `text` empty; the print has no marker, so the
+# words move to `text`, the marker is cleared and the block is a paragraph.
+# Every downstream reader slices `text` by character offset, so the words
+# must live there, not be read from `enumerator` on the side.
+BLOCK_REPAIRS = Path("docs/eval/review_block_repairs.csv")
 
 
 def load(path: Path) -> list[dict]:
@@ -142,6 +149,29 @@ def main() -> int:
         print(f"  {find!r} -> {repl!r}  [{prefix}]  {n}/{expected} on "
               f"{len(pages)} page(s)  {status}")
 
+    if failures:
+        print("\nCOUNT MISMATCH -- nothing written. Re-check the scan:", file=sys.stderr)
+        for find, repl, exp, got in failures:
+            print(f"  {find!r} -> {repl!r}: expected {exp}, found {got}", file=sys.stderr)
+        return 1
+
+    by_id = {r["block_id"]: r for r in rows}
+    for rep in (load(BLOCK_REPAIRS) if BLOCK_REPAIRS.exists() else []):
+        r = by_id.get(rep["block_id"])
+        if r is None:
+            failures.append((rep["block_id"], rep["action"], 1, 0)); continue
+        if rep["action"] != "enumerator_to_text":
+            failures.append((rep["block_id"], rep["action"], 1, 0)); continue
+        e, t = (r.get("enumerator") or "").strip(), (r.get("text") or "").strip()
+        if t and not e:
+            status = "ALREADY APPLIED"
+        elif e and not t:
+            status = "ok"; total += 1
+            if not a.dry_run:
+                r["text"], r["enumerator"], r["block_type"] = r["enumerator"], "", "paragraph"
+        else:
+            status = "MISMATCH"; failures.append((rep["block_id"], rep["action"], 1, 0))
+        print(f"  {rep['action']}  {rep['block_id']}  {status}")
     if failures:
         print("\nCOUNT MISMATCH -- nothing written. Re-check the scan:", file=sys.stderr)
         for find, repl, exp, got in failures:
