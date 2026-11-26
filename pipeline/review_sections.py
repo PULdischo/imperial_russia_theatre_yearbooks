@@ -34,6 +34,12 @@ SECTION_HEADING = {"балетъ", "опера", "драма"}
 #: genre -> the heading word that is this review's OWN, for the run-on case.
 #: Not applied to the combined "All" volumes, which legitimately hold both.
 OWN_HEADING = {"Ballet": "балетъ", "Opera": "опера"}
+#: headings that open the FRENCH-TROUPE review run on after a review's last
+#: page (RG 2026-11-25: drop them). Prefix match, lower-case. NOT «французская
+#: труппа»: that is the running head of 1910-11 SP Ballet p. 140, which sits
+#: above the ballet review's own last paragraphs.
+FOREIGN_HEADING_PREFIXES = ("французскій театръ", "михайловскій театръ",
+                            "спектакли французской труппы")
 
 
 def _heading_word(block: dict) -> str | None:
@@ -57,6 +63,8 @@ def foreign_heading_index(blocks: list[dict], own: str | None) -> int | None:
     for i, b in enumerate(blocks):
         t = _heading_word(b)
         if t in SECTION_HEADING and t != own:
+            return i
+        if t and t.startswith(FOREIGN_HEADING_PREFIXES):
             return i
     return None
 

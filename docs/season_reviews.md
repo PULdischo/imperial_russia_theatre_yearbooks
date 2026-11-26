@@ -947,6 +947,36 @@ Two things found while integrating, both worth knowing:
   mid-paragraph); the check is on `block_type == heading` plus an exact
   match on балетъ/опера/драма.
 
+**ADDED 2026-11-25 — 1913-14 Ballet SP (5 pp, printed 77-81, Левинсонъ), and
+the 1912-13 Ballet SP translation.** Scans checked for cut-off text and blur
+first (none). Processed in a scratch folder through the same pipeline (3 views:
+35 calls, 209,600 tokens, 0 errors; stitch, parse, merge: 32 blocks, folios
+77-81, 0 quality flags), then appended to `merged_full/` (0 id collisions; backup
+`outputs/reviews/_backup_before_1913-14_2026-11-25/`); raw JSON, images and
+manifest rows copied into `pilot_1/`, `bands2/`, `bands4/`. Translated only
+the two ballet reviews, 57 blocks (37,605 tokens), RG's go-ahead in place of the
+2026-10-12 "translate the remaining set once" plan. Only those two files in
+`bilingual/` were rewritten. Corpus: 1,079 pages, 4,729 blocks.
+
+Left open:
+- **French-troupe tails DROPPED (RG 2026-11-25: "drop them all").**
+  `pipeline/review_sections.py` now also cuts a review's last page at a heading
+  starting «Французскій театръ», «Михайловскій театръ» or «Спектакли французской
+  труппы» (not at «Французская труппа», the 1910-11 running head on p. 140,
+  read on the scan). 20 blocks newly dropped, in six SP ballet files: 1891-92,
+  1892-93, 1896-97, 1897-98, 1910-11, 1913-14. Those six files rebuilt (which
+  also brings in later text corrections for the five older ones). The
+  mention layer obeys the same rule: at the next review-layer rebuild 47
+  `research.review_mention` rows in those blocks go (French plays and the
+  Михайловскій; no people). Production not rebuilt.
+- **The other bilingual files are stale.** A fresh build from `merged_full/`
+  differs from 44 of the files built 2026-10-09 (38 after the six rebuilt above) (later text corrections).
+  The fix is a rebuild, not an edit.
+- **10 older blocks have no translation** (1894-95 MSK opera 6; one each in
+  1893-94 MSK, 1895-96 MSK and SP, 1896-97 MSK ballet), probably from later
+  block splits.
+- Not built into the database's review layer (mentions, assertions).
+
 **STATUS 2026-09-28 — the corpus is extracted, merged and translated.**
 All 1,024 pages have been read at three views (full page + 2-band + 4-band),
 merged through the selector, and translated. 41 review files in
