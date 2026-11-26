@@ -29387,3 +29387,23 @@ Result: 1,776 read sessions = 1,776 production sessions, no structural differenc
 (Мих. 11 Jan 1913 = RG's 582 ruling); 3 title cells differ (broken L, Θ/Ѳ typing, 4 Apr «Kammermusiк» wrong-fount к for RG).
 Большой 1 Mar 1913 (printed blank) is stored no_performance. «Дочь фараона, оп.» p038 -> ballet; «Золото Рейна, ком.» p042 ->
 opera (basis text says «оп.»). Writeup under #164 in docs/eval/known_issues.md.
+## 2026-11-26 — 1912-13 C curation (C2/C3/C7, p044 split) + D3 «Kammermusiк» loaded into production (RG: "Yes, load it")
+
+```sql
+-- Full chain on a copy (outputs/rebuild_c2_2026-11-26/chain.sh: parse -> qc -> build_duckdb -> entities -> dates -> productions
+-- -> credits -> creators -> season stats -> review persons/works -> research -> mentions -> reviews_duckdb -> assertions ->
+-- credits -> research -> alignment), then build_research_model again after the Kammermusiк art-form override; 73-table EXCEPT ALL diff.
+select count(*) from research.performance p join research.event e using(event_id) where e.season = '1912-13' and p.discipline is null;
+select e.season, count(*) from (select * from z.research.performance except all select * from p.research.performance) d
+  join z.research.event e using(event_id) group by 1;
+```
+
+Result vs production: research.work 3,136 -> 3,109 (25 folded by aliases, the fused p044 item III, the genre-less «Дивертиссементъ
+(Etudes)»); research.performance 33,447 -> 33,448 (+1 supplied «Избраніе…», Малый 10 Mar 1913) with 78 changed (1912-13 71, 1911-12 6
+«Карамазовы», 1901-02 1 «Миньона»); research.event 16 changed (15 gain Russian drama, p044 n_works 3 -> 4); raw 1 cell («Kammermusiк»);
+1912-13 performances with no discipline 51 -> 12 (concerts, 1812 overture, «Апоѳеозъ», 26 Nov drama-bill «Дивертиссементъ»).
+review_mention 59 / review_person 2: candidate-list order only, no link changes. «Kammermusiк» (Cyrillic к) had fallen to Russian drama
+by the Cyrillic-title rule; the only mixed-script word in the corpus -> art_form_by_performance.csv row, German drama again.
+Backup outputs/full_run/imperial_theaters.before_1912-13_C_curation_2026-11-26.duckdb; production replaced; 73 tables equal to the
+copy; alignment 0 shift blocks; outputs/reviews/mentions CSVs replaced by the build's (backup _backup_mentions_before_1912-13_C_2026-11-26);
+research_dataset.sqlite rebuilt locally (republish is Andy's).

@@ -25324,8 +25324,36 @@ date + session. Output `docs/eval/scan_audit/1912-13_scan_reads.csv`, 1,776 rows
   «ком.» (cosmetic). The p048 header prints «23 марта» but the first row is 22 Mar (date column trusted, as stored).
 Nothing changed in the database.
 
+**1912-13 C curation (RG: "Yes, C curation", 2026-11-26).** Precedent batch applied on a copy (RG: "Yes, apply on a copy"):
+13 excerpt links (`work_excerpt_links.csv`: «10 картинъ изъ … «Двѣнадцатый годъ»» x4 forms, «Келья въ Чудовомъ монастырѣ изъ
+траг. …» x3 -> Pushkin's tragedy, «Грановитая палата …» x3, «1-я сц. 2-го д. … Мининъ-Сухорукъ» x3) and 3 Большой
+«Дивертиссементъ» on «Жизель» bills -> бал. (`research_performance_genre.csv`; 26 Nov Александринскій left blank).
+p044 Малый 10 Mar morning item III. (Минин scene + «1613 годъ. Избраніе…» printed under one numeral): RG "yes, raw as is,
+research layer split" -> research layer only: item III to the Минин scene work, «Избраніе…» supplied on the same bill.
+
 **1912-13 D3 «Kammermusiк» ruled by RG 2026-11-26:** "store cyrillic к in raw, use latin in research". Raw p049 (Михайловскій
 4 Apr 1913) now stores «Kammermusiк» (U+043A) with a `_fix_note`, in outputs/full_run/raw, raw_columnwise_repaired and
 integration_1912-13/raw (`docs/eval/reconciliation/fix_1912_13_kammermusik.py`); `work_title_aliases.csv` matches it to
 «Kammermusik», so research keeps the Latin title and the same work. Logged in genuine_print_typos.md. Production .duckdb NOT
 rebuilt here: the change is folded into the 1912-13 C build (Today's docket session), which diffs every table before loading.
+«Избраніе на царство…» records: RG "Малый only for now since we lack evidence" -> the two «1613 г. …» printings aliased to
+«1613 годъ—избраніе…» [сказаніе въ лицахъ.]; the Александринскій record stays separate until the 1912-13 drama list is scanned.
+27 Aug «Увертюра «Двѣнадцатый годъ».»: auto-linked as an excerpt of Бахметьевъ's chronicle (drama); it is Tchaikovsky's
+overture (26 Aug names him). RG "Yes, unlink it" -> unlink row in `work_excerpt_links.csv`.
+«Золото Рейна, прологъ къ трилогіи.» (Маріинскій 7 Jan 1913, no genre): RG "Yes, fold it" -> alias to «Золото Рейна» [оп.].
+C7 (new titles): 108 works first seen in 1912-13 compared with every earlier work (`outputs/c7_1912-13/new_works.py`).
+Group A, RG "Yes, fold all 11": aliases for the logged print slips «Дивертиссеметъ (Etudes).», «Пробужденный Римъ»,
+«Севильскій цирюльликъ», «Севильскій, цирульникъ», «Der Mittwoeh», «Der Mtttwoch», «Les mines de Ganeffonntaine», «Le femme
+X....», «Заложники живни», «Перъ Гюитъ», and the 1912-13 spelling «Герцогиня Падуанская» joined to 1911-12's «Паддуанская».
+Group B: «Миньона» (1901-02 Italian troupe) and «Миньонъ» (Большой 1912-13) = Thomas's «Mignon», RG "Yes, one work" -> alias.
+Group B: «Не было ни гроша, а вдругъ алтынъ» (Александринскій 31 Mar 1913, once) -> Ostrovsky's «…, да вдругъ алтынъ», RG "Yes, fold it" -> alias.
+Group B: «Царь Ѳеодоръ Іоанновичъ» (1913) -> «Царь Ѳедоръ Іоанновичъ» (1910), Tolstoy, RG "Yes, fold it" -> alias.
+Group B: «Профессоръ Сторицынъ (Нетлѣнное)» (Малый, Dec 1912) -> «Профессоръ Сторицынъ», RG "Yes, fold it" -> alias.
+Group B: «Профессоръ, драма.» (Александринскій 4 Apr 1913, once) -> «Профессоръ Сторицынъ», RG "Yes, fold it" -> alias.
+Group B: «Tais-toi, mon coeur, pièce.» (24 Feb 1913, genre stored in the title) -> «Tais-toi, mon coeur» [pièce.], RG "Yes, fold it" -> alias.
+Group B: four part-titled «Братья Карамазовы» records (1911-12 x2, 1912-13 x2, no genre) -> «Братья Карамазовы» [отрывки изъ романа.], RG "Yes, fold all four" -> aliases (also changes 1911-12).
+Group B: the three 1812 overture records (Александринскій 26-27 Aug, Большой 26-28 Aug) -> one work, Tchaikovsky's overture, RG "All three" -> aliases; the 27 Aug unlink row is dropped (the folded work is no longer read as an excerpt).
+Group B: «4-е д. Эрнани» (Малый 28 Jan 1906) linked as an excerpt of «Эрнани» [др.] (first whole in 1912-13), RG "Yes, link it". Group B done; full rebuild on a copy next.
+«Kammermusiк» art form: the raw Cyrillic к made the Cyrillic-title rule class 4 Apr 1913 as Russian drama; `art_form_by_performance.csv`
+row -> German drama (only mixed-script word in the corpus). **C curation LOADED to production 2026-11-26** (RG "Yes, load it"):
+works 3,136 -> 3,109, 1912-13 performances with no art form 51 -> 12; details in query_log. C6 waits for the 1912-13 BalletArtists lists.
