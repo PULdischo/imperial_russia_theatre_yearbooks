@@ -358,7 +358,23 @@ some dates fall in autumn 1914.
 
 Same method as before: a first read (`first_read/L1_1913-14_jubilees.csv`, `L2_1913-14_obituaries.csv`; briefs
 `BRIEF_1913-14.md`, `BLIND_1913-14.md`) and a blind second read of every heading, date **and tier**
-(`blind_second_read/V6_…`, `V7_…`). All 46 headings, dates and tiers agree. Not checked further: roles, glosses, notes.
+(`blind_second_read/V6_…`, `V7_…`). All 46 headings, dates and tiers agree.
+
+**The other fields were then checked against the scans (2026-11-25).** For all 48 rows, three readers, each covering one page
+range, checked `role`, `troupe_city`, the extra facts in `dates`, `evidence_verbatim` (letter for letter), `evidence_english`,
+`author`, `portrait`, `length`, `notes`, `kind` and `name_latin` against the page images. Each point they flagged was then
+read on the scan by Claude before anything was changed. Every quotation matches the print, and no fact was found wrong. Changed:
+- Каратыгина: role «драматическихъ и комическихъ старухъ» is "dramatic and comic old women" (was "character/comic"); the
+  notice says «Императорскихъ Малаго и Александринскаго театровъ» and names no city for the Maly (her 1908-09 jubilee
+  has the Moscow Maly, 1896); length 12 lines (was 14).
+- Ермолова-Кречетова: "niece of И. А. Ермоловъ" marked as inferred. He is printed as «дядя Марьи Николаевны», she as
+  М. Н.'s «родная сестра».
+- Чаевъ: his only Maly link is the revival of «1613-й годъ» there, not service.
+- Збруева continues for 6 lines on p. 145, not 4; Салтыковъ-Щедринъ is 9 lines, not 11.
+
+Other line counts (the `length` column is approximate) differ by one to three lines in the readers' counts and were left
+as they are. Cross-references in `notes` to other pages (Панчина's father, Тихоновъ/Луговой) are the catalogue's own, not
+the page's.
 
 **Ballet (11, all `core`, no `mentions`):** jubilees of Булгаковъ А. Д. (Moscow régisseur, 25 years), Гердтъ П. А.
 (70th birthday), Дриго Р. Е. (35 years), Легатъ Н. Г. (25 years), Преображенская О. О. (25 years) and Каратыгина К. А.
@@ -371,8 +387,8 @@ scan, p. 156); the notice never names ballet. Both readers put him `core` under 
 kept that, unsure and open to revisiting, although she ruled the *assistant* head, Юмашевъ (1908-09), `mentions`.
 
 Print slips noted, kept as printed: Григорьевъ «родившагося 1882 г.» for 1822 (read on the scan by Claude; in
-`docs/eval/genuine_print_typos.md`); Рыкалова once «Н. П.» for Н. В. (p. 168, first and second readers agree;
-not re-read by Claude).
+`docs/eval/genuine_print_typos.md`); Рыкалова once «Н. П.» for Н. В. (p. 168, «Покинула Н. П. сцену», with
+«Надежда Васильевна» a few lines further down; read on the scan by Claude 2026-11-25).
 
 `see_also` was filled by hand from surname matches.
 
