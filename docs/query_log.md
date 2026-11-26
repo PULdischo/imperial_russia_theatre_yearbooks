@@ -29162,3 +29162,21 @@ Result: one mention only — review_1907-08_SP_ballet_p014__b007 («По час�
 красивыхъ номеровъ: «Лебедь», музыка Сенъ-Санса для г-жи Павловой 2-й»). Other «лебед-» hits are «Лебединое озеро», its
 swan dances («Entrée des cygnes», «Grand pas des cygnes») and its libretto, or the surname Лебедевъ. Nothing in the Repertoire
 or other tables: the only other hits are «Le chant du cygne», a French comedy on the Repertoire bills, and «Лебеди-ное озеро» split across a line in two tallies.
+
+## 2026-11-25 — «Лебедь» 1907-08: is a credit override the right fix? Named dances recorded with no parent ballet
+
+```sql
+-- docs/eval/review_dance_named.csv rows with a blank parent_work_id (14 of 256), joined on (block_id, surface):
+select d.dance_id, d.season, d.dance_surface, d.work_surface, d.work_source from research.review_dance d
+join nb on nb.block_id = d.block_id and nb.surface = d.dance_surface where d.work_id is not null;
+select r.credit_id, r.name_surface, r.work_surface, r.work_source from research.review_credit r
+where r.block_id in (select block_id from nb) and r.work_id is not null;
+```
+
+Result: «Лебедь» is already in review_dance_named.csv with NO parent ballet ("Fokine concert number … not part of a list").
+Neither reader honours a blank parent: build_review_assertions.py treats it as undecided and falls back to the block/page, so 6
+of the 14 dances still carry a work in research.review_dance (Polca militaire 1892-93 -> «Спящая красавица»; Маршъ 1893-94 ->
+«Жизель»; Mandolinata, Татарскій танецъ 1893-94 and «Послѣ маскарада» 1901-02 via page-earlier-block; «Лебедь» -> «Принцъ
+Садовникъ»); 8 have none. build_review_credits.py does not read the file, so credit 2347 (Сенъ-Санса) keeps «Принцъ Садовникъ».
+The other credits in those blocks (2343-2346, 1048) name their own ballets and are unaffected. The override file also cannot
+blank a work (it sets work_id only when one is given).
