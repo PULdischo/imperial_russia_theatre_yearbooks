@@ -37,9 +37,10 @@ own entry.**
 
 ### 1. Waiting on RG's decision (one at a time, evidence first)
 
-- **Review names, the largest item.** 1,813 person mentions still tied between candidates *(checked 11-27)*. Order:
-  (a) re-run G1-G3 on the remaining ties with the full candidate lists (decisions.md item 11; e.g. 90 Moscow «Ѳедорова»
-  from 1900-01 on with matching ordinals); (b) surname-by-season groups, largest first (Павлова 1902-03 SP, Грекова and
+- **Review names, the largest item.** 1,639 person mentions still tied between candidates (was 1,813). (a) DONE
+  2026-11-27 (RG "Yes, apply 174"): G1-G3 re-run on full candidate lists, 174 links applied to production
+  (`docs/eval/review_names_general_rules_rerun_2026-11-27/README.md`; G2 gained a masculine-genitive safeguard; 6 held in
+  `held.csv`: 5 pupils fail the nine-season rule, Булгаковъ waits on Group D). Next: (b) surname-by-season groups, largest first (Павлова 1902-03 SP, Грекова and
   Николаева 1901-02 Moscow, Эрлеръ 1905-06 SP); (c) the 235 with no candidate that season and 33 other-city only;
   (d) about 150 pupil mentions linked to an older namesake (`docs/eval/review_pupil_mentions.csv`). Detail:
   research_layer_review_2026-11-03.md, item 1.
@@ -63,6 +64,11 @@ own entry.**
   quoted «маркитантки» auto-linked to Маркитантка; duplicate works Эвника (13) / Евника (5) still separate *(checked
   11-27)*; divertissement spelling pair; rename `research.production` -> `production_list_entry` (not done *(checked
   11-27)*); production worksheets per ballet (RG wants them); Карменъ as a ballet (tabled).
+- **Masculine genitive read as a woman (found 2026-11-27, production):** 16 links: «Л. Иванова» (Лев Ивановъ, creator)
+  → Лариса Михайловна x8, Ираида Даниловна x1, a record «Иванова» x1; «музыка А. Давидова» → Давыдова, Елизавета x4;
+  «танцовщика А. Обухова» → Обухова, Евгенія x1; «г. Какурина» → Какорина, Екатерина x1 (rerun README, "Found on the way").
+- **1864 «Конекъ-Горбунокъ» cast quoted in 1895-96 SP** (p005__b003 → p006__b002, «Составъ первыхъ исполнителей»): not in
+  `review_historical_passages.csv`; its names are linked to 1890s people (e.g. «А. Богдановъ» → Богданова, Александра).
 - **Event and work structure, to decide together** (#141 and the 2026-10-12 notes): the 7 annotations that name works;
   a "gala" or "mixed" category for whole events; connecting productions without equating them (the two «Млада»,
   «Волшебное зеркало» SP/Moscow; a "canonical work" level under its own name); parent links across languages
@@ -136,7 +142,7 @@ own entry.**
 
 - `research_dataset.sqlite` was rebuilt locally on 2026-11-26 and matches production, but it is not republished: the
   published copy lacks every change since the last publish (review drift rulings, «g.» fix, 1911-12 and 1912-13
-  seasons, review-layer rebuilds). Run `pipeline/merge_datasette_metadata.py` (event table sort).
+  seasons, review-layer rebuilds, the 2026-11-27 review-name links). Run `pipeline/merge_datasette_metadata.py` (event table sort).
   `review_credit` credit_ids were renumbered by the «g.» rebuild.
 
 ### 6. Housekeeping

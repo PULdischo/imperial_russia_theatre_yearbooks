@@ -29489,3 +29489,60 @@ Result: Зандинъ still two records (Ивановичъ 1906-07..1909-10, �
 Query (outputs/full_run/imperial_theaters.duckdb): `select count(*), count(wikidata_qid) from research.person`, grouped by `person_source` and by `first_attested_season` (1908-09 on).
 Result: 2,712 people, 174 with a QID. Roster 2,614 / 98; production_list 86 / 76; review 12 / 0. First attested 1908-09: 178 / 4; 1909-10: 55 / 3; 1910-11: 43 / 1; 1911-12: 100 / 0.
 Also checked: docs/eval/run_history.csv prepublish_check_2026-11-04 has roster gold 76.4 (was 82.1), put down to the gold set being older than later rulings (#137 heading prefixes, «(съ … г.).» tenure notes, service_class stop).
+
+## 2026-11-27 — Review names: G1-G3 re-run on the remaining ties with full candidate lists (status index item 1a)
+
+Scripts in `docs/eval/review_names_general_rules_rerun_2026-11-27/` (copies of the 2026-11-07 rule scripts plus a G2
+masculine-genitive safeguard). Queries run directly:
+
+```sql
+select candidates_n, count(*) from research.review_mention where mention_type='person' and person_id is null and candidates_n>1 group by 1 order by 1;
+select p.display_name, a.printed_family_name, a.season from research.person_appearance a join research.person p using(person_id)
+ where a.city='Moscow' and a.season='1900-01' and a.printed_family_name like 'Иванова%';
+select person_id, display_name from research.person where canonical_family_name='Ивановъ' and canonical_first_name like 'Л%' or display_name like 'Иванова, Лариса%';
+select m.mention_id, m.season, m.surface, m.link_method, p.display_name, substr(coalesce(b.text,b.caption_text,''), greatest(1,m.char_start-60), 90)
+ from research.review_mention m join research.person p using(person_id) join raw.review_block b on b.block_id=m.block_id where p.display_name like 'Иванова, Лариса%';
+-- nine-season pupil test, per pick:
+select p.display_name, min(a.season) as first_s, min(case when a.entity_type='Graduates' then a.season end) as grad
+ from research.person p join research.person_appearance a using(person_id) where p.canonical_family_name=<surname> and a.city=<city> group by 1;
+-- production links of a feminine-looking surface to a woman, preceded by creator wording or bare initials (filtered in Python):
+select m.mention_id, m.season, m.surface, m.link_method, p.display_name, p.canonical_family_name, coalesce(b.text,b.caption_text,''), m.char_start
+ from research.review_mention m join research.person p using(person_id) join raw.review_block b on b.block_id=m.block_id where m.mention_type='person';
+select m.block_id, m.surface, p.display_name, m.link_method from research.review_mention m left join research.person p using(person_id)
+ where m.block_id in ('review_1895-96_SP_ballet_p005__b003','review_1895-96_SP_ballet_p006__b001','review_1895-96_SP_ballet_p006__b002') and m.mention_type='person';
+```
+
+Result: tied candidates_n now 2..38 (complete lists). G1 137 candidates (9 unflagged, 7 of them old casts), G2 207 → 194
+after the safeguard → 179 after old casts, G3 1; build_links 180 new rows, 2 skipped (RG unlinks), 6 held (5 pupils fail
+the nine-season rule, Булгаковъ in an open merge); proposed 174 (ties 1,813 → 1,639). Scan sample 10/10. Every production
+link to Лариса Михайловна (8) is a creator credit of Лев Ивановъ; 32 production links matched the genitive filter, of which
+16 are clear errors (Лариса 8, Ираида 1, «Иванова» 1, Давыдова 4 for composer А. Давидовъ, Обухова 1 «танцовщика»,
+Какорина 1 «г. Какурина») plus Головина (decisions.md item 4); the rest are women named by initials (Карсавина Т. П. …).
+The 1895-96 SP 1864 «Конекъ-Горбунокъ» cast block is linked to 1890s people and is not in review_historical_passages.csv.
+Nothing changed in the database.
+
+## 2026-11-27 — 174 review-name links (G1-G3 re-run) APPLIED to production (RG: "Yes, apply 174")
+
+174 rows appended to docs/eval/review_mention_links.csv. Review chain on a copy (`outputs/rebuild_g123_rerun_2026-11-27/chain.sh`:
+match_review_mentions -> build_reviews_duckdb -> build_review_assertions -> build_review_credits -> build_research_model ->
+check_person_link_alignment), then every table EXCEPT ALL both ways and keyed comparisons (`diff.py` .. `diff5.py` there):
+
+```sql
+select p.mention_id, p.person_id, z.person_id from p.research.review_mention p
+ join z.research.review_mention z using (block_id, char_start, mention_type, surface) where p.person_id is distinct from z.person_id;
+select count(*) from p.research.review_mention p join z.research.review_mention z using (block_id, char_start, mention_type, surface)
+ where list_sort(string_split(coalesce(p.candidate_ids,''),'|')) <> list_sort(string_split(coalesce(z.candidate_ids,''),'|'));
+select p.assertion_id, p.performer_person_id, z.performer_person_id from p.research.review_assertion p join z.research.review_assertion z using(assertion_id)
+ where p.performer_person_id is distinct from z.performer_person_id;
+select count(*) from research.review_mention where mention_type='person' and person_id is not null;
+select count(*) from research.review_mention where mention_type='person' and person_id is null and candidates_n>1;
+```
+
+Result: exactly the 174 proposed mentions changed (NULL -> the proposed person, 174/174), nothing else switched or lost;
+candidate lists differ in order only (0 set differences); review_assertion +3 performers (none switched; 4 more re-labelled
+already-linked); review_dance_performer same people, 15 method labels; review_solo +3 («на флейтѣ—г. Степановъ» -> Ѳедоръ
+Васильевичъ); review_dance_composer order only; research.season_stat_gap +9 / gap_event +6 = the 1912-13 ledger rows
+committed in f0b4007 after the last production build. person_link: 0 shift blocks. Production md5 checked unchanged
+since the copy, backed up to outputs/full_run/imperial_theaters.pre_g123_rerun_2026-11-27.duckdb and replaced; mentions CSVs
+copied to outputs/reviews/mentions (old ones in outputs/reviews/_backup_mentions_before_g123_rerun_2026-11-27/). After:
+person mentions linked 20,020 -> 20,194; tied 1,813 -> 1,639. research_dataset.sqlite rebuilt locally; not republished (Andy).
