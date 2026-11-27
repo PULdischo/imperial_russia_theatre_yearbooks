@@ -29421,3 +29421,66 @@ Result: Moscow 479 / 476 events, receipts -6,273.40 (opera -5,183.80, ballet -99
 (drama 289/287 -8,617.39, French +10,716.02, opera +1,000.00, ballet -1.00). Event surplus = 6 charity/concert evenings
 without receipts + SP drama 2. No single event or pair equals any gap except Moscow opera = any of 8 «Хованщина» full houses
 (5,183.80) and an unrelated SP pair for the drama+French net. Ledger 1912-13-01..09. No data change.
+
+## 2026-11-27 — Database audit (RG: "a kind of large scale audit"): coverage, quality and open work
+
+All read-only against `outputs/full_run/imperial_theaters.duckdb` (file dated 2026-11-26 12:16).
+
+```sql
+select schema_name, table_name, estimated_size from duckdb_tables() order by 1,2;
+select source_kind, count(*) pages, count(distinct season) seasons, min(season), max(season) from research.source_page group by 1 order by 1;
+select season, string_agg(distinct source_kind, ',' order by source_kind) kinds, count(*) from research.source_page group by 1 order by 1;
+select count(*) from research.event;
+select event_status, count(*) from research.event group by 1;
+select date_confidence, count(*) from research.event group by 1 order by 2 desc;
+select season, count(*) events,
+ sum(case when event_status='performed' then 1 else 0 end) performed,
+ sum(case when event_status='no_performance' then 1 else 0 end) no_perf,
+ sum(case when event_status='not_captured' then 1 else 0 end) not_capt,
+ sum(case when receipts_total_kopecks is not null then 1 else 0 end) w_receipts,
+ sum(case when date is null then 1 else 0 end) no_date,
+ sum(case when printed_page_number is null then 1 else 0 end) no_pp
+from research.event group by 1 order by 1;
+select receipts_source, count(*) from research.event where event_status='performed' group by 1 order by 2 desc;
+select season, sum(case when event_status='performed' and receipts_total_kopecks is null then 1 else 0 end) from research.event where season>='1892-93' group by 1 order by 1;
+select count(*) from research.event e where event_status='performed' and not exists (select 1 from research.performance p where p.event_id=e.event_id);
+select season, city, printed_count, repertoire_events, events_minus_printed, round(receipts_minus_printed_kopecks/100.0,2), round(100.0*receipts_minus_printed_kopecks/nullif(printed_receipts_kopecks,0),3) from research.season_stat_check order by 1,2;
+select count(*), count(wikidata_qid), min(first_attested_season), max(last_attested_season) from research.person;
+select entity_type, count(*), count(distinct person_id), count(distinct season), max(season) from research.person_appearance group by 1 order by 2 desc;
+select a.entity_type, count(distinct p.person_id), count(distinct case when p.wikidata_qid is not null then p.person_id end) from research.person p join research.person_appearance a using(person_id) group by 1 order by 2 desc;
+select first_attested_season, count(*), count(wikidata_qid) from research.person where first_attested_season>='1909-10' group by 1 order by 1;
+select count(*), count(art_form), sum(case when art_form is null then 1 else 0 end) from research.work;
+select art_form, count(*), sum(appearance_count) from research.work group by 1 order by 3 desc;
+select status, count(*) from entities.person_candidate group by 1;
+select mention_type, count(*) total, count(person_id)+count(work_id)+count(theater_id) linked,
+ sum(case when coalesce(person_id::varchar,work_id::varchar,theater_id::varchar) is null and candidates_n>1 then 1 else 0 end) tied,
+ sum(case when coalesce(person_id::varchar,work_id::varchar,theater_id::varchar) is null and coalesce(candidates_n,0)=0 then 1 else 0 end) no_cand
+from research.review_mention group by 1 order by 2 desc;
+select count(*), count(performer_person_id), sum(case when date_undate is null then 1 else 0 end) from research.review_assertion;
+```
+
+Result: research.event 36,262 across 23 seasons (1890-91..1912-13): 24,426 performed, 8,959 no_performance, 2,877 not_captured (synthesized gaps; 133-501 per season to 1903-04, 44 in 1904-05, 0-5 after; 1894-95 highest at 501). No event lacks a date; date_confidence verified 33,293 / synthesized_gap 2,877 / corrected_manual 79 / no_weekday 13. Only not_captured rows lack printed_page_number. Performed events with no receipts: 3,037 (1890-91 and 1891-92 print none; 9-103 per season after, rising in later seasons); 123 performed events have no performance row. Staff lists (person_appearance 24,949) cover 1890-91..1911-12 only; 1912-13 has Repertoire, SeasonStats and SeasonReview only. Source kinds absent by season: SeasonReview 1898-99 (permanent: issue truncated), 1909-10, 1911-12; BalletProductions 1905-06, 1906-07; Graduates 1907-08; SeasonStats 1890-91, 1905-06. research.person 2,712 (174 with QID; 1911-12 newcomers 100, 0 with QID). research.work 3,109: drama 2,402, opera 331, ballet 256, operetta 43, concert 11, no art form 66 (507 performances). person_candidate 10 pending / 10 rejected. Review mentions: person 21,932 (20,020 linked, 1,813 tied), work 3,741 (3,091 linked, 463 no candidate), role 1,130 (0 linked, 352 tied), theater 588 (116 linked), dance_number 140 (0). Review assertions 2,691, 2,536 with performer, 1,988 undated. Season totals check: city-level gaps before classification range 0-4% of printed receipts (largest 1909-10 Moscow +107 events / +3.95%); their explanations are in outcome_ledger.csv (297 rows: open 18, yearbook_own 155, corrected 61, excluded_by_yearbook 50, classification 24, comparison_rule 11, counted from the CSV).
+
+## 2026-11-27 — Correction to the entry above: reconciliation ledger outcome counts
+
+Not a database query: recounted `docs/eval/reconciliation/outcome_ledger.csv` with Python's csv module. The entry above mis-added them.
+
+Result: 297 rows: yearbook_own 135, corrected 60, excluded_by_yearbook 50, classification 24, open 17, comparison_rule 11. The 17 open: 1893-94-09, 1896-97-08, 1897-98-09, 1898-99-05, 1901-02-04/06/07/09, 1902-03-09/10, 1903-04-08, 1906-07-08/14, 1908-09-08/10, 1909-10-13, 1911-12-13.
+
+## 2026-11-27 — Re-checking items for the new known_issues.md status index
+
+```sql
+select person_id, display_name, first_attested_season, last_attested_season from research.person where canonical_family_name like 'Зандинъ%';
+select canonical_title, art_form, appearance_count from research.work where canonical_title like 'Гибель Фауста%';
+select e.season, p.discipline, p.company, count(*), min(e.date), max(e.date) from research.event e join research.theater t using(theater_id) join research.performance p using(event_id)
+ where t.canonical_name like 'Михайлов%' and e.receipts_total_kopecks is null and e.event_status='performed' and e.season>='1907-08'
+ and e.date >= (substr(e.season,1,2)||substr(e.season,6,2)||'-03-20') group by 1,2,3 order by 1,2,3;
+select count(*) from analysis.person_entry_credit where regexp_matches(category_credit_count_clean::varchar, '\.$');
+select count(*) pending from entities.person_candidate where status='pending';
+select count(*), count(work_id) from research.review_assertion;
+select count(*), count(work_id) from research.review_dance;
+select canonical_title, appearance_count from research.work where canonical_title in ('Эвника','Евника','Ѳемида и Пелей','Ѳетида и Пелей');
+select count(*) from information_schema.tables where table_schema='research' and table_name='production_list_entry';
+```
+
+Result: Зандинъ still two records (Ивановичъ 1906-07..1909-10, Павловичъ 1910-11..1911-12). «Гибель Фауста» art_form NULL, 14. Михайловскій late-season runs without receipts: Moscow Art Theatre labelled in 1908-09 (46), 1909-10 (35), 1910-11 (45), 1911-12 (59), 1912-13 (52); 1907-08's 38 are «visiting Russian drama troupe»; the 2026-10-15 lead is closed. category_credit_count_clean ending in a period: 135. person_candidate pending 10. Review assertions with a work 1,903 / 2,691 (X/Y variants not applied); review_dance with a ballet 629 / 927. Эвника 13 and Евника 5 still separate works; Ѳетида и Пелей 1 (Ѳемида gone). No production_list_entry table (rename not done). A Пахомова 1904-05 credit check failed on a join error and was not retried (index marks it not rechecked).

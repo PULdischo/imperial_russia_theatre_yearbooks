@@ -24,7 +24,145 @@ goal is catching and triaging them cheaply every run, not eliminating them.
 - **needs source check** — plausibly a real model error, but not confirmed
   against the scanned page yet
 
-## Status index (as of 2026-10-18)
+## Status index (as of 2026-11-27)
+
+The one current list of what is still open, across every tracker. Each item says where its detail lives. Rebuilt
+2026-11-27 from: the 2026-10-18 index (kept below, marked superseded, for its detail), the entries added since (#156-#164
+and the unnumbered ones), `docs/research_layer_review_2026-11-03.md` (OUTSTANDING), `docs/eval/review_link_drift_2026-11-24/decisions.md`
+(Outstanding), `docs/eval/reconciliation/outcome_ledger.csv`, `docs/eval/new_season_checklist.md`,
+`docs/eval/person_merge_candidates_batch.md` and the session pause notes. Items marked *(checked 11-27)* were re-queried
+against `outputs/full_run` that day (`docs/query_log.md`, 2026-11-27). Anything in the 2026-10-18 index not carried here
+is closed. **Keep this list current: when an item closes, delete it here; when one opens, add it here as well as in its
+own entry.**
+
+### 1. Waiting on RG's decision (one at a time, evidence first)
+
+- **Review names, the largest item.** 1,813 person mentions still tied between candidates *(checked 11-27)*. Order:
+  (a) re-run G1-G3 on the remaining ties with the full candidate lists (decisions.md item 11; e.g. 90 Moscow «Ѳедорова»
+  from 1900-01 on with matching ordinals); (b) surname-by-season groups, largest first (Павлова 1902-03 SP, Грекова and
+  Николаева 1901-02 Moscow, Эрлеръ 1905-06 SP); (c) the 235 with no candidate that season and 33 other-city only;
+  (d) about 150 pupil mentions linked to an older namesake (`docs/eval/review_pupil_mentions.csv`). Detail:
+  research_layer_review_2026-11-03.md, item 1.
+- **Review-link leftovers** (decisions.md, Outstanding 2026-11-25): 9 relinks held for scan checks (Петровъ x6,
+  Смирнова x2, «Федорову 2»); 3 credits that disagree with a scan-verified mention (Головина 1904-05, Васильева 1905-06,
+  Герберомъ 1894-95); «помощникомъ балетмейстера г. Ширяевымъ» 1902-03 unresolved; «г. Іогансонъ» 1895-96 unidentified;
+  4 roster-credit links failing a same-season test (Крюгеръ and Никитина 1902-03 are a quoted 1890 cast, so likely
+  unlink + list; Орловъ 1901-02; Федоровъ 1904-05).
+- **Person merges** (person_merge_candidates_batch.md): 1911-12 Group A look-first (Чагинъ, Шарыпинъ, Кассанъ, Кузнецовъ
+  2-й, Смирновъ, Шредеръ), Group C (7), Group D (Волчокъ/Волковъ, Свѣтинская/Снѣжинская, Мосолова, Булгаковъ, Егорова
+  link), Group E (112 newcomers, unchecked); Ивановъ graduate vs Ивановскій / Ивановъ 5-й (p. 94); Петровъ Леонидъ vs
+  Мяздриковъ «(по сценѣ Петровъ)»; the 6 entries added 2026-11-24 (Кирхгеймъ, Карлова, Померанцевъ, Егорова
+  0eea687d/28cd3752, Сергѣевъ 1-й, Гамлійзовскій); Спрышинская (three records). Also `entities.person_candidate` 10
+  pending; #132 Зандинъ Михаилъ still two records, Ивановичъ 1906-07..1909-10 and Павловичъ 1910-11..1911-12 *(checked
+  11-27)*. Rule: both scans zoomed before asking; merges batched (person-merge-batch-at-end).
+- **#159 review statements and works** (entry #159, PAUSED 2026-10-26 lists): the deferred choice on statements without
+  a work, variants X / Y (still 1,903 of 2,691 statements with a work *(checked 11-27)*; re-test on a copy before
+  applying); follow-ups (a) Чекетти as Пивія 1900-01, (c) Плессюкъ as людоѣдка 1905-06, (d) spelled-out «воспитанница»
+  not an honorific, (e) «г. Л. Ивановъ» on Лариса, (f) «г-жи Левенсонъ» (19, genuinely ambiguous), (g) pupil repoints
+  to spot-check; worklist items Le Jardin animé / Корсаръ, Дочь Гудулы / Эсмеральда, Milon's 1855 «Донъ-Кихотъ»,
+  quoted «маркитантки» auto-linked to Маркитантка; duplicate works Эвника (13) / Евника (5) still separate *(checked
+  11-27)*; divertissement spelling pair; rename `research.production` -> `production_list_entry` (not done *(checked
+  11-27)*); production worksheets per ballet (RG wants them); Карменъ as a ballet (tabled).
+- **Event and work structure, to decide together** (#141 and the 2026-10-12 notes): the 7 annotations that name works;
+  a "gala" or "mixed" category for whole events; connecting productions without equating them (the two «Млада»,
+  «Волшебное зеркало» SP/Moscow; a "canonical work" level under its own name); parent links across languages
+  («4-ter Akt aus der Oper Die Hugenotten», «4-o atto di op. Gli Ugonotti»); concerts as works, kept "for now" and to
+  be revisited for all seasons together (1912-13 ruling).
+- **Art forms left open:** «Гибель Фауста» [драм. лег.] (14 performances, art form blank *(checked 11-27)*, waits for a
+  review); «Апоѳеозъ, Кантата.» 19 Feb 1911, one item or two; 1912-13 Александринскій «Избраніе», held separate until the
+  1912-13 drama list is scanned.
+- **Reconciliation:** 17 ledger rows still `open` (1893-94-09, 1896-97-08, 1897-98-09, 1898-99-05, 1901-02-04/06/07/09,
+  1902-03-09/10, 1903-04-08, 1906-07-08/14, 1908-09-08/10, 1909-10-13, 1911-12-13); 135 `yearbook_own` rows stay
+  provisional until RG reads the source; 1912-13 ballet receipts Moscow −999.40 / SP −1.00 and the Moscow opera
+  full-house lead (1912-13-06). The 1897-98 Moscow ballet +2,743.80 detail is in the superseded index below.
+
+### 2. Needs new scans or the physical volume
+
+- **1913 UMich book (V+VI+VII+Supplement, due 12/11):** VII annual indexes first; 1912-13 staff lists, ballet lists and
+  Theatre School pages; V/VI reviews and features; 1912-13 jubilees and obituaries. Unlocks the 1912-13 checklist steps
+  C6, C8, D4-D6, E1-E6 (new_season_checklist.md). Plan: scanning-paused-2026-11-25 note.
+- **1912 Supplement re-shoots** pp. 130, 132, 134 (right columns cut off; verify those columns only; book due 12/22).
+- **1911-12 season reviews** (not in `pdf/Reviews_Season/` *(checked 11-27)*): settle ledger 1911-12-13 (SP list dates
+  26-29 Dec, 1 Jan, 19 Feb; Moscow count 53), the Маріинскій charity evening of 28 Jan 1912, checklist D6.
+- **1912 VII jubilee and obituary sections**, unscanned.
+- **Absent from the database and from `pdf/`; confirm whether the volumes print them** *(checked 11-27)*: season reviews
+  1909-10; ballet productions lists 1905-06 and 1906-07; Graduates 1907-08. (Permanent, not gaps: 1898-99 reviews, the
+  issue was truncated; 1905-06 has no totals page; 1890-91 has no totals page in the data.)
+- **Physical volume:** #151 the 92 fold-hidden receipts cells (Binding Fold Log); #151 fu 12 Малый 6 Jan 1893 «1?80»;
+  #115 Пахита 1897-98 p012 act digit; #93 1908-09 p009 «15?2 р. 34 к.»; #151 fu 21 1899-00 p024 2839/2859; #118
+  Паяда/Наяда, Ваядерка/Баядерка, Пригалъ/Привалъ; and the open ledger rows that turn on a broken digit.
+- **Opera reviews with dance content:** priority list in `docs/review_scan_priorities.md` (1903-04 SP and Moscow opera
+  first, both Princeton).
+- **Other copies:** `docs/other_copy_checks.md` (HathiTrust, later; never a detour). Requests outstanding: 1911 I,
+  1914 I + IV, 1914-15; Princeton copies 1910 I-V, 1912 I-VII (no deadline).
+
+### 3. Workable now (Claude prepares, RG approves before anything changes)
+
+- **Wikidata for new people (checklist E5):** 1911-12 newcomers 100, none with a QID; 1909-10 55 (3), 1910-11 43 (1)
+  *(checked 11-27)*.
+- **Gold set out of step:** roster score 76.4% because the gold predates later rulings; updating
+  `docs/eval/gold/_build_roster.py` restores it as a regression check.
+- **Honours sweep:** missed «Заслуженн… артист…» corpus-wide (only seven holders checked, 2026-11-04).
+- **Review layer resume list** (2026-11-25 pause): Fokine works' `art_form_basis` prefix; re-measure the credit reader
+  (~110 wrong-work credits estimated; sample `docs/eval/review_credit_work_sample_2026-11-25.csv`); opera names absent
+  from the mention layer (matcher reads ballet reviews only); «Chopeniana» 1913-14 unlinked; alias case-sensitivity
+  check of `work_title_aliases.csv`; logged carry-over errors (Moscow 1903-04 f. 201, 1905-06 f. 231, «La Courante»
+  1899-00 f. 104); 352 role mentions unlinked (lower priority).
+- **Review dates in the flat-top-3 face:** every date with a 5 in the 1904-05 and 1905-06 Moscow ballet reviews, compared
+  with the Repertoire.
+- **«Щимана»** music credit (1900-01, «Волшебный башмачекъ»): waits on the Шиманъ identity (#133).
+- **Small, scan-workable:** `category_credit_count_clean` keeps a final period on 135 values *(checked 11-27)*;
+  «Джентльменъ» third spelling (20) not read; duplicate «Ночное, лѣтняя сцена» rows in `art_form_by_title.csv`;
+  1904-05 p032 «Ou n'oublie pas» splits from «On n'oublie pas»; Большакова 2-я tenure missing «(»; #25 Пахомова 1904-05
+  «въ 11 операхъ—5¹» (51), not rechecked 11-27; 41 divertissements with no company, cells not read; 4 Feb 1909 Большой
+  and Малый mornings; «учебныхъ аведеній» p033; #150 credit-summary residue (203 rows, 33 unbalanced parentheses; no
+  research table affected); #30 the 40 parenthesised aliases in name fields; #40/#42 start-date conflicts with no avenue
+  left (Тивольская, Леонтьевъ, Поливановъ).
+
+### 4. Parked by RG (do not raise unprompted)
+
+- Dramas and plays with dancers (planned investigation; leads entry at the end of this file).
+- Genre carried in `performance_title` (~76 + 138) and possible invented genres (4 titles); a normalised genre level.
+- Display-name audit, once every season and list is loaded (includes the Егорова 0eea687d patronymic leftover).
+- 17 ballet works with no Repertoire performance (2026-11-16).
+- Typeface register; Gregorian dates; «Горина», «Брантъ»; ~620 old-cast names; tagging guest appearances.
+- 1911-12 opera/drama list vs Repertoire date comparison (RG "Not now", 2026-11-12); opera/drama works lists are
+  archive only.
+- Small non-ballet receipt gaps (low priority).
+- Methodology never decided: #50/#51 row-boundary detection; #4 punctuation convention; #21 eval compares roster rows
+  by position; #53 majority-vote canonical fields; `entities.work_genre_candidate` open by design.
+
+### 5. For Andy at the next publish
+
+- `research_dataset.sqlite` was rebuilt locally on 2026-11-26 and matches production, but it is not republished: the
+  published copy lacks every change since the last publish (review drift rulings, «g.» fix, 1911-12 and 1912-13
+  seasons, review-layer rebuilds). Run `pipeline/merge_datasette_metadata.py` (event table sort).
+  `review_credit` credit_ids were renumbered by the «g.» rebuild.
+
+### 6. Housekeeping
+
+- 2026-11-27: the 1,552 iCloud sync copies `* 2.json` in `outputs/full_run/raw/` (all dated 2026-09-11; each older than
+  or identical to its original, none orphaned), plus `usage_log 2.csv` and three `* 2.csv` in `outputs/full_run/parsed/`,
+  moved to the macOS Trash folder `yearbooks_sync_copies_2026-11-27` (recoverable until the Trash is emptied).
+- Backups: about 51 GB in `outputs/` (215 `full_run_pre_promote_backup_*` folders, 25 GB; `outputs/backups/` 142 folders,
+  15 GB; ~110 `.duckdb` copies in `outputs/full_run/`, 9 GB; 17 `db_backup_*`, 1.9 GB). 2026-11-27 (RG: "Yes, move them"):
+  456 items, 47 GB, moved to the Trash folder `yearbooks_old_backups_2026-11-27` (same paths under `outputs/`). Kept:
+  everything dated 2026-11-12 or later, the pre-promotion backups for 1908-09, 1909-10, 1910-11, 1911-12, 1912-13 and the
+  2026-09-19 baseline. Space is freed only once RG empties the Trash.
+
+### Closed since the 2026-10-18 index (for the record)
+
+- Moscow Art Theatre spring tours at the Михайловскій: every run 1908-09 to 1912-13 carries company «Moscow Art
+  Theatre» *(checked 11-27)*.
+- «г. М. Петипа» as Королева 1902-03 (#159 follow-up b): linked to Марія by the role rule, 2026-11-07.
+- Every season with a totals page reconciled (1890-91..1912-13); 1905-06 too.
+
+---
+
+## Superseded status index (as of 2026-10-18)
+
+**Superseded by the 2026-11-27 index above;** kept unchanged for its detail. Do not update it.
+
 
 The `Status:` lines on the early entries (roughly #1-#67) were written when
 each issue was found and were mostly not updated; the closures are recorded in
