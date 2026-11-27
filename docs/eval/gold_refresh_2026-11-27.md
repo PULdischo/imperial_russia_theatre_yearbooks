@@ -160,3 +160,12 @@ stops `_repair_musicians_stray_heading` doubling the segment. The 1901-02 blank 
 `_HEADING_PATH_RESTORE_FIXES` entry in `pipeline/parse_and_validate.py` (removed). Production = tested
 copy; vs backup `outputs/backups/musicians_msk_lost_headings_2026-11-27/` only the 127 rows differ;
 0 shift blocks. Still open: 1890-91 p002 two rows, 1900-01 nesting, misfiled Малый institutions.
+
+**Misfiled Малый rows FIXED 2026-11-27 (RG "Yes, fix those"):** `docs/eval/fix_musicians_msk_maly_institution_2026-11-27.py`,
+56 rows, every page read on the scan. Institution «Императорское С.-Петербургское Театральное Училище»
+(1894-95 p002 6, 1896-97 p002 3, 1899-00 p003 5, 1905-06 p004 15, 1907-08 p003 12) and «Оркестры.»
+(1898-99 p004 15, Nos. 21-35 of the Малый list) -> «Оркестръ Малаго театра.»; heading_path reduced to the
+sub-heading as the season's other Малый page writes it. city was already Moscow (from the manifest).
+Production = tested copy; vs backup `outputs/backups/musicians_msk_maly_institution_2026-11-27/` only those
+56 rows differ; 0 shift blocks. Same wrong school institution also on musicians_1890-91_SP_p002 (12
+ballet-orchestra rows) — not in this fix.
