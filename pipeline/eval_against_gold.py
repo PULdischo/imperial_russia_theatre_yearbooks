@@ -19,6 +19,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import re
 from collections import defaultdict
 from pathlib import Path
 import csv
@@ -33,6 +34,29 @@ def load(path: Path) -> list[dict]:
     if not path.exists():
         return []
     return list(csv.DictReader(open(path, encoding="utf-8")))
+
+
+def norm_tenure(s: str) -> str:
+    """Compare tenure notes without their brackets and stops (RG, 2026-11-27,
+    option C). The gold holds the print verbatim -- «(съ 24 мая 1847 г.).» --
+    but the stored rows carry the brackets three ways (none, both, closing
+    only; docs/eval/gold_refresh_2026-11-27.md), a punctuation question kept
+    out of the score. A lost bracket is counted separately (see main())."""
+    s = s.replace("(", "").replace(")", "")
+    s = re.sub(r"\.{2,}", ".", s)
+    s = re.sub(r"\.\s*;", ";", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s.rstrip(".").strip()
+
+
+def norm_heading(s: str) -> str:
+    """Heading segments compared without a printed end colon or stop
+    («Артистки:» = «Артистки»): stored rows keep them on some lists and not
+    on others (2026-11-27, same reasoning as norm_tenure)."""
+    return " / ".join(seg.strip().rstrip(":.").strip() for seg in s.split(" / "))
+
+
+FIELD_NORMALIZERS = {"tenure_note_text": norm_tenure, "heading_path": norm_heading}
 
 
 def by_page(rows: list[dict]) -> dict[str, list[dict]]:
@@ -65,8 +89,9 @@ def eval_roster(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[str]]:
         for g, p in zip(g_rows, p_rows):
             for f in ROSTER_FIELDS:
                 gv, pv = g.get(f, "").strip(), p.get(f, "").strip()
+                norm = FIELD_NORMALIZERS.get(f, lambda s: s)
                 page_total += 1
-                if gv == pv:
+                if norm(gv) == norm(pv):
                     page_matched += 1
                 else:
                     lines.append(f"    [{page_id}/{g.get('family_name','?')}] {f}: gold={gv!r} pred={pv!r}")
@@ -76,6 +101,18 @@ def eval_roster(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[str]]:
         matched += page_matched
 
     return matched, total, lines
+
+
+def count_lopsided_tenure(parsed_dir: Path) -> int:
+    """Rows whose tenure note has a ")" with no "(" before it -- the bracket
+    defect norm_tenure() hides from the score, so it is watched here instead."""
+    n = 0
+    for r in load(parsed_dir / "person_entry.csv"):
+        t = r.get("tenure_note_text", "")
+        i = t.find(")")
+        if i != -1 and "(" not in t[:i]:
+            n += 1
+    return n
 
 
 def eval_repertoire(gold_dir: Path, parsed_dir: Path) -> tuple[int, int, list[str]]:
@@ -146,6 +183,9 @@ def main():
     report.append(f"\nREPERTOIRE TOTAL: {rep_matched}/{rep_total} "
                    f"({100*rep_matched/rep_total:.1f}%)" if rep_total else "REPERTOIRE: no gold rows found")
     report.append(f"\n=== GRAND TOTAL: {matched}/{total} ({100*matched/total:.1f}%) ===")
+    lopsided = count_lopsided_tenure(args.parsed_dir)
+    report.append(f"\nTenure notes with a closing bracket but no opening one (whole run, "
+                  f"not scored above): {lopsided}")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text("\n".join(report), encoding="utf-8")
@@ -153,6 +193,7 @@ def main():
     print(f"roster: {roster_matched}/{roster_total} ({100*roster_matched/roster_total:.1f}%)" if roster_total else "roster: n/a")
     print(f"repertoire: {rep_matched}/{rep_total} ({100*rep_matched/rep_total:.1f}%)" if rep_total else "repertoire: n/a")
     print(f"grand total: {matched}/{total} ({100*matched/total:.1f}%)")
+    print(f"tenure notes missing an opening bracket (whole run, not scored): {lopsided}")
     print(f"full report -> {args.out}")
 
 

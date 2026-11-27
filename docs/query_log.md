@@ -29484,3 +29484,8 @@ select count(*) from information_schema.tables where table_schema='research' and
 ```
 
 Result: Зандинъ still two records (Ивановичъ 1906-07..1909-10, Павловичъ 1910-11..1911-12). «Гибель Фауста» art_form NULL, 14. Михайловскій late-season runs without receipts: Moscow Art Theatre labelled in 1908-09 (46), 1909-10 (35), 1910-11 (45), 1911-12 (59), 1912-13 (52); 1907-08's 38 are «visiting Russian drama troupe»; the 2026-10-15 lead is closed. category_credit_count_clean ending in a period: 135. person_candidate pending 10. Review assertions with a work 1,903 / 2,691 (X/Y variants not applied); review_dance with a ballet 629 / 927. Эвника 13 and Евника 5 still separate works; Ѳетида и Пелей 1 (Ѳемида gone). No production_list_entry table (rename not done). A Пахомова 1904-05 credit check failed on a join error and was not retried (index marks it not rechecked).
+
+## 2026-11-27 — Staff-list follow-ups: Wikidata coverage of research.person
+Query (outputs/full_run/imperial_theaters.duckdb): `select count(*), count(wikidata_qid) from research.person`, grouped by `person_source` and by `first_attested_season` (1908-09 on).
+Result: 2,712 people, 174 with a QID. Roster 2,614 / 98; production_list 86 / 76; review 12 / 0. First attested 1908-09: 178 / 4; 1909-10: 55 / 3; 1910-11: 43 / 1; 1911-12: 100 / 0.
+Also checked: docs/eval/run_history.csv prepublish_check_2026-11-04 has roster gold 76.4 (was 82.1), put down to the gold set being older than later rulings (#137 heading prefixes, «(съ … г.).» tenure notes, service_class stop).
