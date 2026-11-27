@@ -29461,11 +29461,36 @@ select count(*), count(performer_person_id), sum(case when date_undate is null t
 
 Result: research.event 36,262 across 23 seasons (1890-91..1912-13): 24,426 performed, 8,959 no_performance, 2,877 not_captured (synthesized gaps; 133-501 per season to 1903-04, 44 in 1904-05, 0-5 after; 1894-95 highest at 501). No event lacks a date; date_confidence verified 33,293 / synthesized_gap 2,877 / corrected_manual 79 / no_weekday 13. Only not_captured rows lack printed_page_number. Performed events with no receipts: 3,037 (1890-91 and 1891-92 print none; 9-103 per season after, rising in later seasons); 123 performed events have no performance row. Staff lists (person_appearance 24,949) cover 1890-91..1911-12 only; 1912-13 has Repertoire, SeasonStats and SeasonReview only. Source kinds absent by season: SeasonReview 1898-99 (permanent: issue truncated), 1909-10, 1911-12; BalletProductions 1905-06, 1906-07; Graduates 1907-08; SeasonStats 1890-91, 1905-06. research.person 2,712 (174 with QID; 1911-12 newcomers 100, 0 with QID). research.work 3,109: drama 2,402, opera 331, ballet 256, operetta 43, concert 11, no art form 66 (507 performances). person_candidate 10 pending / 10 rejected. Review mentions: person 21,932 (20,020 linked, 1,813 tied), work 3,741 (3,091 linked, 463 no candidate), role 1,130 (0 linked, 352 tied), theater 588 (116 linked), dance_number 140 (0). Review assertions 2,691, 2,536 with performer, 1,988 undated. Season totals check: city-level gaps before classification range 0-4% of printed receipts (largest 1909-10 Moscow +107 events / +3.95%); their explanations are in outcome_ledger.csv (297 rows: open 18, yearbook_own 155, corrected 61, excluded_by_yearbook 50, classification 24, comparison_rule 11, counted from the CSV).
 
+## 2026-11-27 — How events, performances, works and productions link (explainer for RG)
+
+```sql
+-- table shapes
+SELECT column_name FROM information_schema.columns WHERE table_schema='research' AND table_name IN ('event','performance','work','production','production_date');
+SELECT count(*) FROM research.event;            -- and performance, work, production, production_date
+-- worked example: Спящая красавица
+SELECT work_id, canonical_title, canonical_genre, art_form, entry_kind, appearance_count, excerpt_of_work_id FROM research.work WHERE canonical_title LIKE 'Спящая красавица%';
+SELECT p.production_id, p.season, p.city, p.list_title, p.is_premiere, p.printed_total, p.n_dates, p.work_basis FROM research.production p JOIN research.work w USING(work_id) WHERE w.canonical_title LIKE 'Спящая красавица%' ORDER BY season, city LIMIT 6;
+SELECT d.date, d.note, d.event_id, d.performance_id, d.match_note FROM research.production_date d JOIN research.production p USING(production_id) JOIN research.work w USING(work_id) WHERE w.canonical_title LIKE 'Спящая красавица%' AND p.season='1890-91' ORDER BY d.date LIMIT 4;
+SELECT e.*, pf.* FROM research.event e JOIN research.performance pf USING(event_id) WHERE e.event_id='repertoire_1890-91_pair006__s062';
+SELECT match_note LIKE 'matched%' AS matched, count(*) FROM research.production_date GROUP BY 1;
+SELECT count(*) works, count(excerpt_of_work_id) excerpts FROM research.work WHERE entry_kind='work';
+SELECT n_works, count(*) FROM research.event WHERE event_status='performed' GROUP BY 1;
+-- mixed-bill example with a ballet excerpt
+SELECT ... FROM research.performance pf JOIN research.work w USING(work_id) LEFT JOIN research.work par ON par.work_id=w.excerpt_of_work_id WHERE event_id='repertoire_1894-95_pair016__s026';
+```
+
+Result: event 36,262; performance 33,448; work 3,109 (3,053 entry_kind='work', 379 of them excerpts); production 664; production_date 2,503 (2,480 matched to a Repertoire event, 23 not). Спящая красавица = one work (221 appearances), one production row per season×city list (1890-91 SP: 21 printed, 21 dates, all matched); 3 Oct 1890 event = one performance, receipts NULL. Performed events by n_works: 0=123, 1=16,740, 2=6,372, 3=1,053, 4=94, 5=31, 6=12, 7=1. Example mixed bill: Moscow 17 Apr 1895, «Паяцы» (Moscow opera) + «2-я карт. 3-го д. балета Кипрская статуя» (Moscow ballet, excerpt of «Кипрская статуя»), 879.47 руб.
+
 ## 2026-11-27 — Correction to the entry above: reconciliation ledger outcome counts
 
 Not a database query: recounted `docs/eval/reconciliation/outcome_ledger.csv` with Python's csv module. The entry above mis-added them.
 
 Result: 297 rows: yearbook_own 135, corrected 60, excluded_by_yearbook 50, classification 24, open 17, comparison_rule 11. The 17 open: 1893-94-09, 1896-97-08, 1897-98-09, 1898-99-05, 1901-02-04/06/07/09, 1902-03-09/10, 1903-04-08, 1906-07-08/14, 1908-09-08/10, 1909-10-13, 1911-12-13.
+
+## 2026-11-27 — Staff-list follow-ups: Wikidata coverage of research.person
+Query (outputs/full_run/imperial_theaters.duckdb): `select count(*), count(wikidata_qid) from research.person`, grouped by `person_source` and by `first_attested_season` (1908-09 on).
+Result: 2,712 people, 174 with a QID. Roster 2,614 / 98; production_list 86 / 76; review 12 / 0. First attested 1908-09: 178 / 4; 1909-10: 55 / 3; 1910-11: 43 / 1; 1911-12: 100 / 0.
+Also checked: docs/eval/run_history.csv prepublish_check_2026-11-04 has roster gold 76.4 (was 82.1), put down to the gold set being older than later rulings (#137 heading prefixes, «(съ … г.).» tenure notes, service_class stop).
 
 ## 2026-11-27 — Re-checking items for the new known_issues.md status index
 
@@ -29484,11 +29509,6 @@ select count(*) from information_schema.tables where table_schema='research' and
 ```
 
 Result: Зандинъ still two records (Ивановичъ 1906-07..1909-10, Павловичъ 1910-11..1911-12). «Гибель Фауста» art_form NULL, 14. Михайловскій late-season runs without receipts: Moscow Art Theatre labelled in 1908-09 (46), 1909-10 (35), 1910-11 (45), 1911-12 (59), 1912-13 (52); 1907-08's 38 are «visiting Russian drama troupe»; the 2026-10-15 lead is closed. category_credit_count_clean ending in a period: 135. person_candidate pending 10. Review assertions with a work 1,903 / 2,691 (X/Y variants not applied); review_dance with a ballet 629 / 927. Эвника 13 and Евника 5 still separate works; Ѳетида и Пелей 1 (Ѳемида gone). No production_list_entry table (rename not done). A Пахомова 1904-05 credit check failed on a join error and was not retried (index marks it not rechecked).
-
-## 2026-11-27 — Staff-list follow-ups: Wikidata coverage of research.person
-Query (outputs/full_run/imperial_theaters.duckdb): `select count(*), count(wikidata_qid) from research.person`, grouped by `person_source` and by `first_attested_season` (1908-09 on).
-Result: 2,712 people, 174 with a QID. Roster 2,614 / 98; production_list 86 / 76; review 12 / 0. First attested 1908-09: 178 / 4; 1909-10: 55 / 3; 1910-11: 43 / 1; 1911-12: 100 / 0.
-Also checked: docs/eval/run_history.csv prepublish_check_2026-11-04 has roster gold 76.4 (was 82.1), put down to the gold set being older than later rulings (#137 heading prefixes, «(съ … г.).» tenure notes, service_class stop).
 
 ## 2026-11-27 — Review names: G1-G3 re-run on the remaining ties with full candidate lists (status index item 1a)
 
@@ -29577,3 +29597,44 @@ and replaced; shared outputs/reviews/merged_full/review_block.csv corrected (bac
 outputs/reviews/_backup_before_mascgen_2026-11-27/) and identical to the rebuilt copy; mentions CSVs updated; sqlite rebuilt
 locally (not republished: Andy). Found on the way, logged in the status index: Коралли → Каралли and «Леоновой» → Леоновъ
 (1906-07 SP p001); 16 more words doubled across a line break.
+
+## 2026-11-27 — What entity types (tables) does the research layer contain? (for conference abstract title)
+
+```sql
+SELECT table_name FROM information_schema.tables
+WHERE table_schema='research' AND table_type='BASE TABLE' ORDER BY 1;
+-- then SELECT count(*) FROM research.<each table>;
+SELECT table_name FROM information_schema.tables
+WHERE table_schema='research' AND table_type='VIEW' ORDER BY 1;
+SELECT column_name FROM information_schema.columns
+WHERE table_schema='research' AND table_name IN ('person_appearance','production');
+```
+
+Result: 33 base tables + 2 views (events_with_dancers, events_with_dancers_performance).
+Core: theater 6, work 3,109, person 2,712, event 36,262, performance 33,448,
+person_appearance 24,949, production 664, source_page 2,981. Person-related:
+service_period 24,602, person_tenure 3,185, person_tenure_note 33, person_death 319,
+person_assignment 16, person_performance_tally 37,655, jubilee_obituary 770.
+Ballet lists: production_credit 1,682, production_date 2,503, production_work 663, set_design 61.
+Reviews: review_page 1,079, review_passage 4,729, review_mention 27,530, review_assertion 2,691,
+review_credit 2,420, review_dance 927, review_dance_performer 3,141, review_dance_composer 67,
+review_solo 96. Season stats: season_stat_page 21, _line 322, _footnote 125, _check 42,
+_gap 297, _gap_event 594.
+
+## 2026-11-27 — Historical-cast audit (RG: "make sure historical casts don't get mixed into the contemporary casts"): candidates
+
+Read-only on a copy (outputs/rebuild_mascgen_2026-11-27/imperial_theaters.duckdb; production was locked by another
+session's build_entities.py). Script: docs/eval/historical_cast_audit_2026-11-27/detect.py.
+
+```sql
+select block_id, page_id, block_index, block_type, coalesce(text, caption_text, '') from raw.review_block order by page_id, block_index;
+select m.block_id, m.surface, m.person_id, p.display_name from research.review_mention m join research.person p using(person_id) where m.mention_type='person';
+-- Python: blocks not in review_historical_passages.csv, not figures, with >=1 linked person mention, and any of
+-- S1 old-cast wording w/o current wording after (oldcast_check OLD/NOW, lookback 3 blocks); S2 a year < season start - 1
+-- in this or the 2 previous blocks; S3 journal/chronicler quotation; S4 directly after a listed historical block
+```
+
+Result: 161 candidate blocks, 1,598 linked person mentions in them (S2 alone 65, S3 alone 36, S1+S2 28, S1 alone 12, others 20);
+every season 1891-92..1913-14 except 1898-99/1899-00/1909-10/1911-12/1912-13. Why the 2026-11-03 sweep missed the 1895-96
+«Конекъ» 1864 cast: it required the year inside the block; the year sits in the previous block. Candidates are being read
+in context (three read-only agents, by season range) before anything is proposed.
