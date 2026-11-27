@@ -32,9 +32,19 @@ All scan reads are by Claude, from `docs/eval/gold/images/` (checked by Claude, 
 
 ## The 40 remaining mismatches are data errors (NOT fixed; for RG)
 
-1. **Musicians 1890-91 SP:** «Капельмейстеръ военной музыки» (Оглоблинъ) and all 31
-   «Музыканты» are printed under «Оперный оркестръ», but stored without it (Направникъ and
-   Кучера have it). 32 fields. Not checked whether other seasons do the same.
+1. **FIXED 2026-11-27 (RG "yes, promote both").** **Musicians 1890-91 SP:** «Капельмейстеръ
+   военной музыки» (Оглоблинъ) and all 31 «Музыканты» are printed under «Оперный оркестръ»,
+   but stored without it (Направникъ and Кучера have it). 32 fields. The opera list runs on
+   through p001 (Nos. 32-74) and p002 (Nos. 75-103, then «Балетный оркестръ»), and RG's
+   2026-10-02 rule makes continuation pages follow p000, so all 104 rows were changed
+   (`docs/eval/fix_musicians_1890-91_opera_heading_2026-11-27.py`, heading_path only).
+   Tested on a copy of production; production = tested copy; against the backup
+   (`outputs/backups/musicians_1890-91_opera_heading_2026-11-27/`) only those 104 rows differ in
+   raw/analysis.person_entry and research.person_appearance; review links unchanged (20,194),
+   0 shift blocks. Roster gold 97.3 -> 99.5. Sqlite not rebuilt (Andy). Not checked: other SP
+   seasons store the opera musicians as bare «Музыканты» too; whether their scans print
+   «Оперный оркестръ» above them is open. Also seen on p002: the 12 ballet-orchestra rows have
+   institution «Императорское С.-Петербургское Театральное Училище» (series uses «Оркестры.»).
 2. **Administrators 1907-08:** «баронъ» (Кусовъ) and «графъ» (Бергъ) are missing from
    rank_or_title. The same two rows are also missing them in 1906-07; every other season has
    «баронъ, …» / «графъ, …» (the #137 convention).
