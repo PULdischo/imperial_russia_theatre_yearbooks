@@ -64,11 +64,15 @@ own entry.**
   quoted «маркитантки» auto-linked to Маркитантка; duplicate works Эвника (13) / Евника (5) still separate *(checked
   11-27)*; divertissement spelling pair; rename `research.production` -> `production_list_entry` (not done *(checked
   11-27)*); production worksheets per ballet (RG wants them); Карменъ as a ballet (tabled).
-- **Masculine genitive read as a woman (found 2026-11-27, production):** 16 links: «Л. Иванова» (Лев Ивановъ, creator)
-  → Лариса Михайловна x8, Ираида Даниловна x1, a record «Иванова» x1; «музыка А. Давидова» → Давыдова, Елизавета x4;
-  «танцовщика А. Обухова» → Обухова, Евгенія x1; «г. Какурина» → Какорина, Екатерина x1 (rerun README, "Found on the way").
 - **1864 «Конекъ-Горбунокъ» cast quoted in 1895-96 SP** (p005__b003 → p006__b002, «Составъ первыхъ исполнителей»): not in
   `review_historical_passages.csv`; its names are linked to 1890s people (e.g. «А. Богдановъ» → Богданова, Александра).
+- **Creator wording among other matcher links (found 2026-11-27):** the matcher ranks a living listed candidate first,
+  so a dead or absent creator loses (RG: "creators can be named long after death"). Seen on 1906-07 SP p001: «Т. Готье и
+  Коралли «Жизель»» → Каралли, Вѣра (should be Jean Coralli); «Леоновой I (Діана)» → Леоновъ, Сергѣй (a man). Worth a
+  sweep of creator-wording links for a dead/absent creator among the candidates.
+- **Words doubled across a line break in the review text (found 2026-11-27):** 16 more like the 1905-06 «Иванова» fix
+  (e.g. «Горская,\nГорская» 1899-00 SP p013, «Георгіевская» 1901-02 SP p005, «Костровской» / «Хомякова» 1903-04 Moscow
+  p013, «Либретто» 1905-06 Moscow p024); each needs a scan read (some may be genuine). Regex in docs/query_log.md 2026-11-27.
 - **Event and work structure, to decide together** (#141 and the 2026-10-12 notes): the 7 annotations that name works;
   a "gala" or "mixed" category for whole events; connecting productions without equating them (the two «Млада»,
   «Волшебное зеркало» SP/Moscow; a "canonical work" level under its own name); parent links across languages
@@ -142,7 +146,7 @@ own entry.**
 
 - `research_dataset.sqlite` was rebuilt locally on 2026-11-26 and matches production, but it is not republished: the
   published copy lacks every change since the last publish (review drift rulings, «g.» fix, 1911-12 and 1912-13
-  seasons, review-layer rebuilds, the 2026-11-27 review-name links). Run `pipeline/merge_datasette_metadata.py` (event table sort).
+  seasons, review-layer rebuilds, the 2026-11-27 review-name links and masculine-genitive fixes). Run `pipeline/merge_datasette_metadata.py` (event table sort).
   `review_credit` credit_ids were renumbered by the «g.» rebuild.
 
 ### 6. Housekeeping

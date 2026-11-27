@@ -1,0 +1,4 @@
+find,replace,scope_page_prefix,expected,evidence
+"Л. Иванова,
+Иванова, музыка","Л. Ива-
+нова, музыка",review_1905-06_SP_ballet_p006,1,"RG 2026-11-27 (""yes, this one""): f. 6 of the 1905-06 SP ballet review, «Гарлемскій тюльпанъ» 13 Nov: the print has «сочиненіе Л. Ива-» at a line end and «нова, музыка Б. Шеля» on the next line (scan-checked by Claude); the transcription doubled the name. Hyphen kept as printed (review-text convention). Removes a phantom mention linked to Иванова, Ираида Даниловна."

@@ -29546,3 +29546,34 @@ committed in f0b4007 after the last production build. person_link: 0 shift block
 since the copy, backed up to outputs/full_run/imperial_theaters.pre_g123_rerun_2026-11-27.duckdb and replaced; mentions CSVs
 copied to outputs/reviews/mentions (old ones in outputs/reviews/_backup_mentions_before_g123_rerun_2026-11-27/). After:
 person mentions linked 20,020 -> 20,194; tied 1,813 -> 1,639. research_dataset.sqlite rebuilt locally; not republished (Andy).
+
+## 2026-11-27 — Masculine genitive read as a woman: 16 review links ruled by RG and APPLIED to production
+
+Evidence: docs/eval/masculine_genitive_links_2026-11-27/evidence.md (every printing scan-checked by Claude). RG rulings, one
+group at a time: «Л. Иванова» creator credits x9 → Ивановъ, Левъ Ивановичъ ("Yes, link to Лев"); 1905-06 SP p006 doubled
+«Иванова» → text correction «Л. Ива-\nнова, музыка», hyphen kept as printed ("yes, this one"); «(А. А.) Давидова» x4 →
+Давыдовъ, А. А. 910162fe ("Yes, link them"); «танцовщика А. Обухова» 1913-14 and «г. Какурина» 1894-95 → unlinked
+("Yes, unlink both"). 15 rows to review_mention_links.csv, 1 to review_text_corrections.csv.
+
+```sql
+-- Лев Ивановъ's existing links, and every «Ивановымъ» link:
+select m.season, m.surface, m.link_method, count(*) from research.review_mention m where m.person_id='a3f51b5c-ccc8-45af-9a8c-738247cbe325' group by 1,2,3 order by 1;
+select m.season, m.surface, p.display_name, m.link_method from research.review_mention m left join research.person p using(person_id)
+ where m.mention_type='person' and m.surface like 'Иванов%мъ' order by 1;
+select printed_family_name, printed_first_name, season, city, entity_type from research.person_appearance where printed_family_name like 'Какур%' or printed_family_name like 'Какор%';
+-- review-text conventions (Python over raw.review_block text): line-break hyphen r'[а-яёѣіѳa-z]-\n[а-яёѣіѳa-z]' = 7,110;
+-- r'[а-яёѣіѳa-z]- [а-яёѣіѳ]' = 3; word repeated across a line break r'(\b[А-ЯЁ][а-яёѣіѳ]{3,})([,.]?)\n\1\b' = 17 (incl. the fixed one)
+-- after the rebuild on a copy: every table EXCEPT ALL both ways; review_mention keyed on (block_id, surface, mention_type,
+-- occurrence) because offsets shift in the corrected block; review_credit without credit_id / mention_id
+```
+
+Result: Лев Ивановъ's creator credits 1891-92..1901-02 were already his; the wrong links begin after he leaves the lists
+(d. Dec 1901). No Какуринъ on any list (Какоринъ Михаилъ, Moscow Administrators 1905-06 only). Rebuild diff: exactly the 15
+ruled person links changed, the phantom «Иванова» mention (→ Ираида Даниловна) gone, one raw.review_block / review_passage
+text; review_credit: 4 «Давидова» credits re-labelled list-credit (same person), the doubled «Иванова» credit now one (Лев);
+assertions and dance performers identical; dance composers candidate order only. Person mentions linked 20,194 → 20,191
+(−1 phantom, −2 unlinks). Production md5 checked, backed up to outputs/full_run/imperial_theaters.pre_mascgen_2026-11-27.duckdb
+and replaced; shared outputs/reviews/merged_full/review_block.csv corrected (backup in
+outputs/reviews/_backup_before_mascgen_2026-11-27/) and identical to the rebuilt copy; mentions CSVs updated; sqlite rebuilt
+locally (not republished: Andy). Found on the way, logged in the status index: Коралли → Каралли and «Леоновой» → Леоновъ
+(1906-07 SP p001); 16 more words doubled across a line break.
