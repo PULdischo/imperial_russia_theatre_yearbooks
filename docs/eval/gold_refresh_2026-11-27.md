@@ -106,3 +106,47 @@ Re-parse diff: 1,977 heading_path values, nothing else. Tested on a copy; produc
 vs backup `outputs/backups/musicians_sp_opera_heading_2026-11-27/` only raw/analysis.person_entry and
 research.person_appearance differ (1,977 rows each); 0 shift blocks; review links unchanged (20,194).
 No bare «Музыканты» row is left in an SP main-orchestra list. Sqlite not rebuilt (Andy). Moscow not checked.
+
+## Follow-up: Moscow Musicians (1,109 rows FIXED 2026-11-27, RG "Yes, fix the 1,109"; the other findings below NOT fixed)
+
+First scan page read by Claude for 1898-99 .. 1911-12 (1911-12 also p001); 1890-97 rows already
+carry the root in the series' own form (#130 rule). **The print differs from St Petersburg:** the
+«Оркестръ оперы и балета.» heading is printed in 1890-91 .. 1905-06 and in 1911-12, but NOT in
+1906-07, 1907-08, 1908-09, 1909-10, 1910-11 («Оркестры.» > officials/capellmeisters > «Музыканты»
+directly), so the bare «Музыканты» stored for those five seasons is verbatim.
+
+Rows stored without the printed root (seasons that print it):
+
+| season | rows | where |
+|---|---|---|
+| 1894-95 | 46 | p002 continuation of the musicians list (Nos. ~80-125) |
+| 1896-97 | 52 | p001 «Музыканты:» (Nos. 25-76) |
+| 1898-99 | 129 | Репетиторы (2), military bandmaster (1), Музыканты (126) |
+| 1899-00 | 33 | p003 continuation (Nos. 100+) |
+| 1900-01 | 127 | ballet capellmeister + acting 2nd (stored nested under it), Репетиторы (3), military (1), Музыканты (121) |
+| 1901-02 | 89 | capellmeisters (3), Репетиторы (3), military (1), Музыканты (82) |
+| 1902-03 | 130 | Репетиторы (3), military (1), Настройщикъ (1), Музыканты (125) |
+| 1903-04 | 94 | military (1), Настройщикъ (1), Музыканты (92) |
+| 1904-05 | 133 | Репетиторы: (3), military (1), Настройщикъ (1), Музыканты: (89) + p002 Музыканты (39) |
+| 1905-06 | 140 | capellmeisters (3), Репетиторы (2), Аккомпаніаторы (2), military (1), Настройщикъ (1), Музыканты (130), «И. сб.» (1) |
+| 1911-12 | 136 | Музыканты: p001-p004 (institution is the running head «МОСКОВСКІЕ ОРКЕСТРЫ.») |
+
+About 1,109 rows. Also found, a different shape:
+- headings lost or garbled on whole continuation pages: 1901-02 p002 (39 rows, no heading),
+  1903-04 p002 (38 rows, no heading, invented institution «Списокъ скрипачей, альтовъ, …»),
+  1896-97 p002 (49 rows, heading «Оркестръ оперы и балета. Завѣдывающій дѣлами оркестровъ и
+  капельмейстеръ оперы. Музыканты:»), 1892-93 p002 (1 row «Балетный оркестръ / Музыканты / Музыканты»);
+- 1890-91 p002: 2 rows «Музыканты» (Nos. 1-2), probably the first two ballet-orchestra musicians
+  (not scan-checked);
+- Малый-theatre orchestra rows filed under institution «Императорское С.-Петербургское Театральное
+  Училище» (1894-95 6, 1896-97 3, 1899-00 5, 1905-06 15, 1907-08 12) and 1898-99 p004 (15 rows,
+  Nos. 21-35, the Малый list's continuation) under «Оркестры.».
+
+**Applied 2026-11-27:** `docs/eval/fix_musicians_msk_opera_heading_2026-11-27.py`, 1,109 rows on 36 pages
+(per-season counts as in the table), heading_path only, root in each season's own p000 form
+(1894-97 «Оркестръ оперы и балета. …», 1898-1906 «… / …», 1911-12 «Оркестръ оперы и балета. / …»).
+1900-01's «Капельмейстеръ балета / И. об. 2-го капельмейстера балета» kept its (wrong) nesting under the
+new root. Re-parse diff: 1,109 heading_path values only. Tested on a copy of production (md5 79b05203);
+production = tested copy; vs backup `outputs/backups/musicians_msk_opera_heading_2026-11-27/` only
+raw/analysis.person_entry and research.person_appearance differ (1,109 rows each); 0 shift blocks;
+review tables identical. Sqlite not rebuilt (Andy).
