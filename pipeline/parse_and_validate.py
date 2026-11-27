@@ -436,7 +436,11 @@ _HEADING_PATH_RESTORE_FIXES: dict[str, list[tuple]] = {
     # _INSTRUMENT_TRANSCRIPTION_FIXES alone, and their heading_path is the
     # printed ballet-orchestra section ("Балетный оркестръ / Музыканты"), not an
     # instrument name.
-    "musicians_1901-02_MSK_p002": [(i, "heading_path", None) for i in range(1, 40)],
+    # musicians_1901-02_MSK_p002 (entries 1-39, forced to NULL) was removed
+    # 2026-11-27: p001 no longer has a NULL heading (#130 gave it «Музыканты»,
+    # then the Moscow orchestra-root fix «Оркестръ оперы и балета / Музыканты»),
+    # and the raw heading_path of this continuation page now holds the same
+    # value (docs/eval/fix_musicians_msk_lost_headings_2026-11-27.py).
 }
 
 

@@ -150,3 +150,13 @@ new root. Re-parse diff: 1,109 heading_path values only. Tested on a copy of pro
 production = tested copy; vs backup `outputs/backups/musicians_msk_opera_heading_2026-11-27/` only
 raw/analysis.person_entry and research.person_appearance differ (1,109 rows each); 0 shift blocks;
 review tables identical. Sqlite not rebuilt (Andy).
+
+**Lost/garbled Moscow headings FIXED 2026-11-27 (RG "Yes, fix those"):** `docs/eval/fix_musicians_msk_lost_headings_2026-11-27.py`,
+127 rows; each page read on the scan (plain continuations, no heading or title printed).
+1896-97 p002 (49) «Оркестръ оперы и балета. Музыканты:»; 1901-02 p002 (39) and 1903-04 p002 (38)
+«Оркестръ оперы и балета / Музыканты», 1903-04 also institution «Оркестры» (was the invented
+«Списокъ скрипачей, …»); 1892-93 p002 Альбрехтъ: stray «Музыканты:» cleared from rank_or_title, which
+stops `_repair_musicians_stray_heading` doubling the segment. The 1901-02 blank came from a stale
+`_HEADING_PATH_RESTORE_FIXES` entry in `pipeline/parse_and_validate.py` (removed). Production = tested
+copy; vs backup `outputs/backups/musicians_msk_lost_headings_2026-11-27/` only the 127 rows differ;
+0 shift blocks. Still open: 1890-91 p002 two rows, 1900-01 nesting, misfiled Малый institutions.
