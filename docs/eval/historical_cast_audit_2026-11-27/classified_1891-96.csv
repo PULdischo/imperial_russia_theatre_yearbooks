@@ -1,0 +1,53 @@
+block_id,verdict,event_date,historical_mention_ids,creator_keep_mention_ids,unclear_mention_ids,evidence,note
+review_1891-92_MSK_ballet_p000__b006,CURRENT,,,,,«Въ воскресенье 24-го ноября состоялось первое представленіе возобновленнаго ... балета»; cast follows «роль Лизы исполняла г-жа Нелидова»,this season's revival; Доберваль/Гертель/Мендесъ are creators
+review_1891-92_MSK_ballet_p000__b007,CURRENT,,,,,«1-го декабря въ заглавной роли ... «Эсмеральда» дебютировала ученица балетмейстера И. Мендеса»,"Перро, Мендесъ = creator/teacher, current event"
+review_1891-92_MSK_ballet_p000__b008,CURRENT,,,,,«29-го декабря состоялся бенефисъ балетмейстера И. Мендеса»,
+review_1891-92_SP_ballet_p001__b004,MIXED,1876,,,,«Балетъ этотъ не давался съ 1876 года. Будучи поставленъ съ г-жею Генріэттой Доръ ... нынѣ же возобновленъ съ г-жею Бріанца»,"historical names (Доръ, Вергиной, Ваземъ) carry no links; only linked performer 277 Бріанца is current; 273-275 creators"
+review_1891-92_SP_ballet_p011__b010,CURRENT,,,,,«Нынѣ балетъ возобновленъ съ г-жею Никитиной въ роли Сильфиды»,follows the 1835/1837 history block p011__b009 but is the current cast
+review_1891-92_SP_ballet_p011__b011,CURRENT,,,,,«Остальныя роли были поручены: Джемса Рубень ... г-ну Гердту»,continuation of the 1892 revival cast
+review_1892-93_MSK_ballet_p002__b001,CURRENT,,,,,«16-го декабря состоялось первое представленіе волшебной сказки ... «Кольцо любви»»,creators only
+review_1892-93_MSK_ballet_p002__b002,CURRENT,,,,,«эльфомъ—Вилли»,"plot summary; mention 523 «Вилли» is the character name (elf), falsely linked to Виль, Е. И. — a wrong link, not a historical one; flag separately"
+review_1892-93_MSK_ballet_p007__b002,CURRENT,,,,,«27-го декабря ... состоялось первое представленіе возобновленнаго ... «Фіаметта»»,creators only
+review_1892-93_MSK_ballet_p008__b007,CURRENT,,,,,«10-го января данъ былъ балетъ ... роль Сванильды въ первый разъ исполнила ... г-жа Рославлева»,preceding p008__b006 (1877 «Папоротникъ» cast) has no linked mentions
+review_1892-93_MSK_ballet_p009__b004,CURRENT,,,,,"«6-го февраля, въ бенефисъ г. Гельцера ... роль Аспиччіи исполнила въ первый разъ г-жа Нелидова»","1870/1874 dates are in the Гейтенъ caption p009__b003, not this block"
+review_1892-93_MSK_ballet_p010__b003,CURRENT,,,,,"«31-го марта, въ бенефисъ балетмейстера И. Мендеса, состоялось первое представленіе возобновленнаго балета»",creators only
+review_1892-93_MSK_ballet_p011__b001,CURRENT,,,,,«Роли были распредѣлены слѣдующимъ образомъ: Робертъ—г. Гельцеръ»,cast of the 31 Mar 1893 revival
+review_1892-93_SP_ballet_p001__b001,HISTORICAL,30-го января 1851 года; later revivals,779;780;783;785;786,,,"«дины 1-я и 2-я, Снѣткова и Ефимова ... при послѣдующихъ возобновленіяхъ ... исполнительницами заглавной роли являлись: г-жи Ришаръ, М. С. Петипа, Ваземъ»","continues 1851 cast of p000__b007 (listed), then past title-role holders; 779 is also a wrong-gender link (Снѣтковъ, Петръ); Никитина (785) danced it this season too but that is stated separately in p001__b003"
+review_1892-93_SP_ballet_p001__b002,HISTORICAL,1851,,788,,«Успѣху балета «Наяда и рыбакъ» во многомъ содѣйствовала мелодичная музыка Пуни»,about the 1851 success; composer keeps link
+review_1892-93_SP_ballet_p003__b002,CURRENT,,,,,"«Въ представленіи означенной картины, кромѣ г-жъ М. Петипа 1-й и Н. Петипа 2-й, принимали участіе»",follows the 1862 history block p003__b001 (listed) but returns to the 1892 performance
+review_1892-93_SP_ballet_p003__b003,CURRENT,,,,,«23-го сентября данъ былъ «Гарлемскій тюльпанъ» ... остальныя же роли остались за прежними исполнителями»,"""прежними"" = usual current cast, not historical"
+review_1892-93_SP_ballet_p003__b005,CURRENT,,,,,«11-го октября состоялось первое представленіе возобновленнаго балета ... «Пахита»»,creators only
+review_1892-93_SP_ballet_p004__b002,HISTORICAL,26-го сентября 1847 года,,850,,«тована назначеннымъ тогда дирижеромъ балетнаго оркестра А. Н. Лядовымъ»,"orchestrator = creator; print says «А. Н.», link is to Лядовъ, К. — check identity separately"
+review_1892-93_SP_ballet_p004__b003,HISTORICAL,1847,857;858,,,"«исполненные первыми сюжетами тогдашней труппы: г. Іогансономъ и г-жами Смирновой, Яковлевой»","1847 «Пахита» cast; 858 is also a wrong-gender link (Яковлевъ, Николай)"
+review_1892-93_SP_ballet_p006__b004,CURRENT,,,,,«6-го декабря состоялось первое представленіе новаго балета-фееріи ... «Щелкунчикъ»»,creators only
+review_1892-93_SP_ballet_p016__b004,CURRENT,,,,,«10-го января состоялся прощальный бенефисъ г-жи Горшенковой 1-й»,"1876 is her graduation (bio), not a cast"
+review_1892-93_SP_ballet_p017__b002,UNCLEAR,1884,,,1094,"«Съ переходомъ же на амплуа балерины, въ 1884 году, М. Н. Горшенковой были исполнены балеты»","career retrospective of the current farewell beneficiary (roles 1884-1893), not a quoted cast; RG to rule whether such bio passages count"
+review_1892-93_SP_ballet_p017__b004,CURRENT,,,,,"«Кшесинской 2-й въ роли Авроры; 2-го дѣйствія балета «Коппелія», съ г-жею Никитиной»",7 Feb 1893 mixed programme (text order jumbled with p017__b006)
+review_1892-93_SP_ballet_p018__b002,HISTORICAL,12-го іюня 1822 года,,1124,,«соч. Бернаделли былъ поставленъ впервые 12-го іюня 1822 года»,author keeps link; Андре unlinked
+review_1892-93_SP_ballet_p018__b004,CURRENT,,,,,«При настоящемъ возобновленіи ... вновь поставленъ балетмейстеромъ Л. И. Ивановымъ»,creators only
+review_1893-94_MSK_ballet_p004__b002,HISTORICAL,1-го декабря 1866 года,1320;1321;1329;1333;1334,,,«Составъ первыхъ исполнителей остальныхъ ролей былъ слѣдующій» (p003__b007) continues: «г. Гиллертъ и г. Гельцеръ; Конекъ-горбунокъ ... г. Рейнзгаузенъ»,Moscow premiere cast; current cast starts p004__b004 «При нынѣшнемъ возобновленіи»
+review_1893-94_MSK_ballet_p004__b003,HISTORICAL,1866,,1338;1345,,«Декораціи при первой постановкѣ «Конька-горбунка» были написаны: ... гг. Вальцемъ»,set painters = creators
+review_1893-94_MSK_ballet_p010__b005,CURRENT,,,,,«При нынѣшнемъ возобновленіи «Жизели» составъ исполнителей былъ слѣдующій»,
+review_1893-94_SP_ballet_p001__b001,HISTORICAL,22-го іюля 1886,1871,,,«поставленъ впервые 22-го іюля 1886 года ... на Ольгиномъ островѣ»,"1871 «Ольгиномъ» is a place name (Ольгинъ островъ) falsely linked to Ольгина, Е. М.; unlink either way"
+review_1893-94_SP_ballet_p016__b001,CURRENT,,,,,«9-го января состоялось первое представленіе возобновленнаго ... «Катарина»»,creators only
+review_1893-94_SP_ballet_p016__b002,CURRENT,,,,,«При настоящемъ возобновленіи роль Катарины ... исполнена была ... г-жей Пьериной Леньяни»,
+review_1893-94_SP_ballet_p016__b003,CURRENT,,,,,«Остальныя же роли балета были распредѣлены слѣдующимъ образомъ: Дьяволино—г. Чекетти»,
+review_1893-94_SP_ballet_p018__b003,CURRENT,,,,,«26-го января состоялся бенефисъ г-жи Пьерины Леньяни»,follows 1849-1889 history block p018__b002 (listed)
+review_1893-94_SP_ballet_p019__b004,CURRENT,,,,,«При настоящемъ возобновленіи ... новыя декораціи: ... художникомъ И. П. Андреевымъ»,
+review_1893-94_SP_ballet_p023__b004,HISTORICAL,20-го февраля 1877 года,,2881,,"«было впервые дано въ Москвѣ ... 20-го февраля 1877 года, въ бенефисъ балерины г-жи Карпаковой»",Карпакова unlinked; Рейзингеръ = author
+review_1893-94_SP_ballet_p023__b005,CURRENT,,,,,«Постановкою на нашей сценѣ 2-го дѣйствія ... завѣдывалъ балетмейстеръ Л. И. Ивановъ»,
+review_1893-94_SP_ballet_p024__b001,CURRENT,,,,,«Scène dansante»—г-жа Леньяни и г. Гердтъ,dance list of the 17 Feb 1894 performance
+review_1894-95_SP_ballet_p002__b004,HISTORICAL,"1818 году, 20-го сентября",3381;3382;3383,,,"«прибывшихъ изъ Вѣны артистовъ: г-жи Бернаделли—въ роли Лизы, г. Бернаделли—въ роли Маркелины ... г. Артемьевъ—Колена»","Бернаделли here are performers; 3383 links to a modern Артемьевъ, П. Ф. (wrong anyway)"
+review_1894-95_SP_ballet_p004__b004,CURRENT,,,,,«это pas было исполнено только въ первое представленіе—25-го сентября»,25 Sept 1894
+review_1894-95_SP_ballet_p004__b005,CURRENT,,,,,"«2) «Galop» — г-жи Иванова, Носкова, Обухова»",current dance list
+review_1894-95_SP_ballet_p004__b006,CURRENT,,,,,«3) «Polca de caractère»—г-жа Гантенбергъ и г. Гердтъ»,current dance list
+review_1894-95_SP_ballet_p004__b010,CURRENT,1888,,,,«М. К. Андерсонъ воспитывалась ... 1-го іюня 1888 года была опредѣлена на службу»,"bio of the current farewell beneficiary; 1888 = hiring, not a cast"
+review_1894-95_SP_ballet_p005__b001,UNCLEAR,1888-1894,,,3560,«Въ ряду исполненныхъ ею ролей за кратковременный періодъ ея службы»,career retrospective of the current beneficiary (same case as 1892-93 p017__b002); RG to rule
+review_1894-95_SP_ballet_p010__b003,CURRENT,,,,,«При нынѣшнемъ возобновленіи распредѣленіе ролей было слѣдующее»,follows 1859 cast block p010__b002 (listed)
+review_1894-95_SP_ballet_p011__b002,CURRENT,,,,,«15-го января ... состоялось первое представленіе на нашей сценѣ—«Лебединаго озера»»,creators only
+review_1894-95_SP_ballet_p011__b004,HISTORICAL,17-го и 22-го февраля [1894]; 20-го февраля 1877 года,,3860,,«была уже дана ... въ прошломъ сезонѣ (17-го и 22-го февраля) ... впервые поставленъ 20-го февраля 1877 года»,composer only; Карпакова unlinked
+review_1894-95_SP_ballet_p011__b005,CURRENT,,,,,«шло на Маріинской сценѣ при слѣдующемъ распредѣленіи ролей»,
+review_1895-96_MSK_ballet_p004__b006,CURRENT,,,,,«28-го апрѣля состоялось первое представленіе новаго балета—«Даита»»,creators only
+review_1895-96_SP_ballet_p001__b006,CURRENT,,,,,«При нынѣшнемъ возобновленіи исполнителями явились: г-жа Рославлева»,follows 1889 cast block p001__b005 (listed)
+review_1895-96_SP_ballet_p002__b005,CURRENT,,,,,«Распредѣленіе ролей при нынѣшнемъ возобновленіи было таково»,follows 1889 history block p002__b004 (listed)
+review_1895-96_SP_ballet_p003__b001,CURRENT,,,,,continues «Распредѣленіе ролей при нынѣшнемъ возобновленіи» (p002__b005),"57 links, all current"

@@ -1,0 +1,63 @@
+block_id,verdict,event_date,historical_mention_ids,creator_keep_mention_ids,unclear_mention_ids,evidence,note
+review_1902-03_SP_ballet_p017__b003,MIXED,1890-01-03,,17110,,«Партитура … была начата П. И. Чайковскимъ въ половинѣ декабря 1888 года … 3-го января 1890 года балетъ былъ данъ въ первый разъ»,100th performance (current) + composition/premiere history; only the composer is linked
+review_1902-03_SP_ballet_p017__b004,HISTORICAL,1890-01-02,,,17113,"«2-го января состоялась торжественная репетиція «Спящей Красавицы»» quoted from «Жизни П. И. Чайковскаго», составленной его братомъ М. И. Чайковскимъ","17113 = М. И. Чайковскій as cited biographer, not performer or creator of the ballet: RG to rule keep/unlink"
+review_1902-03_SP_ballet_p019__b001,HISTORICAL,1890-01-03,17147;17149;17151;17156;17159;17162;17164;17165;17167;17169;17172;17176,,,continues p018__b002 «При первомъ и послѣдующихъ представленіяхъ Спящей Красавицы роли въ ней были распредѣлены такъ»,"continuation of listed block p018__b002 (whole); 1890 premiere and later casts to 1893; the 100th-performance cast starts p019__b003. 17151 «Принца» (role word) is a false link to Принцъ, Борисъ"
+review_1902-03_SP_ballet_p019__b002,HISTORICAL,1890-01-03,17177;17179;17181;17183;17184;17188;17189;17190;17193,,,"same «первомъ и послѣдующихъ представленіяхъ» cast list (Волшебныя сказки), before «Въ сотое представленіе балета роли въ немъ исполняли» (p019__b003)",continuation of p018__b002/p019__b001
+review_1903-04_MSK_ballet_p003__b002,MIXED,1867,,17363;17364;17366;17367,,"«Балетъ этотъ былъ данъ въ первый разъ въ Петербургѣ, въ Большомъ театрѣ въ 1867 г. Роли … исполняли: … г-жа Сальвіони»","1867 cast performers are all unlinked already; linked names are creators (Сенъ-Леонъ, Минкусъ); 17377-17379 Горскій/Минкусъ/Сенъ-Леонъ in the current-staging sentence"
+review_1903-04_MSK_ballet_p005__b002,CURRENT,,,,,«Первая часть балета очень близко подходитъ къ фабулѣ Пушкина»,plot summary of current production; Пушкинъ = source author
+review_1903-04_SP_ballet_p006__b002,MIXED,1851-01-30,,18520;18522,,«Балетъ этотъ былъ представленъ въ 1-й разъ … 30-го января 1851 года. Одинъ изъ рецензентовъ того времени … пишетъ»,"current revival (7 Dec) + 1851 premiere; only creators linked (Петипа, Пуни; Ширяевъ 18521 = current reviver)"
+review_1903-04_SP_ballet_p007__b001,HISTORICAL,1851-01-30,18535;18536;18537;18539;18541;18542;18544;18548;18551;18554;18555;18556,,,"quoted 1851 review: «въ немъ участвовали Перро, г-жи Андреянова и Карлотта Гризи … Очаровательными Наядами были: г-жа Прихунова, Амосова 1-я, Соколова»","whole block is the quoted 1851 review and 1851 cast; 18535 «Антоніо» is a role name falsely linked to Антоніо, Анна; 18542 Петипа danced in 1851 (performer)"
+review_1903-04_SP_ballet_p009__b002,HISTORICAL,1851-01-30,,18573;18574,,"«Музыка г. Пуни, который самъ дирижировалъ оркестромъ … декораціи, написанныхъ для балета гг. Вагнеромъ и Роллеромъ, то хроникеры того времени»",end of quoted 1851 review; composer and set painter keep; whether the 1851 Вагнеръ is Конрадъ Робертовичъ was not checked
+review_1903-04_SP_ballet_p009__b003,CURRENT,,,,,«При настоящемъ возобновленіи балета роли въ немъ исполняли»,"current cast; 18583 «Антоніо» (role) falsely linked to Антоніо, Анна"
+review_1903-04_SP_ballet_p010__b001,CURRENT,,,,,continuation of «При настоящемъ возобновленіи» cast (p009__b003),
+review_1903-04_SP_ballet_p011__b002,MIXED,1892-93 onward,18838;18839;18840;18841;18842;18843,,18805,"«Въ двѣнадцать сезоновъ … Она танцовала въ Маріинскомъ театрѣ съ балеринами: г-жами Дель-Эра, Леньяни, Бріанца, Замбелли, Гримальди и Поллини»","Kshesinskaya farewell benefit 4 Feb 1904 (current: 18804, 18844, Гельцеръ 18847); six foreign ballerinas = earlier seasons; 18805 = her 1892-93 debut (career summary of the current beneficiary)"
+review_1903-04_SP_ballet_p011__b003,CURRENT,,,,,«28-го декабря … было дано въ 1-й разъ по возобновленіи „Волшебное зеркало“»,
+review_1903-04_SP_ballet_p012__b001,CURRENT,,,,,continuation of the 28 Dec 1903 «Волшебное зеркало» cast,
+review_1903-04_SP_ballet_p016__b002,MIXED,1875,19278;19279,19274;19275,,"«затѣмъ возобновленъ въ 1875 г. въ бенефисъ г. Гердта, для дебюта г-жи М. Петипа»",19276 Куличевская = current reviver; 19279 = М. М. Петипа 1875 debut; 19278 = Гердтъ 1875 benefit
+review_1903-04_SP_ballet_p016__b003,CURRENT,,,,,«При настоящей его постановкѣ роли въ немъ исполняли»,
+review_1903-04_SP_ballet_p017__b001,CURRENT,,,,,continuation of the current school performance (p016__b003),
+review_1904-05_SP_ballet_p002__b002,MIXED,1896-05,,20452,,«Балетъ этотъ былъ сочиненъ М. И. Петипа спеціально для торжественнаго спектакля … въ маѣ 1896 года»,20450/20451 creators of the current 12 Sep revival
+review_1904-05_SP_ballet_p002__b003,HISTORICAL,1896-05,20455;20456,,,"«Въ Московскомъ Большомъ театрѣ въ торжественный коронаціонный спектакль Вѣлую жемчужину изображала П. Леньяни, а Желтую—М. Ф. Кшесинская»",1896 coronation-gala cast; Kshesinskaya is also current elsewhere but not in this block
+review_1904-05_SP_ballet_p002__b004,CURRENT,,,,,«12-го сентября роль Вѣлой жемчужины исполняла г-жа Сѣдова»,
+review_1904-05_SP_ballet_p014__b002,CURRENT,,,,,«При возобновленіи балета роли въ немъ были распредѣлены такъ»,"follows the 1875 cast (p013__b003/p014__b001, already listed); 21628 «Готье» is a role name falsely linked to Готье, Теофиль"
+review_1904-05_SP_ballet_p015__b003,MIXED,1859-04-25,21747,21741;21742,,"«При первой постановкѣ балета роли въ немъ были распредѣлены такъ: … Лизетта, штопальщица — г-жа М. Петипа»","1859 Лизетта = М. С. Петипа, wrongly linked to Петипа 1-я, Марія Маріусовна; later Lizettes (Кемереръ etc.) unlinked; current cast after «При настоящей постановкѣ»; 21743 Куличевская current reviver"
+review_1904-05_SP_ballet_p016__b001,CURRENT,,,,,continuation of «При настоящей постановкѣ» (20 Apr 1905 school performance),
+review_1904-05_SP_ballet_p017__b001,CURRENT,,,,,continuation of the 20 Apr 1905 school divertissement,
+review_1905-06_MSK_ballet_p001__b006,HISTORICAL,1864-11-17,22036,,,"«„Дочь Фараона“ была поставлена въ первый разъ въ Москвѣ … 17-го ноября 1864 г., въ бенефисъ балерины П. П. Лебедевой»","П. П. Лебедева (1864) is wrongly linked to Лебедева, Клавдія Петровна; block opens a quoted chronicler"
+review_1905-06_MSK_ballet_p002__b001,HISTORICAL,1864-11-17,,22039,,quoted chronicler: «балетмейстеру г. Петипа публика выразила свою благодарность»,Petipa as balletmaster of the 1864 production
+review_1905-06_SP_ballet_p004__b002,CURRENT,,,,,«6-го ноября состоялось 50-е представленіе „Щелкунчика“» (1892 premiere only cross-referenced),creators only
+review_1905-06_SP_ballet_p004__b003,CURRENT,,,,,«Въ день 50-го его представленія роли были распредѣлены такъ»,
+review_1905-06_SP_ballet_p005__b001,CURRENT,,,,,continuation of the 50th-performance cast,
+review_1905-06_SP_ballet_p009__b002,MIXED,1858-1875,,,23873;23874;23875;23876;23877;23878,"«выступилъ въ 1858 г. въ бенефисъ балерины г-жи Фридбергъ … курсъ танцевъ подъ руководствомъ Петипа - отца, Пименова, Іогансона, М. И. Петипа … Первый бенефисъ … 31 января 1871 г.»",Gerdt jubilee benefit 12 Feb 1906 (23872 current); 23873/23878 = career summary of the current beneficiary; 23874-23877 = his teachers 1858-65 (not performers or creators): RG to rule
+review_1905-06_SP_ballet_p009__b003,CURRENT,,,,,«Программа бенефиса П. Л. Гердта состояла изъ 3 и 5 картины балета „Баядерка“»,
+review_1905-06_SP_ballet_p010__b001,CURRENT,,,,,continuation of the Gerdt benefit programme,
+review_1905-06_SP_ballet_p010__b002,CURRENT,,,,,«Офиціальный актъ юбилейнаго торжества состоялся послѣ первой картины»,
+review_1906-07_MSK_ballet_p006__b006,MIXED,1845,,24743,,«Балетъ Доберваля въ первый разъ на Московской сценѣ былъ данъ въ 1845 году съ г-жею Санковской»,"1845 and later Lizas (Санковская, Эльслеръ …) all unlinked; linked dancers belong to the 21 Jan 1907 benefit cast"
+review_1906-07_MSK_ballet_p007__b001,CURRENT,,,,,continuation of «Роли въ балетѣ въ день бенефиса были распредѣлены такъ»,
+review_1906-07_MSK_ballet_p007__b002,CURRENT,,,,,«Затѣмъ дана была въ первый разъ «Арлекинада»» (1899-1900 SP staging only cross-referenced),Ламбинъ = designer
+review_1906-07_MSK_ballet_p008__b001,CURRENT,,,,,end of the current «Арлекинада» cast + benefit ceremony,
+review_1906-07_MSK_ballet_p008__b002,CURRENT,,,,,«28-го февраля представленъ былъ во второй разъ»,
+review_1906-07_MSK_ballet_p008__b003,MIXED,1843-11-25; 1846-11-05,,24828;24829,,"«былъ поставленъ въ первый разъ … 25-го ноября 1843 года, въ бенефисъ г-жи Андреяновой, а затѣмъ возобновленъ съ г-жею Санковской 1-ю, 5-го ноября 1846 г.» + Родиславскій memoir",historical performers unlinked; linked names = creators/craftspeople and Каралли (current Жизель)
+review_1906-07_MSK_ballet_p010__b001,MIXED,1846-1901,,,,"«роль Жизели на Московской сценѣ исполняли: г-жа Ирка-Матіасъ (въ 1848 г.) … Гримальды (1901 г.). При настоящемъ возобновленіи балета, роли …»","all historical names (Санковская … Гримальди, Ѳедоръ Вальцъ) are unlinked; all 14 linked mentions are in the current cast"
+review_1906-07_SP_ballet_p003__b004,CURRENT,,,,,«Роль Марикиты … исполняла г-жа Преображенская» (1865 premiere only dated),
+review_1906-07_SP_ballet_p003__b005,CURRENT,,,,,"«13-го декабря состоялось, 63-е по возобновленіи»",
+review_1906-07_SP_ballet_p006__b002,CURRENT,,,,,«Роли въ балетѣ были распредѣлены при его возобновленіи такъ» (1900 premiere only cross-referenced),
+review_1906-07_SP_ballet_p006__b003,CURRENT,,,,,«Роли въ «Раймондѣ» распредѣлены были въ этотъ спектакль такъ» (1898 premiere only cross-referenced),
+review_1906-07_SP_ballet_p006__b004,CURRENT,,,,,"«4-го февраля … былъ данъ, въ 65-й разъ по возобновленіи»",
+review_1906-07_SP_ballet_p007__b001,CURRENT,,,,,"«11-го февраля, въ 112-й разъ»","25438 «Принцъ» (role «Принцъ Дезире») falsely linked to Принцъ, Борисъ"
+review_1907-08_SP_ballet_p009__b003,MIXED,1875,26527,,26530,"«Юбилярша дебютировала въ 1875 году, въ бенефисъ Г. Гердта»","М. М. Петипа farewell benefit 11 Nov 1907 (current: 26518-26524, 26531); 26527 = Гердтъ 1875 benefit; 26530 = career summary of the current beneficiary"
+review_1907-08_SP_ballet_p010__b001,CURRENT,,,,,«Бенефиціантка протанцовала вмѣстѣ съ г. Кусовымъ Panaderos»,
+review_1907-08_SP_ballet_p014__b006,CURRENT,,,,,"«20-го апрѣля, въ балетѣ «Аленькій цвѣточекъ» … въ роли Анжелики выступила г-жа Сѣдова» (1898 = her graduation)",
+review_1907-08_SP_ballet_p014__b007,CURRENT,,,,,«Всѣхъ балетныхъ спектаклей въ сезонѣ 1907 и 1908 г. было дано 52»,season summary
+review_1907-08_SP_ballet_p015__b001,CURRENT,,,,,«Скончался мимический артистъ г. Гиллертъ. Перевели …»,season personnel changes
+review_1908-09_SP_ballet_p002__b003,CURRENT,,,,,«возобновили 14 числа старый большой балетъ «Царь Кандавлъ»» (1891 revival only dated),Петипа = creator
+review_1908-09_SP_ballet_p002__b005,CURRENT,,,,,"«Новый 1909 годъ начался «Спящей красавицей» съ г-жей Преображенской, 4 января»",
+review_1910-11_SP_ballet_p004__b005,CURRENT,,,,,«12-го декабря … справлялъ бенефисъ за 50-лѣтнюю службу неувядаемый П. А. Гердтъ»,1844/1861 = birth and service start; no cast
+review_1910-11_SP_ballet_p005__b002,CURRENT,,,,,«главную женскую роль Изоры—г-жа Кшесинская»,
+review_1910-11_SP_ballet_p005__b005,CURRENT,,,,,«6-го февраля состоялось первое представленіе единственной новинки сезона»,"possible wrong identities: 27251 Шумана -> Шуманъ, Отто Рейнгольдовичъ; 27255 Глазуновъ -> Глазуновъ, Николай Лукичъ"
+review_1910-11_SP_ballet_p005__b006,CURRENT,,,,,«13-го февраля … праздновала свой 20-лѣтній юбилей М. Ф. Кшесинская»,
+review_1910-11_SP_ballet_p006__b002,MIXED,c. 1890,27266;27267;27268;27269;27271,,,"«начала свою карьеру въ ту пору, когда центръ интереса … на … иностранокъ, вродѣ Бріанца, Дель-Эра, Леньяни, Замбелли»",Kshesinskaya mentions current (20-year jubilee); the foreign ballerinas belong to the 1890s
+review_1910-11_SP_ballet_p006__b003,CURRENT,,,,,«Спектакль для бенефиса талантливой балерины былъ сборный»,
+review_1913-14_SP_ballet_p003__b004,CURRENT,,,,,«16-го февраля состоялось первое представленіе возобновленной … «Спящей красавицы»»,creators only
+review_1913-14_SP_ballet_p003__b005,CURRENT,,,,,«Новыя декораціи и костюмы были изготовлены по эскизамъ академика К. А. Коровина»,27513/27514 = authors of the old scenario (creators)
+review_1913-14_SP_ballet_p003__b006,CURRENT,,,,,«Дѣятельность г. Горскаго сказалась далѣе»,

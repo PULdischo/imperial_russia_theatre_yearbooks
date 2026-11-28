@@ -29638,3 +29638,43 @@ Result: 161 candidate blocks, 1,598 linked person mentions in them (S2 alone 65,
 every season 1891-92..1913-14 except 1898-99/1899-00/1909-10/1911-12/1912-13. Why the 2026-11-03 sweep missed the 1895-96
 «Конекъ» 1864 cast: it required the year inside the block; the year sits in the previous block. Candidates are being read
 in context (three read-only agents, by season range) before anything is proposed.
+
+## 2026-11-28 — Historical-cast audit: classification of the 161 candidates (results)
+
+Read-only on outputs/rebuild_mascgen_2026-11-27/imperial_theaters.duckdb (review tables = production). Three agents read
+each candidate block in context and listed its linked person mentions:
+
+```sql
+select block_id, page_id, block_index, block_type, text, caption_text from raw.review_block where page_id like '<review>%' order by page_id, block_index;
+select mention_id, surface, char_start, person_id, link_method from research.review_mention where block_id=? and mention_type='person' and person_id is not null;
+-- check by Claude: every listed mention_id exists in research.review_mention, is linked, and is in that block (0 failures)
+```
+
+Result: 156 blocks classified (+5 «Конекъ» blocks handled separately): 102 current, 28 historical, 24 mixed, 2 unclear;
+90 linked names in historical passages (Group A quoted old casts 78 in 18 blocks; Group B career retrospectives 12 in 3
+blocks), 52 creator links kept, 12 unclear. Files: docs/eval/historical_cast_audit_2026-11-27/ (README, classified_all.csv,
+group_A_quoted_old_casts.csv, group_B_and_unclear.csv). Nothing changed.
+
+## 2026-11-28 — Historical-cast audit, Group A APPLIED to production (RG: "Yes, apply Group A")
+
+28 rows to docs/eval/review_historical_passages.csv (18 audit blocks: 15 'whole', 3 'part'; the 1864 «Конекъ-Горбунокъ»
+passage in 1895-96 SP: 8 'whole', 2 'part', dated 1864-12-03) and 89 unlink rows to docs/eval/review_mention_links.csv.
+10 of the 99 Group A mentions already had a ruled row (2026-11-07 G1/G2/Petipa pilot) and were NOT overwritten (held for RG).
+Review chain on a copy (outputs/rebuild_histcast_2026-11-28/chain.sh); diff.py there, plus:
+
+```sql
+select p.mention_id, p.person_id, z.person_id from p.research.review_mention p join z.research.review_mention z
+ using (block_id, char_start, mention_type, surface) where p.person_id is distinct from z.person_id;
+select p.assertion_id, p.block_id, p.performer_surface, p.date_undate, z.date_undate from p.research.review_assertion p
+ join z.research.review_assertion z using(assertion_id) where p.performer_person_id is distinct from z.performer_person_id or p.date_undate is distinct from z.date_undate;
+-- review_dance / review_dance_performer changes restricted to the listed historical blocks
+select count(*) from entities.person_link;  -- before promoting, on production and the copy
+```
+
+Result: first build was on md5 3625a89d, which turned out to be another session's interrupted build (uncheckpointed .wal;
+read with it, person_link 19,364 of 24,949) — not promoted; that session restored production (eca3017a, person_link 24,949,
+no .wal). Rebuilt on eca3017a: exactly the 89 mention links removed; 26 assertions re-dated to the quoted date or unlinked,
+none switched or lost; 14 review_dance and 23 review_dance_performer rows changed, all inside the listed blocks, none
+switched; candidate lists order only; person_link 24,949, 0 shift blocks. Linked person mentions 20,191 → 20,102. Production
+backed up to outputs/full_run/imperial_theaters.pre_histcast_2026-11-28.duckdb and replaced (md5 e4df7787); mentions CSVs
+updated (old in outputs/reviews/_backup_before_histcast_2026-11-28/); sqlite rebuilt locally (not republished: Andy).

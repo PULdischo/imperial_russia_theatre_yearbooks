@@ -64,8 +64,15 @@ own entry.**
   quoted «маркитантки» auto-linked to Маркитантка; duplicate works Эвника (13) / Евника (5) still separate *(checked
   11-27)*; divertissement spelling pair; rename `research.production` -> `production_list_entry` (not done *(checked
   11-27)*); production worksheets per ballet (RG wants them); Карменъ as a ballet (tabled).
-- **1864 «Конекъ-Горбунокъ» cast quoted in 1895-96 SP** (p005__b003 → p006__b002, «Составъ первыхъ исполнителей»): not in
-  `review_historical_passages.csv`; its names are linked to 1890s people (e.g. «А. Богдановъ» → Богданова, Александра).
+- **Historical casts in the reviews (audit 2026-11-27/28, `docs/eval/historical_cast_audit_2026-11-27/README.md`):** Group A
+  (quoted old casts) APPLIED 2026-11-28 (RG "Yes, apply Group A"): 28 blocks listed in review_historical_passages.csv
+  (incl. the 1864 «Конекъ-Горбунокъ» passage in 1895-96 SP), 89 performer links removed. Still open for RG, one at a time:
+  (1) 10 Group A links that already carry a 2026-11-07 ruling (G1/G2/Petipa pilot) and were not overwritten — some right
+  people in an old cast (Марія Петипа 1890 ×2, Л. Ивановъ 1861, the 1875 «дебюта г-жи М. Петипа»), some wrong namesakes
+  (1861 Павлова ×2 / Ѳедорова, 1866 Кузнецовъ, 1851 Макарова, 1859 Лизетта = М. С. Петипа); (2) Group B, career
+  retrospectives in benefit/farewell/jubilee reviews (12 links) + 12 unclear mentions; (3) p010__b003 of 1895-96 SP (the
+  ballerinas who danced «Конекъ» 1864-95; «Кеммереръ» → Владиміръ is wrong anyway); (4) ~a dozen wrong links seen on the way
+  (README, last section).
 - **Creator wording among other matcher links (found 2026-11-27):** the matcher ranks a living listed candidate first,
   so a dead or absent creator loses (RG: "creators can be named long after death"). Seen on 1906-07 SP p001: «Т. Готье и
   Коралли «Жизель»» → Каралли, Вѣра (should be Jean Coralli); «Леоновой I (Діана)» → Леоновъ, Сергѣй (a man). Worth a
@@ -146,7 +153,7 @@ own entry.**
 
 - `research_dataset.sqlite` was rebuilt locally on 2026-11-26 and matches production, but it is not republished: the
   published copy lacks every change since the last publish (review drift rulings, «g.» fix, 1911-12 and 1912-13
-  seasons, review-layer rebuilds, the 2026-11-27 review-name links and masculine-genitive fixes). Run `pipeline/merge_datasette_metadata.py` (event table sort).
+  seasons, review-layer rebuilds, the 2026-11-27 review-name links and masculine-genitive fixes, the 2026-11-28 historical-cast unlinks). Run `pipeline/merge_datasette_metadata.py` (event table sort).
   `review_credit` credit_ids were renumbered by the «g.» rebuild.
 
 ### 6. Housekeeping
