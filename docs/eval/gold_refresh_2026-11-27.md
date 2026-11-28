@@ -176,3 +176,13 @@ institution «Императорское С.-Петербургское Теат
 rows; heading «Балетный оркестръ / …» unchanged). `docs/eval/fix_musicians_1890-91_sp_ballet_institution_2026-11-27.py`.
 Production = tested copy; vs backup `outputs/backups/musicians_1890-91_sp_ballet_institution_2026-11-27/` only those
 11 rows differ; 0 shift blocks. No Musicians row now carries a school institution.
+
+**Moscow 1890-91 ballet-orchestra Nos. 1-2 FIXED 2026-11-28 (RG "Yes, fix them"):** musicians_1890-91_MSK_p002
+e040-e041 (Альбрехтъ, Людвигъ Карловичъ No. 1; Альбрехтъ (см. оперный оркестръ) No. 2) are printed on p. 108 under
+«Балетный оркестръ.» > «Музыканты:» (scan-read by Claude); heading «Музыканты» -> «Балетный оркестръ / Музыканты»
+(`docs/eval/fix_musicians_1890-91_msk_ballet_heading_2026-11-28.py`). The first production rebuild was killed mid-run
+(exit 137, the tool's 10-minute limit) and left an uncheckpointed .wal whose replay showed entities.person_link at
+19,364 rows (found by the audit session); the half-written file and its .wal were moved to
+`outputs/backups/musicians_1890-91_msk_ballet_heading_2026-11-28/interrupted_run/`, production restored from the
+complete backup (af0ef313) and the rebuild re-run in the background. Final production (eca3017a) = tested copy; vs
+backup only those 2 rows differ; person_link 24,949; 0 shift blocks; no .wal. Still open: 1900-01 MSK nesting.
