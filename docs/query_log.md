@@ -29678,3 +29678,19 @@ none switched or lost; 14 review_dance and 23 review_dance_performer rows change
 switched; candidate lists order only; person_link 24,949, 0 shift blocks. Linked person mentions 20,191 → 20,102. Production
 backed up to outputs/full_run/imperial_theaters.pre_histcast_2026-11-28.duckdb and replaced (md5 e4df7787); mentions CSVs
 updated (old in outputs/reviews/_backup_before_histcast_2026-11-28/); sqlite rebuilt locally (not republished: Andy).
+
+## 2026-11-28 — Status check: do this thread's 2026-11-25 review-layer changes still hold in production?
+
+```sql
+select count(*) from research.review_mention;  -- likewise review_assertion, review_credit, review_dance, entities.review_work, research.work
+select canonical_title, art_form from research.work where canonical_title in ('Papillons', 'Исламей', 'Les préludes');
+select count(*) from research.work where canonical_title = 'Конекъ-Горбунокъ или Царь-Дѣвица';
+select work_source, count(*) from research.review_credit where work_source in ('divertissement', 'unidentified title') group by 1;
+select count(*) from research.review_dance where work_source = 'named-dance list: no parent';
+```
+
+Result (production written 2026-11-28 10:12 by other sessions; no .wal; person_link 24,949 = raw.person_entry): all of this
+thread's changes hold — Fokine works ballet, «Конекъ» duplicate gone («Конекъ-горбунокъ» 260), 14 no-parent dances, French-troupe
+mentions absent, 1913-14 «Papillons» linked, review_work 17. Moved since by other sessions (not examined here): review_mention
+27,531 -> 27,530, review_credit 2,421 -> 2,420 (divertissement 18 -> 17, unidentified title 1 -> 3), research.work 3,136 -> 3,109
+(1912-13 C curation, dbb841e: 27 title folds).
