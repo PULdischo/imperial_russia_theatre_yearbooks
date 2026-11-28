@@ -169,3 +169,10 @@ sub-heading as the season's other Малый page writes it. city was already Mo
 Production = tested copy; vs backup `outputs/backups/musicians_msk_maly_institution_2026-11-27/` only those
 56 rows differ; 0 shift blocks. Same wrong school institution also on musicians_1890-91_SP_p002 (12
 ballet-orchestra rows) — not in this fix.
+
+**SP 1890-91 ballet-orchestra institution FIXED 2026-11-27 (RG "Yes, fix them"):** 11 rows (not 12, as first
+counted) on musicians_1890-91_SP_p002 — Дриго, Канненгиссеръ, the three répétiteurs, musicians Nos. 1-6 —
+institution «Императорское С.-Петербургское Театральное Училище» -> «Оркестры.» (#130 rule for ballet-orchestra
+rows; heading «Балетный оркестръ / …» unchanged). `docs/eval/fix_musicians_1890-91_sp_ballet_institution_2026-11-27.py`.
+Production = tested copy; vs backup `outputs/backups/musicians_1890-91_sp_ballet_institution_2026-11-27/` only those
+11 rows differ; 0 shift blocks. No Musicians row now carries a school institution.
