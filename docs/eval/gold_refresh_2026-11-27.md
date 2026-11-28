@@ -186,3 +186,10 @@ e040-e041 (Альбрехтъ, Людвигъ Карловичъ No. 1; Альб
 `outputs/backups/musicians_1890-91_msk_ballet_heading_2026-11-28/interrupted_run/`, production restored from the
 complete backup (af0ef313) and the rebuild re-run in the background. Final production (eca3017a) = tested copy; vs
 backup only those 2 rows differ; person_link 24,949; 0 shift blocks; no .wal. Still open: 1900-01 MSK nesting.
+
+**1900-01 Moscow nesting FIXED 2026-11-28 (RG "Yes, fix it"):** musicians_1900-01_MSK_p000 e005 (Герберъ, Александръ
+Юліевичъ) «Оркестръ оперы и балета / Капельмейстеръ балета / И. об. 2-го капельмейстера балета» -> «Оркестръ оперы и
+балета / И. об. 2-го капельмейстера балета» (printed p. 119 sets the two headings side by side).
+`docs/eval/fix_musicians_1900-01_msk_nesting_2026-11-28.py`; rebuild run in the background. Production 5c9de8d1 = tested
+copy; vs backup only that row differs; person_link 24,949; 0 shift blocks; no .wal; review tables identical.
+**All Musicians heading/institution items found by this refresh are now closed.**
