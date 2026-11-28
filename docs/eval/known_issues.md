@@ -24,7 +24,7 @@ goal is catching and triaging them cheaply every run, not eliminating them.
 - **needs source check** — plausibly a real model error, but not confirmed
   against the scanned page yet
 
-## Status index (as of 2026-11-27)
+## Status index (as of 2026-11-28)
 
 The one current list of what is still open, across every tracker. Each item says where its detail lives. Rebuilt
 2026-11-27 from: the 2026-10-18 index (kept below, marked superseded, for its detail), the entries added since (#156-#164
@@ -115,10 +115,20 @@ own entry.**
 
 ### 3. Workable now (Claude prepares, RG approves before anything changes)
 
-- **Wikidata for new people (checklist E5):** 1911-12 newcomers 100, none with a QID; 1909-10 55 (3), 1910-11 43 (1)
-  *(checked 11-27)*.
-- **Gold set out of step:** roster score 76.4% because the gold predates later rulings; updating
-  `docs/eval/gold/_build_roster.py` restores it as a regression check.
+- **Wikidata for new people (checklist E5):** 174 of 2,712 people have a QID; the gap starts in 1908-09, not 1911-12:
+  newcomers 1908-09 178 (4 with a QID), 1909-10 55 (3), 1910-11 43 (1), 1911-12 100 (0) *(checked 11-27)*.
+- **Staff-list data errors the refreshed roster gold caught** (`docs/eval/gold_refresh_2026-11-27.md`, scan-read by
+  Claude; not fixed): «баронъ» (Кусовъ) and «графъ» (Бергъ) missing from rank_or_title in 1906-07 and 1907-08 only
+  (every other season stores them); Administrators 1907-08 heading «Помощники дѣлопроизводителя:» missing (Посниковъ,
+  Шенкъ); Administrators 1890-91 heading «Полиціймейстеры:» missing (Старженецкій-Лаппа, Клечковскій); TheaterSchoolStaff
+  1906-07 Боборыкинъ carries Смирновъ's date «съ 1 сентября 1903 г.» (nothing printed after his name). These are the 8
+  fields still failing the roster gold (99.5%). Also two structure questions for RG: Абрамова 1906-07 stored under
+  «Лекарскій помощникъ / И. д. фельдшерицы» though «И. д. фельдшерицы.» prints as its own heading; Шарыпинъ
+  Administrators 1907-08, whose only printed heading is «VIII кл.» (gold follows the stored «Распорядительное отдѣленіе»).
+- **Tenure notes missing their opening bracket:** 2,435 rows store «съ … г.)» for the printed «(съ … г.).» (BalletArtists
+  ~1,024, Musicians ~925, ProductionTeam ~247, Administrators ~139, TheaterSchoolStaff ~108; counted by
+  `eval_against_gold.py`, which ignores tenure brackets since 2026-11-27, RG option C). Other rows store no brackets or
+  both; one convention to choose before any sweep (#4).
 - **Honours sweep:** missed «Заслуженн… артист…» corpus-wide (only seven holders checked, 2026-11-04).
 - **Review layer resume list** (2026-11-25 pause): Fokine works' `art_form_basis` prefix; re-measure the credit reader
   (~110 wrong-work credits estimated; sample `docs/eval/review_credit_work_sample_2026-11-25.csv`); opera names absent
@@ -153,7 +163,8 @@ own entry.**
 
 - `research_dataset.sqlite` was rebuilt locally on 2026-11-26 and matches production, but it is not republished: the
   published copy lacks every change since the last publish (review drift rulings, «g.» fix, 1911-12 and 1912-13
-  seasons, review-layer rebuilds, the 2026-11-27 review-name links and masculine-genitive fixes, the 2026-11-28 historical-cast unlinks). Run `pipeline/merge_datasette_metadata.py` (event table sort).
+  seasons, review-layer rebuilds, the 2026-11-27 review-name links and masculine-genitive fixes, the 2026-11-28 historical-cast unlinks, the
+  2026-11-27/28 Musicians heading and institution fixes, ~3,385 rows). Run `pipeline/merge_datasette_metadata.py` (event table sort).
   `review_credit` credit_ids were renumbered by the «g.» rebuild.
 
 ### 6. Housekeeping
@@ -173,6 +184,11 @@ own entry.**
   Theatre» *(checked 11-27)*.
 - «г. М. Петипа» as Королева 1902-03 (#159 follow-up b): linked to Марія by the role rule, 2026-11-07.
 - Every season with a totals page reconciled (1890-91..1912-13); 1905-06 too.
+- Roster gold refreshed 2026-11-27 (76.4% -> 97.3%, then 99.5% after the fixes below); scorer ignores tenure brackets
+  (RG option C) and heading end colons/stops (`docs/eval/gold_refresh_2026-11-27.md`).
+- Musicians headings and institutions, 2026-11-27/28: orchestra root restored SP 1890-91..1909-10 (2,081 rows) and Moscow
+  (1,109); Moscow lost/garbled continuation headings (127); Малый rows misfiled (56); SP 1890-91 ballet institution (11);
+  Moscow 1890-91 ballet Nos. 1-2 (2); 1900-01 nesting (1). No Musicians row carries a school institution now.
 
 ---
 
